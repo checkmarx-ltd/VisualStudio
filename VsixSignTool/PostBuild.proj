@@ -12,23 +12,31 @@
 		<Message Text="
 			RootDir=$(RootDir)
 			SourcesDir=$(SourcesDir)
-			BinariesDir=$(BinariesDir)" />
-
+			BinariesDir=$(BinariesDir)
+			CxVersion=$(CxVersion)" />
+	</Target>
+	
+	<Target Name="AppendVersionToPluginName"
+			Condition="Exists('$(BinariesDir)\CxViewerVSIX.vsix')">
+			<Exec Command='attrib -r "$(BinariesDir)\CxViewerVSIX.vsix"'/>
+			<PropertyGroup>
+			  <NewPluginName>$(BinariesDir)\CxViewerVSIX_$(CxVersion).vsix</NewPluginName>
+			</PropertyGroup>
+			<!-- Move plugin == Copy plugin with the new name and delete the old one -->
+			<Move SourceFiles="$(BinariesDir)\CxViewerVSIX.vsix" DestinationFiles="$(NewPluginName)" />
+	
+	</Target>
+	
+	<Target Name="CollectFilesToSign">
 		<ItemGroup>
 			<FilesToSign
-						Include="
-											
-								$(BinariesDir)\**\*.vsix;"
-						Exclude="
-								$(BinariesDir)\**\*.dll;"
-								
-							/>
-						
-		
+							Include="											
+									$(BinariesDir)\**\*.vsix;"
+							Exclude="
+									$(BinariesDir)\**\*.dll;" /> 
 		</ItemGroup>
-
 	</Target>
-
+	
 	<Target Name="MakeWritable"
 			Condition=" '@(FilesToSign)' != '' ">
 		
@@ -47,12 +55,14 @@
 	
 	<PropertyGroup>
 		<PostBuildDependsOn>
+			AppendVersionToPluginName;
+			CollectFilesToSign;
 			MakeWritable;
-			SignFiles;
-		
-	
+			SignFiles;			
 		</PostBuildDependsOn>
 	</PropertyGroup>
+	
+	
 	<Target Name="PostBuild"
 			DependsOnTargets="$(PostBuildDependsOn)"
 				/>
