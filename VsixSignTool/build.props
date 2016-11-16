@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<!-- ========================================================================================================================================================
+				Directories
+		========================================================================================================================================================= -->
+		<PropertyGroup>
+			<IdeDir                     Condition="'$(IdeDir)'==''"                 >$(MSBuildProgramFiles32)\Microsoft Visual Studio 12.0\Common7\IDE</IdeDir>
+			<DotfuscatorBinPath         Condition="'$(DotfuscatorBinPath)'==''"     >$(MSBuildExtensionsPath)\PreEmptive\Dotfuscator\4</DotfuscatorBinPath>
+			<DotfuscatorDataPath        Condition="'$(DotfuscatorDataPath)'==''"    >$(MSBuildExtensionsPath)\PreEmptive\Dotfuscator\4</DotfuscatorDataPath>
+			<RootDir                    Condition="'$(RootDir)'==''"                >$([MSBuild]::ValueOrDefault($(TF_BUILD_BUILDDIRECTORY), `$([System.IO.Directory]::GetParent($(MSBuildThisFileDirectory)..\..))\`))</RootDir>
+			<SourcesDir                 Condition="'$(SourcesDir)'==''"             >$([MSBuild]::ValueOrDefault($(TF_BUILD_SOURCESDIRECTORY), `$([System.IO.Path]::Combine($(RootDir), `src`))`))</SourcesDir>
+			<BinariesDir                Condition="'$(BinariesDir)'==''"            >$([MSBuild]::ValueOrDefault($(TF_BUILD_BINARIESDIRECTORY), `$([System.IO.Path]::Combine($(RootDir), `bin`))`))</BinariesDir>
+			<EngineDir                  Condition="'$(EngineDir)'==''"              >$(SourcesDir)\App\Source\Engine\ExternalDLLs</EngineDir>
+			<EngineBinariesDir          Condition="'$(EngineBinariesDir)'==''"      >$(BinariesDir)\Engine</EngineBinariesDir>
+			<OutputPath                 Condition="'$(OutputPath)'==''"             >$(EngineDir)</OutputPath>
+		</PropertyGroup>
+	
+		<!-- ========================================================================================================================================================
+				Build Properties
+		========================================================================================================================================================= -->
+		<PropertyGroup>
+			<CxVersion                  Condition=" '$(CxVersion)' == '' "          >$([System.Text.RegularExpressions.Regex]::Match($(BuildLabel), "\d+\.\d+\.\d+\.\d+"))</CxVersion>
+			<CxVersion                                                              >$([MSBuild]::ValueOrDefault($(CxVersion), `unknown`))</CxVersion>
+		</PropertyGroup>  
+
+		<!-- ========================================================================================================================================================
+				Global Properties
+		========================================================================================================================================================= -->
+		<PropertyGroup>
+			<ContinueOnError            Condition="'$(ContinueOnError)'==''"        >False</ContinueOnError>
+			<Configuration              Condition="'$(Configuration)' == '' "       >Build</Configuration>
+			<Platform                   Condition="'$(Platform)' == '' "            >Any CPU</Platform>
+			<BuildInParallel            Condition="'$(BuildInParallel)'==''"        >True</BuildInParallel>
+		</PropertyGroup>
+
+		<!-- ========================================================================================================================================================
+				Copy Flags
+		========================================================================================================================================================= -->
+		<PropertyGroup>
+			<OverwriteReadOnlyFiles     Condition="'$(OverwriteReadOnlyFiles)'==''" >True</OverwriteReadOnlyFiles>
+			<Retries                    Condition="'$(Retries)'==''"                >5</Retries>
+			<RetryDelayMilliseconds     Condition="'$(RetryDelayMilliseconds)'==''" >200</RetryDelayMilliseconds>
+			<SkipUnchangedFiles         Condition="'$(SkipUnchangedFiles)'==''"     >True</SkipUnchangedFiles>
+			<UseHardlinksIfPossible     Condition="'$(UseHardlinksIfPossible)'==''" >False</UseHardlinksIfPossible>
+		</PropertyGroup>
+
+	</Project>

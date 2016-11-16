@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" InitialTargets="Init" DefaultTargets="PostBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<BuildPropertiesFile Condition=" '$(BuildPropertiesFile)'=='' ">$(MSBuildThisFileDirectory)build.props</BuildPropertiesFile>
+	</PropertyGroup>
+
+	<Import Project="$(BuildPropertiesFile)"/>
+
+	<Target Name="Init" >
+
+		<Message Text="
+			RootDir=$(RootDir)
+			SourcesDir=$(SourcesDir)
+			BinariesDir=$(BinariesDir)" />
+
+		<ItemGroup>
+			<FilesToSign
+						Include="
+											
+								$(BinariesDir)\**\*.vsix;"
+						Exclude="
+								$(BinariesDir)\**\*.dll;"
+								
+							/>
+						
+		
+		</ItemGroup>
+
+	</Target>
+
+	<Target Name="MakeWritable"
+			Condition=" '@(FilesToSign)' != '' ">
+		
+		<Exec Command='attrib -r "%(FilesToSign.FullPath)"'
+					ContinueOnError="$(ContinueOnError)"/>
+	</Target>
+
+	<Target Name="SignFiles"
+			Condition=" '@(FilesToSign)' != '' ">
+		<Exec Command=' "$(MSBuildThisFileDirectory)\vsixsigntool.exe" sign /f "$(MSBuildThisFileDirectory)\mymcre.pfx" /p neige /fd sha1 /sha1 "e1 86 87 72 0a cf 22 e0 dd 4d e6 ad d5 1e 08 35 b9 eb 36 b4" "%(FilesToSign.FullPath)" '
+					ContinueOnError="$(ContinueOnError)" />
+	</Target>
+	
+		
+
+	
+	<PropertyGroup>
+		<PostBuildDependsOn>
+			MakeWritable;
+			SignFiles;
+		
+	
+		</PostBuildDependsOn>
+	</PropertyGroup>
+	<Target Name="PostBuild"
+			DependsOnTargets="$(PostBuildDependsOn)"
+				/>
+
+</Project>

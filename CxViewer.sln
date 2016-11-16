@@ -1,0 +1,111 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CxViewerVSIX", "CxViewerVSIX\CxViewerVSIX.csproj", "{0D4CC225-7BF6-4EB8-9936-C6FD86FABCAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{9B747803-8500-4115-953E-CE7CBF2A14C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorButton", "CxViewerColorButton\ColorButton.csproj", "{DEFBE28B-3B2E-4324-BBAE-9B9783A29607}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DgvFilterPopup", "CxViewerDgvFilterPopup\DgvFilterPopup.csproj", "{4B9BE5FD-303E-4270-9C4D-FA3BDE6C34EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CxViewerAction", "CxViewerAction\CxViewerAction.csproj", "{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Build|Any CPU = Build|Any CPU
+		Build|x86 = Build|x86
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D4CC225-7BF6-4EB8-9936-C6FD86FABCAB}.Build|Any CPU.ActiveCfg = Release|Any CPU
+		{0D4CC225-7BF6-4EB8-9936-C6FD86FABCAB}.Build|Any CPU.Build.0 = Release|Any CPU
+		{0D4CC225-7BF6-4EB8-9936-C6FD86FABCAB}.Build|x86.ActiveCfg = Release|Any CPU
+		{0D4CC225-7BF6-4EB8-9936-C6FD86FABCAB}.Build|x86.Build.0 = Release|Any CPU
+		{0D4CC225-7BF6-4EB8-9936-C6FD86FABCAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D4CC225-7BF6-4EB8-9936-C6FD86FABCAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D4CC225-7BF6-4EB8-9936-C6FD86FABCAB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0D4CC225-7BF6-4EB8-9936-C6FD86FABCAB}.Debug|x86.Build.0 = Debug|Any CPU
+		{0D4CC225-7BF6-4EB8-9936-C6FD86FABCAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D4CC225-7BF6-4EB8-9936-C6FD86FABCAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D4CC225-7BF6-4EB8-9936-C6FD86FABCAB}.Release|x86.ActiveCfg = Release|Any CPU
+		{0D4CC225-7BF6-4EB8-9936-C6FD86FABCAB}.Release|x86.Build.0 = Release|Any CPU
+		{9B747803-8500-4115-953E-CE7CBF2A14C2}.Build|Any CPU.ActiveCfg = Release|Any CPU
+		{9B747803-8500-4115-953E-CE7CBF2A14C2}.Build|Any CPU.Build.0 = Release|Any CPU
+		{9B747803-8500-4115-953E-CE7CBF2A14C2}.Build|x86.ActiveCfg = Release|Any CPU
+		{9B747803-8500-4115-953E-CE7CBF2A14C2}.Build|x86.Build.0 = Release|Any CPU
+		{9B747803-8500-4115-953E-CE7CBF2A14C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B747803-8500-4115-953E-CE7CBF2A14C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B747803-8500-4115-953E-CE7CBF2A14C2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9B747803-8500-4115-953E-CE7CBF2A14C2}.Debug|x86.Build.0 = Debug|Any CPU
+		{9B747803-8500-4115-953E-CE7CBF2A14C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B747803-8500-4115-953E-CE7CBF2A14C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B747803-8500-4115-953E-CE7CBF2A14C2}.Release|x86.ActiveCfg = Release|Any CPU
+		{9B747803-8500-4115-953E-CE7CBF2A14C2}.Release|x86.Build.0 = Release|Any CPU
+		{DEFBE28B-3B2E-4324-BBAE-9B9783A29607}.Build|Any CPU.ActiveCfg = Build|Any CPU
+		{DEFBE28B-3B2E-4324-BBAE-9B9783A29607}.Build|Any CPU.Build.0 = Build|Any CPU
+		{DEFBE28B-3B2E-4324-BBAE-9B9783A29607}.Build|x86.ActiveCfg = Build|x86
+		{DEFBE28B-3B2E-4324-BBAE-9B9783A29607}.Build|x86.Build.0 = Build|x86
+		{DEFBE28B-3B2E-4324-BBAE-9B9783A29607}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEFBE28B-3B2E-4324-BBAE-9B9783A29607}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEFBE28B-3B2E-4324-BBAE-9B9783A29607}.Debug|x86.ActiveCfg = Debug|x86
+		{DEFBE28B-3B2E-4324-BBAE-9B9783A29607}.Debug|x86.Build.0 = Debug|x86
+		{DEFBE28B-3B2E-4324-BBAE-9B9783A29607}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEFBE28B-3B2E-4324-BBAE-9B9783A29607}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEFBE28B-3B2E-4324-BBAE-9B9783A29607}.Release|x86.ActiveCfg = Release|x86
+		{DEFBE28B-3B2E-4324-BBAE-9B9783A29607}.Release|x86.Build.0 = Release|x86
+		{4B9BE5FD-303E-4270-9C4D-FA3BDE6C34EB}.Build|Any CPU.ActiveCfg = Build|Any CPU
+		{4B9BE5FD-303E-4270-9C4D-FA3BDE6C34EB}.Build|Any CPU.Build.0 = Build|Any CPU
+		{4B9BE5FD-303E-4270-9C4D-FA3BDE6C34EB}.Build|x86.ActiveCfg = Build|Any CPU
+		{4B9BE5FD-303E-4270-9C4D-FA3BDE6C34EB}.Build|x86.Build.0 = Build|Any CPU
+		{4B9BE5FD-303E-4270-9C4D-FA3BDE6C34EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B9BE5FD-303E-4270-9C4D-FA3BDE6C34EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B9BE5FD-303E-4270-9C4D-FA3BDE6C34EB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4B9BE5FD-303E-4270-9C4D-FA3BDE6C34EB}.Debug|x86.Build.0 = Debug|Any CPU
+		{4B9BE5FD-303E-4270-9C4D-FA3BDE6C34EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B9BE5FD-303E-4270-9C4D-FA3BDE6C34EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B9BE5FD-303E-4270-9C4D-FA3BDE6C34EB}.Release|x86.ActiveCfg = Release|Any CPU
+		{4B9BE5FD-303E-4270-9C4D-FA3BDE6C34EB}.Release|x86.Build.0 = Release|Any CPU
+		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Build|Any CPU.ActiveCfg = Build|Any CPU
+		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Build|Any CPU.Build.0 = Build|Any CPU
+		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Build|x86.ActiveCfg = Build|x86
+		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Build|x86.Build.0 = Build|x86
+		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Debug|x86.ActiveCfg = Debug|x86
+		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Debug|x86.Build.0 = Debug|x86
+		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Release|x86.ActiveCfg = Release|x86
+		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs2013:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = CxViewerVSIX\\CxViewerVSIX.csproj
+		SccProjectName1 = CxViewerVSIX
+		SccLocalPath1 = CxViewerVSIX
+		SccProjectUniqueName2 = Common\\Common.csproj
+		SccProjectName2 = Common
+		SccLocalPath2 = Common
+		SccProjectUniqueName3 = CxViewerColorButton\\ColorButton.csproj
+		SccProjectName3 = CxViewerColorButton
+		SccLocalPath3 = CxViewerColorButton
+		SccProjectUniqueName4 = CxViewerDgvFilterPopup\\DgvFilterPopup.csproj
+		SccProjectName4 = CxViewerDgvFilterPopup
+		SccLocalPath4 = CxViewerDgvFilterPopup
+		SccProjectUniqueName5 = CxViewerAction\\CxViewerAction.csproj
+		SccProjectName5 = CxViewerAction
+		SccLocalPath5 = CxViewerAction
+	EndGlobalSection
+EndGlobal

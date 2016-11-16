@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4B9BE5FD-303E-4270-9C4D-FA3BDE6C34EB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DgvFilterPopup</RootNamespace>
+    <AssemblyName>DgvFilterPopup</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\DgvFilterPopup.XML</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build|AnyCPU'">
+    <OutputPath>bin\Build\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FilterPopup\ColumnFilterEvent.cs" />
+    <Compile Include="FilterPopup\Extensions\DgvDateRangeColumnFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FilterPopup\Extensions\DgvDateRangeColumnFilter.Designer.cs">
+      <DependentUpon>DgvDateRangeColumnFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FilterPopup\Extensions\DgvMonthYearColumnFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FilterPopup\Extensions\DgvMonthYearColumnFilter.Designer.cs">
+      <DependentUpon>DgvMonthYearColumnFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FilterPopup\Extensions\DgvNumRangeColumnFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FilterPopup\Extensions\DgvNumRangeColumnFilter.Designer.cs">
+      <DependentUpon>DgvNumRangeColumnFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FilterPopup\ImageComboBox.cs" />
+    <Compile Include="FilterPopup\ImageComboBox.Designer.cs">
+      <DependentUpon>ImageComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FilterPopup\Implementations\DgvComboBoxImageColumnFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FilterPopup\Implementations\DgvComboBoxImageColumnFilter.Designer.cs">
+      <DependentUpon>DgvComboBoxImageColumnFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FilterPopup\Implementations\DgvDateColumnFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FilterPopup\Implementations\DgvDateColumnFilter.Designer.cs">
+      <DependentUpon>DgvDateColumnFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FilterPopup\Implementations\DgvCheckBoxColumnFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FilterPopup\Implementations\DgvCheckBoxColumnFilter.Designer.cs">
+      <DependentUpon>DgvCheckBoxColumnFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FilterPopup\Implementations\DgvComboBoxColumnFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FilterPopup\Implementations\DgvComboBoxColumnFilter.Designer.cs">
+      <DependentUpon>DgvComboBoxColumnFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FilterPopup\DgvBaseFilterHost.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FilterPopup\DgvFilterManager.cs" />
+    <Compile Include="FilterPopup\DgvBaseColumnFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FilterPopup\Implementations\DgvFilterHost.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FilterPopup\Implementations\DgvFilterHost.Designer.cs">
+      <DependentUpon>DgvFilterHost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FilterPopup\Implementations\DgvTextBoxColumnFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FilterPopup\Implementations\DgvTextBoxColumnFilter.Designer.cs">
+      <DependentUpon>DgvTextBoxColumnFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceImages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourceImages.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FilterPopup\Extensions\DgvDateRangeColumnFilter.resx">
+      <DependentUpon>DgvDateRangeColumnFilter.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FilterPopup\Extensions\DgvMonthYearColumnFilter.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DgvMonthYearColumnFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FilterPopup\Extensions\DgvNumRangeColumnFilter.resx">
+      <DependentUpon>DgvNumRangeColumnFilter.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FilterPopup\Implementations\DgvComboBoxImageColumnFilter.resx">
+      <DependentUpon>DgvComboBoxImageColumnFilter.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FilterPopup\Implementations\DgvDateColumnFilter.resx">
+      <DependentUpon>DgvDateColumnFilter.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FilterPopup\Implementations\DgvCheckBoxColumnFilter.resx">
+      <DependentUpon>DgvCheckBoxColumnFilter.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FilterPopup\Implementations\DgvComboBoxColumnFilter.resx">
+      <DependentUpon>DgvComboBoxColumnFilter.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FilterPopup\Implementations\DgvFilterHost.resx">
+      <DependentUpon>DgvFilterHost.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FilterPopup\Implementations\DgvTextBoxColumnFilter.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DgvTextBoxColumnFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResourceImages.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourceImages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Diagrams\DetailDiagram.cd" />
+    <None Include="Diagrams\BasicDiagram.cd" />
+    <None Include="Diagrams\Extensions.cd" />
+    <None Include="Diagrams\Implementations.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="key.snk" />
+    <None Include="Resources\Disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Enabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{9b747803-8500-4115-953e-ce7cbf2a14c2}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
