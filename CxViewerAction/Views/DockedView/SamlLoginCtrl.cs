@@ -78,7 +78,7 @@ namespace CxViewerAction.Views.DockedView
 
         private void NavigateToSamlLogin(Uri serverUri)
         {
-            string header = string.Format("User-Agent: {0}{1}", CxWsResolver.CxClientType.VS.ToString("G"), Environment.NewLine);
+            string header = string.Format("User-Agent: {0}{1}cxOrigin: cx-{0}{1}", CxWsResolver.CxClientType.VS.ToString("G"), Environment.NewLine);
             webBrowserIdentityProvider.Navigate(serverUri, string.Empty, null, header);
         }
     }
