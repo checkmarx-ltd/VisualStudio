@@ -326,7 +326,8 @@ namespace CxViewerAction.Views.DockedView
             {
                 int queryId = ((TreeNodeData)tag).QueryResult.Id;
                 string queryName = ((TreeNodeData)tag).QueryResult.Name;
-                QueryDescriptionEventArg eventArgs = new QueryDescriptionEventArg(queryId, queryName);
+                long queryVersionCode = ((TreeNodeData)tag).QueryResult.QueryVersionCode;
+                QueryDescriptionEventArg eventArgs = new QueryDescriptionEventArg(queryId, queryName, queryVersionCode);
                 SelectedReportItemChanged(this, eventArgs);
             }
         }
@@ -374,14 +375,17 @@ namespace CxViewerAction.Views.DockedView
 
         public string QueryName { get; set; }
 
+        public long QueryVersionCode { get; set; }
+
         #endregion
 
         #region Ctor
 
-        public QueryDescriptionEventArg(int queryId, string queryName)
+        public QueryDescriptionEventArg(int queryId, string queryName, long queryVersionCode)
         {
             QueryId = queryId;
             QueryName = queryName;
+            QueryVersionCode = queryVersionCode;
         }
 
         #endregion

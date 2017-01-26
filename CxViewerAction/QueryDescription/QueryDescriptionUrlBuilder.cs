@@ -6,11 +6,12 @@ namespace CxViewerAction.QueryDescription
     {
         #region API
 
-        public string Build(int queryId, string queryName, string scheme = null)
+        public string Build(int queryId, string queryName, long queryVersionCode, string scheme = null)
         {
-            return string.Format("{0}/CxWebClient/ScanQueryDescription.aspx?cxsid={1}&queryID={2}&queryTitle={3}",
+            return string.Format("{0}/CxWebClient/ScanQueryDescription.aspx?cxsid={1}&queryVersionCode={2}&queryID={3}&queryTitle={4}",
                     Common.Text.Text.RemoveTrailingSlash(LoginHelper.PortalConfiguration.WebServer),
                     LoginHelper.SessionId,
+                    queryVersionCode,
                     queryId,
                     queryName);
         }

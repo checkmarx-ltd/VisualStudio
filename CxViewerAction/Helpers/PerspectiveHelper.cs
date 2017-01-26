@@ -370,12 +370,13 @@ namespace CxViewerAction.Helpers
 
                 foreach (var queryGroup in queriesGroups)
                 {
-
                     List<ReportQueryResult> list = new List<ReportQueryResult>();
+
                     for (int i = 0; i < queryGroup.Value.Count; i++)
                     {
                         CxWSQueryVulnerabilityData query = queryGroup.Value[i];
-                        ReportQueryResult res = new ReportQueryResult()
+
+                        ReportQueryResult queryResult = new ReportQueryResult()
                         {
                             CweId = (int)query.CWE,
                             Group = query.GroupName,
@@ -385,10 +386,11 @@ namespace CxViewerAction.Helpers
                             Report = null,
                             Severity = (ReportQuerySeverityType)query.Severity,
                             AmountOfResults = query.AmountOfResults,
-                            ScanId = scanId
+                            ScanId = scanId,
+                            QueryVersionCode = query.QueryVersionCode
                         };
 
-                        list.Add(res);
+                        list.Add(queryResult);
                     }
 
                     tree.Add(queryGroup.Key, list);

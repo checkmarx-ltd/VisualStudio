@@ -294,11 +294,10 @@ namespace CxViewerAction.Views.DockedView
             col.ReadOnly = true;
             dt.Columns.Add(col);
 
-            CxWSSingleResultData[] results  = PerspectiveHelper.GetScanResultsForQuery(nodeData.ScanId, nodeData.Id);
-
-            
+            CxWSSingleResultData[] results  = PerspectiveHelper.GetScanResultsForQuery(nodeData.ScanId, nodeData.Id);          
 
             int index = 1;
+
             foreach (CxWSSingleResultData reportQueryItemResult in results)
             {
                 string resultComment = reportQueryItemResult.Comment;

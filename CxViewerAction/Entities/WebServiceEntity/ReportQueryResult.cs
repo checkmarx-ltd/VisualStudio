@@ -437,7 +437,12 @@ namespace CxViewerAction.Entities.WebServiceEntity
             get;
             set;
         }
-
+        
+        public long QueryVersionCode
+        {
+            get;
+            set;
+        }
 
         #endregion
 
