@@ -8,7 +8,7 @@ namespace CxViewerAction.Services
         #region Fields
 
         public const string CX_ORIGIN_CUSTOM_HEADER_NAME = "cxOrigin";
-        public string _visualStudioPluginName = "VS";
+        public string _visualStudioPluginName = "cx-VS";
 
         #endregion
 
