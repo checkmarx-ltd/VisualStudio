@@ -69,10 +69,8 @@ namespace CxViewerAction.Services
 
         private HttpWebRequest GetWebRequest(Uri uri)
         {
-            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(uri);
-            webRequest.Method = "GET";
+            HttpWebRequest webRequest = new CxRESTApiWebRequestCore().Create(uri, "GET");
             webRequest.Accept = requestContentType;
-            webRequest.CookieContainer = new CookieContainer();
             
             foreach (Cookie cookie in LoginHelper.RESTApiCookies)
             {

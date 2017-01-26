@@ -277,6 +277,7 @@
     <Compile Include="Services\CxWSResolverWrapper.cs" />
     <Compile Include="Services\EnvDTEConstants.cs" />
     <Compile Include="Services\RESTApi\CxRESTApiPortalConfiguration.cs" />
+    <Compile Include="Services\RESTApi\CxRESTApiWebRequestBase.cs" />
     <Compile Include="ValueObjects\WebPortal\Models\CxPortalConfiguration.cs" />
     <Compile Include="ValueObjects\RESTApi\CxRESTApiLoginResponse.cs" />
     <Compile Include="ValueObjects\Results.cs" />

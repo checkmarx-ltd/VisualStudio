@@ -59,11 +59,9 @@ namespace CxViewerAction.Services
 
         private HttpWebRequest GetWebRequest(Uri uri, string messageBody)
         {
-            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(uri);
-            webRequest.Method = "POST";
+            HttpWebRequest webRequest = new CxRESTApiWebRequestCore().Create(uri, "POST");
             webRequest.ContentType = requestContentType;
             webRequest.ContentLength = messageBody.Length;
-            webRequest.CookieContainer = new CookieContainer();
 
             return webRequest;
         }
