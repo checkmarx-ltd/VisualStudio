@@ -299,13 +299,14 @@ namespace CxViewerAction.Helpers
             }
 
             LoginResult loginResult = ExecuteLogin(login, out cancelPressed, relogin);
+
             if (loginResult != null && loginResult.CxWSResponseLoginData != null && loginResult.CxWSResponseLoginData.IsSuccesfull)
             {
                 isScanner = loginResult.CxWSResponseLoginData.IsScanner;
             }
+
             _isLogged = !cancelPressed ? loginResult.IsSuccesfull : false;
-
-
+            
             Helpers.LoginHelper.Save(login);
 
             _loginResult = loginResult;
@@ -322,6 +323,7 @@ namespace CxViewerAction.Helpers
             if (login != null && login.IsLogging && (!_isLogged || relogin))
             {
                 CxWebServiceClient client = null;
+
                 BackgroundWorkerHelper bg = new BackgroundWorkerHelper(delegate
                 {
                     try
@@ -347,6 +349,8 @@ namespace CxViewerAction.Helpers
                         client = new CxWebServiceClient(login);
                         Credentials credentials = new Credentials();
                         CxWSResponseLoginData cxWSResponseLoginData = null;
+                        serverBaseUrl = login.ServerBaseUri;
+
                         if (login.isSaml)
                         {
                             if (!useCurrentSession)
@@ -356,18 +360,29 @@ namespace CxViewerAction.Helpers
                             }
                             cxWSResponseLoginData = DoSamlLogin(login, client);
                         }
-                        else if (!login.SSO)
+                        else if (login.SSO)
+                        {
+                            useCurrentSession = false;
+                            cxWSResponseLoginData = client.ServiceClient.SsoLogin(credentials, LoginData.DEFAULT_LANGUAGE_CODE);
+
+                            if (cxWSResponseLoginData.IsSuccesfull)
+                            {
+                                LoginToRESTAPI(login);
+                            }
+                        }
+                        else
                         {
                             useCurrentSession = false;
                             credentials.User = login.UserName;
                             credentials.Pass = login.Password;
                             cxWSResponseLoginData = client.ServiceClient.Login(credentials, LoginData.DEFAULT_LANGUAGE_CODE);
+
+                            if (cxWSResponseLoginData.IsSuccesfull)
+                            {
+                                LoginToRESTAPI(login);
+                            }
                         }
-                        else
-                        {
-                            useCurrentSession = false;
-                            cxWSResponseLoginData = client.ServiceClient.SsoLogin(credentials, LoginData.DEFAULT_LANGUAGE_CODE);
-                        }                        
+                                     
                         loginResult.CxWSResponseLoginData = cxWSResponseLoginData;
                         loginResult.AuthenticationData = login;
                         loginResult.IsSuccesfull = cxWSResponseLoginData.IsSuccesfull;
@@ -376,19 +391,13 @@ namespace CxViewerAction.Helpers
                         loginResult.IsSaml = login.isSaml;
                         _loginResult = loginResult;
                         sessionId = loginResult.SessionId;
-                        serverBaseUrl = login.ServerBaseUri;
-
-                        if (cxWSResponseLoginData.IsSuccesfull)
-                        {
-                            LoginToRESTAPI(login);
-                        }
-
                     }
                     catch (WebException ex)
                     {
                         Logger.Create().Error(ex.Message, ex);
                         loginResult.LoginResultType = LoginResultType.UnknownServerName;
                         loginResult.LoginResultMessage = ex.Message;
+                        loginResult.IsSuccesfull = false;
                     }
                     catch (Exception ex)
                     {

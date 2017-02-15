@@ -30,6 +30,7 @@ namespace CxViewerAction.Views
                 Invoke(new MethodInvoker(CloseForm));
                 return;
             }
+
             Hide();
         }
 

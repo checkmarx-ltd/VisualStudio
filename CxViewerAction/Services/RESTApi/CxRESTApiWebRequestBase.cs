@@ -33,6 +33,8 @@ namespace CxViewerAction.Services
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(uri);
             webRequest.Headers[CX_ORIGIN_CUSTOM_HEADER_NAME] = _visualStudioPluginName;
             webRequest.CookieContainer = new CookieContainer();
+            webRequest.Credentials = CredentialCache.DefaultNetworkCredentials;
+            webRequest.UseDefaultCredentials = true;
 
             if (!string.IsNullOrEmpty(httpMethod))
             {

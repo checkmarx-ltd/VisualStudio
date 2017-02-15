@@ -16,7 +16,8 @@ namespace CxViewerAction.Services
         #region Fields
 
         private LoginData _login;
-        private string _restAPIRelativePath = "/cxrestapi/auth/login";
+        private string _restApplicationAPIRelativePath = "/cxrestapi/auth/login";
+        private string _restSSOLoginAPIRelativePath = "/cxrestapi/auth/ssologin";
         private const string requestContentType = "application/x-www-form-urlencoded; charset=UTF-8";
         private const string _messageBodyTemplate = "username={0}&password={1}";
 
@@ -48,6 +49,7 @@ namespace CxViewerAction.Services
             catch (Exception ex)
             {
                 Logger.Create().Error("CxRESTApiLogin->Login: " + ex.ToString());
+                throw new WebException(ex.ToString());
             }
 
             return cxRESTApiLoginResponse;
@@ -82,6 +84,7 @@ namespace CxViewerAction.Services
         private void HandleWebResponse(CxRESTApiLoginResponse cxRESTApiLoginResponse, HttpWebRequest webRequest)
         {
             HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponse();
+            cxRESTApiLoginResponse.ResponseStatusCode = webResponse.StatusCode;
 
             if (webResponse.StatusCode != HttpStatusCode.OK)
             {
@@ -112,9 +115,18 @@ namespace CxViewerAction.Services
 
         private Uri GetLoginUri()
         {
-            string url = string.Format("{0}{1}", 
-                Common.Text.Text.RemoveTrailingSlash(_login.ServerBaseUri),
-                _restAPIRelativePath);
+            string relativeUrl = string.Empty;
+
+            if (_login.SSO)
+            {
+                relativeUrl = _restSSOLoginAPIRelativePath;
+            }
+            else if (!_login.isSaml && !_login.SSO)
+            {
+                relativeUrl = _restApplicationAPIRelativePath;
+            }
+
+            string url = string.Format("{0}{1}", Common.Text.Text.RemoveTrailingSlash(_login.ServerBaseUri), relativeUrl);
 
             Uri uri = new Uri(url);
 
