@@ -358,6 +358,8 @@ namespace CxViewerAction.Helpers
                                 sessionId = null;
                                 useCurrentSession = true;
                             }
+
+                            LoginToRESTAPI(login);
                             cxWSResponseLoginData = DoSamlLogin(login, client);
                         }
                         else if (login.SSO)
@@ -420,7 +422,18 @@ namespace CxViewerAction.Helpers
 
         private static void LoginToRESTAPI(LoginData login)
         {
-            new CxRESTApiLogin(login).Login();
+            string url = string.Empty;
+
+            if (login.SSO)
+            {
+                url = "/cxrestapi/auth/ssologin";
+            }
+            else
+            {
+                url = "/cxrestapi/auth/login";
+            }
+
+            new CxRESTApiLogin(login, url).Login();
         }
 
         private static CxWSResponseLoginData DoSamlLogin(LoginData login, CxWebServiceClient client)
