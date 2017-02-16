@@ -6,6 +6,7 @@ using CxViewerAction.Dispatchers;
 using CxViewerAction.ServiceLocators;
 using CxViewerAction.Views;
 using CxViewerAction.Services;
+using CxViewerAction.Services.RESTApi;
 
 namespace CxViewerAction.Presenters
 {
@@ -98,17 +99,7 @@ namespace CxViewerAction.Presenters
 
         private void LoginToRESTAPI(LoginData login)
         {
-            string url = string.Empty;
-
-            if (login.SSO)
-            {
-                url = "/cxrestapi/auth/ssologin";
-            }
-            else
-            {
-                url = "/cxrestapi/auth/login";
-            }
-
+            string url = new RESTAPiUrlLoader().Load(login);
             new CxRESTApiLogin(login, url).Login();
         }
 

@@ -12,6 +12,7 @@ using CxViewerAction.Entities.WebServiceEntity;
 using CxViewerAction.Services;
 using CxViewerAction.ValueObjects;
 using CxViewerAction.WebPortal;
+using CxViewerAction.Services.RESTApi;
 
 namespace CxViewerAction.Helpers
 {
@@ -359,8 +360,8 @@ namespace CxViewerAction.Helpers
                                 useCurrentSession = true;
                             }
 
-                            LoginToRESTAPI(login);
                             cxWSResponseLoginData = DoSamlLogin(login, client);
+                            sessionId = cxWSResponseLoginData.SessionId;
                         }
                         else if (login.SSO)
                         {
@@ -369,6 +370,7 @@ namespace CxViewerAction.Helpers
 
                             if (cxWSResponseLoginData.IsSuccesfull)
                             {
+                                sessionId = cxWSResponseLoginData.SessionId;
                                 LoginToRESTAPI(login);
                             }
                         }
@@ -381,6 +383,7 @@ namespace CxViewerAction.Helpers
 
                             if (cxWSResponseLoginData.IsSuccesfull)
                             {
+                                sessionId = cxWSResponseLoginData.SessionId;
                                 LoginToRESTAPI(login);
                             }
                         }
@@ -392,7 +395,6 @@ namespace CxViewerAction.Helpers
                         loginResult.SessionId = cxWSResponseLoginData.SessionId;
                         loginResult.IsSaml = login.isSaml;
                         _loginResult = loginResult;
-                        sessionId = loginResult.SessionId;
                     }
                     catch (WebException ex)
                     {
@@ -412,7 +414,9 @@ namespace CxViewerAction.Helpers
                         if (client != null)
                             client.Close();
                     }
-                }, login.ReconnectInterval * 1000, login.ReconnectCount);
+
+                },
+                login.ReconnectInterval * 1000, login.ReconnectCount);
 
                 cancelPressed = !bg.DoWork(WAIT_DIALOG_PROGRESS_TEXT);
             }
@@ -422,17 +426,7 @@ namespace CxViewerAction.Helpers
 
         private static void LoginToRESTAPI(LoginData login)
         {
-            string url = string.Empty;
-
-            if (login.SSO)
-            {
-                url = "/cxrestapi/auth/ssologin";
-            }
-            else
-            {
-                url = "/cxrestapi/auth/login";
-            }
-
+            string url = new RESTAPiUrlLoader().Load(login);
             new CxRESTApiLogin(login, url).Login();
         }
 
@@ -451,6 +445,7 @@ namespace CxViewerAction.Helpers
             }
             
             SamlLoginResult samlLoginResult = _samlLoginHelper.ConnectToIdentidyProvider(login.ServerBaseUri);
+
             if (samlLoginResult.IsSuccessful)
             {
                 cxWSResponseLoginData = client.ServiceClient.LoginWithToken(samlLoginResult.Ott, LoginData.DEFAULT_LANGUAGE_CODE);

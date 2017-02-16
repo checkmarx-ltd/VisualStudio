@@ -16,9 +16,6 @@ namespace CxViewerAction.Views
 
         public void ConnectToIdentidyProvider(string baseServerUri)
         {
-//#if DEBUG
-//            baseServerUri = "http://localhost:63325";
-//#endif
             var serverUri = new Uri(baseServerUri + SAML_LOGIN_RELATIVE_PATH);
             samlLoginCtrl.ConnectToIdentidyProvider(serverUri);
         }

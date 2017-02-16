@@ -1,4 +1,8 @@
-﻿using System;
+﻿using CxViewerAction.Helpers;
+using CxViewerAction.Services;
+using CxViewerAction.ValueObjects;
+using System;
+using System.Net;
 using System.Web;
 using System.Windows.Forms;
 
@@ -6,11 +10,16 @@ namespace CxViewerAction.Views.DockedView
 {
     public partial class SamlLoginCtrl : UserControl
     {
+        #region Fields
+
         public event EventHandler<string> NavigationError;
         public event EventHandler<string> NavigationCompleted;
-
         public const string ERROR_QUERY_KEY = "Error";
-        public const string BLANK_PAGE = "about:blank";
+        public const string BLANK_PAGE = "about:blank"; 
+        
+        #endregion
+
+        #region Ctor
 
         public SamlLoginCtrl()
         {
@@ -18,6 +27,10 @@ namespace CxViewerAction.Views.DockedView
             webBrowserIdentityProvider.DocumentCompleted += OnDocumentCompleted;
             webBrowserIdentityProvider.Navigated += OnNavigated;
         }
+
+        #endregion
+
+        #region Private methods
 
         private void OnNavigated(object sender, WebBrowserNavigatedEventArgs eventArgs)
         {
@@ -57,8 +70,12 @@ namespace CxViewerAction.Views.DockedView
             {
                 return;
             }
+
+            PrepareCookiesForFurtherRESTRequests(eventArgs.Url);
+
             WebBrowser browser = sender as WebBrowser;
             string ottValue = browser.DocumentText;
+
             if (NavigationCompleted != null)
             {
                 webBrowserIdentityProvider.Navigate(BLANK_PAGE);
@@ -81,5 +98,20 @@ namespace CxViewerAction.Views.DockedView
             string header = string.Format("User-Agent: {0}{1}cxOrigin: cx-{0}{1}", CxWsResolver.CxClientType.VS.ToString("G"), Environment.NewLine);
             webBrowserIdentityProvider.Navigate(serverUri, string.Empty, null, header);
         }
+
+        private void PrepareCookiesForFurtherRESTRequests(Uri uri)
+        {
+            LoginHelper.RESTApiCookies = Common.Web.Cookies.GetUriCookieContainer(uri).GetCookies(uri);
+
+            for (int i = 0; i < LoginHelper.RESTApiCookies.Count; i++)
+            {
+                LoginHelper.RESTApiCookies[i].Path = String.Empty;
+            }
+            
+            new CxRESTApiPortalConfiguration().InitPortalBaseUrl();
+            Common.Web.Cookies.SetCookiesInTheInternalBrowser(LoginHelper.RESTApiCookies, LoginHelper.PortalConfiguration.WebServer);
+        }
+
+        #endregion
     }
 }

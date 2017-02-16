@@ -50,7 +50,6 @@ namespace CxViewerAction.Views.DockedView
             this.Name = "SamlLoginCtrl";
             this.Size = new System.Drawing.Size(388, 572);
             this.ResumeLayout(false);
-
         }
 
         #endregion

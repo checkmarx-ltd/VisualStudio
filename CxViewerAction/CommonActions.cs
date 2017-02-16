@@ -334,7 +334,7 @@ namespace CxViewerAction
                 CxRESTApiPortalConfiguration rESTApiPortalConfiguration = new CxRESTApiPortalConfiguration();
                 rESTApiPortalConfiguration.InitPortalBaseUrl();
                 string urlToDescription = new QueryDescriptionUrlBuilder().Build(nodeData.QueryId, nodeData.QueryName, nodeData.QueryVersionCode);
-                _applicationObject.ItemOperations.Navigate(urlToDescription, vsNavigateOptions.vsNavigateOptionsDefault);
+                _applicationObject.ItemOperations.Navigate(urlToDescription, vsNavigateOptions.vsNavigateOptionsNewWindow);
             }
             catch (Exception ex)
             {
