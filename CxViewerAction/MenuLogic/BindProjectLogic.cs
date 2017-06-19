@@ -98,7 +98,7 @@ namespace CxViewerAction.MenuLogic
 
         public CommandStatus GetStatus()
         {
-            CommandStatus status = CommandStatus.CommandStatusNull;
+            CommandStatus status = CommandStatus.CommandStatusNull;           
             _isBinded = false;
             status = (CommandStatus)CommandStatus.CommandStatusSupported |
                          CommandStatus.CommandStatusEnabled;
@@ -110,10 +110,9 @@ namespace CxViewerAction.MenuLogic
             }
             if (login != null && login.BindedProjects != null)
             {
-                LoginData.BindProject bindPro = login.BindedProjects.Find(delegate (LoginData.BindProject bp)
-                {
-                    return bp.ProjectName == selectedProject.ProjectName && bp.RootPath == selectedProject.RootPath && bp.IsBound == true;
-                });
+                LoginData.BindProject bindPro = login.BindedProjects.Find(project => project.ProjectName == selectedProject.ProjectName && 
+                                                                                     project.RootPath == selectedProject.RootPath && 
+                                                                                     project.IsBound == true);
 
                 if (bindPro != null)
                 {

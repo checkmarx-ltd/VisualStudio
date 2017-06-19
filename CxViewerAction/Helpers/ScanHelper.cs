@@ -220,8 +220,6 @@ namespace CxViewerAction.Helpers
                     {
                         byte[] zippedProject = ZipProject(_scan, project, bg);
 
-                        long newProjectId = 0;
-                        
                         if (!_scan.IsCancelPressed && zippedProject != null)
                         {
                             if (configuration.Configurations.Count > 0)
@@ -316,7 +314,7 @@ namespace CxViewerAction.Helpers
 
                             if (!bCancel && !isIISStoped)
                             {
-                                ShowScanData(ref scanData, ref scanId, client, newProjectId);
+                                ShowScanData(ref scanData, ref scanId, client);
                             }
                             else
                             {
@@ -379,36 +377,35 @@ namespace CxViewerAction.Helpers
             return ProjectScanStatuses.CanceledByUser;
         }
 
-        private void ShowScanData(ref CxWSQueryVulnerabilityData[] scanData, ref long scanId, CxWebServiceClient client, long newProjectId)
+        private void ShowScanData(ref CxWSQueryVulnerabilityData[] scanData, ref long scanId, CxWebServiceClient client)
         {
             // Get url to scanned project result
             string savedFileName = string.Format("report{0}", Guid.NewGuid());
             long id = 0;
-            CxWSResponseScanStatus cxWSResponseScanStatusFinal = client.ServiceClient.GetStatusOfSingleScan(_scan.LoginResult.SessionId, _scan.RunScanResult.ScanId);
-            string ScanTaskId = cxWSResponseScanStatusFinal.ScanId.ToString();//after scan is finished the server replaces the scan id with task scan id
+            CxWSResponseScanStatus scanStatus = client.ServiceClient.GetStatusOfSingleScan(_scan.LoginResult.SessionId, _scan.RunScanResult.ScanId);
+            string ScanTaskId = scanStatus.ScanId.ToString();//after scan is finished the server replaces the scan id with task scan id
             scanData = PerspectiveHelper.GetScanResultsPaths(ScanTaskId, ref scanId);
             id = scanId;
-            LoginData.BindProject bindProject = _scan.LoginResult.AuthenticationData.BindedProjects.Find(delegate(LoginData.BindProject bp)
-            {
-                return bp.BindedProjectId == CommonData.ProjectId &&
-                        bp.ProjectName == CommonData.ProjectName &&
-                        bp.RootPath == CommonData.ProjectRootPath;
-            }
-                    );
+            LoginData.BindProject bindProject = _scan.LoginResult.AuthenticationData.BindedProjects.Find(project => project.BindedProjectId == CommonData.ProjectId &&
+                                                                                                                    project.ProjectName == CommonData.ProjectName &&
+                                                                                                                    project.RootPath == CommonData.ProjectRootPath);
+
             if (bindProject == null) // scaned for the first time
             {
                 bindProject = new LoginData.BindProject();
                 bindProject.ProjectName = CommonData.ProjectName;
                 bindProject.RootPath = CommonData.ProjectRootPath;
+                bindProject.IsBound = true;
                 _scan.LoginResult.AuthenticationData.BindedProjects.Add(bindProject);
             }
             if (!CommonData.IsProjectBound) // its new project
             {
 
-                bindProject.BindedProjectId = newProjectId;
-                CommonData.ProjectId = newProjectId;
-                CommonData.IsProjectPublic = _scan.UploadSettings.IsPublic;
-                bindProject.IsPublic = _scan.UploadSettings.IsPublic;
+                bindProject.BindedProjectId = scanStatus.ProjectId;
+                CommonData.ProjectId = scanStatus.ProjectId;
+                CommonData.IsProjectPublic = scanStatus.IsPublic;
+                bindProject.IsPublic = scanStatus.IsPublic;
+                bindProject.IsBound = true;
             }
             bindProject.SelectedScanId = id;
             bindProject.ScanReports = new List<ScanReportInfo>();
