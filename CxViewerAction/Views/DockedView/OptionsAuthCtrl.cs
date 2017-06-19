@@ -249,7 +249,7 @@ namespace CxViewerAction.Views.DockedView
 
 			if (results.IsSuccesfull)
 			{
-				MessageBox.Show("Connection successfull");
+				MessageBox.Show("Connection successful");
 			}
 			else
 			{
