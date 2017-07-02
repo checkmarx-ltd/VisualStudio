@@ -63,6 +63,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +71,7 @@
     <Compile Include="Code\Enums.cs" />
     <Compile Include="Code\Logger.cs" />
     <Compile Include="Code\Text\Text.cs" />
+    <Compile Include="Code\Web\WebUtilities.cs" />
     <Compile Include="Code\Web\Cookies.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

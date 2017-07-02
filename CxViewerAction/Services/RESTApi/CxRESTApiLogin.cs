@@ -5,8 +5,7 @@ using System.Net;
 using System.Text;
 using CxViewerAction.Entities;
 using CxViewerAction.ValueObjects;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
+using Common.Code.Web;
 using CxViewerAction.Helpers;
 
 namespace CxViewerAction.Services
@@ -104,7 +103,9 @@ namespace CxViewerAction.Services
 
         private string GetMesageBody()
         {
-            return string.Format(_messageBodyTemplate, _login.UserName, _login.Password);
+            string userName = WebUtilities.GetUrlEncodedString(_login.UserName);
+            string password = WebUtilities.GetUrlEncodedString(_login.Password);
+            return string.Format(_messageBodyTemplate, userName, password);
         }
 
         private byte[] GetMesageBodyEncoded()
