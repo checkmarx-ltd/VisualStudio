@@ -938,7 +938,7 @@ namespace CxViewerAction
             }
 
             IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
-            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.CloseFrame((uint)EnvDTE.vsSaveChanges.vsSaveChangesYes));
+            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.CloseFrame((uint)__FRAMECLOSE.FRAMECLOSE_PromptSave));
         } 
         
         #endregion

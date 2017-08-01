@@ -40,6 +40,7 @@ namespace CxViewerAction.Helpers
 
             Project[] projectList = project.ProjectPaths.Count == 0 ? new Project[] { project } : project.ProjectPaths.ToArray();
 
+
             data = Compress(projectList, GetFileExcludeRegex(fileExtToExclude), GetFolderToExcludeRegex(foldersToExclude),
                             project.ProjectPaths.Count > 0, maxAllowedZipFileSize, out error);
 
@@ -91,9 +92,21 @@ namespace CxViewerAction.Helpers
                         //Compress Level
                         oZip.CompressionLevel = Ionic.Zlib.CompressionLevel.Level9;
 
+                        int commonPathLength = 0;
+
+                        if (projects.Count() > 1)
+                        {
+                            commonPathLength = GetCommonPathLength(projects.Select(l => l.RootPath).ToList());
+                        }
+                        else if (Directory.GetParent(projects[0].RootPath) != null)
+                        {
+
+                            commonPathLength = Directory.GetParent(projects[0].RootPath).FullName.Length + 1; // +1  remove '\'
+                        }
+
                         foreach (Project p in projects)
                         {
-                            foreach(string filePath in p.FilePathList) // scan only the file selected
+                            foreach (string filePath in p.FilePathList) // scan only the file selected
                             {
                                 if (Directory.Exists(p.RootPath))
                                 {
@@ -102,10 +115,12 @@ namespace CxViewerAction.Helpers
                                     WriteEntryToZip(oZip, filePath.Remove(0, p.RootPath.Length).TrimStart(new[] { '/', '\\' }), filePath);
                                 }
                             }
+
+
                             foreach (string folderPath in p.FolderPathList) // scan only the Folder selected
                             {
                                 Logger.Create().Info("Zip Folder: " + p.FolderPathList);
-                                if (!WriteDirectoryToZip(oZip, folderPath.TrimEnd('\\'), sExcludeFile, sExcludePath, maxAllowedZipFileSize))
+                                if (!WriteDirectoryToZip(oZip, folderPath.TrimEnd('\\'), sExcludeFile, sExcludePath, maxAllowedZipFileSize, commonPathLength))
                                 {
                                     error = string.Format("allowable archive size {0}mb exceeded", Convert.ToInt32(maxAllowedZipFileSize / 1024 / 1204));
                                     break;
@@ -115,12 +130,15 @@ namespace CxViewerAction.Helpers
                             {
                                 //in case there are no selected files and folders - scan the whi
                                 Logger.Create().Info("Zip Root Path: " + p.RootPath);
-                                if (!WriteDirectoryToZip(oZip, p.RootPath.TrimEnd('\\'), sExcludeFile, sExcludePath, maxAllowedZipFileSize))
+                                if (!WriteDirectoryToZip(oZip, p.RootPath.TrimEnd('\\'), sExcludeFile, sExcludePath, maxAllowedZipFileSize, commonPathLength))
                                 {
                                     error = string.Format("allowable archive size {0}mb exceeded", Convert.ToInt32(maxAllowedZipFileSize / 1024 / 1204));
                                     break;
                                 }
+
+
                             }
+
                         }
 
                         oZip.Flush();
@@ -138,26 +156,38 @@ namespace CxViewerAction.Helpers
             return compressed;
         }
 
+        private static int GetCommonPathLength(List<string> Files)
+        {
+            string LongestDir = string.Empty;
+            try
+            {
+                var MatchingChars =
+                from len in Enumerable.Range(0, Files.Min(s => s.Length)).Reverse()
+                let possibleMatch = Files.First().Substring(0, len)
+                where Files.All(f => f.StartsWith(possibleMatch))
+                select possibleMatch;
+
+                LongestDir = Path.GetDirectoryName(MatchingChars.First());
+            }
+            catch (Exception err)
+            {
+                Common.Logger.Create().Error("Failed to get project common path. error: " + err.Message);
+                LongestDir = string.Empty;
+            }
+            return LongestDir == string.Empty ? 0 : LongestDir.Length + 1;// +1  remove '\'
+        }
 
 
         /// <summary>
         /// Zip a folder of files  in a new zip file
         /// </summary>
-        public static bool WriteDirectoryToZip(ZipOutputStream zipStream, string inputFolderPath, string sExcludeFile, string sExcludePath, long maxAllowedZipFileSize)
+        public static bool WriteDirectoryToZip(ZipOutputStream zipStream, string inputFolderPath, string sExcludeFile, string sExcludePath, long maxAllowedZipFileSize, int trimLength)
+
         {
             Regex fileMatch = new Regex(sExcludeFile, RegexOptions.IgnoreCase);
             Regex dirMatch = new Regex(sExcludePath, RegexOptions.IgnoreCase);
 
             List<string> filesToZip = GenerateFileList(inputFolderPath, fileMatch, dirMatch);
-
-            int trimLength = 0;
-
-            if (Directory.GetParent(inputFolderPath) != null)
-            {
-                trimLength = Directory.GetParent(inputFolderPath).FullName.Length;
-                // find number of chars to remove from orginal file path
-                trimLength += 1; //remove '\'
-            }
 
             int entryCounter = 0;
 
