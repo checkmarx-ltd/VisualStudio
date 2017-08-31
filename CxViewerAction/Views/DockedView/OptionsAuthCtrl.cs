@@ -88,7 +88,11 @@ namespace CxViewerAction.Views.DockedView
                 }
 
                 LoginData currentLogin = BindDataFromView();
-                currentLogin.BindedProjects.Clear();
+                if (currentLogin.BindedProjects != null)
+                {
+                    currentLogin.BindedProjects.Clear();
+                }
+     
                 CommonData.IsProjectBound = false;
                 LoginHelper.IsLogged = false;
                 LoginHelper.Save(currentLogin);
