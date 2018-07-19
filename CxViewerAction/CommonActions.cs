@@ -682,7 +682,7 @@ namespace CxViewerAction
         private bool ShowProblemFile(string file, int row, int column, int length)
         {
             FileInfo fileInfo = new FileInfo(file);
-
+        
             if (fileInfo.Exists)
             {
                 try
@@ -691,15 +691,26 @@ namespace CxViewerAction
                     _applicationObject.ActiveDocument.Activate();
 
                     TextSelection selection = (TextSelection)_applicationObject.ActiveDocument.Selection;
+                    try
+                    {
+                        selection.MoveToLineAndOffset(row, column, false);
+                        selection.CharRight(true, length);
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        if (IsJavaScriptFile(fileInfo))
+                        {
+                            string errMsg = "“This plugin does not support showing results in a compressed min.js file. \n" + 
+                                            "To view the full results, please navigate to the Checkmarx results viewer.";
+                            TopMostMessageBox.Show(errMsg);
 
-                    selection.MoveToLineAndOffset(row, column, false);
-                    selection.CharRight(true, length);
-
+                            return true;
+                        }
+                    }
                     return true;
                 }
                 catch (Exception ex)
                 {
-
                     Logger.Create().Error(ex.ToString());
 
                     TopMostMessageBox.Show(ex.Message);
@@ -708,6 +719,15 @@ namespace CxViewerAction
 
             return false;
         }
+
+        public bool IsJavaScriptFile(FileInfo fileInfo)
+        {
+            bool isJSFile = (fileInfo.FullName != null || fileInfo.Name != null) &&
+          fileInfo.Extension.Equals(".js", StringComparison.OrdinalIgnoreCase);
+          
+            return isJSFile;
+        }
+
 
         private void ShowProblemFile(CxViewerAction.Entities.WebServiceEntity.TreeNodeData treeNode)
         {
