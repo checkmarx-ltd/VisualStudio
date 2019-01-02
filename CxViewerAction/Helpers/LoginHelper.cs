@@ -12,14 +12,13 @@ using CxViewerAction.Entities.WebServiceEntity;
 using CxViewerAction.Services;
 using CxViewerAction.ValueObjects;
 using CxViewerAction.WebPortal;
-using CxViewerAction.Services.RESTApi;
 
 namespace CxViewerAction.Helpers
 {
     public class LoginHelper
     {
         static readonly object lockObj = new object();
-        private static readonly SamlLoginHelper _samlLoginHelper = new SamlLoginHelper();
+        private static readonly OIDCLoginHelper _oidcLoginHelper = new OIDCLoginHelper();
 
         #region [ Constants ]
 
@@ -30,8 +29,10 @@ namespace CxViewerAction.Helpers
 
         private static string studioVersion = "";
         private static bool isScanner = true;
+		private static CxRESTApi cxRestApi = null;
 
-        public static bool IsScanner
+
+		public static bool IsScanner
         {
             get { return LoginHelper.isScanner; }
         }
@@ -127,7 +128,7 @@ namespace CxViewerAction.Helpers
 
         public static CxPortalConfiguration PortalConfiguration { get; set; }
 
-        public static CookieCollection RESTApiCookies { get; set; }
+        //public static CookieCollection RESTApiCookies { get; set; }
 
         #endregion
 
@@ -237,30 +238,22 @@ namespace CxViewerAction.Helpers
             return TryDoLogin(out cancelPressed, true, true);
         }
 
+		//TODO check who is calling this and if we need it
         internal static LoginResult DoLoginWithoutForm(out bool cancelPressed, bool relogin)
         {
+			//loads the preferences
             Entities.LoginData login = LoadSaved();
             if (login == null)
             {
                 cancelPressed = false;
                 return new LoginResult();
             }
-            if (!login.SSO && !login.isSaml)
+            if (string.IsNullOrEmpty(login.Server))
             {
-                if (string.IsNullOrEmpty(login.UserName) || string.IsNullOrEmpty(login.Password) || string.IsNullOrEmpty(login.Server))
-                {
-                    cancelPressed = false;
-                    return new LoginResult();
-                }
+                cancelPressed = false;
+                return new LoginResult();
             }
-            else
-            {
-                if (string.IsNullOrEmpty(login.Server))
-                {
-                    cancelPressed = false;
-                    return new LoginResult();
-                }
-            }
+            
             return TryDoLogin(out cancelPressed, relogin, false);
         }
 
@@ -268,6 +261,7 @@ namespace CxViewerAction.Helpers
         {
             cancelPressed = false;
 
+			//TODO check what to do with this
             if (_isLogged && !relogin)
             {
                 _loginResult.AuthenticationData = LoadSaved();
@@ -284,6 +278,7 @@ namespace CxViewerAction.Helpers
                 login = LoadSaved();
 
                 // verify that user hasn't active session and dialog data was validated sucessfull
+				//TODO check if isLogged neccessary
                 if (!_isLogged || !login.CanLog() || relogin)
                 {
                     if (showForm)
@@ -302,9 +297,9 @@ namespace CxViewerAction.Helpers
 
             LoginResult loginResult = ExecuteLogin(login, out cancelPressed, relogin);
 
-            if (loginResult != null && loginResult.CxWSResponseLoginData != null && loginResult.CxWSResponseLoginData.IsSuccesfull)
+            if (loginResult != null && loginResult.IsSuccesfull)
             {
-                isScanner = loginResult.CxWSResponseLoginData.IsScanner;
+                isScanner = loginResult.AuthenticationData.SaveSastScan;
             }
 
             _isLogged = !cancelPressed ? loginResult.IsSuccesfull : false;
@@ -348,53 +343,12 @@ namespace CxViewerAction.Helpers
                     // perform login
                     try
                     {
-                        client = new CxWebServiceClient(login);
-                        Credentials credentials = new Credentials();
-                        CxWSResponseLoginData cxWSResponseLoginData = null;
                         serverBaseUrl = login.ServerBaseUri;
 
-                        if (login.isSaml)
-                        {
-                            if (!useCurrentSession)
-                            {
-                                sessionId = null;
-                                useCurrentSession = true;
-                            }
-
-                            cxWSResponseLoginData = DoSamlLogin(login, client);
-                            sessionId = cxWSResponseLoginData.SessionId;
-                        }
-                        else if (login.SSO)
-                        {
-                            useCurrentSession = false;
-                            cxWSResponseLoginData = client.ServiceClient.SsoLogin(credentials, LoginData.DEFAULT_LANGUAGE_CODE);
-
-                            if (cxWSResponseLoginData.IsSuccesfull)
-                            {
-                                sessionId = cxWSResponseLoginData.SessionId;
-                                LoginToRESTAPI(login);
-                            }
-                        }
-                        else
-                        {
-                            useCurrentSession = false;
-                            credentials.User = login.UserName;
-                            credentials.Pass = login.Password;
-                            cxWSResponseLoginData = client.ServiceClient.Login(credentials, LoginData.DEFAULT_LANGUAGE_CODE);
-
-                            if (cxWSResponseLoginData.IsSuccesfull)
-                            {
-                                sessionId = cxWSResponseLoginData.SessionId;
-                                LoginToRESTAPI(login);
-                            }
-                        }
+						DolLogin(login, client);
+						loginResult.IsSuccesfull = true;
+						loginResult.AuthenticationData = login;
                                      
-                        loginResult.CxWSResponseLoginData = cxWSResponseLoginData;
-                        loginResult.AuthenticationData = login;
-                        loginResult.IsSuccesfull = cxWSResponseLoginData.IsSuccesfull;
-                        loginResult.LoginResultMessage = cxWSResponseLoginData.ErrorMessage;
-                        loginResult.SessionId = cxWSResponseLoginData.SessionId;
-                        loginResult.IsSaml = login.isSaml;
                         _loginResult = loginResult;
                     }
                     catch (WebException ex)
@@ -425,42 +379,23 @@ namespace CxViewerAction.Helpers
             return loginResult;
         }
 
-        private static void LoginToRESTAPI(LoginData login)
+
+        private static void DolLogin(LoginData login, CxWebServiceClient client)
         {
-            string url = new RESTAPiUrlLoader().Load(login);
-            new CxRESTApiLogin(login, url).Login();
-        }
+			_oidcLoginHelper.resetLatestResult();
+			OidcLoginResult oidcLoginResult = _oidcLoginHelper.ConnectToIdentidyProvider(login.ServerBaseUri);
 
-        private static CxWSResponseLoginData DoSamlLogin(LoginData login, CxWebServiceClient client)
-        {
-            CxWSResponseLoginData cxWSResponseLoginData;
+			if (oidcLoginResult.IsSuccessful)
+			{
+				cxRestApi = new CxRESTApi(login);
+				string accessToken = cxRestApi.Login(oidcLoginResult.Code);
+				cxRestApi.getPermissions(accessToken);
+			}
+			else
+			{
+				_oidcLoginHelper.CloseLoginWindow();
+			}
 
-            if (!string.IsNullOrWhiteSpace(sessionId))
-            {
-                cxWSResponseLoginData = client.ServiceClient.LoginBySID(sessionId);
-            
-                if (cxWSResponseLoginData.IsSuccesfull)
-                {
-                    return cxWSResponseLoginData;
-                }
-            }
-            
-            SamlLoginResult samlLoginResult = _samlLoginHelper.ConnectToIdentidyProvider(login.ServerBaseUri);
-
-            if (samlLoginResult.IsSuccessful)
-            {
-                cxWSResponseLoginData = client.ServiceClient.LoginWithToken(samlLoginResult.Ott, LoginData.DEFAULT_LANGUAGE_CODE);
-            }
-            else
-            {
-                cxWSResponseLoginData = new CxWSResponseLoginData()
-                {
-                    IsSuccesfull = false,
-                    ErrorMessage = samlLoginResult.ResultMessage,
-                };
-            }
-
-            return cxWSResponseLoginData;
         }
 
         /// <summary>

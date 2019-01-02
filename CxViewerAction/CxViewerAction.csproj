@@ -188,6 +188,7 @@
     <Compile Include="CommonData.cs" />
     <Compile Include="Dispatchers\Dispatcher.cs" />
     <Compile Include="Entities\BindProjectEntity.cs" />
+    <Compile Include="Entities\OidcLoginData.cs" />
     <Compile Include="Entities\EntityId.cs" />
     <Compile Include="Entities\Enumeration\SerializableDictionary.cs" />
     <Compile Include="Entities\Enum\ProjectScanStatuses.cs" />
@@ -197,6 +198,8 @@
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\LoginData.cs" />
     <Compile Include="Entities\Project.cs" />
+    <Compile Include="Entities\RestEntities\UserInfoDTO.cs" />
+    <Compile Include="Entities\RestEntities\AccessTokenDTO.cs" />
     <Compile Include="Entities\ResultEntity.cs" />
     <Compile Include="Entities\ScanReportInfo.cs" />
     <Compile Include="Entities\ScanStatusBar.cs" />
@@ -228,7 +231,7 @@
     <Compile Include="Helpers\ObserversManager.cs" />
     <Compile Include="Helpers\PerspectiveHelper.cs" />
     <Compile Include="Helpers\ProblemDescriptionHelper.cs" />
-    <Compile Include="Helpers\SamlLoginHelper.cs" />
+    <Compile Include="Helpers\OIDCLoginHelper.cs" />
     <Compile Include="Helpers\SavedResultsManager.cs" />
     <Compile Include="Helpers\StorageHelper.cs" />
     <Compile Include="Helpers\TopMostMessageBox.cs" />
@@ -271,18 +274,18 @@
     </Compile>
     <Compile Include="QueryDescription\QueryDescriptionUrlBuilder.cs" />
     <Compile Include="ServiceLocator\ServiceLocator.cs" />
-    <Compile Include="Services\RESTApi\CxRESTApiLogin.cs" />
+    <Compile Include="Services\RESTApi\CxRESTApi.cs" />
     <Compile Include="Services\CxVSWebServiceWrapper.cs" />
     <Compile Include="Services\CxWebServiceClient.cs" />
     <Compile Include="Services\CxWSResolverWrapper.cs" />
     <Compile Include="Services\EnvDTEConstants.cs" />
     <Compile Include="Services\RESTApi\CxRESTApiPortalConfiguration.cs" />
     <Compile Include="Services\RESTApi\CxRESTApiWebRequestBase.cs" />
-    <Compile Include="Services\RESTApi\RESTAPiUrlLoader.cs" />
+    <Compile Include="Services\WinCookieHelper.cs" />
     <Compile Include="ValueObjects\WebPortal\Models\CxPortalConfiguration.cs" />
     <Compile Include="ValueObjects\RESTApi\CxRESTApiLoginResponse.cs" />
     <Compile Include="ValueObjects\Results.cs" />
-    <Compile Include="ValueObjects\SamlLoginResult.cs" />
+    <Compile Include="ValueObjects\OidcLoginResult.cs" />
     <Compile Include="Views\BindingPrjList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -336,11 +339,11 @@
     <Compile Include="Views\DockedView\PerspectiveCtrl.Designer.cs">
       <DependentUpon>PerspectiveCtrl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\DockedView\SamlLoginCtrl.cs">
+    <Compile Include="Views\DockedView\OidcLoginCtrl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\DockedView\SamlLoginCtrl.Designer.cs">
-      <DependentUpon>SamlLoginCtrl.cs</DependentUpon>
+    <Compile Include="Views\DockedView\OidcLoginCtrl.Designer.cs">
+      <DependentUpon>OidcLoginCtrl.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\DockedView\ScanProcessCtrl.cs">
       <SubType>UserControl</SubType>
@@ -365,12 +368,6 @@
     <Compile Include="Views\IScanView.cs" />
     <Compile Include="Views\IUploadView.cs" />
     <Compile Include="Views\IWaitView.cs" />
-    <Compile Include="Views\LoginFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\LoginFrm.designer.cs">
-      <DependentUpon>LoginFrm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\OpenPercspectiveDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -378,11 +375,11 @@
       <DependentUpon>OpenPercspectiveDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\ProjectListEntity.cs" />
-    <Compile Include="Views\SamlLoginFrm.cs">
+    <Compile Include="Views\OidcLoginFrm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\SamlLoginFrm.Designer.cs">
-      <DependentUpon>SamlLoginFrm.cs</DependentUpon>
+    <Compile Include="Views\OidcLoginFrm.Designer.cs">
+      <DependentUpon>OidcLoginFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\ScanProcessFrm.cs">
       <SubType>Form</SubType>
@@ -579,8 +576,8 @@
       <DependentUpon>PerspectivePathCtrl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\SamlLoginCtrl.resx">
-      <DependentUpon>SamlLoginCtrl.cs</DependentUpon>
+    <EmbeddedResource Include="Views\DockedView\OidcLoginCtrl.resx">
+      <DependentUpon>OidcLoginCtrl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\DockedView\ScanProcessCtrl.resx">
       <DependentUpon>ScanProcessCtrl.cs</DependentUpon>
@@ -594,16 +591,12 @@
       <DependentUpon>ErrorFrm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\LoginFrm.resx">
-      <DependentUpon>LoginFrm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\OpenPercspectiveDialog.resx">
       <DependentUpon>OpenPercspectiveDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SamlLoginFrm.resx">
-      <DependentUpon>SamlLoginFrm.cs</DependentUpon>
+    <EmbeddedResource Include="Views\OidcLoginFrm.resx">
+      <DependentUpon>OidcLoginFrm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ScanProcessFrm.resx">
       <DependentUpon>ScanProcessFrm.cs</DependentUpon>

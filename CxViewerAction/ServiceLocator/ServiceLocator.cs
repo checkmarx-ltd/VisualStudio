@@ -24,8 +24,6 @@ namespace CxViewerAction.ServiceLocators
                 return new ScanPresenter((IScanView)objs[0]) as T;
             if (type == typeof(IBindProjectPresenter))
                 return new BindProjectPresenter((IBindProjectView)objs[0]) as T;
-            if (type == typeof(ILoginView))
-                return new LoginFrm() as T;
             if (type == typeof(IUploadView))
                 return new UploadFrm((string)objs[0]) as T;
             if (type == typeof(IScanView))

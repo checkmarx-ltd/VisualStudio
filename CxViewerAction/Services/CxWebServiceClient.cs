@@ -94,27 +94,6 @@ namespace CxViewerAction.Services
         }
 
         /// <summary>
-        /// Test method to verify connectivity to specified server.
-        /// </summary>
-        /// <returns>if true - connection with server established</returns>
-        public bool TestServer(LoginData login)
-        {
-            try
-            {
-                Credentials credentials = new Credentials();
-                credentials.User = login.UserName;
-                credentials.Pass = login.Password;
-                CxWSResponseLoginData cxWSResponseLoginData = _client.Login(credentials, LoginData.DEFAULT_LANGUAGE_CODE);
-                return cxWSResponseLoginData.IsSuccesfull;
-            }
-            catch (Exception e)
-            {
-                Common.Logger.Create().Error(e.ToString());
-                return false;
-            }
-        }
-
-        /// <summary>
         /// Return selected problem description
         /// </summary>
         /// <param name="queryId">Problem identifier</param>
@@ -130,7 +109,6 @@ namespace CxViewerAction.Services
             if (client == null || client.ServiceClient == null)
                 return null;
 
-            string output = "Cannot get Session ID.";
             if (LoginHelper.LoginResult == null)
             {
                 //Execute login

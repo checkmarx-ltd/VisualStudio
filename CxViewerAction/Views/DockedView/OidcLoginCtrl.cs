@@ -1,14 +1,15 @@
-﻿using CxViewerAction.Helpers;
-using CxViewerAction.Services;
-using CxViewerAction.ValueObjects;
+﻿using CxViewerAction.Services;
 using System;
-using System.Net;
 using System.Web;
 using System.Windows.Forms;
+using Common;
+using Microsoft.Win32;
+
 
 namespace CxViewerAction.Views.DockedView
 {
-    public partial class SamlLoginCtrl : UserControl
+
+	public partial class OidcLoginCtrl : UserControl
     {
         #region Fields
 
@@ -21,12 +22,25 @@ namespace CxViewerAction.Views.DockedView
 
         #region Ctor
 
-        public SamlLoginCtrl()
+        public OidcLoginCtrl()
         {
             InitializeComponent();
-            webBrowserIdentityProvider.DocumentCompleted += OnDocumentCompleted;
-            webBrowserIdentityProvider.Navigated += OnNavigated;
-        }
+			webBrowserIdentityProvider.ScriptErrorsSuppressed = true;
+			ChangeIeVersion();
+			webBrowserIdentityProvider.DocumentCompleted += OnDocumentCompleted;
+			webBrowserIdentityProvider.Navigated += OnNavigated;
+		}
+
+		private void ChangeIeVersion() {
+			int RegVal;
+
+			// set the appropriate IE 11 version
+			RegVal = 11001;
+	
+			// set the actual key
+			using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION", RegistryKeyPermissionCheck.ReadWriteSubTree))
+			Key.SetValue(System.Diagnostics.Process.GetCurrentProcess().ProcessName + ".exe", RegVal, RegistryValueKind.DWord);
+		}
 
         #endregion
 
@@ -34,7 +48,9 @@ namespace CxViewerAction.Views.DockedView
 
         private void OnNavigated(object sender, WebBrowserNavigatedEventArgs eventArgs)
         {
-            Uri urlAddress = new Uri(eventArgs.Url.ToString());
+			webBrowserIdentityProvider.AllowNavigation = true;
+			
+			Uri urlAddress = new Uri(eventArgs.Url.ToString());
             string queryString = urlAddress.Query;
             if (string.IsNullOrWhiteSpace(queryString))
             {
@@ -66,52 +82,51 @@ namespace CxViewerAction.Views.DockedView
 
         private void OnDocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs eventArgs)
         {
-            if (!eventArgs.Url.AbsolutePath.ToLower().Contains("samlacs"))
+            if (!eventArgs.Url.AbsoluteUri.ToLower().Contains("code="))
             {
                 return;
             }
 
-            PrepareCookiesForFurtherRESTRequests(eventArgs.Url);
-
-            WebBrowser browser = sender as WebBrowser;
-            string ottValue = browser.DocumentText;
+			string code = ExtractCodeFromUrl(eventArgs.Url.AbsoluteUri);
 
             if (NavigationCompleted != null)
             {
                 webBrowserIdentityProvider.Navigate(BLANK_PAGE);
-                NavigationCompleted(this, ottValue);
+                NavigationCompleted(this, code);
             }
         }
 
-        public void ConnectToIdentidyProvider(Uri serverUri)
+		private string ExtractCodeFromUrl(string absoluteUri)
+		{
+			Uri myUri = new Uri(absoluteUri);
+			return HttpUtility.ParseQueryString(myUri.Query).Get("code");
+		}
+
+		public void ConnectToIdentidyProvider(String serverUri)
         {
             if (InvokeRequired)
             {
                 Invoke(new MethodInvoker(() => ConnectToIdentidyProvider(serverUri)));
                 return;
             }
-            NavigateToSamlLogin(serverUri);
+            NavigateToOidcLogin(serverUri);
         }
 
-        private void NavigateToSamlLogin(Uri serverUri)
+        private void NavigateToOidcLogin(String serverUri)
         {
-            string header = string.Format("User-Agent: {0}{1}cxOrigin: cx-{0}{1}", CxWsResolver.CxClientType.VS.ToString("G"), Environment.NewLine);
-            webBrowserIdentityProvider.Navigate(serverUri, string.Empty, null, header);
+			string serverURL = serverUri + Constants.PORT + Constants.AUTHORIZATION_ENDPOINT;
+			string header = string.Format("Content-Type: application/x-www-form-urlencoded", Environment.NewLine);
+			string postData = Constants.CLIENT_ID_KEY + "=" + Constants.CLIENT_VALUE + "&" + 
+				Constants.SCOPE_KEY + "=" + Constants.SCOPE_VALUE + "&" + 
+				Constants.RESPONSE_TYPE_KEY + "=" + Constants.RESPONSE_TYPE_VALUE + "&" + 
+				Constants.REDIRECT_URI_KEY + "=" + serverUri;
+			System.Text.Encoding encoding = System.Text.Encoding.UTF8;
+			byte[] postDataBytes = encoding.GetBytes(postData);
+
+			WinCookieHelper.SupressCookiePersist();
+			webBrowserIdentityProvider.Navigate(serverURL, string.Empty, postDataBytes, header);
         }
 
-        private void PrepareCookiesForFurtherRESTRequests(Uri uri)
-        {
-            LoginHelper.RESTApiCookies = Common.Web.Cookies.GetUriCookieContainer(uri).GetCookies(uri);
-
-            for (int i = 0; i < LoginHelper.RESTApiCookies.Count; i++)
-            {
-                LoginHelper.RESTApiCookies[i].Path = String.Empty;
-            }
-            
-            new CxRESTApiPortalConfiguration().InitPortalBaseUrl();
-            Common.Web.Cookies.SetCookiesInTheInternalBrowser(LoginHelper.RESTApiCookies, LoginHelper.PortalConfiguration.WebServer);
-        }
-
-        #endregion
-    }
+		#endregion
+	}
 }

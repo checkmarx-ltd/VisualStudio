@@ -25,6 +25,9 @@ namespace CxViewerAction.Views.DockedView
 		private string _password = "";
 		#endregion
 
+		private LoginData currentLogin = null;
+		private LoginResult loginResult = null;
+
 		#region [Public Properties]
 
 		#endregion
@@ -43,69 +46,64 @@ namespace CxViewerAction.Views.DockedView
 
 		#region [Public Methods]
 
+		
+
+
 		/// <summary>
-		/// Save click button handler
+		/// Login click button handler
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void btnSave_Click(object sender, EventArgs e)
 		{
             save();
+			currentLogin = BindDataFromView();
+			if (currentLogin.BindedProjects != null)
+			{
+				currentLogin.BindedProjects.Clear();
+			}
+
+			CommonData.IsProjectBound = false;
+			LoginHelper.IsLogged = false;
+			LoginHelper.Save(currentLogin);
+			try
+			{
+				bool cancelPressed;
+				loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, true);
+				if (loginResult.IsSuccesfull)
+				{
+					MessageBox.Show("Login Successful", "Information", MessageBoxButtons.OK);
+					loginBtn.Enabled = false;
+					logoutBtn.Enabled = true;
+				}
+				else
+				{
+					MessageBox.Show("Login Failed", "Information", MessageBoxButtons.OK);
+					loginBtn.Enabled = true;
+					logoutBtn.Enabled = false;
+				}
+				
+			}
+			catch (Exception ex)
+			{
+				Logger.Create().Error(ex);
+			}
 		}
 
-        private void save()
+		private void save()
         {
             if (!Connect.IsLoaded)
             {
-                MessageBox.Show("Checkmarx Visual Studio Plugin is disable. \r\nPlease enable the plugin in Tools->Add-In Manager", "Information", MessageBoxButtons.OK);
+                MessageBox.Show("Checkmarx Visual Studio Plugin is disabled. \r\nPlease enable the plugin in Tools->Add-In Manager", "Information", MessageBoxButtons.OK);
                 return;
             }
             try
             {
-                if (rbUseCredentials.Checked)
+                txtServer_Validating(txtServer, new CancelEventArgs());
+                if (!string.IsNullOrEmpty(errorProvider.GetError(txtServer)) || string.IsNullOrEmpty(txtServer.Text))
                 {
-                    CheckValidation();
-                    if (!string.IsNullOrEmpty(errorProvider.GetError(txtServer)) ||
-                           !string.IsNullOrEmpty(errorProvider.GetError(txtUserName)) ||
-                           !string.IsNullOrEmpty(errorProvider.GetError(txtPassword))
-                           )
-                    {
-                        return;
-                    }
-
-                    if (string.IsNullOrEmpty(txtServer.Text) || string.IsNullOrEmpty(txtUserName.Text) || string.IsNullOrEmpty(txtPassword.Text))
-                    {
-                        return;
-                    }
+                    return;
                 }
-                else
-                {
-                    txtServer_Validating(txtServer, new CancelEventArgs());
-                    if (!string.IsNullOrEmpty(errorProvider.GetError(txtServer)) || string.IsNullOrEmpty(txtServer.Text))
-                    {
-                        return;
-                    }
-                }
-
-                LoginData currentLogin = BindDataFromView();
-                if (currentLogin.BindedProjects != null)
-                {
-                    currentLogin.BindedProjects.Clear();
-                }
-     
-                CommonData.IsProjectBound = false;
-                LoginHelper.IsLogged = false;
-                LoginHelper.Save(currentLogin);
-                try
-                {
-                    bool cancelPressed;           
-                    LoginHelper.DoLoginWithoutForm(out cancelPressed, true);
-                }
-                catch (Exception ex)
-                {
-                    Logger.Create().Error(ex);
-                }
-
             }
             catch (Exception ex)
             {
@@ -117,8 +115,6 @@ namespace CxViewerAction.Views.DockedView
 		void CheckValidation()
 		{
 			txtServer_Validating(txtServer, new CancelEventArgs());
-			txtUserName_Validating(txtUserName, new CancelEventArgs());
-			txtPassword_Validating(txtPassword, new CancelEventArgs());
 		}
 
 		#endregion
@@ -130,13 +126,9 @@ namespace CxViewerAction.Views.DockedView
 		/// </summary>
 		private void BindDataToView()
 		{
-			LoginData currentLogin = LoginHelper.Load(0);
+			currentLogin = LoginHelper.Load(0);
           
 			txtServer.Text = currentLogin.ServerDomain;
-			txtUserName.Text = currentLogin.UserName;
-			txtPassword.Text = currentLogin.Password;
-            rbUseCurrentUser.Checked = currentLogin.SSO;
-            radioButtonSaml.Checked = currentLogin.isSaml;
         }
 
 		/// <summary>
@@ -145,13 +137,9 @@ namespace CxViewerAction.Views.DockedView
 		/// <returns></returns>
 		private LoginData BindDataFromView()
 		{
-			LoginData currentLogin = LoginHelper.Load(0);
+			currentLogin = LoginHelper.Load(0);
 
 			currentLogin.ServerDomain = txtServer.Text;
-			currentLogin.UserName = txtUserName.Text;
-			currentLogin.Password = txtPassword.Text;
-            currentLogin.SSO = rbUseCurrentUser.Checked;
-            currentLogin.isSaml = radioButtonSaml.Checked;
 
 			return currentLogin;
 		}
@@ -172,37 +160,8 @@ namespace CxViewerAction.Views.DockedView
 				errorProvider.SetError(txtServer, string.Empty);
 		}
 
-		/// <summary>
-		/// Validate user name
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void txtUserName_Validating(object sender, CancelEventArgs e)
-		{
-			if (string.IsNullOrEmpty(txtUserName.Text))
-			{
-				errorProvider.SetError(txtUserName, "Enter user name");
-				e.Cancel = true;
-			}
-			else
-				errorProvider.SetError(txtUserName, string.Empty);
-		}
 
-		/// <summary>
-		/// Validate password
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void txtPassword_Validating(object sender, CancelEventArgs e)
-		{
-			if (string.IsNullOrEmpty(txtPassword.Text))
-			{
-				errorProvider.SetError(txtPassword, "Enter password");
-				e.Cancel = true;
-			}
-			else
-				errorProvider.SetError(txtPassword, string.Empty);
-		}
+		
 
 		/// <summary>
 		/// "Restore default" button handler
@@ -212,28 +171,6 @@ namespace CxViewerAction.Views.DockedView
 		private void btnRestore_Click(object sender, EventArgs e)
 		{
 			txtServer.Text = _server;
-			txtUserName.Text = _userName;
-			txtPassword.Text = _password;
-		}
-
-		/// <summary>
-		/// Validate server and credentials - make test request to establish connection with server
-		/// </summary>
-		/// <param name="loginData"></param>
-		/// <returns></returns>
-		private LoginResult ValidateAuthData(LoginData loginData)
-		{
-			bool cancelPressed;
-			bool isRelogin = false;
-			if (LoginHelper.IsLogged)
-			{
-				isRelogin = true;
-			}
-			loginData.IsLogging = true;
-			LoginResult res = LoginHelper.ExecuteLogin(loginData, out cancelPressed, isRelogin);
-
-			return res;
-			//return (res != null && res.IsSuccesfull && !cancelPressed);
 		}
 		#endregion
 
@@ -246,75 +183,39 @@ namespace CxViewerAction.Views.DockedView
             }
 		}
 
-		private void btTestConnection_Click(object sender, EventArgs e)
-		{
-			LoginData currentLogin = BindDataFromView();
-			LoginResult results = ValidateAuthData(currentLogin);
-
-			if (results.IsSuccesfull)
-			{
-				MessageBox.Show("Connection successful");
-			}
-			else
-			{
-                try
-                {
-                    if (results.CxWSResponseLoginData != null)
-                    {
-                        MessageBox.Show(string.Format("Connection failed: {0}", results.CxWSResponseLoginData.ErrorMessage), Common.Constants.ERR_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Connection failed");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Logger.Create().Error(ex.ToString());
-                    MessageBox.Show("Connection failed");
-                }
-               		
-			}
-		}
 
         public void OnOK()
         {
             save();
-            if (rbUseCredentials.Checked)
+            if (Connect.IsLoaded && (string.IsNullOrEmpty(txtServer.Text)))
             {
-                if (Connect.IsLoaded && (string.IsNullOrEmpty(txtServer.Text) || string.IsNullOrEmpty(txtUserName.Text) || string.IsNullOrEmpty(txtPassword.Text)))
-                {
-                    MessageBox.Show("Cannot save. Data is not valid.", "Error", MessageBoxButtons.OK);
-                }
-            }
-            else
-            {
-                if (Connect.IsLoaded && (string.IsNullOrEmpty(txtServer.Text)))
-                {
-                    MessageBox.Show("Cannot save. Data is not valid.", "Error", MessageBoxButtons.OK);
-                }
+                MessageBox.Show("Cannot save. Data is not valid.", "Error", MessageBoxButtons.OK);
             }
         }
 
-        private void rbUseCredentials_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbUseCredentials.Checked)
-            {
-                txtUserName.Enabled = true;
-                txtPassword.Enabled = true;
-            }
-            else
-            {
-                txtUserName.Enabled = false;
-                txtPassword.Enabled = false;
-                errorProvider.SetError(txtUserName, "");
-                errorProvider.SetError(txtPassword, "");
-            }
-        }
+		// Logout button
+		private void logoutBtn_Click(object sender, EventArgs e)
+		{
+			
+			loginResult.IsSuccesfull = false;
+			loginResult.AuthenticationData.AccessToken = null;
+			loginResult.AuthenticationData.AccessTokenExpiration = -1;
+			loginResult.AuthenticationData.RefreshToken = null;
+			currentLogin.AccessToken = null;
+			currentLogin.AccessTokenExpiration = -1;
+			currentLogin.RefreshToken = null;
+			MessageBox.Show("Logout Successful", "Information", MessageBoxButtons.OK);
+			loginBtn.Enabled = true;
+			logoutBtn.Enabled = false;
 
-        private void radioButtonSaml_CheckedChanged(object sender, EventArgs e)
-        {
-            btTestConnection.Enabled = !radioButtonSaml.Checked;
-        }
-    }
+		}
+
+
+		// Apply button
+		private void button1_Click(object sender, EventArgs e)
+		{
+			OnOK();
+		}
+
+	}
 }

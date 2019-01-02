@@ -1,22 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Data;
-
 using System.Text;
 using System.Windows.Forms;
 using Common;
 using CxViewerAction.Entities.WebServiceEntity;
 using System.Collections;
 using CxViewerAction.Helpers;
-using CxViewerAction.Helpers.DrawingHelper;
-using CxViewerAction.Entities;
-using CxViewerAction.BaseInterfaces;
-using System.IO;
-using CxViewerAction.Resources;
-using System.Drawing.Imaging;
-//using DgvFilterPopup;
 using CxViewerAction.CxVSWebService;
 
 
@@ -36,7 +27,6 @@ namespace CxViewerAction.Views.DockedView
         private IPerspectiveView perspectiveView = null;
         private ReportQueryResult _selectedReportItem = null;
         private ReportResult _report = null;
-        static bool isUIUpdating = false;
         #endregion
 
         #region [Constructors]
@@ -445,25 +435,16 @@ namespace CxViewerAction.Views.DockedView
         {
             if (dgvProjects.SelectedRows.Count > 0)
             {
-                try
-                {
-                    IsActive = true;
-                    isUIUpdating = true;
-                    CxWSSingleResultData reportQueryItemPathResult = dgvProjects.SelectedRows[0].Cells["ResultEntity"].Value as CxWSSingleResultData;
-                    int scanId = -1;
-                    Int32.TryParse(dgvProjects.SelectedRows[0].Cells["ScanId"].Value.ToString(), out scanId);
+				IsActive = true;
+				CxWSSingleResultData reportQueryItemPathResult = dgvProjects.SelectedRows[0].Cells["ResultEntity"].Value as CxWSSingleResultData;
+				int scanId = -1;
+				Int32.TryParse(dgvProjects.SelectedRows[0].Cells["ScanId"].Value.ToString(), out scanId);
 
-                    if (reportQueryItemPathResult == null)
-                        return;
+				if (reportQueryItemPathResult == null)
+					return;
 
-                    this.SelectedRowChanged(this, new ResultData(reportQueryItemPathResult, scanId, this.SelectedNode));
-                    UpdateGridShowPath();
-
-                }
-                finally
-                {
-                    isUIUpdating = false;
-                }
+				this.SelectedRowChanged(this, new ResultData(reportQueryItemPathResult, scanId, this.SelectedNode));
+				UpdateGridShowPath();
             }
         }
 
@@ -578,25 +559,16 @@ namespace CxViewerAction.Views.DockedView
                     }
                     if (dgvProjects.SelectedRows.Count > 0)
                     {
-                        try
-                        {
-                            IsActive = true;
-                            isUIUpdating = true;
-                            CxWSSingleResultData reportQueryItemPathResult = dgvProjects.SelectedRows[0].Cells["ResultEntity"].Value as CxWSSingleResultData;
-                            int scanId = -1;
-                            Int32.TryParse(dgvProjects.SelectedRows[0].Cells["ScanId"].Value.ToString(), out scanId);
+                        IsActive = true;
+                        CxWSSingleResultData reportQueryItemPathResult = dgvProjects.SelectedRows[0].Cells["ResultEntity"].Value as CxWSSingleResultData;
+                        int scanId = -1;
+                        Int32.TryParse(dgvProjects.SelectedRows[0].Cells["ScanId"].Value.ToString(), out scanId);
 
-                            if (reportQueryItemPathResult == null)
-                                return;
+                        if (reportQueryItemPathResult == null)
+                            return;
 
-                            this.SelectedRowChanged(this, new ResultData(reportQueryItemPathResult, scanId, this.SelectedNode));
-                            UpdateGridShowPath();
-
-                        }
-                        finally
-                        {
-                            isUIUpdating = false;
-                        }
+                        this.SelectedRowChanged(this, new ResultData(reportQueryItemPathResult, scanId, this.SelectedNode));
+                        UpdateGridShowPath();
                     }
 
                 }

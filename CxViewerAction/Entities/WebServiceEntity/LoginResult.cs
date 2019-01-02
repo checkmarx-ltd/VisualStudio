@@ -16,21 +16,13 @@ namespace CxViewerAction.Entities.WebServiceEntity
         #region [Private memebers]
 
         private bool _isSuccesfull = false;
-        private bool _isSaml = false;
         private string _sessionId = null;
-        private CxWSResponseLoginData _cxWSResponseLoginData;
         private LoginData _auth = null;
-        #endregion
+		#endregion
 
-        #region [Public properties]
+		#region [Public properties]
 
 		public LoginResultType LoginResultType { get; set; }
-
-        public CxWSResponseLoginData CxWSResponseLoginData
-        {
-            get { return _cxWSResponseLoginData; }
-            set { _cxWSResponseLoginData = value; }
-        }
 
         /// <summary>
         /// Get or set service perform status
@@ -39,15 +31,6 @@ namespace CxViewerAction.Entities.WebServiceEntity
         {
             get { return _isSuccesfull; }
             set { _isSuccesfull = value; }
-        }
-
-        /// <summary>
-        /// Get or set saml
-        /// </summary>
-        public bool IsSaml
-        {
-            get { return _isSaml; }
-            set { _isSaml = value; }
         }
 
         /// <summary>
@@ -73,20 +56,7 @@ namespace CxViewerAction.Entities.WebServiceEntity
             get;
             set;
         }
-        #endregion
 
-        #region [Static methods]
-
-        /// <summary>
-        /// Convert LoginResult object from xml
-        /// </summary>
-        /// <param name="xml">xml string</param>
-        /// <returns></returns>
-        public static LoginResult FromXml(string xml)
-        {
-            return XmlHelper.ParseLoginResult(xml);
-        }
-
-        #endregion
-    }
+		#endregion
+	}
 }

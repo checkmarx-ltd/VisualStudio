@@ -463,7 +463,7 @@ namespace CxViewerAction.Helpers
 
             if (!BackgroundWorkerHelper.IsReloginInvoked)
             {
-                isIISStoped = !_scan.LoginResult.CxWSResponseLoginData.IsScanner;
+                isIISStoped = !_scan.LoginResult.AuthenticationData.SaveSastScan;
             }
             else
             {

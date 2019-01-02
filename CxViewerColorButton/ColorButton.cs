@@ -246,8 +246,6 @@ namespace ColorButton
 
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
         {
-            LinearGradientBrush brush;
-            LinearGradientMode mode;
 
             //
             // set SmoothingMode

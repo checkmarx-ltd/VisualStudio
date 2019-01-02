@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Windows.Forms;
-using CxViewerAction.Helpers;
+using System.Reflection;
 
 namespace CxViewerAction.Views
 {
-    public partial class SamlLoginFrm : Form
+    public partial class OidcLoginFrm : Form
     {
         public event EventHandler UserClosedForm;
-        private const string SAML_LOGIN_RELATIVE_PATH = "/cxrestapi/auth/samlLogin";
 
-        public SamlLoginFrm()
+        public OidcLoginFrm()
         {
             InitializeComponent();
-        }
+		}
 
         public void ConnectToIdentidyProvider(string baseServerUri)
         {
-            var serverUri = new Uri(baseServerUri + SAML_LOGIN_RELATIVE_PATH);
-            samlLoginCtrl.ConnectToIdentidyProvider(serverUri);
+            OidcLoginCtrl1.ConnectToIdentidyProvider(baseServerUri);
         }
 
         public void CloseForm()

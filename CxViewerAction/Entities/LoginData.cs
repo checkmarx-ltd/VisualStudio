@@ -39,8 +39,6 @@ namespace CxViewerAction.Entities
         private bool _ssl = false;        
 
         private EntityId _id;
-        private string _userName;
-        private string _password;
         private bool _isLogging;
         string unboundRunID;
 
@@ -61,15 +59,21 @@ namespace CxViewerAction.Entities
         SerializableDictionary<string, string> _perspectives;
         
         private List<BindProject> bindedProjects;
+		private bool _saveSastScan;
+		private bool _manageResultsComment;
+		private bool _manageResultsExploitability;
+		private string _accessToken;
+		private string _refreshToken;
+		private long _accessTokenExpiration;
 
-        #endregion
+		#endregion
 
-        #region [ Constructors ]
+		#region [ Constructors ]
 
-        /// <summary>
-        /// Empty constructor
-        /// </summary>
-        public LoginData() { }
+		/// <summary>
+		/// Empty constructor
+		/// </summary>
+		public LoginData() { }
 
         /// <summary>
         /// Constructor with param
@@ -78,13 +82,10 @@ namespace CxViewerAction.Entities
         /// <param name="server">Server name</param>
         /// <param name="userName">User name</param>
         /// <param name="password">Password</param>
-        public LoginData(EntityId id, string server, string userName, string password)
+        public LoginData(EntityId id, string server)
         {
             this.ID = id;
             this.Server = server;
-            this.UserName = userName;
-            this.Password = password;
-            this.isSaml = false;
         }
 
         #endregion [ Constructors ]
@@ -183,50 +184,6 @@ namespace CxViewerAction.Entities
         public EntityId ID { get { return _id; } set { _id = value; } }
 
         /// <summary>
-        /// Get or set User name
-        /// </summary>
-        [XmlIgnore()]
-        public string UserName { get { return _userName; } set { _userName = value; } }
-
-        public string UserNameEncrypted
-        {
-            get
-            {
-                if (!String.IsNullOrEmpty(UserName))
-                {
-                    return EncryptHelper.EncryptString(UserName);
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            set { _userName = EncryptHelper.DecryptString(value); }
-        }
-
-        /// <summary>
-        /// Get or set password
-        /// </summary>
-        [XmlIgnore()]
-        public string Password { get { return _password; } set { _password = value; } }
-
-        public string PasswordEncrypted
-        {
-            get
-            {
-                if (!String.IsNullOrEmpty(Password))
-                {
-                    return EncryptHelper.EncryptString(Password);
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            set { _password = EncryptHelper.DecryptString(value); }
-        }
-
-        /// <summary>
         /// Gets or sets interval to call server to get current process state
         /// </summary>
         public int UpdateStatusInterval { get { return _updateStatusInterval; } set { _updateStatusInterval = value; } }
@@ -300,18 +257,6 @@ namespace CxViewerAction.Entities
             set { _maxZipFileSize = value; }
         }
 
-        public bool SSO
-        {
-            get;
-            set;
-        }
-
-        public bool isSaml
-        {
-            get;
-            set;
-        }
-
         /// <summary>
         /// Gets or sets the option to disable connection optimizations
         /// This optimization should be disabled when there is a proxy or firewall between the plugin and the server
@@ -322,17 +267,24 @@ namespace CxViewerAction.Entities
             set { _disableConnectionOptimizations = value; }
         }
 
-        #endregion [ Properties ]
+		public bool SaveSastScan { get => _saveSastScan; set => _saveSastScan = value; }
+		public bool ManageResultsComment { get => _manageResultsComment; set => _manageResultsComment = value; }
+		public bool ManageResultsExploitability { get => _manageResultsExploitability; set => _manageResultsExploitability = value; }
+		public string AccessToken { get => _accessToken; set => _accessToken = value; }
+		public string RefreshToken { get => _refreshToken; set => _refreshToken = value; }
+		public long AccessTokenExpiration { get => _accessTokenExpiration; set => _accessTokenExpiration = value; }
 
-        #region [ Public Methods ]
+		#endregion [ Properties ]
 
-        /// <summary>
-        /// Verify if user enter all data to start auth verification
-        /// </summary>
-        /// <returns></returns>
-        public bool CanLog()
+		#region [ Public Methods ]
+
+		/// <summary>
+		/// Verify if user enter all data to start auth verification
+		/// </summary>
+		/// <returns></returns>
+		public bool CanLog()
         {
-            return ((String.IsNullOrEmpty(this.Server)) || (String.IsNullOrEmpty(this.UserName)) || (String.IsNullOrEmpty(this.Password))) ? false : true;
+            return (String.IsNullOrEmpty(this.Server)) ? false : true;
         }
 
         /// <summary>
@@ -363,8 +315,6 @@ namespace CxViewerAction.Entities
         /// </summary>
         internal void Clear()
         {
-            _userName = string.Empty;
-            _password = string.Empty;
             _serverDomain = string.Empty;
         }
 

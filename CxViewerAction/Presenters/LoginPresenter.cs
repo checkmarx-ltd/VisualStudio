@@ -6,7 +6,6 @@ using CxViewerAction.Dispatchers;
 using CxViewerAction.ServiceLocators;
 using CxViewerAction.Views;
 using CxViewerAction.Services;
-using CxViewerAction.Services.RESTApi;
 
 namespace CxViewerAction.Presenters
 {
@@ -33,26 +32,14 @@ namespace CxViewerAction.Presenters
             string url = string.Empty;
             string userName = string.Empty;
             string password = string.Empty;
-            bool sso = false;
-            bool saml = false;
 
             if (_view != null)
             {
                 url = _view.ServerDomain;
-                userName = _view.UserName;
-                password = _view.Password;
-                sso = _view.SSO;
-                saml = _view.Saml;
             }
             _view = view;
             if (string.IsNullOrEmpty(_view.ServerDomain))
                 _view.ServerDomain = url;
-            if (string.IsNullOrEmpty(_view.UserName))
-                _view.UserName = userName;
-            if (string.IsNullOrEmpty(_view.Password))
-                _view.Password = password;
-            _view.SSO = sso;
-            _view.Saml = saml;
             _view.Load += View_Load;
 
             _dispatcher = ServiceLocator.GetDispatcher();
@@ -99,8 +86,9 @@ namespace CxViewerAction.Presenters
 
         private void LoginToRESTAPI(LoginData login)
         {
-            string url = new RESTAPiUrlLoader().Load(login);
-            new CxRESTApiLogin(login, url).Login();
+			CxRESTApi cxRestApiLogin = new CxRESTApi(login);
+			//TODO check what is this shit
+			cxRestApiLogin.Login("");
         }
 
         /// <summary>
@@ -112,12 +100,6 @@ namespace CxViewerAction.Presenters
             _view.EntityId = login.ID;
             if (!string.IsNullOrEmpty(login.ServerDomain))
                 _view.ServerDomain = login.ServerDomain;
-            if (!string.IsNullOrEmpty(login.UserName))
-                _view.UserName = login.UserName;
-            if (!string.IsNullOrEmpty(login.Password))
-                _view.Password = login.Password;
-            _view.SSO = login.SSO;
-            _view.Saml = login.isSaml;
         }
 
         /// <summary>
@@ -128,10 +110,6 @@ namespace CxViewerAction.Presenters
         {
             login.Ssl = _view.Ssl;
             login.ServerDomain = _view.ServerDomain;
-            login.UserName = _view.UserName;
-            login.Password = _view.Password;
-            login.SSO = _view.SSO;
-            login.isSaml = _view.Saml;
         }
         
         #endregion

@@ -599,7 +599,7 @@ namespace CxViewerAction.Helpers
                 return null;
             }
 
-            res = loginResult.CxWSResponseLoginData.AllowedToChangeNotExploitable ? CxWSResponseResults.ResultStateList : RemoveNotExploitableFromArray(CxWSResponseResults.ResultStateList );
+            res = loginResult.AuthenticationData.ManageResultsExploitability ? CxWSResponseResults.ResultStateList : RemoveNotExploitableFromArray(CxWSResponseResults.ResultStateList );
             
 
             return res;
@@ -791,19 +791,12 @@ namespace CxViewerAction.Helpers
             }
             if (!loginResult.IsSuccesfull)
             {
-                if (loginResult.IsSaml)
+                if (!OIDCLoginHelper.errorWasShown)
                 {
-                    if (!SamlLoginHelper.errorWasShown)
-                    {
-                        SamlLoginHelper.errorWasShown = false;
-                        showErrorMessage("Unable to connect to the server. Please verify data: server path, saml configuration");
-                    }
+                    OIDCLoginHelper.errorWasShown = false;
+                    showErrorMessage("Unable to connect to the server. Please verify data: server path, saml configuration");
                 }
-                else
-                {
-                    showErrorMessage("Unable to connect to the server or user credentials are invalid. Please verify data: server path, login, password");
-                }
-                return LoginToServer();
+				return LoginToServer();
             }
             return loginResult;
         }

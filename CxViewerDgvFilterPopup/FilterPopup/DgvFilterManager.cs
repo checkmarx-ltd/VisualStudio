@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Data;
-using System.ComponentModel;
-using Common;
 
 namespace DgvFilterPopup {
 
@@ -499,28 +496,6 @@ namespace DgvFilterPopup {
                 Console.WriteLine ("Invalid filter: " + Filter);
             }
 
-            UpdateGridHeaders();
-        }
-
-        public void UpdateGridHeaders()
-        {
-            try
-            {
-                //mDataGridView.Columns[0].HeaderText = Constants.COL_NAME_NUMBER;
-                //mDataGridView.Columns[1].HeaderText = Constants.COL_NAME_SOURCE_FOLDER;
-                //mDataGridView.Columns[2].HeaderText = Constants.COL_NAME_SOURCE_FILE_NAME;
-                //mDataGridView.Columns[3].HeaderText = Constants.COL_NAME_SOURCE_LINE;
-                //mDataGridView.Columns[4].HeaderText = Constants.COL_NAME_SOURCE_OBJECT;
-                //mDataGridView.Columns[5].HeaderText = Constants.COL_NAME_DEST_FOLDER;
-                //mDataGridView.Columns[6].HeaderText = Constants.COL_NAME_DEST_FILE_NAME;
-                //mDataGridView.Columns[7].HeaderText = Constants.COL_NAME_DEST_LINE;
-                //mDataGridView.Columns[8].HeaderText = Constants.COL_NAME_DEST_OBJECT;
-                //mDataGridView.Columns[9].HeaderText = Constants.COL_NAME_SHOW_PATH;
-                //mDataGridView.Columns[10].HeaderText = Constants.COL_NAME_REMARK;
-            }
-            catch (Exception err)
-            {
-            }
         }
 
         #endregion

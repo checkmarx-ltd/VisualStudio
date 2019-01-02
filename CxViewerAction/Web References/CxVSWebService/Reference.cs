@@ -1604,7 +1604,8 @@ namespace CxViewerAction.CxVSWebService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://Checkmarx.com/v7")]
-    public partial class Credentials {
+	//TODO need to remove this credentials
+	public partial class Credentials {
         
         private string userField;
         

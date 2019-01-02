@@ -71,18 +71,7 @@ namespace CxViewerAction.Services
         {
             HttpWebRequest webRequest = new CxRESTApiWebRequestCore().Create(uri, "GET");
             webRequest.Accept = requestContentType;
-            
-            foreach (Cookie cookie in LoginHelper.RESTApiCookies)
-            {
-                webRequest.CookieContainer.Add(cookie);
-
-                if (cookie.Name.ToLower() == CXCSRF_TOKEN_NAME.ToLower())
-                {
-                    webRequest.Headers.Add(cookie.Name, cookie.Value);
-                }
-            }
-
-            return webRequest;
+                     return webRequest;
         }
 
         private CxPortalConfiguration GetWebResponse(HttpWebRequest webRequest)

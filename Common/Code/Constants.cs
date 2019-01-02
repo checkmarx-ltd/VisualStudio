@@ -21,5 +21,28 @@
 		public const string ERR_UNKNOWN = "Cannot establish connection with the server. Unknown error.";
 		public const string ERR_UNKNOWN_SERVER = "Cannot establish connection with the server. This may be an issue of incorrect server name or address";
 		public const string ERR_UNKNOWN_USER_PASSWORD = "Cannot establish connection with the server. This may be an issue of incorrect user name or password";
-    }
+
+		public const string CLIENT_ID_KEY = "client_id";
+		public const string CLIENT_VALUE = "plugin_client";
+		public const string SCOPE_KEY = "scope";
+		public const string CODE_KEY = "code";
+		public const string GRANT_TYPE_KEY = "grant_type";
+		public const string AUTHORIZATION_CODE_GRANT_TYPE = "authorization_code";
+		public const string SAST_PREFIX = "/cxrestapi/auth";
+		public const string REFRESH_TOKEN = "refresh_token";
+		public const string REDIRECT_URI_KEY = "redirect_uri";
+		public const string RESPONSE_TYPE_VALUE = "code";
+		public const string SCOPE_VALUE = "offline_access openid sast_api sast-permissions";
+		public const string AUTHORIZATION_ENDPOINT = "/identity/connect/authorize";
+		public const string AUTHORIZATION_HEADER = "Authorization";
+		public const string BEARER = "Bearer ";
+		public const string USER_INFO_ENDPOINT = "/identity/connect/userinfo";
+		public const string RESPONSE_TYPE_KEY = "response_type";
+		public const string PORT = ":8080";
+		public const string TOKEN_ENDPOINT = "/identity/connect/token";
+		public const string SAVE_SAST_SCAN = "save-sast-scan";
+		public const string MANAGE_RESULTS_COMMENT = "manage-result-comment";
+		public const string MANAGE_RESULTS_EXPLOITABILITY = "manage-result-exploitability";
+
+	}
 }

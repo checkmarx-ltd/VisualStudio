@@ -23,18 +23,5 @@ namespace CxViewerAction.Views
         /// Get or set server domain name (i.e. example.com)
         /// </summary>
         string ServerDomain { get; set; }
-
-        /// <summary>
-        /// Get or set user name
-        /// </summary>
-        string UserName { get; set; }
-
-        /// <summary>
-        /// Get or set password
-        /// </summary>
-        string Password { get; set; }
-
-        bool SSO { get; set; }
-        bool Saml { get; set; }
     }
 }
