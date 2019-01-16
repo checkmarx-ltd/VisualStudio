@@ -18,7 +18,7 @@ namespace CxViewerAction.Services
         private LoginData _login;
         private const string requestContentType = "application/x-www-form-urlencoded; charset=UTF-8";
         private const string _messageBodyTemplateTokenFromCode = Constants.GRANT_TYPE_KEY + "={0}&" + Constants.CLIENT_ID_KEY + "={1}&" 
-			+ Constants.REDIRECT_URI_KEY + "={2}&" + Constants.CODE_KEY +"={3}";
+			+ Constants.REDIRECT_URI_KEY + "={2}/&" + Constants.CODE_KEY +"={3}";
 
 		#endregion
 
@@ -41,34 +41,34 @@ namespace CxViewerAction.Services
             byte[] messageBodyAsByteArray = GetMesageBodyEncoded(code);
             HttpWebRequest webRequest = CreateWebRequest(uri, messageBody, messageBodyAsByteArray, null);
 			HttpWebResponse webResponse = HandleWebResponse(webRequest);
-			oidcLoginData =  parseOidcInfo(webResponse);
+			oidcLoginData =  ParseOidcInfo(webResponse);
 			_login.AccessToken = oidcLoginData.AccessToken;
 			_login.RefreshToken = oidcLoginData.RefreshToken;
 			_login.AccessTokenExpiration = oidcLoginData.AccessTokenExpiration;
 			return _login.AccessToken;
 
 		}
-
-		private OidcLoginData parseOidcInfo(HttpWebResponse webResponse)
-		{
+		 
+		private OidcLoginData ParseOidcInfo(HttpWebResponse webResponse)
+		{ 
 			AccessTokenDTO jsonResponse = ParseAccessTokenJsonFromResponse(webResponse);
 			long accessTokenExpirationInMillis = GetAccessTokenExpirationInMillis(jsonResponse.ExpiresIn);
 			return new OidcLoginData(jsonResponse.AccessToken, jsonResponse.RefreshToken, accessTokenExpirationInMillis);
 		}
 
-		internal void getPermissions(string accessToken)
+		internal void GetPermissions(string accessToken)
 		{
 			Uri uri = GetUserInfoUri();
 			byte[] messageEmptyBody = Encoding.UTF8.GetBytes("");
 			HttpWebRequest webRequest = CreateWebRequest(uri, "", messageEmptyBody, accessToken);
 			HttpWebResponse webResponse = HandleWebResponse(webRequest);
-			ArrayList sastPermissions = parseJsonPermissionsFromResponse(webResponse);
+			ArrayList sastPermissions = ParseJsonPermissionsFromResponse(webResponse);
 			_login.SaveSastScan = sastPermissions.Contains(Constants.SAVE_SAST_SCAN);
 			_login.ManageResultsComment = sastPermissions.Contains(Constants.MANAGE_RESULTS_COMMENT);
 			_login.ManageResultsExploitability = sastPermissions.Contains(Constants.MANAGE_RESULTS_EXPLOITABILITY);
 		}
 
-		private ArrayList parseJsonPermissionsFromResponse(HttpWebResponse webResponse)
+		private ArrayList ParseJsonPermissionsFromResponse(HttpWebResponse webResponse)
 		{
 			ArrayList sastPermissions = null;
 			using (var reader = new StreamReader(webResponse.GetResponseStream()))
@@ -155,7 +155,7 @@ namespace CxViewerAction.Services
 
         private Uri GetLoginUri()
         {
-            string url = string.Format("{0}{1}", Common.Text.Text.RemoveTrailingSlash(_login.ServerBaseUri), Constants.PORT + Constants.TOKEN_ENDPOINT);
+            string url = string.Format("{0}{1}", Common.Text.Text.RemoveTrailingSlash(_login.ServerBaseUri), Constants.TOKEN_ENDPOINT);
 
             Uri uri = new Uri(url);
 
@@ -164,7 +164,7 @@ namespace CxViewerAction.Services
 
 		private Uri GetUserInfoUri()
 		{
-			string url = string.Format("{0}{1}", Common.Text.Text.RemoveTrailingSlash(_login.ServerBaseUri), Constants.PORT + Constants.USER_INFO_ENDPOINT);
+			string url = string.Format("{0}{1}", Common.Text.Text.RemoveTrailingSlash(_login.ServerBaseUri), Constants.USER_INFO_ENDPOINT);
 
 			Uri uri = new Uri(url);
 

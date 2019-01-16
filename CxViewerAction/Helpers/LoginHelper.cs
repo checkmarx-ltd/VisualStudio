@@ -389,7 +389,7 @@ namespace CxViewerAction.Helpers
 			{
 				cxRestApi = new CxRESTApi(login);
 				string accessToken = cxRestApi.Login(oidcLoginResult.Code);
-				cxRestApi.getPermissions(accessToken);
+				cxRestApi.GetPermissions(accessToken);
 			}
 			else
 			{

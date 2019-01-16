@@ -30,27 +30,6 @@ namespace CxViewerAction.Helpers
         #endregion [ Constants ]
 
         /// <summary>
-        /// Check if perspective exist for selected project path
-        /// </summary>
-        /// <param name="projectPath">project path to find connected perspective</param>
-        /// <returns></returns>
-        public static bool ExistPerspective(string projectPath)
-        {
-            // Get logged user credentials and project relation data
-            LoginData login = Helpers.LoginHelper.Load(0);
-
-            if (login != null && login.Perspectives != null && !string.IsNullOrEmpty(projectPath))
-            {
-                string perspective;
-                if (login.Perspectives.TryGetValue(projectPath, out perspective))
-                    return true;
-            }
-
-            TopMostMessageBox.Show(_perspectiveNotExist);
-            return false;
-        }
-
-        /// <summary>
         /// Execute 'Previous Result' command
         /// </summary>
         public static void DoPrevResult()
