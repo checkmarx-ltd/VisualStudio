@@ -107,18 +107,11 @@ namespace CxViewerAction.Services
                 client = new CxWebServiceClient(login);
             }
             if (client == null || client.ServiceClient == null)
-                return null;
-
-            if (LoginHelper.LoginResult == null)
             {
-                //Execute login
-                bool cancelPressed;
-                LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
-                if (!loginResult.IsSuccesfull)
-                    loginResult = LoginHelper.DoLogin(out cancelPressed);
+                return null;
             }
-            CxWSResponseQueryDescription cxWSResponseQueryDescription = client.ServiceClient.GetQueryDescriptionByQueryId(LoginHelper.LoginResult.SessionId, queryId);
-            //output = cxWSResponseQueryDescription.QueryDescription;
+                
+            CxWSResponseQueryDescription cxWSResponseQueryDescription = client.ServiceClient.GetQueryDescriptionByQueryId("", queryId);
 
             client.Close();
             return cxWSResponseQueryDescription;

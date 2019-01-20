@@ -21,8 +21,6 @@ namespace CxViewerAction.Views.DockedView
     { 
 		#region [Private Members]
 		private string _server = "";
-		private string _userName = "";
-		private string _password = "";
 		#endregion
 
 		private LoginData currentLogin = null;

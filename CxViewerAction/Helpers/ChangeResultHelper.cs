@@ -4,6 +4,7 @@ using CxViewerAction.Entities.WebServiceEntity;
 using CxViewerAction.Services;
 using CxViewerAction.CxVSWebService;
 using System.Threading;
+using CxViewerAction.Entities;
 
 namespace CxViewerAction.Helpers
 {
@@ -12,20 +13,29 @@ namespace CxViewerAction.Helpers
         
         public static ProjectScanStatuses EditRemark(long resultId, long pathId, string remark)
         {
-            //Execute login
-            bool cancelPressed;
-            LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
-            if (!loginResult.IsSuccesfull)
-                loginResult = LoginHelper.DoLogin(out cancelPressed);
 
-            if (loginResult.IsSuccesfull)
-            {
-                return EditRemark(loginResult, resultId, pathId, remark);
+            LoginData loginData = LoginHelper.LoadSaved();
+            LoginResult loginResult = new LoginResult();
+            bool cancelPressed = false;
+            if (loginData.AccessToken == null) {
+                //Execute login
+                loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
+                if (!loginResult.IsSuccesfull)
+                    loginResult = LoginHelper.DoLogin(out cancelPressed);
+
+                if (loginResult.IsSuccesfull)
+                {
+                    return EditRemark(loginResult, resultId, pathId, remark);
+                }
+                else if (!cancelPressed)
+                {
+                    TopMostMessageBox.Show("Unable to connect to server or user creadentials are invalid. Please verify data: server, login, password", "Log in problem");
+                    return ProjectScanStatuses.Error;
+                }
             }
-            else if (!cancelPressed)
-            {
-                TopMostMessageBox.Show("Unable to connect to server or user creadentials are invalid. Please verify data: server, login, password", "Log in problem");
-                return ProjectScanStatuses.Error;
+            else {
+                loginResult.AuthenticationData = loginData;
+                loginResult.IsSuccesfull = true;
             }
 
             return ProjectScanStatuses.CanceledByUser;

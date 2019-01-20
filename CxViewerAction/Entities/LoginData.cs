@@ -70,22 +70,18 @@ namespace CxViewerAction.Entities
 
 		#region [ Constructors ]
 
-		/// <summary>
-		/// Empty constructor
-		/// </summary>
-		public LoginData() { }
+        private static LoginData loginDataInstance;
 
-        /// <summary>
-        /// Constructor with param
-        /// </summary>
-        /// <param name="id">Entity identifier</param>
-        /// <param name="server">Server name</param>
-        /// <param name="userName">User name</param>
-        /// <param name="password">Password</param>
-        public LoginData(EntityId id, string server)
+        private LoginData() { }
+
+        public static LoginData GetLoginDataInstance
         {
-            this.ID = id;
-            this.Server = server;
+            get
+            {
+                if (loginDataInstance == null)
+                    loginDataInstance = new LoginData();
+                return loginDataInstance;
+            }
         }
 
         #endregion [ Constructors ]

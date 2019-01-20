@@ -102,12 +102,7 @@ namespace CxViewerAction.Helpers
         public static ProjectConfiguration GetProjectConfiguration(long projectId)
         {
             ProjectConfiguration res = null;
-            bool cancelPressed;
-            LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
-            if (!loginResult.IsSuccesfull)
-                loginResult = LoginHelper.DoLogin(out cancelPressed);
-
-
+            LoginResult loginResult = getLoginResult();
 
             CxWebServiceClient client;
             try
@@ -137,48 +132,57 @@ namespace CxViewerAction.Helpers
         public static CxWSQueryVulnerabilityData[] GetScanResultsPath(long scanId)
         {
             CxWSQueryVulnerabilityData[] res = null;
+            LoginResult loginResult = getLoginResult();
+
+            CxWebServiceClient client;
+            try
+            {
+                client = new CxWebServiceClient(loginResult.AuthenticationData);
+            }
+            catch (Exception e)
+            {
+                Logger.Create().Error(e.ToString());
+                MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK);
+                return null;
+            }
+
+            CxWSResponceQuerisForScan cXWSResponseResults = client.ServiceClient.GetQueriesForScan(loginResult.SessionId, scanId);
+            if (!cXWSResponseResults.IsSuccesfull)
+            {
+                // show error message
+                MessageBox.Show(cXWSResponseResults.ErrorMessage, "Error", MessageBoxButtons.OK);
+                return null;
+            }
+
+            res = cXWSResponseResults.Queries;
+
+            return res;
+        }
+
+        private static LoginResult getLoginResult()
+        {
+            LoginData loginData = LoginHelper.LoadSaved();
+            LoginResult loginResult = new LoginResult();
             bool cancelPressed;
-            LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
-            if (!loginResult.IsSuccesfull)
-                loginResult = LoginHelper.DoLogin(out cancelPressed);
+            if (loginData.AccessToken == null)
+            {
+                loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
+                if (!loginResult.IsSuccesfull)
+                    loginResult = LoginHelper.DoLogin(out cancelPressed);
+            }
+            else
+            {
+                loginResult.AuthenticationData = loginData;
+                loginResult.IsSuccesfull = true;
+            }
 
-
-
-           CxWebServiceClient client;
-           try
-           {
-               client = new CxWebServiceClient(loginResult.AuthenticationData);
-           }
-           catch (Exception e)
-           {
-               Logger.Create().Error(e.ToString());
-               MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK);
-               return null;
-           }
-
-           CxWSResponceQuerisForScan cXWSResponseResults = client.ServiceClient.GetQueriesForScan(loginResult.SessionId, scanId);
-           if (!cXWSResponseResults.IsSuccesfull)
-           {
-               // show error message
-               MessageBox.Show(cXWSResponseResults.ErrorMessage, "Error", MessageBoxButtons.OK);
-               return null;
-           }
-
-           res = cXWSResponseResults.Queries;
-
-           return res;
+            return loginResult;
         }
 
         public static CxWSQueryVulnerabilityData[] GetScanResultsPaths(string scanTaskId, ref long scaId)
         {
             CxWSQueryVulnerabilityData[] res = null;
-            bool cancelPressed;
-            LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
-            if (!loginResult.IsSuccesfull)
-                loginResult = LoginHelper.DoLogin(out cancelPressed);
-
-
-
+            LoginResult loginResult = getLoginResult();
             CxWebServiceClient client;
             try
             {
@@ -220,11 +224,7 @@ namespace CxViewerAction.Helpers
         public static string GetScanXML(long scanId)
         {
             string path = "";
-            bool cancelPressed;
-            LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
-
-
-
+            LoginResult loginResult = getLoginResult();
             CxWebServiceClient client;
             try
             {
@@ -394,15 +394,8 @@ namespace CxViewerAction.Helpers
                 return SavedResultsManager.Instance.GetScanResultsForQuery(scanId, queryId);
             }
             CxWSSingleResultData[] res = null;
-            bool cancelPressed;
-            LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
-            if (!loginResult.IsSuccesfull)
-            {
-                loginResult = LoginHelper.DoLogin(out cancelPressed);
-            }
-
-            
-                CxWebServiceClient client;
+            LoginResult loginResult = getLoginResult();
+            CxWebServiceClient client;
                 try
                 {
                     client = new CxWebServiceClient(loginResult.AuthenticationData);
@@ -434,15 +427,8 @@ namespace CxViewerAction.Helpers
                 return SavedResultsManager.Instance.GetResultPath(scanId, pathId);
             }
             CxWSResultPath res = null;
-            bool cancelPressed;
-            LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
-            if (!loginResult.IsSuccesfull)
-            {
-                loginResult = LoginHelper.DoLogin(out cancelPressed);
-            }
-
-            
-                CxWebServiceClient client;
+            LoginResult loginResult = getLoginResult();
+            CxWebServiceClient client;
                 try
                 {
                     client = new CxWebServiceClient(loginResult.AuthenticationData);
@@ -474,13 +460,7 @@ namespace CxViewerAction.Helpers
                 return SavedResultsManager.Instance.GetResultPath(scanId, pathId);
             }
             CxWSResultPath res = null;
-            bool cancelPressed;
-            LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
-            if (!loginResult.IsSuccesfull)
-            {
-                loginResult = LoginHelper.DoLogin(out cancelPressed);
-            }
-
+            LoginResult loginResult = getLoginResult();
 
             CxWebServiceClient client;
             try
@@ -513,13 +493,7 @@ namespace CxViewerAction.Helpers
                 return SavedResultsManager.Instance.GetResultPathsForQuery(scanId, queryId);
             }
             CxWSResultPath[] res = null;
-            bool cancelPressed;
-            LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
-            if (!loginResult.IsSuccesfull)
-            {
-                loginResult = LoginHelper.DoLogin(out cancelPressed);
-            }
-
+            LoginResult loginResult = getLoginResult();
 
             CxWebServiceClient client;
             try
@@ -550,14 +524,7 @@ namespace CxViewerAction.Helpers
         public static ResultState[] GetResultStateList()
         {
             ResultState[] res = null;
-            bool cancelPressed;
-            LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
-            if (!loginResult.IsSuccesfull)
-            {
-                loginResult = LoginHelper.DoLogin(out cancelPressed);
-            }
-
-
+            LoginResult loginResult = getLoginResult();
             CxWebServiceClient client;
             try
             {
@@ -606,13 +573,7 @@ namespace CxViewerAction.Helpers
                 return new AssignUser[0];
             }
             AssignUser[] res = null;
-            bool cancelPressed;
-            LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
-            if (!loginResult.IsSuccesfull)
-            {
-                loginResult = LoginHelper.DoLogin(out cancelPressed);
-            }
-
+            LoginResult loginResult = getLoginResult();
 
             CxWebServiceClient client;
             try
@@ -654,12 +615,7 @@ namespace CxViewerAction.Helpers
             try
             {
                 CxWebServiceClient client = null;
-                bool cancelPressed;
-                LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
-                if (!loginResult.IsSuccesfull)
-                {
-                    loginResult = LoginHelper.DoLogin(out cancelPressed);
-                }
+                LoginResult loginResult = getLoginResult();
                 try
                 {
                     client = new CxWebServiceClient(loginResult.AuthenticationData);
@@ -696,13 +652,7 @@ namespace CxViewerAction.Helpers
         public static CxWSResponseScansDisplayData GetScansDisplayData(long selectedProjectId)
         {
             CxWSResponseScansDisplayData res = null;
-            bool cancelPressed;
-            LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
-            if (!loginResult.IsSuccesfull)
-                loginResult = LoginHelper.DoLogin(out cancelPressed);
-
-
-
+            LoginResult loginResult = getLoginResult();
             CxWebServiceClient client;
             try
             {
@@ -748,22 +698,31 @@ namespace CxViewerAction.Helpers
 
         public static LoginResult LoginToServer()
         {
-            LoginResult loginResult = null;
-            bool cancelPressed;
-            try
+            LoginData loginData = LoginHelper.LoadSaved();
+            LoginResult loginResult = new LoginResult();
+            bool cancelPressed = false;
+            if (loginData.AccessToken == null)
             {
-                loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
-                if (!loginResult.IsSuccesfull)
+                try
                 {
-                    loginResult = LoginHelper.DoLogin(out cancelPressed);
+                    loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
+                    if (!loginResult.IsSuccesfull)
+                    {
+                        loginResult = LoginHelper.DoLogin(out cancelPressed);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.Create().Error(e.ToString());
+                    MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK);
+                    return null;
                 }
             }
-            catch (Exception e)
-            {
-                Logger.Create().Error(e.ToString());
-                MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK);
-                return null;
+            else {
+                loginResult.AuthenticationData = loginData;
+                loginResult.IsSuccesfull = true;
             }
+            
             if (cancelPressed)
             {
                 return null;
@@ -773,7 +732,7 @@ namespace CxViewerAction.Helpers
                 if (!OIDCLoginHelper.errorWasShown)
                 {
                     OIDCLoginHelper.errorWasShown = false;
-                    showErrorMessage("Unable to connect to the server. Please verify data: server path, saml configuration");
+                    showErrorMessage("Unable to connect to the server. Please verify data");
                 }
 				return LoginToServer();
             }

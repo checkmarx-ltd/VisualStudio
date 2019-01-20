@@ -128,7 +128,6 @@ namespace CxViewerAction.Helpers
 
         public static CxPortalConfiguration PortalConfiguration { get; set; }
 
-        //public static CookieCollection RESTApiCookies { get; set; }
 
         #endregion
 
@@ -140,7 +139,7 @@ namespace CxViewerAction.Helpers
         internal static LoginData Load(int tryNum)
         {
             Logger.Create().Debug("Load preferences");
-            LoginData login = new LoginData();
+            LoginData login = LoginData.GetLoginDataInstance;
 
             if (tryNum > 2)
                 return login;
@@ -238,7 +237,6 @@ namespace CxViewerAction.Helpers
             return TryDoLogin(out cancelPressed, true, true);
         }
 
-		//TODO check who is calling this and if we need it
         internal static LoginResult DoLoginWithoutForm(out bool cancelPressed, bool relogin)
         {
 			//loads the preferences
@@ -345,10 +343,11 @@ namespace CxViewerAction.Helpers
                     {
                         serverBaseUrl = login.ServerBaseUri;
 
-						DolLogin(login, client);
-						loginResult.IsSuccesfull = true;
-						loginResult.AuthenticationData = login;
-                                     
+						bool loginSucceeded = DolLogin(login, client);
+                        if (loginSucceeded) {
+                            loginResult.IsSuccesfull = true;
+                            loginResult.AuthenticationData = login;
+                        }
                         _loginResult = loginResult;
                     }
                     catch (WebException ex)
@@ -380,8 +379,9 @@ namespace CxViewerAction.Helpers
         }
 
 
-        private static void DolLogin(LoginData login, CxWebServiceClient client)
+        public static bool DolLogin(LoginData login, CxWebServiceClient client)
         {
+            bool loginSucceeded = false;
 			_oidcLoginHelper.resetLatestResult();
 			OidcLoginResult oidcLoginResult = _oidcLoginHelper.ConnectToIdentidyProvider(login.ServerBaseUri);
 
@@ -390,11 +390,14 @@ namespace CxViewerAction.Helpers
 				cxRestApi = new CxRESTApi(login);
 				string accessToken = cxRestApi.Login(oidcLoginResult.Code);
 				cxRestApi.GetPermissions(accessToken);
-			}
+                loginSucceeded = true;
+
+            }
 			else
 			{
 				_oidcLoginHelper.CloseLoginWindow();
 			}
+            return loginSucceeded;
 
         }
 

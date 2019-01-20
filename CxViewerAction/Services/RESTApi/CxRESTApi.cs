@@ -19,12 +19,14 @@ namespace CxViewerAction.Services
         private const string requestContentType = "application/x-www-form-urlencoded; charset=UTF-8";
         private const string _messageBodyTemplateTokenFromCode = Constants.GRANT_TYPE_KEY + "={0}&" + Constants.CLIENT_ID_KEY + "={1}&" 
 			+ Constants.REDIRECT_URI_KEY + "={2}/&" + Constants.CODE_KEY +"={3}";
+        private const string _messageBodyTemplateTokenFromRefreshToken = Constants.GRANT_TYPE_KEY + "={0}&" + Constants.CLIENT_ID_KEY + "={1}&"
+            + Constants.REFRESH_TOKEN + "={2}" ;
 
-		#endregion
+        #endregion
 
-		#region Ctor
+        #region Ctor
 
-		public CxRESTApi(LoginData login)
+        public CxRESTApi(LoginData login)
         {
             _login = login;
         }
@@ -36,20 +38,47 @@ namespace CxViewerAction.Services
         public string Login(string code)
         {
 			OidcLoginData oidcLoginData = null;
-            Uri uri = GetLoginUri();
+            Uri uri = GetTokenEndpointUri();
             string messageBody = GetLoginMesageBody(code);
             byte[] messageBodyAsByteArray = GetMesageBodyEncoded(code);
             HttpWebRequest webRequest = CreateWebRequest(uri, messageBody, messageBodyAsByteArray, null);
-			HttpWebResponse webResponse = HandleWebResponse(webRequest);
+			HttpWebResponse webResponse = HandleWebResponse(webRequest, "CxRESTApiLogin->Login->Rest API, status message: ", "Login Failed");
 			oidcLoginData =  ParseOidcInfo(webResponse);
 			_login.AccessToken = oidcLoginData.AccessToken;
 			_login.RefreshToken = oidcLoginData.RefreshToken;
 			_login.AccessTokenExpiration = oidcLoginData.AccessTokenExpiration;
-			return _login.AccessToken;
+            Helpers.LoginHelper.Save(_login);
+            return _login.AccessToken;
 
 		}
-		 
-		private OidcLoginData ParseOidcInfo(HttpWebResponse webResponse)
+
+        internal void getAccessTokenFromRefreshToken(string refreshToken)
+        {
+            OidcLoginData oidcLoginData = null;
+            Uri uri = GetTokenEndpointUri();
+            string messageBody = GetAccessTokenFromRefreshTokenMessageBody(refreshToken);
+            byte[] messageBodyAsByteArray = GetRefTokenMessageBodyEncoded(refreshToken);
+            HttpWebRequest webRequest = CreateWebRequest(uri, messageBody, messageBodyAsByteArray, null);
+            HttpWebResponse webResponse = HandleWebResponse(webRequest, "CxRESTApiLogin->getAccessTokenFromRefreshToken->Rest API, status message: ", "Session expired. Please login.");
+            oidcLoginData = ParseOidcInfo(webResponse);
+            _login.AccessToken = oidcLoginData.AccessToken;
+            _login.RefreshToken = oidcLoginData.RefreshToken;
+            _login.AccessTokenExpiration = oidcLoginData.AccessTokenExpiration;
+            Helpers.LoginHelper.Save(_login);
+        }
+
+        private byte[] GetRefTokenMessageBodyEncoded(string refreshToken)
+        {
+            string messageBody = GetAccessTokenFromRefreshTokenMessageBody(refreshToken);
+            return Encoding.UTF8.GetBytes(messageBody);
+        }
+
+        private string GetAccessTokenFromRefreshTokenMessageBody(string refreshToken)
+        {
+            return string.Format(_messageBodyTemplateTokenFromRefreshToken, Constants.REFRESH_TOKEN, Constants.CLIENT_VALUE, refreshToken);
+        }
+
+        private OidcLoginData ParseOidcInfo(HttpWebResponse webResponse)
 		{ 
 			AccessTokenDTO jsonResponse = ParseAccessTokenJsonFromResponse(webResponse);
 			long accessTokenExpirationInMillis = GetAccessTokenExpirationInMillis(jsonResponse.ExpiresIn);
@@ -61,7 +90,7 @@ namespace CxViewerAction.Services
 			Uri uri = GetUserInfoUri();
 			byte[] messageEmptyBody = Encoding.UTF8.GetBytes("");
 			HttpWebRequest webRequest = CreateWebRequest(uri, "", messageEmptyBody, accessToken);
-			HttpWebResponse webResponse = HandleWebResponse(webRequest);
+			HttpWebResponse webResponse = HandleWebResponse(webRequest, "CxRESTApiLogin->GetPermissions->Rest API, status message: ", "Login Failed");
 			ArrayList sastPermissions = ParseJsonPermissionsFromResponse(webResponse);
 			_login.SaveSastScan = sastPermissions.Contains(Constants.SAVE_SAST_SCAN);
 			_login.ManageResultsComment = sastPermissions.Contains(Constants.MANAGE_RESULTS_COMMENT);
@@ -110,15 +139,15 @@ namespace CxViewerAction.Services
             return webRequest;
         }
 
-        private HttpWebResponse HandleWebResponse(HttpWebRequest webRequest)
+        private HttpWebResponse HandleWebResponse(HttpWebRequest webRequest, string logErrorMessage, string errorMessage)
         {
             HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponse();
 
             if (webResponse.StatusCode != HttpStatusCode.OK)
             {
-				string message = "CxRESTApiLogin->Login->Rest API, status message: " + webResponse.StatusDescription;
+				string message = logErrorMessage + webResponse.StatusDescription;
 				Logger.Create().Error(message);
-				System.Windows.Forms.MessageBox.Show("Login Failed", "Error", System.Windows.Forms.MessageBoxButtons.OK);
+				System.Windows.Forms.MessageBox.Show(errorMessage, "Error", System.Windows.Forms.MessageBoxButtons.OK);
 				throw new WebException(message);
 			}
 			return webResponse;
@@ -153,7 +182,7 @@ namespace CxViewerAction.Services
             return Encoding.UTF8.GetBytes(messageBody);
         }
 
-        private Uri GetLoginUri()
+        private Uri GetTokenEndpointUri()
         {
             string url = string.Format("{0}{1}", Common.Text.Text.RemoveTrailingSlash(_login.ServerBaseUri), Constants.TOKEN_ENDPOINT);
 

@@ -45,25 +45,36 @@ namespace CxViewerAction.Helpers
         public ProjectScanStatuses DoScan(Project project, bool isIncremental, ref CxWSQueryVulnerabilityData[] scanData, ref long scanId)
         {
             if (_scan != null && _scan.InProcess)
+                {
                 return ProjectScanStatuses.CanceledByUser;
+            }
+            LoginResult loginResult = new LoginResult();
             try
             {
                 //Release old view data
 
                 CommonActionsInstance.getInstance().ClearScanProgressView();
 
+                LoginData logindata = LoginHelper.LoadSaved();
                 //Execute login
-                LoginResult loginResult = Login();
-
+                if (logindata.AccessToken == null)
+                {
+                    loginResult = Login();
+                    if (loginResult == null || loginResult.AuthenticationData == null)
+                    {
+                        LoginHelper.ShowLoginErrorMessage(loginResult);
+                        return ProjectScanStatuses.Error;
+                    }
+                }
+                else
+                {
+                    loginResult.AuthenticationData = logindata;
+                    loginResult.IsSuccesfull = true;
+                }
+                
                 if (_cancelPressed)
                 {
                     return ProjectScanStatuses.CanceledByUser;
-                }
-
-                if (loginResult == null || loginResult.AuthenticationData == null)
-                {
-                    LoginHelper.ShowLoginErrorMessage(loginResult);
-                    return ProjectScanStatuses.Error;
                 }
 
                 if (loginResult.IsSuccesfull)

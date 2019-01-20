@@ -16,7 +16,7 @@ namespace CxViewerAction.Entities.WebServiceEntity
         #region [Private memebers]
 
         private bool _isSuccesfull = false;
-        private string _sessionId = null;
+        private string _sessionId = "";
         private LoginData _auth = null;
 		#endregion
 
@@ -39,7 +39,6 @@ namespace CxViewerAction.Entities.WebServiceEntity
         public string SessionId
         {
             get { return _sessionId; }
-            set { _sessionId = value; }
         }
 
         /// <summary>

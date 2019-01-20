@@ -1,4 +1,5 @@
 ﻿using Common;
+using CxViewerAction.Entities;
 using CxViewerAction.Helpers;
 using CxViewerAction.WebPortal;
 using System;
@@ -15,7 +16,6 @@ namespace CxViewerAction.Services
 
         private string _restAPIRelativePath = "/cxrestapi/Configurations/Portal";
         private const string requestContentType = "application/json, text/plain, */*";
-        private const string CXCSRF_TOKEN_NAME = "CXCSRFToken";
 
         #endregion
 
@@ -71,7 +71,15 @@ namespace CxViewerAction.Services
         {
             HttpWebRequest webRequest = new CxRESTApiWebRequestCore().Create(uri, "GET");
             webRequest.Accept = requestContentType;
-                     return webRequest;
+            LoginData loginData = LoginHelper.LoadSaved();
+            if (CxVSWebServiceWrapper.IsTokenExpired(loginData))
+            {
+                //get the login data again with the new access token
+                loginData = LoginHelper.LoadSaved();
+            };
+            webRequest.Headers.Clear();
+            webRequest.Headers.Add(Constants.AUTHORIZATION_HEADER, Constants.BEARER + loginData.AccessToken);
+            return webRequest;
         }
 
         private CxPortalConfiguration GetWebResponse(HttpWebRequest webRequest)

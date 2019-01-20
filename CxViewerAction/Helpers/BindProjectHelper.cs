@@ -89,13 +89,25 @@ namespace CxViewerAction.Helpers
 
         static ProjectScanStatuses LoginAndBindSelectedProject(Entities.Project project)
 		{
-			//Execute login
-			bool cancelPressed;
-			LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
-			if (!loginResult.IsSuccesfull)
-				loginResult = LoginHelper.DoLogin(out cancelPressed);
 
-			if (loginResult.IsSuccesfull)
+            LoginData loginData = LoginHelper.LoadSaved();
+            LoginResult loginResult = new LoginResult();
+            bool cancelPressed = false;
+            if (loginData.AccessToken == null)
+            {
+                //Execute login
+                loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
+                if (!loginResult.IsSuccesfull)
+                    loginResult = LoginHelper.DoLogin(out cancelPressed);
+
+            }
+            else
+            {
+                loginResult.AuthenticationData = loginData;
+                loginResult.IsSuccesfull = true;
+            }
+
+            if (loginResult.IsSuccesfull)
 			{
 				_canceled = false;
                 BindSelectedProject(loginResult, project);
@@ -106,7 +118,7 @@ namespace CxViewerAction.Helpers
 			}
 			else if (!cancelPressed)
 			{
-				TopMostMessageBox.Show("Unable to connect to server or user creadentials are invalid. Please verify data: server, login, password", "Log in problem");
+				TopMostMessageBox.Show("Unable to connect to server.", "Log in problem");
 				return ProjectScanStatuses.Error;
 			}
 

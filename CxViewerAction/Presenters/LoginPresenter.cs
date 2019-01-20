@@ -6,6 +6,7 @@ using CxViewerAction.Dispatchers;
 using CxViewerAction.ServiceLocators;
 using CxViewerAction.Views;
 using CxViewerAction.Services;
+using CxViewerAction.Helpers;
 
 namespace CxViewerAction.Presenters
 {
@@ -87,8 +88,8 @@ namespace CxViewerAction.Presenters
         private void LoginToRESTAPI(LoginData login)
         {
 			CxRESTApi cxRestApiLogin = new CxRESTApi(login);
-			//TODO check what is this shit
-			cxRestApiLogin.Login("");
+            bool cancelPressed = false;
+            LoginHelper.DoLogin(out cancelPressed);
         }
 
         /// <summary>

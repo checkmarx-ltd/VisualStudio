@@ -13,38 +13,6 @@ namespace CxViewerAction.Helpers
     /// </summary>
     public class XmlHelper
     {
-        /// <summary>
-        /// Convert XML string into LoginResult object
-        /// </summary>
-        /// <param name="response">xml string</param>
-        /// <returns></returns>
-        public static LoginResult ParseLoginResult(string response)
-        {
-            LoginResult r = new LoginResult();
-
-            try
-            {
-                XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.LoadXml(response);
-
-                foreach (XmlNode xmlNode in xmlDoc.ChildNodes[1].ChildNodes)
-                {
-                    switch (xmlNode.Name)
-                    {
-                        case "IsSuccesfull": r.IsSuccesfull = bool.Parse(xmlNode.InnerText); break;
-                        case "ReturnValue": r.SessionId = xmlNode.InnerText; break;
-                    }
-                }
-
-                xmlDoc = null;
-            }
-            catch (Exception ex)
-            {
-                Common.Logger.Create().Error(ex.ToString());
-            }
-
-            return r;
-        }
 
         /// <summary>
         /// Convert XML string into PresetResult object
