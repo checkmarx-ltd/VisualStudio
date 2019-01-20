@@ -127,6 +127,15 @@ namespace CxViewerAction.Views.DockedView
 			currentLogin = LoginHelper.Load(0);
           
 			txtServer.Text = currentLogin.ServerDomain;
+            if (currentLogin.AccessToken == null)
+            {
+                loginBtn.Enabled = true;
+                logoutBtn.Enabled = false;
+            }
+            else {
+                loginBtn.Enabled = false;
+                logoutBtn.Enabled = true;
+            }
         }
 
 		/// <summary>
@@ -194,14 +203,16 @@ namespace CxViewerAction.Views.DockedView
 		// Logout button
 		private void logoutBtn_Click(object sender, EventArgs e)
 		{
-			
-			loginResult.IsSuccesfull = false;
-			loginResult.AuthenticationData.AccessToken = null;
-			loginResult.AuthenticationData.AccessTokenExpiration = -1;
-			loginResult.AuthenticationData.RefreshToken = null;
+            if (loginResult != null) {
+                loginResult.IsSuccesfull = false;
+                loginResult.AuthenticationData.AccessToken = null;
+                loginResult.AuthenticationData.AccessTokenExpiration = -1;
+                loginResult.AuthenticationData.RefreshToken = null;
+            }
 			currentLogin.AccessToken = null;
 			currentLogin.AccessTokenExpiration = -1;
 			currentLogin.RefreshToken = null;
+            LoginHelper.DoLogout();
 			MessageBox.Show("Logout Successful", "Information", MessageBoxButtons.OK);
 			loginBtn.Enabled = true;
 			logoutBtn.Enabled = false;

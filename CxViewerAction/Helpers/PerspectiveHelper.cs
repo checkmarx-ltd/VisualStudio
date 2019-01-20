@@ -631,7 +631,7 @@ namespace CxViewerAction.Helpers
                 {
                     data.projectId = CommonData.ProjectId;
                 }
-                res = client.ServiceClient.UpdateSetOfResultState(LoginHelper.SessionId, dataArr);
+                res = client.ServiceClient.UpdateSetOfResultState("", dataArr);
                 
                 if (!res.IsSuccesfull)
                 {

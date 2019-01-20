@@ -104,15 +104,8 @@ namespace CxViewerAction.Helpers
             get { return _isLogged; }
             set { _isLogged = value; }
         }
-
-        private static string sessionId;
         
         private static string serverBaseUrl;
-
-        public static string SessionId
-        {
-            get { return sessionId; }
-        }
 
         public static string ServerBaseUrl
         {
@@ -406,6 +399,43 @@ namespace CxViewerAction.Helpers
         /// </summary>
         internal static void DoLogout()
         {
+            Logger.Create().Debug("Logging out, clear authentication data");
+            LoginData login = LoadSaved();
+            login.AccessToken = null;
+            login.RefreshToken = null;
+            login.AccessTokenExpiration = -1;
+            server = null; // reset server
+            string fileName = FullConfigPath; // Directory.GetCurrentDirectory() + "\\" + FileName;
+            Logger.Create().Debug("Save To File : " + fileName);
+
+            try
+            {
+                lock (lockObj)
+                {
+                    if (File.Exists(fileName))
+                    {
+                        // Create a new FileInfo object.
+                        FileInfo fInfo = new FileInfo(fileName);
+
+                        // Set the IsReadOnly property.
+                        if (fInfo.IsReadOnly == true)
+                        {
+                            fInfo.IsReadOnly = false;
+                        }
+                    }
+
+                    XmlSerializer writer = new XmlSerializer(typeof(LoginData));
+                    using (StreamWriter file = new StreamWriter(@fileName))
+                    {
+                        writer.Serialize(file, login);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Create().Error("Failed to clear authentication data, logout failed.");
+                Logger.Create().Error(ex);
+            }
             _isLogged = false;
         }
 
