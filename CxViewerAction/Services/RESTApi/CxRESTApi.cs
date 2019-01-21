@@ -99,10 +99,11 @@ namespace CxViewerAction.Services
 
 		private ArrayList ParseJsonPermissionsFromResponse(HttpWebResponse webResponse)
 		{
-			ArrayList sastPermissions = null;
-			using (var reader = new StreamReader(webResponse.GetResponseStream()))
+            ArrayList sastPermissions = null;
+            string json;
+            using (StreamReader readStream = new StreamReader(webResponse.GetResponseStream(), Encoding.UTF8))
 			{
-				var json = reader.ReadToEnd();
+				json = readStream.ReadToEnd();
                 JsonSerializerSettings settings = new JsonSerializerSettings();
                 settings.TypeNameHandling = TypeNameHandling.None;
                 UserInfoDTO userInfoDTO = JsonConvert.DeserializeObject<UserInfoDTO>(json, settings);
@@ -165,9 +166,10 @@ namespace CxViewerAction.Services
 		private AccessTokenDTO ParseAccessTokenJsonFromResponse(HttpWebResponse webResponse)
 		{
 			AccessTokenDTO accessTokenDTO = null;
-			using (var reader = new StreamReader(webResponse.GetResponseStream()))
-			{
-				var json = reader.ReadToEnd();
+            string json;
+            using (StreamReader readStream = new StreamReader(webResponse.GetResponseStream(), Encoding.UTF8))
+            {
+				json = readStream.ReadToEnd();
                 JsonSerializerSettings settings = new JsonSerializerSettings();
                 settings.TypeNameHandling = TypeNameHandling.None;
                 accessTokenDTO = JsonConvert.DeserializeObject<AccessTokenDTO>(json, settings);
