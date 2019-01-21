@@ -103,7 +103,9 @@ namespace CxViewerAction.Services
 			using (var reader = new StreamReader(webResponse.GetResponseStream()))
 			{
 				var json = reader.ReadToEnd();
-				UserInfoDTO userInfoDTO = JsonConvert.DeserializeObject<UserInfoDTO>(json);
+                JsonSerializerSettings settings = new JsonSerializerSettings();
+                settings.TypeNameHandling = TypeNameHandling.None;
+                UserInfoDTO userInfoDTO = JsonConvert.DeserializeObject<UserInfoDTO>(json, settings);
 				sastPermissions = userInfoDTO.SastPermissions;
 			}
 			return sastPermissions;
@@ -166,7 +168,9 @@ namespace CxViewerAction.Services
 			using (var reader = new StreamReader(webResponse.GetResponseStream()))
 			{
 				var json = reader.ReadToEnd();
-				accessTokenDTO = JsonConvert.DeserializeObject<AccessTokenDTO>(json);
+                JsonSerializerSettings settings = new JsonSerializerSettings();
+                settings.TypeNameHandling = TypeNameHandling.None;
+                accessTokenDTO = JsonConvert.DeserializeObject<AccessTokenDTO>(json, settings);
 			}
 			return accessTokenDTO;
 		}
