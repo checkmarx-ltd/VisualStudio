@@ -74,7 +74,7 @@ namespace CxViewerAction.Views.DockedView
 					loginBtn.Enabled = false;
 					logoutBtn.Enabled = true;
 				}
-				else
+				else if(!loginResult.LoginResultMessage.Equals("Exit"))
 				{
 					MessageBox.Show("Login Failed", "Information", MessageBoxButtons.OK);
 					loginBtn.Enabled = true;

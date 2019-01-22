@@ -29,7 +29,7 @@ namespace CxViewerAction.Helpers
 
         private void OnUserClosedForm(object sender, EventArgs e)
         {
-            _latestResult = new OidcLoginResult(false, string.Empty, null);
+            _latestResult = new OidcLoginResult(false, "Exit", null);
             _oidcLoginEvent.Set();
         }
 
