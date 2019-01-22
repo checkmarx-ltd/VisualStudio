@@ -285,7 +285,7 @@ namespace CxViewerAction.Helpers
                     }
                 }
             }
-
+            login.IsLogging = true;
             LoginResult loginResult = ExecuteLogin(login, out cancelPressed, relogin);
 
             if (loginResult != null && loginResult.IsSuccesfull)
@@ -400,42 +400,10 @@ namespace CxViewerAction.Helpers
         internal static void DoLogout()
         {
             Logger.Create().Debug("Logging out, clear authentication data");
-            LoginData login = LoadSaved();
-            login.AccessToken = null;
-            login.RefreshToken = null;
-            login.AccessTokenExpiration = -1;
-            server = null; // reset server
-            string fileName = FullConfigPath; // Directory.GetCurrentDirectory() + "\\" + FileName;
-            Logger.Create().Debug("Save To File : " + fileName);
-
-            try
-            {
-                lock (lockObj)
-                {
-                    if (File.Exists(fileName))
-                    {
-                        // Create a new FileInfo object.
-                        FileInfo fInfo = new FileInfo(fileName);
-
-                        // Set the IsReadOnly property.
-                        if (fInfo.IsReadOnly == true)
-                        {
-                            fInfo.IsReadOnly = false;
-                        }
-                    }
-
-                    XmlSerializer writer = new XmlSerializer(typeof(LoginData));
-                    using (StreamWriter file = new StreamWriter(@fileName))
-                    {
-                        writer.Serialize(file, login);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Create().Error("Failed to clear authentication data, logout failed.");
-                Logger.Create().Error(ex);
-            }
+            OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
+            oidcLoginData.AccessToken = null;
+            oidcLoginData.RefreshToken = null;
+            oidcLoginData.AccessTokenExpiration = -1;
             _isLogged = false;
         }
 

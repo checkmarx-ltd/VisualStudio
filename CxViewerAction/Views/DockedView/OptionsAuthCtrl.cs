@@ -124,10 +124,10 @@ namespace CxViewerAction.Views.DockedView
 		/// </summary>
 		private void BindDataToView()
 		{
-			currentLogin = LoginHelper.Load(0);
-          
-			txtServer.Text = currentLogin.ServerDomain;
-            if (currentLogin.AccessToken == null)
+            OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
+            currentLogin = LoginHelper.Load(0);
+            txtServer.Text = currentLogin.ServerDomain;
+            if (oidcLoginData.AccessToken == null)
             {
                 loginBtn.Enabled = true;
                 logoutBtn.Enabled = false;
@@ -205,13 +205,7 @@ namespace CxViewerAction.Views.DockedView
 		{
             if (loginResult != null) {
                 loginResult.IsSuccesfull = false;
-                loginResult.AuthenticationData.AccessToken = null;
-                loginResult.AuthenticationData.AccessTokenExpiration = -1;
-                loginResult.AuthenticationData.RefreshToken = null;
             }
-			currentLogin.AccessToken = null;
-			currentLogin.AccessTokenExpiration = -1;
-			currentLogin.RefreshToken = null;
             LoginHelper.DoLogout();
 			MessageBox.Show("Logout Successful", "Information", MessageBoxButtons.OK);
 			loginBtn.Enabled = true;

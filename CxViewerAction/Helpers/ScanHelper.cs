@@ -56,8 +56,9 @@ namespace CxViewerAction.Helpers
                 CommonActionsInstance.getInstance().ClearScanProgressView();
 
                 LoginData logindata = LoginHelper.LoadSaved();
+                OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
                 //Execute login
-                if (logindata.AccessToken == null)
+                if (oidcLoginData.AccessToken == null)
                 {
                     loginResult = Login();
                     if (loginResult == null || loginResult.AuthenticationData == null)

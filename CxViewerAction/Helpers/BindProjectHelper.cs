@@ -90,10 +90,11 @@ namespace CxViewerAction.Helpers
         static ProjectScanStatuses LoginAndBindSelectedProject(Entities.Project project)
 		{
 
+            OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
             LoginData loginData = LoginHelper.LoadSaved();
             LoginResult loginResult = new LoginResult();
             bool cancelPressed = false;
-            if (loginData.AccessToken == null)
+            if (oidcLoginData.AccessToken == null)
             {
                 //Execute login
                 loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);

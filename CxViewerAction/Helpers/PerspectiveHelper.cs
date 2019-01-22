@@ -163,8 +163,9 @@ namespace CxViewerAction.Helpers
         {
             LoginData loginData = LoginHelper.LoadSaved();
             LoginResult loginResult = new LoginResult();
+            OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
             bool cancelPressed;
-            if (loginData.AccessToken == null)
+            if (oidcLoginData.AccessToken == null)
             {
                 loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
                 if (!loginResult.IsSuccesfull)
@@ -699,9 +700,10 @@ namespace CxViewerAction.Helpers
         public static LoginResult LoginToServer()
         {
             LoginData loginData = LoginHelper.LoadSaved();
+            OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
             LoginResult loginResult = new LoginResult();
             bool cancelPressed = false;
-            if (loginData.AccessToken == null)
+            if (oidcLoginData.AccessToken == null)
             {
                 try
                 {

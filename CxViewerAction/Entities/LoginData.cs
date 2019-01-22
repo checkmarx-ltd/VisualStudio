@@ -62,9 +62,6 @@ namespace CxViewerAction.Entities
 		private bool _saveSastScan;
 		private bool _manageResultsComment;
 		private bool _manageResultsExploitability;
-		private string _accessToken;
-		private string _refreshToken;
-		private long _accessTokenExpiration;
 
 		#endregion
 
@@ -266,9 +263,6 @@ namespace CxViewerAction.Entities
 		public bool SaveSastScan { get => _saveSastScan; set => _saveSastScan = value; }
 		public bool ManageResultsComment { get => _manageResultsComment; set => _manageResultsComment = value; }
 		public bool ManageResultsExploitability { get => _manageResultsExploitability; set => _manageResultsExploitability = value; }
-		public string AccessToken { get => _accessToken; set => _accessToken = value; }
-		public string RefreshToken { get => _refreshToken; set => _refreshToken = value; }
-		public long AccessTokenExpiration { get => _accessTokenExpiration; set => _accessTokenExpiration = value; }
 
 		#endregion [ Properties ]
 

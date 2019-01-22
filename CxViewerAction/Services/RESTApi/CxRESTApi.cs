@@ -37,18 +37,13 @@ namespace CxViewerAction.Services
 
         public string Login(string code)
         {
-			OidcLoginData oidcLoginData = null;
             Uri uri = GetTokenEndpointUri();
             string messageBody = GetLoginMesageBody(code);
             byte[] messageBodyAsByteArray = GetMesageBodyEncoded(code);
             HttpWebRequest webRequest = CreateWebRequest(uri, messageBody, messageBodyAsByteArray, null);
 			HttpWebResponse webResponse = HandleWebResponse(webRequest, "CxRESTApiLogin->Login->Rest API, status message: ", "Login Failed");
-			oidcLoginData =  ParseOidcInfo(webResponse);
-			_login.AccessToken = oidcLoginData.AccessToken;
-			_login.RefreshToken = oidcLoginData.RefreshToken;
-			_login.AccessTokenExpiration = oidcLoginData.AccessTokenExpiration;
-            Helpers.LoginHelper.Save(_login);
-            return _login.AccessToken;
+            OidcLoginData oidcLoginData =  ParseOidcInfo(webResponse);
+            return oidcLoginData.AccessToken;
 
 		}
 
@@ -61,10 +56,6 @@ namespace CxViewerAction.Services
             HttpWebRequest webRequest = CreateWebRequest(uri, messageBody, messageBodyAsByteArray, null);
             HttpWebResponse webResponse = HandleWebResponse(webRequest, "CxRESTApiLogin->getAccessTokenFromRefreshToken->Rest API, status message: ", "Session expired. Please login.");
             oidcLoginData = ParseOidcInfo(webResponse);
-            _login.AccessToken = oidcLoginData.AccessToken;
-            _login.RefreshToken = oidcLoginData.RefreshToken;
-            _login.AccessTokenExpiration = oidcLoginData.AccessTokenExpiration;
-            Helpers.LoginHelper.Save(_login);
         }
 
         private byte[] GetRefTokenMessageBodyEncoded(string refreshToken)
@@ -82,7 +73,11 @@ namespace CxViewerAction.Services
 		{ 
 			AccessTokenDTO jsonResponse = ParseAccessTokenJsonFromResponse(webResponse);
 			long accessTokenExpirationInMillis = GetAccessTokenExpirationInMillis(jsonResponse.ExpiresIn);
-			return new OidcLoginData(jsonResponse.AccessToken, jsonResponse.RefreshToken, accessTokenExpirationInMillis);
+            OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
+            oidcLoginData.AccessToken = jsonResponse.AccessToken;
+            oidcLoginData.RefreshToken = jsonResponse.RefreshToken;
+            oidcLoginData.AccessTokenExpiration = accessTokenExpirationInMillis;
+            return oidcLoginData;
 		}
 
 		internal void GetPermissions(string accessToken)

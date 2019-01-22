@@ -12,15 +12,15 @@ namespace CxViewerAction.Services
 
         protected override WebRequest GetWebRequest(Uri uri)
         {
-            LoginData loginData = LoginHelper.LoadSaved();
-            if (IsTokenExpired(loginData))
+            OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
+            if (IsTokenExpired(oidcLoginData))
             {
                 //get the login data again with the new access token
-                loginData = LoginHelper.LoadSaved();
-            };
+                oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
+            }
             WebRequest request = base.GetWebRequest(uri);
             request.Headers.Clear();
-            request.Headers.Add(Constants.AUTHORIZATION_HEADER, Constants.BEARER + loginData.AccessToken);
+            request.Headers.Add(Constants.AUTHORIZATION_HEADER, Constants.BEARER + oidcLoginData.AccessToken);
             if (DisableConnectionOptimizations)
             {
                 ((HttpWebRequest)request).ServicePoint.UseNagleAlgorithm = false;
@@ -31,17 +31,18 @@ namespace CxViewerAction.Services
             return request;
         }
 
-        public static bool IsTokenExpired(LoginData loginData)
+        public static bool IsTokenExpired(OidcLoginData oidcLoginData)
         {
             bool isExpired = false;
-            if (loginData.AccessToken != null)
+            if (oidcLoginData.AccessToken != null)
             {
                 long currentTimeInMilli = DateTime.Now.Ticks;
-                isExpired = DateTime.Compare(new DateTime(currentTimeInMilli), DateTimeOffset.FromUnixTimeMilliseconds(loginData.AccessTokenExpiration).UtcDateTime) > 0 ? false : true;
+                isExpired = DateTime.Compare(new DateTime(currentTimeInMilli), DateTimeOffset.FromUnixTimeMilliseconds(oidcLoginData.AccessTokenExpiration).UtcDateTime) > 0 ? false : true;
                 if (isExpired)
                 {
+                    LoginData loginData = LoginHelper.LoadSaved();
                     CxRESTApi cxRestApi = new CxRESTApi(loginData);
-                    cxRestApi.getAccessTokenFromRefreshToken(loginData.RefreshToken);
+                    cxRestApi.getAccessTokenFromRefreshToken(oidcLoginData.RefreshToken);
                 }
             }
             return isExpired;

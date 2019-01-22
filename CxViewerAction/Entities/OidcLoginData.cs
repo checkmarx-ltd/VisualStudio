@@ -12,17 +12,17 @@ namespace CxViewerAction.Entities
 		private string _accessToken;
 		private string _refreshToken;
 		private long _accessTokenExpiration;
+        private static OidcLoginData oidcLoginDataInstance;
 
-		public OidcLoginData()
+        public static OidcLoginData GetOidcLoginDataInstance()
 		{
-		}
+            if (oidcLoginDataInstance == null)
+                oidcLoginDataInstance = new OidcLoginData();
+                return oidcLoginDataInstance;   
+        }
 
-		public OidcLoginData(string accessToken, string refreshToken, long accessTokenExpiration)
-		{
-			_accessToken = accessToken;
-			_refreshToken = refreshToken;
-			_accessTokenExpiration = accessTokenExpiration;
-		}
+        public OidcLoginData() {
+        }
 
 		public string AccessToken { get => _accessToken; set => _accessToken = value; }
 		public string RefreshToken { get => _refreshToken; set => _refreshToken = value; }

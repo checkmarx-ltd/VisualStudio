@@ -71,14 +71,14 @@ namespace CxViewerAction.Services
         {
             HttpWebRequest webRequest = new CxRESTApiWebRequestCore().Create(uri, "GET");
             webRequest.Accept = requestContentType;
-            LoginData loginData = LoginHelper.LoadSaved();
-            if (CxVSWebServiceWrapper.IsTokenExpired(loginData))
+            OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
+            if (CxVSWebServiceWrapper.IsTokenExpired(oidcLoginData))
             {
                 //get the login data again with the new access token
-                loginData = LoginHelper.LoadSaved();
+                oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
             };
             webRequest.Headers.Clear();
-            webRequest.Headers.Add(Constants.AUTHORIZATION_HEADER, Constants.BEARER + loginData.AccessToken);
+            webRequest.Headers.Add(Constants.AUTHORIZATION_HEADER, Constants.BEARER + oidcLoginData.AccessToken);
             return webRequest;
         }
 
