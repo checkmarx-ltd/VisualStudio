@@ -30,7 +30,7 @@ namespace CxViewerAction.Helpers
                 }
                 else if (!cancelPressed)
                 {
-                    TopMostMessageBox.Show("Unable to connect to server or user creadentials are invalid. Please verify data: server, login, password", "Log in problem");
+                    TopMostMessageBox.Show("Unable to connect to server or user creadentials are invalid. Please verify data", "Log in problem");
                     return ProjectScanStatuses.Error;
                 }
             }

@@ -735,6 +735,7 @@ namespace CxViewerAction.Helpers
                 {
                     OIDCLoginHelper.errorWasShown = false;
                     showErrorMessage("Unable to connect to the server. Please verify data");
+                    return null;
                 }
 				return LoginToServer();
             }
