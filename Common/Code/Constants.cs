@@ -32,7 +32,7 @@
 		public const string REFRESH_TOKEN = "refresh_token";
 		public const string REDIRECT_URI_KEY = "redirect_uri";
 		public const string RESPONSE_TYPE_VALUE = "code";
-		public const string SCOPE_VALUE = "offline_access openid sast_api sast-permissions";
+		public const string SCOPE_VALUE = "offline_access openid sast_api sast-permissions access_control_api";
 		public const string AUTHORIZATION_ENDPOINT = SAST_PREFIX + "/identity/connect/authorize";
 		public const string AUTHORIZATION_HEADER = "Authorization";
 		public const string BEARER = "Bearer ";
