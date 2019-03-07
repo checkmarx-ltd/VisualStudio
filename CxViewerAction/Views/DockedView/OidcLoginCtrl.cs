@@ -116,10 +116,15 @@ namespace CxViewerAction.Views.DockedView
         {
 			string serverURL = serverUri + Constants.AUTHORIZATION_ENDPOINT;
 			string header = string.Format("Content-Type: application/x-www-form-urlencoded", Environment.NewLine);
-			string postData = Constants.CLIENT_ID_KEY + "=" + Constants.CLIENT_VALUE + "&" + 
+            string redirectUri = serverUri;
+            if (!redirectUri.EndsWith("/"))
+            {
+                redirectUri = redirectUri + "/";
+            }
+            string postData = Constants.CLIENT_ID_KEY + "=" + Constants.CLIENT_VALUE + "&" + 
 				Constants.SCOPE_KEY + "=" + Constants.SCOPE_VALUE + "&" + 
 				Constants.RESPONSE_TYPE_KEY + "=" + Constants.RESPONSE_TYPE_VALUE + "&" + 
-				Constants.REDIRECT_URI_KEY + "=" + serverUri + "/";
+				Constants.REDIRECT_URI_KEY + "=" + redirectUri;
 			System.Text.Encoding encoding = System.Text.Encoding.UTF8;
 			byte[] postDataBytes = encoding.GetBytes(postData);
 

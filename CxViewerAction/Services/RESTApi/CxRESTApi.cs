@@ -174,7 +174,11 @@ namespace CxViewerAction.Services
 
 		private string GetLoginMesageBody(string code)
         {
-            return string.Format(_messageBodyTemplateTokenFromCode, Constants.AUTHORIZATION_CODE_GRANT_TYPE, Constants.CLIENT_VALUE, _login.ServerBaseUri, code);
+            string redirectUri = _login.ServerBaseUri;
+            if (!redirectUri.EndsWith("/")) {
+                redirectUri = redirectUri + "/";
+            }
+            return string.Format(_messageBodyTemplateTokenFromCode, Constants.AUTHORIZATION_CODE_GRANT_TYPE, Constants.CLIENT_VALUE, redirectUri, code);
         }
 
         private byte[] GetMesageBodyEncoded(string code)
