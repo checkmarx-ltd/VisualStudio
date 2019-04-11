@@ -175,8 +175,8 @@ namespace CxViewerAction.Services
 		private string GetLoginMesageBody(string code)
         {
             string redirectUri = _login.ServerBaseUri;
-            if (!redirectUri.EndsWith("/")) {
-                redirectUri = redirectUri + "/";
+            if (redirectUri.EndsWith("/")) {
+                redirectUri = redirectUri.Substring(0, redirectUri.Length -1);
             }
             return string.Format(_messageBodyTemplateTokenFromCode, Constants.AUTHORIZATION_CODE_GRANT_TYPE, Constants.CLIENT_VALUE, redirectUri, code);
         }
