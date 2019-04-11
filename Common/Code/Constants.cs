@@ -28,7 +28,7 @@
 		public const string CODE_KEY = "code";
 		public const string GRANT_TYPE_KEY = "grant_type";
 		public const string AUTHORIZATION_CODE_GRANT_TYPE = "authorization_code";
-		public const string SAST_PREFIX = "/cxrestapi/auth";
+		public const string SAST_PREFIX = "/CxRestAPI/auth";
 		public const string REFRESH_TOKEN = "refresh_token";
 		public const string REDIRECT_URI_KEY = "redirect_uri";
 		public const string RESPONSE_TYPE_VALUE = "code";
