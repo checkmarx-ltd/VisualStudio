@@ -16,8 +16,8 @@ namespace CxViewerAction.Helpers
 
         public OIDCLoginHelper()
         {
-			_oidcLoginFrm.OidcLoginCtrl1.NavigationCompleted += OidcLoginCtrlOnNavigationCompleted;
-			_oidcLoginFrm.OidcLoginCtrl1.NavigationError += OidcLoginCtrlOnNavigationError;
+			_oidcLoginFrm.OidcLoginCtrl2.NavigationCompleted += OidcLoginCtrlOnNavigationCompleted;
+			_oidcLoginFrm.OidcLoginCtrl2.NavigationError += OidcLoginCtrlOnNavigationError;
 			_oidcLoginFrm.UserClosedForm += OnUserClosedForm;
 			_latestResult = new OidcLoginResult(false, string.Empty, null);
 		}
@@ -49,7 +49,7 @@ namespace CxViewerAction.Helpers
 
         private void ConectAndWait(string baseServerUri)
         {
-            _oidcLoginFrm.OidcLoginCtrl1.Invoke(new MethodInvoker(() =>
+            _oidcLoginFrm.OidcLoginCtrl2.Invoke(new MethodInvoker(() =>
             {
                 _oidcLoginFrm.Show();
                 _oidcLoginFrm.ConnectToIdentidyProvider(baseServerUri);

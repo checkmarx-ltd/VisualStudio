@@ -30,26 +30,26 @@ namespace CxViewerAction.Views.DockedView
         /// </summary>
         private void InitializeComponent()
         {
-			this.webBrowserIdentityProvider = new System.Windows.Forms.WebBrowser();
-			this.SuspendLayout();
-			// 
-			// webBrowserIdentityProvider
-			// 
-			this.webBrowserIdentityProvider.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.webBrowserIdentityProvider.Location = new System.Drawing.Point(0, 0);
-			this.webBrowserIdentityProvider.MinimumSize = new System.Drawing.Size(20, 20);
-			this.webBrowserIdentityProvider.Name = "webBrowserIdentityProvider";
-			this.webBrowserIdentityProvider.Size = new System.Drawing.Size(388, 572);
-			this.webBrowserIdentityProvider.TabIndex = 0;
-			// 
-			// OidcLoginCtrl
-			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.webBrowserIdentityProvider);
-			this.Name = "OidcLoginCtrl";
-			this.Size = new System.Drawing.Size(388, 572);
-			this.ResumeLayout(false);
+            this.webBrowserIdentityProvider = new System.Windows.Forms.WebBrowser();
+            this.SuspendLayout();
+            // 
+            // webBrowserIdentityProvider
+            // 
+            this.webBrowserIdentityProvider.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowserIdentityProvider.Location = new System.Drawing.Point(0, 0);
+            this.webBrowserIdentityProvider.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowserIdentityProvider.Name = "webBrowserIdentityProvider";
+            this.webBrowserIdentityProvider.Size = new System.Drawing.Size(388, 572);
+            this.webBrowserIdentityProvider.TabIndex = 0;
+            // 
+            // OidcLoginCtrl
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.webBrowserIdentityProvider);
+            this.Name = "OidcLoginCtrl";
+            this.Size = new System.Drawing.Size(388, 572);
+            this.ResumeLayout(false);
 
         }
 

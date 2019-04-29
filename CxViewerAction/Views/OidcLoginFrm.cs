@@ -15,7 +15,7 @@ namespace CxViewerAction.Views
 
         public void ConnectToIdentidyProvider(string baseServerUri)
         {
-            OidcLoginCtrl1.ConnectToIdentidyProvider(baseServerUri);
+            OidcLoginCtrl2.ConnectToIdentidyProvider(baseServerUri);
         }
 
         public void CloseForm()
