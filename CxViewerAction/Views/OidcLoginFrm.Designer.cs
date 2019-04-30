@@ -63,7 +63,7 @@ namespace CxViewerAction.Views
         #endregion
 
 		//private DockedView.OidcLoginCtrl oidcLoginCtrl1;
-        private OidcLoginCtrl oidcLoginCtrl2;
+        private DockedView.OidcLoginCtrl oidcLoginCtrl2;
 
         public OidcLoginCtrl OidcLoginCtrl2 { get => oidcLoginCtrl2; set => oidcLoginCtrl2 = value; }
 	}
