@@ -13,7 +13,7 @@ pipeline {
         string(name: "provider", defaultValue: "VMWARE", description: "IAAS platform to be used")
         string(name: "decommissionPeriod", defaultValue: "1 hour", description: "Decommission period")
         booleanParam(name: 'deleteVMinPost', defaultValue: true, description: 'If selected VM will be not deleted after process finished')
-		//string(name: "branchName", defaultValue: "master", description: "github branch for Visual Studio plugin")
+	gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
     }
     agent { node { label 'install01' } }
     options {
