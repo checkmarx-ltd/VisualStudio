@@ -9,16 +9,16 @@ def msbuildLocation = "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\
 pipeline {
     parameters {
         string(name: "ram", defaultValue: "18000", description: "Server memory")
-        string(name: "cpu", defaultValue: "8", description: "")
+        string(name: "cpu", defaultValue: "8", description: "Number of virtual cpu")
         string(name: "provider", defaultValue: "VMWARE", description: "IAAS platform to be used")
         string(name: "decommissionPeriod", defaultValue: "1 hour", description: "Decommission period")
-        booleanParam(name: 'deleteVMinPost', defaultValue: true, description: 'If selected VM will be not deleted after process finished')
-	gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
+        booleanParam(name: 'doNotDeleteVM', defaultValue: false, description: 'If selected VM will be not deleted after process finished')
+	gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'branch', type: 'PT_BRANCH'
     }
     agent { node { label 'install01' } }
     options {
         timestamps()
-        timeout(time: 3, unit: 'HOURS')
+        timeout(time: 2, unit: 'HOURS')
     }
     stages {
         stage('Create VM') {
@@ -41,7 +41,7 @@ pipeline {
         }
         */
 
-        stage('Build plugin') {
+        stage('Build') {
             agent { node { label vmName } }
             steps {
                 script {
@@ -50,7 +50,7 @@ pipeline {
             }
         }
 		
-		stage('Pack plugin') {
+	stage('Pack') {
             agent { node { label vmName } }
             steps {
                 script {
@@ -59,7 +59,7 @@ pipeline {
             }
         }
 		
-		stage('Upload_To_Artifactory') {
+	stage('Upload To Artifactory') {
             agent { node { label vmName } }
             steps {
                 script {
@@ -75,9 +75,11 @@ pipeline {
                 logstashSend failBuild: false, maxLines: 1000
                 if (ipAddress != null) {
                     try {
-                        if (deleteVMinPost == 'true') {
-                            deleteVm(provider, ipAddress, vmName)
-                        }
+                        if (doNotDeleteVM == 'true') {
+                            kit.Info_Msg("Not deleting VM since user chose to keep it")
+			} else {
+			    deleteVm(provider, ipAddress, vmName)
+			}
                     } catch (Exception e) {
                         kit.Warning_Msg("Clean VM - Fail to delete. Exception:\n" + e.toString())
                         currentBuild.result = 'UNSTABLE'
