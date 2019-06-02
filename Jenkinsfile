@@ -11,7 +11,7 @@ pipeline {
         string(name: "ram", defaultValue: "18000", description: "Server memory")
         string(name: "cpu", defaultValue: "8", description: "Number of virtual cpu")
         string(name: "provider", defaultValue: "VMWARE", description: "IAAS platform to be used")
-        string(name: "decommissionPeriod", defaultValue: "1 hour", description: "Decommission period")
+        string(name: "decommissionPeriod", defaultValue: "2 hour", description: "Decommission period")
         booleanParam(name: 'doNotDeleteVM', defaultValue: false, description: 'If selected VM will be not deleted after process finished')
 	gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'branch', type: 'PT_BRANCH'
     }
@@ -81,7 +81,7 @@ pipeline {
 			    deleteVm(provider, ipAddress, vmName)
 			}
                     } catch (Exception e) {
-                        kit.Warning_Msg("Clean VM - Fail to delete. Exception:\n" + e.toString())
+                        kit.Warning_Msg("Failed to delete vm. Exception:\n" + e.toString())
                         currentBuild.result = 'UNSTABLE'
                     }
                 }
