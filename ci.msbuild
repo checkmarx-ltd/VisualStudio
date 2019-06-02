@@ -31,6 +31,12 @@ msbuild ci.msbuild /t:Pack - for pack
 
   <Target Name="Pack">
     <CallTarget Targets="CleanupArtifacts"/>
+	<CallTarget Targets="CopyToArtifacts"/>
+  </Target>
+  
+  <Target Name="CopyToArtifacts">
+    <Copy SourceFiles="$(WorkingFolder)\CxViewerVSIX\bin\Release\CxViewerVSIX.vsix"
+          DestinationFolder="$(WorkingFolder)\Artifacts" />
   </Target>
 
 
