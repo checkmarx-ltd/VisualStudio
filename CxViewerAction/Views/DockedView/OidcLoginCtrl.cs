@@ -129,7 +129,8 @@ namespace CxViewerAction.Views.DockedView
 			byte[] postDataBytes = encoding.GetBytes(postData);
 
 			WinCookieHelper.SupressCookiePersist();
-			webBrowserIdentityProvider.Navigate(serverURL, string.Empty, postDataBytes, header);
+            ChangeIeVersion();
+            webBrowserIdentityProvider.Navigate(serverURL, string.Empty, postDataBytes, header);
         }
 
 		#endregion
