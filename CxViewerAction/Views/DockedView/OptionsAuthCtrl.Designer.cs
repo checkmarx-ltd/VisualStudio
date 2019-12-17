@@ -44,6 +44,7 @@ namespace CxViewerAction.Views.DockedView
             this.btnSave = new System.Windows.Forms.Button();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.btTestConnection = new System.Windows.Forms.Button();
+            this.lblNote = new System.Windows.Forms.Label();
             this.groupAuth.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
@@ -177,6 +178,15 @@ namespace CxViewerAction.Views.DockedView
             this.btTestConnection.UseVisualStyleBackColor = true;
             this.btTestConnection.Click += new System.EventHandler(this.btTestConnection_Click);
             // 
+            // lblNote
+            // 
+            this.lblNote.AutoSize = true;
+            this.lblNote.Location = new System.Drawing.Point(7, 230);
+            this.lblNote.Name = "lblNote";
+            this.lblNote.Size = new System.Drawing.Size(41, 13);
+            this.lblNote.TabIndex = 0;
+            this.lblNote.Text = "Note: for Visual Studio 2019 you need to uncheck the following checkbox under\nTools -> Options -> Environment -> General:\nOptimize rendering for screens with different pixel densities (requires restart)";
+            // 
             // OptionsAuthCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -184,6 +194,7 @@ namespace CxViewerAction.Views.DockedView
             this.Controls.Add(this.groupAuth);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btTestConnection);
+            this.Controls.Add(this.lblNote);
             this.Name = "OptionsAuthCtrl";
             this.Size = new System.Drawing.Size(700, 297);
             this.VisibleChanged += new System.EventHandler(this.OptionsAuthCtrl_VisibleChanged);
@@ -210,5 +221,6 @@ namespace CxViewerAction.Views.DockedView
         private System.Windows.Forms.RadioButton rbUseCredentials;
         private System.Windows.Forms.RadioButton rbUseCurrentUser;
         private System.Windows.Forms.RadioButton radioButtonSaml;
+        private System.Windows.Forms.Label lblNote;
     }
 }
