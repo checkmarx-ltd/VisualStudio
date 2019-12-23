@@ -38,7 +38,7 @@ pipeline {
             agent { node { label vmName } }
             steps {
                 script {
-                    bat "${msbuildLocation} ${WORKSPACE}\\Plugin-VisualStudio\\ci.msbuild /t:build /p:VisualStudioVersion=\"15.0\" /p:DeployExtension=false"
+                    bat "${msbuildLocation} ${WORKSPACE}\\${JOB_NAME}\\ci.msbuild /t:build /p:VisualStudioVersion=\"15.0\" /p:DeployExtension=false"
                 }
             }
         }
