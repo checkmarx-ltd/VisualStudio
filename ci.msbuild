@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<!-- 
+cmd samples: 
+msbuild ci.msbuild /t:CI - for build and pack
+msbuild ci.msbuild /t:Pack - for pack
+-->
+  <PropertyGroup>
+    <WorkingFolder>$(MSBuildProjectDirectory)</WorkingFolder>
+    <Configuration>Release</Configuration>
+    <Platform>Any CPU</Platform>
+    <SolutionFile>$(WorkingFolder)\CxViewer.sln</SolutionFile>
+    <MSBuildCommunityTasksPath>$(WorkingFolder)\.build</MSBuildCommunityTasksPath>
+    <ArtifactsFolder>$(WorkingFolder)\Artifacts</ArtifactsFolder>
+	<CodeCoverage></CodeCoverage>
+  </PropertyGroup>
+
+  <Import Project="$(WorkingFolder)\Build\.build\MSBuild.Community.Tasks.Targets" />
+
+  <Target Name="CI">
+    <CallTarget Targets="Build"/>
+    <CallTarget Targets="Pack"/>
+  </Target>
+
+  <Target Name="Build">
+    <Exec Command="$(WorkingFolder)\Build\.nuget\nuget restore $(SolutionFile)"/>
+    <MSBuild Projects="$(SolutionFile)" Targets="Rebuild"
+             Properties="Configuration=$(Configuration); Platform=$(Platform);" />
+  </Target>
+
+
+  <Target Name="Pack">
+    <CallTarget Targets="CleanupArtifacts"/>
+	<CallTarget Targets="CopyToArtifacts"/>
+  </Target>
+  
+  <Target Name="CopyToArtifacts">
+    <Copy SourceFiles="$(WorkingFolder)\CxViewerVSIX\bin\Release\CxViewerVSIX.vsix"
+          DestinationFolder="$(WorkingFolder)\Artifacts" />
+  </Target>
+
+
+  <Target Name="CleanupArtifacts">
+    <RemoveDir Directories="$(ArtifactsFolder)"
+               Condition="Exists($(ArtifactsFolder))" />
+    <MakeDir Directories="$(ArtifactsFolder)"/>
+  </Target>
+
+</Project>
