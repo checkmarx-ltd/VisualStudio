@@ -14,16 +14,13 @@ msbuild ci.msbuild /t:Pack - for pack
     <ArtifactsFolder>$(WorkingFolder)\Artifacts</ArtifactsFolder>
 	<CodeCoverage></CodeCoverage>
   </PropertyGroup>
-
-  <Import Project="$(WorkingFolder)\Build\.build\MSBuild.Community.Tasks.Targets" />
-
+  
   <Target Name="CI">
     <CallTarget Targets="Build"/>
     <CallTarget Targets="Pack"/>
   </Target>
 
   <Target Name="Build">
-    <Exec Command="$(WorkingFolder)\Build\.nuget\nuget restore $(SolutionFile)"/>
     <MSBuild Projects="$(SolutionFile)" Targets="Rebuild"
              Properties="Configuration=$(Configuration); Platform=$(Platform);" />
   </Target>

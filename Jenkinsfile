@@ -25,29 +25,11 @@ pipeline {
             }
         }
 
-        /**
-        stage('Download Code from Github') {
-            agent { node { label vmName } }
-            steps {
-                git changelog: false, credentialsId: 'f62744b7-1d3d-41a7-a3a6-cbe679c24b26', poll: false, url: 'https://github.com/CxRepositories/VisualStudio'
-            }
-        }
-        */
-
-        stage('Build') {
+        stage('Build and Pack') {
             agent { node { label vmName } }
             steps {
                 script {
-                    bat "${msbuildLocation} ${WORKSPACE}\\${JOB_NAME}\\ci.msbuild /t:build /p:VisualStudioVersion=\"15.0\" /p:DeployExtension=false"
-                }
-            }
-        }
-		
-		stage('Pack') {
-            agent { node { label vmName } }
-            steps {
-                script {
-                    bat "${msbuildLocation} ${WORKSPACE}\\${JOB_NAME}\\ci.msbuild /t:pack /p:VisualStudioVersion=\"15.0\""
+                    bat "${msbuildLocation} ${WORKSPACE}\\${JOB_NAME}\\ci.msbuild /t:CI /p:VisualStudioVersion=\"15.0\" /p:DeployExtension=false"
                 }
             }
         }
