@@ -38,7 +38,8 @@ namespace CxViewerAction.Views.DockedView
 			this.label1 = new System.Windows.Forms.Label();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
 			this.applyButton = new System.Windows.Forms.Button();
-			this.groupAuth.SuspendLayout();
+            this.lblNote = new System.Windows.Forms.Label();
+            this.groupAuth.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -94,10 +95,19 @@ namespace CxViewerAction.Views.DockedView
 			this.label1.Size = new System.Drawing.Size(41, 13);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Server:";
-			// 
-			// errorProvider
-			// 
-			this.errorProvider.ContainerControl = this;
+            // 
+            // lblNote
+            // 
+            this.lblNote.AutoSize = true;
+            this.lblNote.Location = new System.Drawing.Point(7, 230);
+            this.lblNote.Name = "lblNote";
+            this.lblNote.Size = new System.Drawing.Size(41, 13);
+            this.lblNote.TabIndex = 0;
+            this.lblNote.Text = "Note that for Visual Studio 2019, uncheck the\n'Optimize rendering for screens with different pixel densities (requires restart)' checkbox\nlocated under: Tools > Options > Environment > General, in order to optimize visualization.";
+            // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
 			// 
 			// applyButton
 			// 
@@ -116,7 +126,8 @@ namespace CxViewerAction.Views.DockedView
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.applyButton);
 			this.Controls.Add(this.groupAuth);
-			this.Name = "OptionsAuthCtrl";
+            this.Controls.Add(this.lblNote);
+            this.Name = "OptionsAuthCtrl";
 			this.Size = new System.Drawing.Size(598, 250);
 			this.VisibleChanged += new System.EventHandler(this.OptionsAuthCtrl_VisibleChanged);
 			this.groupAuth.ResumeLayout(false);
@@ -136,5 +147,6 @@ namespace CxViewerAction.Views.DockedView
         private System.Windows.Forms.ErrorProvider errorProvider;
 		private System.Windows.Forms.Button logoutBtn;
 		private System.Windows.Forms.Button applyButton;
-	}
+        private System.Windows.Forms.Label lblNote;
+    }
 }
