@@ -10,13 +10,10 @@
 /CxViewerAction/bin/Debug
 /CxViewerVSIX/bin/Debug
 /CxViewerVSIX/obj
-/packages/Microsoft.VSSDK.BuildTools.15.0.26201/build
-/packages/Microsoft.VSSDK.BuildTools.15.0.26201/tools/vssdk
 /CxViewerDgvFilterPopup/bin/Debug
 /CxViewerColorButton/bin/Debug
 /.vs
 /.localhistory/C/Users/Adig/IdeaProjects/VisualStudio
-/packages/Microsoft.VSSDK.BuildTools.15.0.26201
 /CxViewerVSIX/CxViewerVSIX.csproj.user
 /CxViewerColorButton/bin/Release
 /CxViewerDgvFilterPopup/bin/Release
