@@ -8,7 +8,7 @@ def msbuildLocation = "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\
 pipeline {
     parameters {
         string(name: "decommissionPeriod", defaultValue: "3 hour", description: "Decommission period")
-		string(name: "templateName", defaultValue: "Visual_Studio", description: "Template name, if not specified then \"Visual_Studio\" template will be chosen")
+		string(name: "templateName", defaultValue: "VisualStudio2017", description: "Template name, if not specified then \"VisualStudio2017\" template will be chosen")
         booleanParam(name: 'doNotDeleteVM', defaultValue: false, description: 'If selected, VM will not be deleted after process finished')
 		gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'branch', type: 'PT_BRANCH'
     }
@@ -38,7 +38,8 @@ pipeline {
             agent { node { label vmName } }
             steps {
                 script {
-                    kit.Upload_To_Artifactory("${WORKSPACE}\\${JOB_NAME}\\Artifacts\\CxViewerVSIX.vsix", "plugins-release-local/com/checkmarx/visual-studio/")
+					fileOperations([fileRenameOperation("${WORKSPACE}\\${JOB_NAME}\\Artifacts\\CxViewerVSIX.vsix", "${WORKSPACE}\\${JOB_NAME}\\Artifacts\\CxViewerVSIX-8.9.0.vsix")])
+                    kit.Upload_To_Artifactory("${WORKSPACE}\\${JOB_NAME}\\Artifacts\\CxViewerVSIX-8.9.0.vsix", "plugins-release-local/com/checkmarx/visual-studio/")
                 }
             }
         }
