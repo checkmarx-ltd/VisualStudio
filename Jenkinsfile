@@ -38,8 +38,8 @@ pipeline {
             agent { node { label vmName } }
             steps {
                 script {
-		    fileOperations([folderRenameOperation(source: "${WORKSPACE}\\${JOB_NAME}\\Artifacts\\CxViewerVSIX.vsix", destination: "${WORKSPACE}\\${JOB_NAME}\\Artifacts\\CxViewerVSIX-8.9.0.vsix")])
-                    kit.Upload_To_Artifactory("${WORKSPACE}\\${JOB_NAME}\\Artifacts\\CxViewerVSIX-8.9.0.vsix", "plugins-release-local/com/checkmarx/visual-studio/")
+		    fileOperations([folderRenameOperation(source: "${WORKSPACE}\\${JOB_NAME}\\Artifacts\\CxViewerVSIX.vsix", destination: "${WORKSPACE}\\${JOB_NAME}\\Artifacts\\CxViewerVSIX-8.9.1.vsix")])
+                    kit.Upload_To_Artifactory("${WORKSPACE}\\${JOB_NAME}\\Artifacts\\CxViewerVSIX-8.9.1.vsix", "plugins-release-local/com/checkmarx/visual-studio/")
                 }
             }
         }
