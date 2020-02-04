@@ -99,11 +99,11 @@ namespace CxViewerAction.Views.DockedView
             // lblNote
             // 
             this.lblNote.AutoSize = true;
-            this.lblNote.Location = new System.Drawing.Point(7, 230);
+            this.lblNote.Location = new System.Drawing.Point(7, 225);
             this.lblNote.Name = "lblNote";
             this.lblNote.Size = new System.Drawing.Size(41, 13);
             this.lblNote.TabIndex = 0;
-            this.lblNote.Text = "Note that for Visual Studio 2019, uncheck the\n'Optimize rendering for screens with different pixel densities (requires restart)' checkbox\nlocated under: Tools > Options > Environment > General, in order to optimize visualization.";
+            this.lblNote.Text = "Note that for Visual Studio 2019, uncheck the\n'Optimize rendering for screens with different pixel densities (requires restart)'\ncheckbox located under: Tools > Options > Environment > General,\nin order to optimize visualization.";
             // 
             // errorProvider
             // 

@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using CxViewerAction.Views;
 using CxViewerAction.QueryDescription;
+using System.Windows.Forms;
 
 namespace CxViewerAction
 {
@@ -334,8 +335,9 @@ namespace CxViewerAction
                 CxRESTApiPortalConfiguration rESTApiPortalConfiguration = new CxRESTApiPortalConfiguration();
                 rESTApiPortalConfiguration.InitPortalBaseUrl();
                 string urlToDescription = new QueryDescriptionUrlBuilder().Build(nodeData.QueryId, nodeData.QueryName, nodeData.QueryVersionCode);
-                
-                _applicationObject.ItemOperations.Navigate(urlToDescription, vsNavigateOptions.vsNavigateOptionsDefault);
+
+                WebBrowser webBrowser = new WebBrowser();
+                webBrowser.Navigate(urlToDescription, "Query Description", null, "Authorization: Bearer " + OidcLoginData.GetOidcLoginDataInstance().AccessToken);
             }
             catch (Exception ex)
             {
