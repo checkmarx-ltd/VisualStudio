@@ -1,0 +1,20 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Common/obj
+/Common/bin
+/CxViewerAction/obj
+/CxViewerAction/bin
+/CxViewerAction/CxViewerAction.xml
+/CxViewerColorButton/obj
+/CxViewerColorButton/bin
+/CxViewerDgvFilterPopup/obj
+/CxViewerDgvFilterPopup/bin
+/CxViewerVSIX/obj
+/CxViewerVSIX/bin
+/CxViewerVSIX/CxViewerVSIX.csproj.user
+/.localhistory/C/Users/Adig/IdeaProjects/VisualStudio
+/Output
+/Artifacts
