@@ -17,7 +17,7 @@ pipeline {
         stage('Create VM') {
             steps {
                 script {
-                    kit.Create_Vm_Terraform(vmName, templateName, "18000", "8", "VMWARE", decommissionPeriod, "Auto", "Plugins-Developers")
+                    kit.Create_Vm_Terraform(vmName, templateName, "18000", "8", "VMWARE", decommissionPeriod, "Auto", "Platform-Plugins-Developers")
                     ipAddress = kit.getIpAddress(vmName, "VMWARE")
                     kit.Create_Jenkins_Slave_On_Master(vmName)
                     kit.Start_Jenkins_Slave_On_Windows_Pstools(ipAddress, vmName)
