@@ -129,9 +129,8 @@ namespace CxViewerAction.Helpers
                                 {
                                     if (Directory.Exists(p.RootPath))
                                     {
-                                        // find number of chars to remove from orginal file path
                                         Logger.Create().Info("Zip file: " + p.FilePathList);
-                                        WriteEntryToZip(oZip, filePath.Remove(0, p.RootPath.Length).TrimStart(new[] { '/', '\\' }), filePath);
+                                        WriteEntryToZip(oZip, Path.GetFileName(filePath), filePath);
                                     }
                                 }
 
