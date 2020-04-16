@@ -8,7 +8,7 @@ def msbuildLocation = "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\
 pipeline {
     parameters {
         string(name: "decommissionPeriod", defaultValue: "3 hour", description: "Decommission period")
-		string(name: "templateName", defaultValue: "VisualStudio2017", description: "Template name, if not specified then \"VisualStudio2017\" template will be chosen")
+		string(name: "templateName", defaultValue: "VisualStudio-Template", description: "Template name, if not specified then \"VisualStudio-Template\" template will be chosen")
         booleanParam(name: 'doNotDeleteVM', defaultValue: false, description: 'If selected, VM will not be deleted after process finished')
 		gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'branch', type: 'PT_BRANCH'
     }
@@ -17,7 +17,7 @@ pipeline {
         stage('Create VM') {
             steps {
                 script {
-                    kit.Create_Vm_Terraform(vmName, templateName, "18000", "8", "VMWARE", decommissionPeriod, "Auto", "Plugins-Developers")
+                    kit.Create_Vm_Terraform(vmName, templateName, "18000", "8", "VMWARE", decommissionPeriod, "Auto", "Platform-Plugins-Developers")
                     ipAddress = kit.getIpAddress(vmName, "VMWARE")
                     kit.Create_Jenkins_Slave_On_Master(vmName)
                     kit.Start_Jenkins_Slave_On_Windows_Pstools(ipAddress, vmName)
