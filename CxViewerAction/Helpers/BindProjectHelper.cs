@@ -69,6 +69,7 @@ namespace CxViewerAction.Helpers
                 else if (status == ProjectScanStatuses.CanceledByUser)
                 {
                     //Do nothing...
+                    CommonData.IsProjectBound = false;
                 }
                 else
                 {
