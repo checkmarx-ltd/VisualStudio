@@ -28,12 +28,14 @@ namespace CxViewerAction.MenuLogic
                 Entities.Project project = CommonActionsInstance.getInstance().GetSelectedProject();
                 CommonData.ProjectName = project.ProjectName;
                 CommonData.ProjectRootPath = project.RootPath;
-                if (!setBindProject(true))
-                {
-                    return ActionStatus.Failed;
-                }
-                CommonData.IsProjectBound = true;
                 DoRetrieveResults(project);
+                if (CommonData.IsProjectBound)
+                {
+                    if (!setBindProject(true))
+                    {
+                        return ActionStatus.Failed;
+                    }
+                }
                 CommonData.IsWorkingOffline = false;
                 return ActionStatus.Success;
             }
