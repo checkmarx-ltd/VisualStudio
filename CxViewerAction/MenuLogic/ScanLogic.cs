@@ -55,6 +55,10 @@ namespace CxViewerAction.MenuLogic
                     CommonData.IsProjectBound = bindPro.IsBound;
                     CommonData.IsProjectPublic = bindPro.IsPublic;
                 }
+                else
+                {
+                    CommonData.IsProjectBound = false;
+                }
             }
             CommonActionsInstance.getInstance().BuildFileMapping();
             CommonActionsInstance.getInstance().ExecuteSystemCommand("File.SaveAll", string.Empty);
