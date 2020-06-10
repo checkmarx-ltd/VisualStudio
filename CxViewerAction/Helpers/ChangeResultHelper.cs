@@ -15,12 +15,10 @@ namespace CxViewerAction.Helpers
         {
 
             LoginData loginData = LoginHelper.LoadSaved();
-          //  OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
+            OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
             LoginResult loginResult = new LoginResult();
             bool cancelPressed = false;
-            //if (oidcLoginData.AccessToken == null) {
-              
-            if (loginResult.SessionId == "") { 
+            if (oidcLoginData.AccessToken == null) {
                 //Execute login
                 loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
                 if (!loginResult.IsSuccesfull)
@@ -39,6 +37,7 @@ namespace CxViewerAction.Helpers
             else {
                 loginResult.AuthenticationData = loginData;
                 loginResult.IsSuccesfull = true;
+                return ProjectScanStatuses.Success;
             }
 
             return ProjectScanStatuses.CanceledByUser;
