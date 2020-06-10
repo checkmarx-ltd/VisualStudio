@@ -15,10 +15,12 @@ namespace CxViewerAction.Helpers
         {
 
             LoginData loginData = LoginHelper.LoadSaved();
-            OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
+          //  OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
             LoginResult loginResult = new LoginResult();
             bool cancelPressed = false;
-            if (oidcLoginData.AccessToken == null) {
+            //if (oidcLoginData.AccessToken == null) {
+              
+            if (loginResult.SessionId == "") { 
                 //Execute login
                 loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
                 if (!loginResult.IsSuccesfull)
