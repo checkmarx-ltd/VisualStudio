@@ -646,10 +646,10 @@ namespace CxViewerAction.Helpers
                 MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK);
                 return null;
             }
-
+            
+            CxWSResponseAssignUsers CxWSResponseResults = client.ServiceClient.GetProjectAssignUsersList(loginResult.SessionId, CommonData.ProjectId);
             if (CommonData.IsProjectBound)
             {
-                CxWSResponseAssignUsers CxWSResponseResults = client.ServiceClient.GetProjectAssignUsersList(loginResult.SessionId, CommonData.ProjectId);
                 if (!CxWSResponseResults.IsSuccesfull)
                 {
                     // show error message
@@ -657,9 +657,9 @@ namespace CxViewerAction.Helpers
                     return null;
                 }
 
-                res = CxWSResponseResults.AssignUsers;
+                
             }
-
+            res = CxWSResponseResults.AssignUsers;
             return res;
         }
 
