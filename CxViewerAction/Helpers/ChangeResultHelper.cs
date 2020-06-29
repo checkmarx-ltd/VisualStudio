@@ -37,7 +37,9 @@ namespace CxViewerAction.Helpers
             else {
                 loginResult.AuthenticationData = loginData;
                 loginResult.IsSuccesfull = true;
-                return ProjectScanStatuses.Success;
+                    return EditRemark(loginResult, resultId, pathId, remark);
+                
+             //   return ProjectScanStatuses.Success;
             }
 
             return ProjectScanStatuses.CanceledByUser;

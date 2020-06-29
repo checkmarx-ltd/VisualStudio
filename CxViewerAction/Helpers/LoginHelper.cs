@@ -64,6 +64,7 @@ namespace CxViewerAction.Helpers
                         case "12.0": studioYear = "2013"; break;
                         case "14.0": studioYear = "2015"; break;
                         case "15.0": studioYear = "2017"; break;
+                        case "16.0": studioYear = "2019"; break;
                     }
                     string addinTargetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), string.Format(@"Visual Studio {0}\Settings", studioYear)); //\CxExtention
                     return Path.Combine(addinTargetPath, FileName);
