@@ -123,7 +123,7 @@ namespace CxViewerAction.Helpers
 
                             int subProjects = projects.Where(p2 => p.RootPath.Contains(p2.RootPath)).Count();
 
-                            if (subProjects == 1 && dirMatch.IsMatch(Path.GetFileName(p.RootPath))) //If the project is not a subProject and not excluded
+                            if (subProjects >= 1 && dirMatch.IsMatch(Path.GetFileName(p.RootPath))) //If the project is not a subProject and not excluded
                             {
                                 foreach (string filePath in p.FilePathList) // scan only the file selected
                                 {
