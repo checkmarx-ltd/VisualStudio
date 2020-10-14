@@ -381,15 +381,19 @@ namespace CxViewerAction.Helpers
 
 			if (oidcLoginResult.IsSuccessful)
 			{
-				cxRestApi = new CxRESTApi(login);
+                //Add logs for print Server url and AccessToken
+                Logger.Create().Debug("Server URL: " + login.ServerBaseUri);
+                cxRestApi = new CxRESTApi(login);
 				string accessToken = cxRestApi.Login(oidcLoginResult.Code);
 				cxRestApi.GetPermissions(accessToken);
                 loginSucceeded = true;
-
+                Logger.Create().Debug("Succeeded to login. ");
             }
 			else
 			{
-				_oidcLoginHelper.CloseLoginWindow();
+                Logger.Create().Debug("Server URL: " + login.ServerBaseUri);
+                _oidcLoginHelper.CloseLoginWindow();
+                Logger.Create().Debug("Failed to login. ");
 			}
             return loginSucceeded;
 
