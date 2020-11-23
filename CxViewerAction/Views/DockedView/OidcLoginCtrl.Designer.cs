@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.Web;
+using Microsoft.Web.WebView2.Core;
 
 namespace CxViewerAction.Views.DockedView
 {
@@ -30,42 +32,30 @@ namespace CxViewerAction.Views.DockedView
         /// </summary>
         private void InitializeComponent()
         {
-            this.webBrowserIdentityProvider = new System.Windows.Forms.WebBrowser();
+            this.loginWebView = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.SuspendLayout();
             // 
-            // webBrowserIdentityProvider
+            // loginWebView
             // 
-            this.webBrowserIdentityProvider.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowserIdentityProvider.Location = new System.Drawing.Point(0, 0);
-            this.webBrowserIdentityProvider.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowserIdentityProvider.Name = "webBrowserIdentityProvider";
-            this.webBrowserIdentityProvider.Size = new System.Drawing.Size(388, 572);
-            this.webBrowserIdentityProvider.TabIndex = 0;
+            this.loginWebView.CreationProperties = null;
+            this.loginWebView.Location = new System.Drawing.Point(0, 3);
+            this.loginWebView.Name = "loginWebView";
+            this.loginWebView.Size = new System.Drawing.Size(659, 607);
+            this.loginWebView.TabIndex = 0;
+            this.loginWebView.Text = "webView21";
+            this.loginWebView.ZoomFactor = 1D;
             // 
             // OidcLoginCtrl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.webBrowserIdentityProvider);
+            this.Controls.Add(this.loginWebView);
             this.Name = "OidcLoginCtrl";
-            this.Size = new System.Drawing.Size(388, 572);
+            this.Size = new System.Drawing.Size(659, 613);
             this.ResumeLayout(false);
 
         }
 
-        #endregion
 
-        private System.Windows.Forms.WebBrowser webBrowserIdentityProvider;
-        public System.Windows.Forms.WebBrowser WebBrowserIdentityProvider
-        {
-            get
-            {
-                return webBrowserIdentityProvider;
-            }
-            set
-            {
-                webBrowserIdentityProvider = value;
-            }
-        }
+        #endregion        
+        private Microsoft.Web.WebView2.WinForms.WebView2 loginWebView;
     }
 }

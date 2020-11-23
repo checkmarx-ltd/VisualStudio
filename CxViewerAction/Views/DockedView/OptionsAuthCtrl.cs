@@ -70,7 +70,7 @@ namespace CxViewerAction.Views.DockedView
 				loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, true);
 				if (loginResult.IsSuccesfull)
 				{
-					MessageBox.Show("Login Successful", "Information", MessageBoxButtons.OK);
+					MessageBox.Show("Login Successfull", "Information", MessageBoxButtons.OK);
 					loginBtn.Enabled = false;
 					logoutBtn.Enabled = true;
 				}

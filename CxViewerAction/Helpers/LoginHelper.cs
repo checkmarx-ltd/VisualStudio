@@ -252,7 +252,6 @@ namespace CxViewerAction.Helpers
         static LoginResult TryDoLogin(out bool cancelPressed, bool relogin, bool showForm)
         {
             cancelPressed = false;
-
 			//TODO check what to do with this
             if (_isLogged && !relogin)
             {
@@ -308,77 +307,64 @@ namespace CxViewerAction.Helpers
         {
             LoginResult loginResult = new LoginResult();
             cancelPressed = !login.IsLogging;
-
             if (login != null && login.IsLogging && (!_isLogged || relogin))
             {
                 CxWebServiceClient client = null;
-
-                BackgroundWorkerHelper bg = new BackgroundWorkerHelper(delegate
+                try
                 {
-                    try
-                    {
-                        client = new CxWebServiceClient(login);
+                    client = new CxWebServiceClient(login);
+                }
+                catch (Exception e)
+                {
+                    Logger.Create().Error(e.ToString());
+                    System.Windows.Forms.MessageBox.Show(e.Message, "Error", System.Windows.Forms.MessageBoxButtons.OK);
+                    return null;
+                }
+                if (client == null)
+                {
+                    System.Windows.Forms.MessageBox.Show("Cannot connect to server", "Error", System.Windows.Forms.MessageBoxButtons.OK);
+                    return null;
+                }
+                // perform login
+                try
+                {                    
+                    serverBaseUrl = login.ServerBaseUri;                    
+                    bool loginSucceeded = DolLogin(login, client);
+                    if (loginSucceeded) {
+                        loginResult.IsSuccesfull = true;
+                        loginResult.AuthenticationData = login;
                     }
-                    catch (Exception e)
+                    _loginResult = loginResult;
+                }
+                catch (WebException ex)
+                {
+                    Logger.Create().Error(ex.Message, ex);
+                    loginResult.LoginResultType = LoginResultType.UnknownServerName;
+                    loginResult.LoginResultMessage = ex.Message;
+                    loginResult.IsSuccesfull = false;
+                }
+                catch (Exception ex)
+                {
+                    Logger.Create().Error(ex.Message, ex);
+                    loginResult.LoginResultType = LoginResultType.UnknownError;
+                    loginResult.LoginResultMessage = ex.Message;
+                }
+                finally
+                {
+                    if (client != null)
                     {
-                        Logger.Create().Error(e.ToString());
-                        System.Windows.Forms.MessageBox.Show(e.Message, "Error", System.Windows.Forms.MessageBoxButtons.OK);
-                        return;
+                        client.Close();
                     }
-
-                    if (client == null)
-                    {
-                        System.Windows.Forms.MessageBox.Show("Cannot connect to server", "Error", System.Windows.Forms.MessageBoxButtons.OK);
-                        return;
-                    }
-
-                    // perform login
-                    try
-                    {
-                        serverBaseUrl = login.ServerBaseUri;
-
-						bool loginSucceeded = DolLogin(login, client);
-                        if (loginSucceeded) {
-                            loginResult.IsSuccesfull = true;
-                            loginResult.AuthenticationData = login;
-                        }
-                        _loginResult = loginResult;
-                    }
-                    catch (WebException ex)
-                    {
-                        Logger.Create().Error(ex.Message, ex);
-                        loginResult.LoginResultType = LoginResultType.UnknownServerName;
-                        loginResult.LoginResultMessage = ex.Message;
-                        loginResult.IsSuccesfull = false;
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.Create().Error(ex.Message, ex);
-                        loginResult.LoginResultType = LoginResultType.UnknownError;
-                        loginResult.LoginResultMessage = ex.Message;
-                    }
-                    finally
-                    {
-                        if (client != null)
-                            client.Close();
-                    }
-
-                },
-                login.ReconnectInterval * 1000, login.ReconnectCount);
-
-                cancelPressed = !bg.DoWork(WAIT_DIALOG_PROGRESS_TEXT);
+                }
             }
-
             return loginResult;
         }
-
 
         public static bool DolLogin(LoginData login, CxWebServiceClient client)
         {
             bool loginSucceeded = false;
 			_oidcLoginHelper.resetLatestResult();
 			OidcLoginResult oidcLoginResult = _oidcLoginHelper.ConnectToIdentidyProvider(login.ServerBaseUri);
-
 			if (oidcLoginResult.IsSuccessful)
 			{
                 //Add logs for print Server url and AccessToken

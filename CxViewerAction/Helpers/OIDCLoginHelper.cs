@@ -9,16 +9,14 @@ namespace CxViewerAction.Helpers
     public class OIDCLoginHelper
     {
         private readonly OidcLoginFrm _oidcLoginFrm = new OidcLoginFrm();
-        private readonly AutoResetEvent _oidcLoginEvent = new AutoResetEvent(false);
-        public static bool errorWasShown = false;
-
         private OidcLoginResult _latestResult;
+        public static bool errorWasShown = false;
 
         public OIDCLoginHelper()
         {
-			_oidcLoginFrm.OidcLoginCtrl2.NavigationCompleted += OidcLoginCtrlOnNavigationCompleted;
-			_oidcLoginFrm.OidcLoginCtrl2.NavigationError += OidcLoginCtrlOnNavigationError;
-			_oidcLoginFrm.UserClosedForm += OnUserClosedForm;
+            _oidcLoginFrm.NavigationCompleted += OidcLoginCtrlOnNavigationCompleted;
+            _oidcLoginFrm.NavigationError += OidcLoginCtrlOnNavigationError;
+            _oidcLoginFrm.UserClosedForm += OnUserClosedForm;
 			_latestResult = new OidcLoginResult(false, string.Empty, null);
 		}
 
@@ -30,7 +28,6 @@ namespace CxViewerAction.Helpers
         private void OnUserClosedForm(object sender, EventArgs e)
         {
             _latestResult = new OidcLoginResult(false, "Exit", null);
-            _oidcLoginEvent.Set();
         }
 
         private void OidcLoginCtrlOnNavigationError(object sender, string errorMessage)
@@ -38,31 +35,17 @@ namespace CxViewerAction.Helpers
             errorWasShown = true;
             MessageBox.Show(errorMessage,"Error", MessageBoxButtons.OK);
             _latestResult = new OidcLoginResult(false, errorMessage, null);
-            _oidcLoginEvent.Set();
         }
 
         private void OidcLoginCtrlOnNavigationCompleted(object sender, string code)
         {
-            _latestResult = new OidcLoginResult(true, string.Empty, code);
-            _oidcLoginEvent.Set();
-        }
-
-        private void ConectAndWait(string baseServerUri)
-        {
-            _oidcLoginFrm.OidcLoginCtrl2.Invoke(new MethodInvoker(() =>
-            {
-                _oidcLoginFrm.Show();
-                _oidcLoginFrm.ConnectToIdentidyProvider(baseServerUri);
-            }));
-            _oidcLoginEvent.WaitOne();
+            _latestResult = new OidcLoginResult(true, string.Empty, code);            
         }
 
         public OidcLoginResult ConnectToIdentidyProvider(string baseServerUri)
         {
-
-			ConectAndWait(baseServerUri);
-
-            _oidcLoginFrm.CloseForm();
+            _oidcLoginFrm.ConnectToIdentidyProvider(baseServerUri);
+            _oidcLoginFrm.ShowDialog();
             return _latestResult;
         }
 

@@ -1,4 +1,5 @@
 ﻿using CxViewerAction.Views.DockedView;
+using Microsoft.Web.WebView2.Core;
 
 namespace CxViewerAction.Views
 {
@@ -7,7 +8,7 @@ namespace CxViewerAction.Views
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private System.ComponentModel.IContainer components = null;        
 
         /// <summary>
         /// Clean up any resources being used.
@@ -31,23 +32,27 @@ namespace CxViewerAction.Views
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OidcLoginFrm));
-            this.oidcLoginCtrl2 = new CxViewerAction.Views.DockedView.OidcLoginCtrl();
-            this.SuspendLayout();
+            this.webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            this.SuspendLayout();            
             // 
-            // oidcLoginCtrl2
+            // webView21
             // 
-            this.oidcLoginCtrl2.AutoScroll = true;
-            this.oidcLoginCtrl2.Location = new System.Drawing.Point(-1, -2);
-            this.oidcLoginCtrl2.Name = "oidcLoginCtrl2";
-            this.oidcLoginCtrl2.Size = new System.Drawing.Size(495, 574);
-            this.oidcLoginCtrl2.TabIndex = 0;
+            InitializeAsync();
+            this.webView21.Location = new System.Drawing.Point(1, -2);
+            this.webView21.Name = "webView21";
+            this.webView21.Size = new System.Drawing.Size(1011, 706);
+            this.webView21.TabIndex = 0;
+            this.webView21.Text = "webView21";
+            this.webView21.Source = new System.Uri("about:blank");
+            //this.webView21.Source = new System.Uri("http://www.google.com", System.UriKind.Absolute);
+            this.webView21.ZoomFactor = 1D;
             // 
             // OidcLoginFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(494, 573);
-            this.Controls.Add(this.oidcLoginCtrl2);
+            this.ClientSize = new System.Drawing.Size(1013, 699);
+            this.Controls.Add(this.webView21);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -60,11 +65,14 @@ namespace CxViewerAction.Views
 
         }
 
+        private async void InitializeAsync()
+        {
+            var env = await CoreWebView2Environment.CreateAsync(null, "C:\\temp");
+            await webView21.EnsureCoreWebView2Async(env);
+        }
+
         #endregion
 
-		//private DockedView.OidcLoginCtrl oidcLoginCtrl1;
-        private DockedView.OidcLoginCtrl oidcLoginCtrl2;
-
-        public OidcLoginCtrl OidcLoginCtrl2 { get => oidcLoginCtrl2; set => oidcLoginCtrl2 = value; }
-	}
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
+    }
 }

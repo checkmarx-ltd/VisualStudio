@@ -24,11 +24,7 @@ namespace CxViewerAction.Views.DockedView
 
         public OidcLoginCtrl()
         {
-            InitializeComponent();
-			webBrowserIdentityProvider.ScriptErrorsSuppressed = true;
-			ChangeIeVersion();
-			webBrowserIdentityProvider.DocumentCompleted += OnDocumentCompleted;
-			webBrowserIdentityProvider.Navigated += OnNavigated;
+            InitializeComponent();            
 		}
 
 		private void ChangeIeVersion() {
@@ -47,9 +43,7 @@ namespace CxViewerAction.Views.DockedView
         #region Private methods
 
         private void OnNavigated(object sender, WebBrowserNavigatedEventArgs eventArgs)
-        {
-			webBrowserIdentityProvider.AllowNavigation = true;
-			
+        {			
 			Uri urlAddress = new Uri(eventArgs.Url.ToString());
             string queryString = urlAddress.Query;
             if (string.IsNullOrWhiteSpace(queryString))
@@ -63,8 +57,7 @@ namespace CxViewerAction.Views.DockedView
             }
             errorMessage = string.IsNullOrWhiteSpace(errorMessage) ? "Internal server error" : errorMessage;
             if (NavigationError != null)
-            {
-                webBrowserIdentityProvider.Navigate(BLANK_PAGE);
+            {              
                 NavigationError(this, errorMessage);
             }
         }
@@ -91,7 +84,6 @@ namespace CxViewerAction.Views.DockedView
 
             if (NavigationCompleted != null)
             {
-                webBrowserIdentityProvider.Navigate(BLANK_PAGE);
                 NavigationCompleted(this, code);
             }
         }
@@ -127,12 +119,9 @@ namespace CxViewerAction.Views.DockedView
 				Constants.REDIRECT_URI_KEY + "=" + redirectUri;
 			System.Text.Encoding encoding = System.Text.Encoding.UTF8;
 			byte[] postDataBytes = encoding.GetBytes(postData);
-
-			WinCookieHelper.SupressCookiePersist();
-            ChangeIeVersion();
-            webBrowserIdentityProvider.Navigate(serverURL, string.Empty, postDataBytes, header);
+			WinCookieHelper.SupressCookiePersist();            
         }
 
-		#endregion
-	}
+        #endregion
+    }
 }
