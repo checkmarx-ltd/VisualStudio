@@ -42,7 +42,7 @@ namespace CxViewerAction.Views
             this.webView21.Name = "webView21";
             this.webView21.Size = new System.Drawing.Size(1011, 706);
             this.webView21.TabIndex = 0;
-            this.webView21.Text = "webView21";
+            //this.webView21.Text = "webView21";
             this.webView21.Source = new System.Uri("about:blank");
             //this.webView21.Source = new System.Uri("http://www.google.com", System.UriKind.Absolute);
             this.webView21.ZoomFactor = 1D;

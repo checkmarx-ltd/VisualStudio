@@ -42,7 +42,7 @@ namespace CxViewerAction.Views.DockedView
             this.loginWebView.Name = "loginWebView";
             this.loginWebView.Size = new System.Drawing.Size(659, 607);
             this.loginWebView.TabIndex = 0;
-            this.loginWebView.Text = "webView21";
+            //this.loginWebView.Text = "webView21";
             this.loginWebView.ZoomFactor = 1D;
             // 
             // OidcLoginCtrl
