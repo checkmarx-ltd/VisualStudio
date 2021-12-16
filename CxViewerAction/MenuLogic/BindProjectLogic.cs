@@ -20,6 +20,7 @@ namespace CxViewerAction.MenuLogic
         {
             if (!_isBinded)
             {
+                Logger.Create().Debug("Project has not been binded yet.");
                 //bind
                 if (PerspectiveHelper.LoginToServer() == null)
                 {
@@ -100,14 +101,18 @@ namespace CxViewerAction.MenuLogic
 
         public CommandStatus GetStatus()
         {
+            Logger.Create().Debug("BindLogic GetStatus");
             CommandStatus status = CommandStatus.CommandStatusNull;           
             _isBinded = false;
             status = (CommandStatus)CommandStatus.CommandStatusSupported |
                          CommandStatus.CommandStatusEnabled;
             LoginData login = LoginHelper.LoadSaved();
+            Logger.Create().Debug("BindLogic GetSelectedProject");
             Entities.Project selectedProject = CommonActionsInstance.getInstance().GetSelectedProject();
+            
             if (selectedProject == null)
             {
+                Logger.Create().Debug("BindLogic GetSelectedProject returned null");
                 return CommandStatus.CommandStatusNull;
             }
             if (login != null && login.BindedProjects != null)
@@ -118,6 +123,7 @@ namespace CxViewerAction.MenuLogic
 
                 if (bindPro != null)
                 {
+                    Logger.Create().Debug("BindLogic project is found " + bindPro.ProjectName);
                     _isBinded = true;
                     status = (CommandStatus)CommandStatus.CommandStatusUnsupported;
                     //bind is unsupported -> unbind is supported

@@ -36,11 +36,13 @@ namespace CxViewerAction.Views.DockedView
 
 			// set the appropriate IE 11 version
 			RegVal = 11001;
-	
-			// set the actual key
-			using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION", RegistryKeyPermissionCheck.ReadWriteSubTree))
+
+            Logger.Create().Debug("Changing IE Version to IE11 version 11001.");
+            // set the actual key
+            using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION", RegistryKeyPermissionCheck.ReadWriteSubTree))
 			Key.SetValue(System.Diagnostics.Process.GetCurrentProcess().ProcessName + ".exe", RegVal, RegistryValueKind.DWord);
-		}
+            Logger.Create().Debug("Registry update for IE11 for Process Name " + System.Diagnostics.Process.GetCurrentProcess().ProcessName);
+        }
 
         #endregion
 
@@ -49,8 +51,9 @@ namespace CxViewerAction.Views.DockedView
         private void OnNavigated(object sender, WebBrowserNavigatedEventArgs eventArgs)
         {
 			webBrowserIdentityProvider.AllowNavigation = true;
-			
-			Uri urlAddress = new Uri(eventArgs.Url.ToString());
+            
+            Uri urlAddress = new Uri(eventArgs.Url.ToString());
+            Logger.Create().Debug("Navigation complete for " + urlAddress.ToString());
             string queryString = urlAddress.Query;
             if (string.IsNullOrWhiteSpace(queryString))
             {
@@ -62,6 +65,7 @@ namespace CxViewerAction.Views.DockedView
                 return;
             }
             errorMessage = string.IsNullOrWhiteSpace(errorMessage) ? "Internal server error" : errorMessage;
+            Logger.Create().Debug("Navigation complete with error " + errorMessage);
             if (NavigationError != null)
             {
                 webBrowserIdentityProvider.Navigate(BLANK_PAGE);
@@ -82,12 +86,14 @@ namespace CxViewerAction.Views.DockedView
 
         private void OnDocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs eventArgs)
         {
+            Logger.Create().Debug("Checking for presence of authorization code in the URL. "+ eventArgs.Url.AbsoluteUri.ToLower());
             if (!eventArgs.Url.AbsoluteUri.ToLower().Contains("code="))
             {
                 return;
             }
 
-			string code = ExtractCodeFromUrl(eventArgs.Url.AbsoluteUri);
+            Logger.Create().Debug("Extracting authorization code from the URL. " );
+            string code = ExtractCodeFromUrl(eventArgs.Url.AbsoluteUri);
 
             if (NavigationCompleted != null)
             {
@@ -109,6 +115,7 @@ namespace CxViewerAction.Views.DockedView
                 Invoke(new MethodInvoker(() => ConnectToIdentidyProvider(serverUri)));
                 return;
             }
+            Logger.Create().Debug("Initiating navigation to OIDC authorization endpoint "+serverUri);
             NavigateToOidcLogin(serverUri);
         }
 
@@ -129,7 +136,9 @@ namespace CxViewerAction.Views.DockedView
 			byte[] postDataBytes = encoding.GetBytes(postData);
 
 			WinCookieHelper.SupressCookiePersist();
+            Logger.Create().Debug("Changing IE version to IE11.");
             ChangeIeVersion();
+            Logger.Create().Debug("Navigating to " + serverURL + " headers " + header);
             webBrowserIdentityProvider.Navigate(serverURL, string.Empty, postDataBytes, header);
         }
 

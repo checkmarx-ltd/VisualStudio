@@ -153,7 +153,9 @@ namespace CxViewerAction.Helpers
                     isThrewError = true;
                     return;
                 }
+                Logger.Create().Debug("Getting project display data.");
                 cxWSResponseProjectsDisplayData = client.ServiceClient.GetProjectsDisplayData(loginResult.SessionId);
+                Logger.Create().Debug("Received project display data. Count "+ cxWSResponseProjectsDisplayData.projectList.Length);
 
             }, loginResult.AuthenticationData.ReconnectInterval * 1000, loginResult.AuthenticationData.ReconnectCount);
 
@@ -229,7 +231,7 @@ namespace CxViewerAction.Helpers
                                        isNewProject = true;
                                    }
 
-
+                                   Logger.Create().Info("Getting Scans display data for selected project " + selectedProjectId);
                                    CxWSResponseScansDisplayData cxWSResponseScansDisplayData = PerspectiveHelper.GetScansDisplayData(selectedProjectId);
                                    if (cxWSResponseScansDisplayData.ScanList.Length == 0)
                                    {
@@ -239,6 +241,7 @@ namespace CxViewerAction.Helpers
                                        return;
                                    }
 
+                                   Logger.Create().Info("Received Scans display data for selected project. Count " + cxWSResponseScansDisplayData.ScanList.Length);
                                    foreach (ScanDisplayData item in cxWSResponseScansDisplayData.ScanList)
                                    {
 

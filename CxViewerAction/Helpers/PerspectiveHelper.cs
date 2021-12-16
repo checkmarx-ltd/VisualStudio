@@ -35,7 +35,7 @@ namespace CxViewerAction.Helpers
         public static void DoPrevResult()
         {
 
-            Logger.Create().Debug("DoPrevResult in");
+            Logger.Create().Debug("Display previous results.");
             // Get logged user credentials and project relation data
             LoginData login = Helpers.LoginHelper.Load(0);
             CxWSQueryVulnerabilityData[] perspective = null;
@@ -69,6 +69,7 @@ namespace CxViewerAction.Helpers
                     StorageHelper.Delete(tmp.Path);
                 }
 
+                Logger.Create().Debug("Getting SCAN XML in backgroundworkerhelper.");
                 BackgroundWorkerHelper bgWork = new BackgroundWorkerHelper(delegate
                     {
                         tmp.Path = PerspectiveHelper.GetScanXML(CommonData.SelectedScanId);
@@ -82,6 +83,7 @@ namespace CxViewerAction.Helpers
 
 
                 Dictionary<string, long> list = new Dictionary<string, long>();
+                Logger.Create().Debug("Scan report list size " + bindProject.ScanReports.Count);
                 foreach (ScanReportInfo item in bindProject.ScanReports)
                 {
                     if (!list.ContainsKey(item.Name))
@@ -101,6 +103,7 @@ namespace CxViewerAction.Helpers
 
         public static ProjectConfiguration GetProjectConfiguration(long projectId)
         {
+            Logger.Create().Debug("Getting project configuration.");
             ProjectConfiguration res = null;
             LoginResult loginResult = getLoginResult();
 
@@ -124,6 +127,7 @@ namespace CxViewerAction.Helpers
                 return null;
             }
 
+            Logger.Create().Debug("Retrieved project configuration successfully.");
             res = cXWSResponseResults.ProjectConfig;
 
             return res;
@@ -131,6 +135,7 @@ namespace CxViewerAction.Helpers
 
         public static CxWSQueryVulnerabilityData[] GetScanResultsPath(long scanId)
         {
+            Logger.Create().Debug("Getting scan results path.");
             CxWSQueryVulnerabilityData[] res = null;
             LoginResult loginResult = getLoginResult();
 
@@ -153,6 +158,8 @@ namespace CxViewerAction.Helpers
                 MessageBox.Show(cXWSResponseResults.ErrorMessage, "Error", MessageBoxButtons.OK);
                 return null;
             }
+
+            Logger.Create().Debug("Scan results path retrived.");
 
             res = cXWSResponseResults.Queries;
 
@@ -224,6 +231,7 @@ namespace CxViewerAction.Helpers
 
         public static string GetScanXML(long scanId)
         {
+            Logger.Create().Debug("Getting Scan XML for scanId " + scanId);
             string path = "";
             LoginResult loginResult = getLoginResult();
             CxWebServiceClient client;
@@ -242,10 +250,13 @@ namespace CxViewerAction.Helpers
             CxWSReportRequest reportRequest = new CxWSReportRequest();
             reportRequest.ScanID = scanId;
             reportRequest.Type = CxWSReportType.XML;
+            Logger.Create().Debug("Creating scan report from the server. ");
             CxWSCreateReportResponse cXWSCreateReportResponse = client.ServiceClient.CreateScanReport(loginResult.SessionId, reportRequest);
+            Logger.Create().Debug("Getting Scan XML for scanId " + scanId);
             long reportID = cXWSCreateReportResponse.ID;
             int numOfTrials = 0;
             bool resultsObtained = false;
+            Logger.Create().Debug("Waiting for report getting ready.");
             while (!resultsObtained && numOfTrials < 100)
             {
                 CxWSReportStatusResponse cxWSReportStatusResponse = client.ServiceClient.GetScanReportStatus(loginResult.SessionId, reportID);
@@ -259,7 +270,7 @@ namespace CxViewerAction.Helpers
                 }
                 numOfTrials++;
             }
-            
+            Logger.Create().Debug("Getting the scan report from the server.");
             CxWSResponseScanResults cxWSResponseScanResults = client.ServiceClient.GetScanReport(loginResult.SessionId, reportID);
             if (!cxWSResponseScanResults.IsSuccesfull)
             {
@@ -703,6 +714,7 @@ namespace CxViewerAction.Helpers
             bool cancelPressed = false;
             if (oidcLoginData.AccessToken == null)
             {
+                Logger.Create().Debug("AccessToken is null. Initiating DoLoginWithoutForm.");
                 try
                 {
                     loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);

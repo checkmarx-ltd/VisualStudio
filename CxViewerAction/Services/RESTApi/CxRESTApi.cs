@@ -22,6 +22,10 @@ namespace CxViewerAction.Services
         private const string _messageBodyTemplateTokenFromRefreshToken = Constants.GRANT_TYPE_KEY + "={0}&" + Constants.CLIENT_ID_KEY + "={1}&"
             + Constants.REFRESH_TOKEN + "={2}" ;
 
+        private const string _messageBodyTemplateTokenFromUsernamePassword = Constants.USERNAME_KEY + "={0}&" + Constants.PASSWORD_KEY + "={1}&" + 
+            Constants.GRANT_TYPE_KEY + "={2}&" + Constants.CLIENT_ID_KEY + "=resource_owner_client&"
+            + Constants.REDIRECT_URI_KEY + "={3}/&" + Constants.CLIENT_SECRET_KEY + "=014DF517-39D1-4453-B7B3-9930C563627C&" + Constants.SCOPE_KEY + "=" + Constants.SCOPE_VALUE;
+
         #endregion
 
         #region Ctor
@@ -46,6 +50,18 @@ namespace CxViewerAction.Services
             return oidcLoginData.AccessToken;
 
 		}
+
+        public string LoginUserNamePassword(string username, string password)
+        {
+            Uri uri = GetTokenEndpointUri();
+            string messageBody = GetLoginUsernamePasswordMesageBody(username, password);
+            byte[] messageBodyAsByteArray = GetMesageBodyEncoded(username, password);
+            HttpWebRequest webRequest = CreateWebRequest(uri, messageBody, messageBodyAsByteArray, null);
+            HttpWebResponse webResponse = HandleWebResponse(webRequest, "CxRESTApiLogin->Login->Rest API, status message: ", "Login Failed");
+            OidcLoginData oidcLoginData = ParseOidcInfo(webResponse);
+            return oidcLoginData.AccessToken;
+
+        }
 
         internal void getAccessTokenFromRefreshToken(string refreshToken)
         {
@@ -181,9 +197,25 @@ namespace CxViewerAction.Services
             return string.Format(_messageBodyTemplateTokenFromCode, Constants.AUTHORIZATION_CODE_GRANT_TYPE, Constants.CLIENT_VALUE, redirectUri, code);
         }
 
+        private string GetLoginUsernamePasswordMesageBody(string username, string password)
+        {
+            string redirectUri = _login.ServerBaseUri;
+            if (redirectUri.EndsWith("/"))
+            {
+                redirectUri = redirectUri.Substring(0, redirectUri.Length - 1);
+            }
+            return string.Format(_messageBodyTemplateTokenFromUsernamePassword, username, password, Constants.PASSWORD_GRANT_TYPE, redirectUri);
+        }
+
         private byte[] GetMesageBodyEncoded(string code)
         {
             string messageBody = GetLoginMesageBody(code);
+            return Encoding.UTF8.GetBytes(messageBody);
+        }
+
+        private byte[] GetMesageBodyEncoded(string username, string password)
+        {
+            string messageBody = GetLoginUsernamePasswordMesageBody(username, password);
             return Encoding.UTF8.GetBytes(messageBody);
         }
 

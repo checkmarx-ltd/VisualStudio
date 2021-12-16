@@ -28,16 +28,22 @@ namespace CxViewerAction.MenuLogic
 
         public ActionStatus Act()
         {
+            Logger.Create().Debug("Scanlogic Act");
             if (PerspectiveHelper.LoginToServer() == null)
             {
+                Logger.Create().Debug("LoginToServer() return null");
                 return ActionStatus.Failed;
             }
+            Logger.Create().Debug("LoginToServer() return success");
             LoginData login = LoginHelper.LoadSaved();
+            Logger.Create().Debug("Load Saved "+login.ToString());
             Entities.Project selectedProject = CommonActionsInstance.getInstance().GetSelectedProject();
             if (selectedProject == null)
             {
+                Logger.Create().Debug("Selected project is null");
                 return ActionStatus.Failed;
             }
+            Logger.Create().Debug("Selected project is not null" + selectedProject.ProjectName);
             CommonData.ProjectName = selectedProject.ProjectName;
             CommonData.ProjectRootPath = selectedProject.RootPath;
             if (login != null && login.BindedProjects != null)
@@ -60,8 +66,11 @@ namespace CxViewerAction.MenuLogic
                     CommonData.IsProjectBound = false;
                 }
             }
+            Logger.Create().Debug("BuildFileMapping");
             CommonActionsInstance.getInstance().BuildFileMapping();
+            Logger.Create().Debug("Calling File.SaveAll");
             CommonActionsInstance.getInstance().ExecuteSystemCommand("File.SaveAll", string.Empty);
+            Logger.Create().Debug("Initiating scan....");
             DoScan(selectedProject);
             CommonData.IsWorkingOffline = false;
             return ActionStatus.Success;

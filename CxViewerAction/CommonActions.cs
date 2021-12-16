@@ -185,6 +185,7 @@ namespace CxViewerAction
         /// <returns></returns>
         public Entities.Project GetSelectedProject()
         {
+            Logger.Create().Debug("Inside GetSelectedProje3ct()");
             string projectName, projectPath;
             Array projects = (Array)_applicationObject.ActiveSolutionProjects;
 
@@ -193,6 +194,7 @@ namespace CxViewerAction
             //Context menu are displayed on project item in solution explorer
             if (_applicationObject.SelectedItems != null)
             {
+                Logger.Create().Debug("Looping for SelectedItems ");
                 foreach (SelectedItem selectedItem in _applicationObject.SelectedItems)
                 {
                     if (selectedItem.ProjectItem != null)

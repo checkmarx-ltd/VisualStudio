@@ -36,7 +36,8 @@ namespace CxViewerAction.Entities
         private string _serverDomain = null;
         private string _server = null;
         private string _serverBaseUri = null;
-        private bool _ssl = false;        
+        private bool _ssl = false;
+        private string _authenticationType = "access_control";
 
         private EntityId _id;
         private bool _isLogging;
@@ -169,6 +170,12 @@ namespace CxViewerAction.Entities
         {
             get { return _ssl; }
             set { _ssl = value; }
+        }
+
+        public string getAuthenticationType
+        {
+            get { return _authenticationType; }
+            set { _authenticationType = value; }
         }
 
         /// <summary>

@@ -4,6 +4,7 @@ using CxViewerAction.Helpers;
 using CxViewerAction.CxVSWebService;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
+using Common;
 
 namespace CxViewerAction.MenuLogic
 {
@@ -16,7 +17,9 @@ namespace CxViewerAction.MenuLogic
                 return ActionStatus.Failed;
             }
             LoginData login = LoginHelper.LoadSaved();
+            Logger.Create().Debug("Getting selected project");
             Entities.Project selectedProject = CommonActionsInstance.getInstance().GetSelectedProject();
+            Logger.Create().Debug("Found selected project " + selectedProject.ProjectName) ;
             if (selectedProject == null)
             {
                 return ActionStatus.Failed;
@@ -49,6 +52,7 @@ namespace CxViewerAction.MenuLogic
 
         private void RetrieveResultsFromServer(LoginData.BindProject bindPro, LoginData login)
         {
+            Logger.Create().Debug("Retrieving  results from server.");
             CxWSResponseScansDisplayData cxWSResponseScansDisplayData = PerspectiveHelper.GetScansDisplayData(CommonData.ProjectId);
             if (cxWSResponseScansDisplayData == null)
             { //error occured
@@ -61,6 +65,7 @@ namespace CxViewerAction.MenuLogic
                 return;
             }
             bindPro.ScanReports.Clear();
+            Logger.Create().Debug("Received scan results data. Size=" + cxWSResponseScansDisplayData.ScanList.Length);
             foreach (ScanDisplayData item in cxWSResponseScansDisplayData.ScanList)
             {
 

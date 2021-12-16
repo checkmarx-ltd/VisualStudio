@@ -23,11 +23,15 @@
 		public const string ERR_UNKNOWN_USER_PASSWORD = "Cannot establish connection with the server. This may be an issue of incorrect user name or password";
 
 		public const string CLIENT_ID_KEY = "client_id";
+		public const string CLIENT_SECRET_KEY = "client_secret";
 		public const string CLIENT_VALUE = "ide_client";
 		public const string SCOPE_KEY = "scope";
 		public const string CODE_KEY = "code";
 		public const string GRANT_TYPE_KEY = "grant_type";
+		public const string USERNAME_KEY = "username";
+		public const string PASSWORD_KEY = "password";
 		public const string AUTHORIZATION_CODE_GRANT_TYPE = "authorization_code";
+		public const string PASSWORD_GRANT_TYPE = "password";
 		public const string SAST_PREFIX = "/CxRestAPI/auth";
 		public const string REFRESH_TOKEN = "refresh_token";
 		public const string REDIRECT_URI_KEY = "redirect_uri";

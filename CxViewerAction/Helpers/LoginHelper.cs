@@ -317,6 +317,7 @@ namespace CxViewerAction.Helpers
                 {
                     try
                     {
+                        Logger.Create().Debug("Initializing Web service client.");
                         client = new CxWebServiceClient(login);
                     }
                     catch (Exception e)
@@ -336,8 +337,8 @@ namespace CxViewerAction.Helpers
                     try
                     {
                         serverBaseUrl = login.ServerBaseUri;
-
-						bool loginSucceeded = DolLogin(login, client);
+                        Logger.Create().Debug("DoLogin in backgroundworkerhelper.");
+                        bool loginSucceeded = DolLogin(login, client);
                         if (loginSucceeded) {
                             loginResult.IsSuccesfull = true;
                             loginResult.AuthenticationData = login;
