@@ -114,7 +114,11 @@ namespace CxViewerAction.Views
                 {
                     cxRestApi = new CxRESTApi(login);
                     accessToken = cxRestApi.LoginUserNamePassword(username, password);
-                    cxRestApi.GetPermissions(accessToken);
+                    //GetPermissions requires 'openid' scope which is not relevant for username+password scenario
+                    // because in this case we use resource_owner_client oauth client.
+                    // Impact is that during traigging, VS plugin will still show UI fileds like Change State, Assign User editable
+                    // but SAST server will return error if logged-in user does not have those permissions.
+                    //cxRestApi.GetPermissions(accessToken);
                 }
                 catch (WebException ex)
                 {
