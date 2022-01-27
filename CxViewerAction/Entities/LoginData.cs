@@ -24,7 +24,7 @@ namespace CxViewerAction.Entities
         #region [Private Constants]
 
         /// <summary>
-        /// Full service path url format
+        /// Full service path url format 
         /// </summary>
         private const string _baseFormat = "http{0}://{1}";
         private const string _servicePathFormat = "{0}/Cxwebinterface/CxWsResolver.asmx";
@@ -36,7 +36,8 @@ namespace CxViewerAction.Entities
         private string _serverDomain = null;
         private string _server = null;
         private string _serverBaseUri = null;
-        private bool _ssl = false;        
+        private bool _ssl = false;
+        private string _authenticationType = "access_control";
 
         private EntityId _id;
         private bool _isLogging;
@@ -57,15 +58,15 @@ namespace CxViewerAction.Entities
         private bool _disableConnectionOptimizations = false;
 
         SerializableDictionary<string, string> _perspectives;
-        
+
         private List<BindProject> bindedProjects;
-		private bool _saveSastScan;
-		private bool _manageResultsComment;
-		private bool _manageResultsExploitability;
+        private bool _saveSastScan;
+        private bool _manageResultsComment;
+        private bool _manageResultsExploitability;
 
-		#endregion
+        #endregion
 
-		#region [ Constructors ]
+        #region [ Constructors ]
 
         private static LoginData loginDataInstance;
 
@@ -139,7 +140,7 @@ namespace CxViewerAction.Entities
                 return string.Format(_servicePathFormat, _serverBaseUri);
             }
             set { _server = value; }
-        }              
+        }
 
         public string ServerBaseUri
         {
@@ -170,6 +171,16 @@ namespace CxViewerAction.Entities
             get { return _ssl; }
             set { _ssl = value; }
         }
+
+        /// <summary>
+        /// Gets or sets value indicating that Authenticationa Type Log in Form Or User Submit Form throw htts protocol
+        /// </summary>
+        public string AuthenticationType
+        {
+            get { return _authenticationType; }
+            set { _authenticationType = value; }
+        }
+
 
         /// <summary>
         /// Get or set Entity prorepty
@@ -233,8 +244,8 @@ namespace CxViewerAction.Entities
         {
             get { return unboundRunID; }
             set { unboundRunID = value; }
-        }     
-        
+        }
+
         public List<BindProject> BindedProjects
         {
             get { return bindedProjects; }
@@ -260,19 +271,19 @@ namespace CxViewerAction.Entities
             set { _disableConnectionOptimizations = value; }
         }
 
-		public bool SaveSastScan { get => _saveSastScan; set => _saveSastScan = value; }
-		public bool ManageResultsComment { get => _manageResultsComment; set => _manageResultsComment = value; }
-		public bool ManageResultsExploitability { get => _manageResultsExploitability; set => _manageResultsExploitability = value; }
+        public bool SaveSastScan { get => _saveSastScan; set => _saveSastScan = value; }
+        public bool ManageResultsComment { get => _manageResultsComment; set => _manageResultsComment = value; }
+        public bool ManageResultsExploitability { get => _manageResultsExploitability; set => _manageResultsExploitability = value; }
 
-		#endregion [ Properties ]
+        #endregion [ Properties ]
 
-		#region [ Public Methods ]
+        #region [ Public Methods ]
 
-		/// <summary>
-		/// Verify if user enter all data to start auth verification
-		/// </summary>
-		/// <returns></returns>
-		public bool CanLog()
+        /// <summary>
+        /// Verify if user enter all data to start auth verification
+        /// </summary>
+        /// <returns></returns>
+        public bool CanLog()
         {
             return (String.IsNullOrEmpty(this.Server)) ? false : true;
         }
@@ -298,7 +309,7 @@ namespace CxViewerAction.Entities
                 Perspectives.Add(project, perspective);
         }
 
-       
+
 
         /// <summary>
         /// Clear user auth data

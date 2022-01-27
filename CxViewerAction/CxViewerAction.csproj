@@ -393,6 +393,12 @@
     <Compile Include="Views\Shapes\TableLayout.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Views\SubmitUserFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SubmitUserFrm.designer.cs">
+      <DependentUpon>SubmitUserFrm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\UploadFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -601,6 +607,9 @@
     <EmbeddedResource Include="Views\ScanProcessFrm.resx">
       <DependentUpon>ScanProcessFrm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SubmitUserFrm.resx">
+      <DependentUpon>SubmitUserFrm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UploadFrm.resx">
       <DependentUpon>UploadFrm.cs</DependentUpon>

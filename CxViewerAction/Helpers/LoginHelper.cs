@@ -11,6 +11,7 @@ using CxViewerAction.Entities;
 using CxViewerAction.Entities.WebServiceEntity;
 using CxViewerAction.Services;
 using CxViewerAction.ValueObjects;
+using CxViewerAction.Views;
 using CxViewerAction.WebPortal;
 
 namespace CxViewerAction.Helpers
@@ -29,10 +30,10 @@ namespace CxViewerAction.Helpers
 
         private static string studioVersion = "";
         private static bool isScanner = true;
-		private static CxRESTApi cxRestApi = null;
+        private static CxRESTApi cxRestApi = null;
 
 
-		public static bool IsScanner
+        public static bool IsScanner
         {
             get { return LoginHelper.isScanner; }
         }
@@ -105,7 +106,7 @@ namespace CxViewerAction.Helpers
             get { return _isLogged; }
             set { _isLogged = value; }
         }
-        
+
         private static string serverBaseUrl;
 
         public static string ServerBaseUrl
@@ -233,7 +234,7 @@ namespace CxViewerAction.Helpers
 
         internal static LoginResult DoLoginWithoutForm(out bool cancelPressed, bool relogin)
         {
-			//loads the preferences
+            //loads the preferences
             Entities.LoginData login = LoadSaved();
             if (login == null)
             {
@@ -245,7 +246,7 @@ namespace CxViewerAction.Helpers
                 cancelPressed = false;
                 return new LoginResult();
             }
-            
+
             return TryDoLogin(out cancelPressed, relogin, false);
         }
 
@@ -253,7 +254,7 @@ namespace CxViewerAction.Helpers
         {
             cancelPressed = false;
 
-			//TODO check what to do with this
+            //TODO check what to do with this
             if (_isLogged && !relogin)
             {
                 _loginResult.AuthenticationData = LoadSaved();
@@ -270,7 +271,7 @@ namespace CxViewerAction.Helpers
                 login = LoadSaved();
 
                 // verify that user hasn't active session and dialog data was validated sucessfull
-				//TODO check if isLogged neccessary
+                //TODO check if isLogged neccessary
                 if (!_isLogged || !login.CanLog() || relogin)
                 {
                     if (showForm)
@@ -295,7 +296,7 @@ namespace CxViewerAction.Helpers
             }
 
             _isLogged = !cancelPressed ? loginResult.IsSuccesfull : false;
-            
+
             Helpers.LoginHelper.Save(login);
 
             _loginResult = loginResult;
@@ -337,8 +338,9 @@ namespace CxViewerAction.Helpers
                     {
                         serverBaseUrl = login.ServerBaseUri;
 
-						bool loginSucceeded = DolLogin(login, client);
-                        if (loginSucceeded) {
+                        bool loginSucceeded = DolLogin(login, client);
+                        if (loginSucceeded)
+                        {
                             loginResult.IsSuccesfull = true;
                             loginResult.AuthenticationData = login;
                         }
@@ -376,25 +378,65 @@ namespace CxViewerAction.Helpers
         public static bool DolLogin(LoginData login, CxWebServiceClient client)
         {
             bool loginSucceeded = false;
-			_oidcLoginHelper.resetLatestResult();
-			OidcLoginResult oidcLoginResult = _oidcLoginHelper.ConnectToIdentidyProvider(login.ServerBaseUri);
+            OidcLoginResult oidcLoginResult = null;
 
-			if (oidcLoginResult.IsSuccessful)
-			{
-                //Add logs for print Server url and AccessToken
-                Logger.Create().Debug("Server URL: " + login.ServerBaseUri);
-                cxRestApi = new CxRESTApi(login);
-				string accessToken = cxRestApi.Login(oidcLoginResult.Code);
-				cxRestApi.GetPermissions(accessToken);
+            if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && login.AuthenticationType == Constants.AuthenticationaType_DefaultValue)
+            {
+                _oidcLoginHelper.resetLatestResult();
+                oidcLoginResult = _oidcLoginHelper.ConnectToIdentidyProvider(login.ServerBaseUri);
+            }
+            else if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && login.AuthenticationType == Constants.AuthenticationaType_UserNamePassword)
+            {
+                SubmitUserFrm submitUser = new SubmitUserFrm();
+                DialogResult dialogResult = submitUser.ShowModalView();
+                if (dialogResult == DialogResult.OK)
+                {
+                    oidcLoginResult = new OidcLoginResult(true, string.Empty, "");
+                }
+                if (dialogResult == DialogResult.Retry)
+                {
+                    submitUser = null;
+                    SubmitUserFrm submitUser1 = new SubmitUserFrm();
+                    dialogResult = submitUser1.ShowModalView();
+                    if (dialogResult == DialogResult.OK)
+                    {
+                        oidcLoginResult = new OidcLoginResult(true, string.Empty, "");
+                    }
+                    else if (dialogResult == DialogResult.Cancel)
+                        oidcLoginResult = new OidcLoginResult(false, string.Empty, "");
+                }
+                else if (dialogResult == DialogResult.Cancel)
+                    oidcLoginResult = new OidcLoginResult(false, string.Empty, "");
+
+            }
+            else
+            {
+                MessageBox.Show("Please configure valid Authentication Type", "Information", MessageBoxButtons.OK);
+                oidcLoginResult = new OidcLoginResult(false, string.Empty, "");
+            }
+            if (oidcLoginResult != null && oidcLoginResult.IsSuccessful)
+            {
+                if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && login.AuthenticationType == Constants.AuthenticationaType_DefaultValue)
+                {
+                    //Add logs for print Server url and AccessToken
+                    Logger.Create().Debug("Server URL: " + login.ServerBaseUri);
+                    cxRestApi = new CxRESTApi(login);
+                    string accessToken = cxRestApi.Login(oidcLoginResult.Code);
+                    cxRestApi.GetPermissions(accessToken);
+                }
+
                 loginSucceeded = true;
                 Logger.Create().Debug("Succeeded to login. ");
             }
-			else
-			{
-                Logger.Create().Debug("Server URL: " + login.ServerBaseUri);
-                _oidcLoginHelper.CloseLoginWindow();
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && login.AuthenticationType == Constants.AuthenticationaType_DefaultValue)
+                {
+                    Logger.Create().Debug("Server URL: " + login.ServerBaseUri);
+                    _oidcLoginHelper.CloseLoginWindow();
+                }
                 Logger.Create().Debug("Failed to login. ");
-			}
+            }
             return loginSucceeded;
 
         }

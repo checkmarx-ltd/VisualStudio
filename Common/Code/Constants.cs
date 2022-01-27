@@ -1,21 +1,34 @@
 ﻿namespace Common
 {
-    public class Constants
-    {
-        public const string COL_NAME_NUMBER = "No.";
-        public const string COL_NAME_STATUS = "Status";
-        public const string COL_NAME_SOURCE_FOLDER = "Source Folder";
-        public const string COL_NAME_SOURCE_FILE_NAME = "Source Filename";
-        public const string COL_NAME_SOURCE_LINE = "Source Line";
-        public const string COL_NAME_SOURCE_OBJECT = "Source Object";
-        public const string COL_NAME_DEST_FOLDER = "Destination Folder";
-        public const string COL_NAME_DEST_FILE_NAME = "Destination Filename";
-        public const string COL_NAME_DEST_LINE = "Destination Line";
-        public const string COL_NAME_DEST_OBJECT = "Destination Object";
-        public const string COL_NAME_SHOW_PATH = "Result State";
-        public const string COL_NAME_SEVERITY = "Severity";
-        public const string COL_NAME_ASSIGN = "Assigned User";
-        public const string COL_NAME_REMARK = "Comment";
+	public class Constants
+	{
+		#region AuthTypeUserpassword
+
+		public const string AuthenticationaType_DefaultValue = "access_control";
+		public const string AuthenticationaType_UserNamePassword = "username_password";
+
+		public const string USERNAME_KEY = "username";
+		public const string PASSWORD_KEY = "password";
+		public const string PASSWORD_GRANT_TYPE = "password";
+		public const string CLIENT_SECRET_KEY = "client_secret";
+		public const string SCOPE_VALUE_CREDS = "sast_api sast-permissions access_control_api sast_rest_api";
+
+		#endregion AuthTypeUserpassword
+
+		public const string COL_NAME_NUMBER = "No.";
+		public const string COL_NAME_STATUS = "Status";
+		public const string COL_NAME_SOURCE_FOLDER = "Source Folder";
+		public const string COL_NAME_SOURCE_FILE_NAME = "Source Filename";
+		public const string COL_NAME_SOURCE_LINE = "Source Line";
+		public const string COL_NAME_SOURCE_OBJECT = "Source Object";
+		public const string COL_NAME_DEST_FOLDER = "Destination Folder";
+		public const string COL_NAME_DEST_FILE_NAME = "Destination Filename";
+		public const string COL_NAME_DEST_LINE = "Destination Line";
+		public const string COL_NAME_DEST_OBJECT = "Destination Object";
+		public const string COL_NAME_SHOW_PATH = "Result State";
+		public const string COL_NAME_SEVERITY = "Severity";
+		public const string COL_NAME_ASSIGN = "Assigned User";
+		public const string COL_NAME_REMARK = "Comment";
 
 		public const string ERR_TITLE = "Error Message";
 		public const string ERR_UNKNOWN = "Cannot establish connection with the server. Unknown error.";
