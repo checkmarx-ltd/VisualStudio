@@ -3,7 +3,7 @@
 
 def ipAddress
 def vmName = "Plugin-VisualStudio-" + UUID.randomUUID().toString()
-def msbuildLocation = "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Professional\\MSBuild\\Current\\Bin\\MSBuild.exe""
+def msbuildLocation = "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Professional\\MSBuild\\Current\\Bin\\MSBuild.exe\""
 
 pipeline {
     parameters {
