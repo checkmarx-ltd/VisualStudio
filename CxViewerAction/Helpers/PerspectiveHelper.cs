@@ -35,7 +35,7 @@ namespace CxViewerAction.Helpers
         public static void DoPrevResult()
         {
 
-            Logger.Create().Debug("DoPrevResult in");
+            Logger.Create().Debug("Display previous results.");
             // Get logged user credentials and project relation data
             LoginData login = Helpers.LoginHelper.Load(0);
             CxWSQueryVulnerabilityData[] perspective = null;
@@ -69,6 +69,7 @@ namespace CxViewerAction.Helpers
                     StorageHelper.Delete(tmp.Path);
                 }
 
+                Logger.Create().Debug("Getting SCAN XML in backgroundworkerhelper.");
                 BackgroundWorkerHelper bgWork = new BackgroundWorkerHelper(delegate
                     {
                         tmp.Path = PerspectiveHelper.GetScanXML(CommonData.SelectedScanId);
@@ -82,6 +83,7 @@ namespace CxViewerAction.Helpers
 
 
                 Dictionary<string, long> list = new Dictionary<string, long>();
+                Logger.Create().Debug("Scan report list size " + bindProject.ScanReports.Count);
                 foreach (ScanReportInfo item in bindProject.ScanReports)
                 {
                     if (!list.ContainsKey(item.Name))
