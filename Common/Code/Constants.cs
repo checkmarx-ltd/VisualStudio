@@ -11,7 +11,7 @@
 		public const string PASSWORD_KEY = "password";
 		public const string PASSWORD_GRANT_TYPE = "password";
 		public const string CLIENT_SECRET_KEY = "client_secret";
-		public const string SCOPE_VALUE_CREDS = "sast_api sast-permissions access_control_api sast_rest_api";
+		public const string SCOPE_VALUE_CREDS = "sast_api sast-permissions access_control_api sast_rest_api offline_access";
 
 		#endregion AuthTypeUserpassword
 
@@ -37,6 +37,8 @@
 
 		public const string CLIENT_ID_KEY = "client_id";
 		public const string CLIENT_VALUE = "ide_client";
+		public const string CLIENT_VALUE_ROPC = "resource_owner_client";
+		public const string CLIENT_SECRET_ROPC = "014DF517-39D1-4453-B7B3-9930C563627C";
 		public const string SCOPE_KEY = "scope";
 		public const string CODE_KEY = "code";
 		public const string GRANT_TYPE_KEY = "grant_type";

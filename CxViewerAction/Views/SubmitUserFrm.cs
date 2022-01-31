@@ -13,11 +13,14 @@ namespace CxViewerAction.Views
     public partial class SubmitUserFrm : Form
     {
         public event EventHandler UserClosedForm;
+
+        private LoginData _login;
         /// <summary>
         /// SubmitUserFrm
         /// </summary>
-        public SubmitUserFrm()
+        public SubmitUserFrm(LoginData login)
         {
+            _login = login;
             InitializeComponent();
         }
         /// <summary>
@@ -99,10 +102,7 @@ namespace CxViewerAction.Views
             this.Show((IWin32Window)parent);
         }
         private void btnsubmituser_Click(object sender, EventArgs e)
-        {
-            LoginData login;
-
-            login = LoadSaved();
+        {            
             string username = txtInvUserName.Text;
             string password = txtInvPassword.Text;
 
@@ -112,13 +112,9 @@ namespace CxViewerAction.Views
                 string accessToken = null;
                 try
                 {
-                    cxRestApi = new CxRESTApi(login);
+                    cxRestApi = new CxRESTApi(_login);
                     accessToken = cxRestApi.LoginUserNamePassword(username, password);
-                    //GetPermissions requires 'openid' scope which is not relevant for username+password scenario
-                    // because in this case we use resource_owner_client oauth client.
-                    // Impact is that during traigging, VS plugin will still show UI fileds like Change State, Assign User editable
-                    // but SAST server will return error if logged-in user does not have those permissions.
-                    //cxRestApi.GetPermissions(accessToken);
+                    cxRestApi.GetPermissions(accessToken);                    
                 }
                 catch (WebException ex)
                 {
@@ -172,21 +168,6 @@ namespace CxViewerAction.Views
                     UserClosedForm(this, new EventArgs());
                 }
             }
-        }
-        /// <summary>
-        /// Load stored user data
-        /// </summary>
-        /// <returns></returns>
-        internal static LoginData LoadSaved()
-        {
-            if (loginCache != null)
-            {
-                return loginCache;
-            }
-            LoginData login = Helpers.LoginHelper.Load(0);
-            server = login.Server;
-            loginCache = login;
-            return login;
         }
     }
 }

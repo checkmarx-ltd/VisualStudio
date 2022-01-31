@@ -388,7 +388,7 @@ namespace CxViewerAction.Helpers
             }
             else if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && login.AuthenticationType == Constants.AuthenticationaType_UserNamePassword)
             {
-                SubmitUserFrm submitUser = new SubmitUserFrm();
+                SubmitUserFrm submitUser = new SubmitUserFrm(login);
                 DialogResult dialogResult = submitUser.ShowModalView();
                 if (dialogResult == DialogResult.OK)
                 {
@@ -397,7 +397,7 @@ namespace CxViewerAction.Helpers
                 if (dialogResult == DialogResult.Retry)
                 {
                     submitUser = null;
-                    SubmitUserFrm submitUser1 = new SubmitUserFrm();
+                    SubmitUserFrm submitUser1 = new SubmitUserFrm(login);
                     dialogResult = submitUser1.ShowModalView();
                     if (dialogResult == DialogResult.OK)
                     {

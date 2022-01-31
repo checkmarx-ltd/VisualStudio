@@ -36,14 +36,21 @@ namespace CxViewerAction.Services
             bool isExpired = false;
             if (oidcLoginData.AccessToken != null)
             {
-                long currentTimeInMilli = DateTime.Now.Ticks;
-                isExpired = DateTime.Compare(new DateTime(currentTimeInMilli), DateTimeOffset.FromUnixTimeMilliseconds(oidcLoginData.AccessTokenExpiration).UtcDateTime) > 0 ? false : true;
+                Logger.Create().Debug("IsTokenExpired: Token is not null");
+                DateTime tokenTime = DateTimeOffset.FromUnixTimeMilliseconds(oidcLoginData.AccessTokenExpiration).UtcDateTime;
+                isExpired = DateTime.Compare(DateTime.UtcNow, tokenTime ) > 0 ? true : false;
                 if (isExpired)
                 {
+                    Logger.Create().Debug("Access token has expired. Renewing.");
                     LoginData loginData = LoginHelper.LoadSaved();
                     CxRESTApi cxRestApi = new CxRESTApi(loginData);
                     cxRestApi.getAccessTokenFromRefreshToken(oidcLoginData.RefreshToken);
+                    Logger.Create().Debug("Access token has expired. Renewed.");
                 }
+            }
+            else
+            {
+                Logger.Create().Debug("IsTokenExpired: Access token is null.");
             }
             return isExpired;
         }

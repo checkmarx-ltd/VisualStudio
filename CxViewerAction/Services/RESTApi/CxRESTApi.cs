@@ -22,9 +22,12 @@ namespace CxViewerAction.Services
         private const string _messageBodyTemplateTokenFromRefreshToken = Constants.GRANT_TYPE_KEY + "={0}&" + Constants.CLIENT_ID_KEY + "={1}&"
             + Constants.REFRESH_TOKEN + "={2}" ;
 
+        private const string _messageBodyTemplateTokenFromRefreshTokenUP = Constants.GRANT_TYPE_KEY + "={0}&" + Constants.CLIENT_ID_KEY + "={1}&"
+            + Constants.REFRESH_TOKEN + "={2}&" + Constants.CLIENT_SECRET_KEY + "={3}";
+
         private const string _messageBodyTemplateTokenFromUsernamePassword = Constants.USERNAME_KEY + "={0}&" + Constants.PASSWORD_KEY + "={1}&" +
-            Constants.GRANT_TYPE_KEY + "={2}&" + Constants.CLIENT_ID_KEY + "=resource_owner_client&"
-            + Constants.REDIRECT_URI_KEY + "={3}/&" + Constants.CLIENT_SECRET_KEY + "=014DF517-39D1-4453-B7B3-9930C563627C&" + Constants.SCOPE_KEY + "=" + Constants.SCOPE_VALUE_CREDS;
+            Constants.GRANT_TYPE_KEY + "={2}&" + Constants.CLIENT_ID_KEY + "=" + Constants.CLIENT_VALUE_ROPC + "&"
+            + Constants.REDIRECT_URI_KEY + "={3}/&" + Constants.CLIENT_SECRET_KEY + "="+ Constants.CLIENT_SECRET_ROPC + "&" + Constants.SCOPE_KEY + "=" + Constants.SCOPE_VALUE_CREDS;
 
         #endregion
 
@@ -85,7 +88,15 @@ namespace CxViewerAction.Services
         {
             OidcLoginData oidcLoginData = null;
             Uri uri = GetTokenEndpointUri();
-            string messageBody = GetAccessTokenFromRefreshTokenMessageBody(refreshToken);
+            string messageBody;
+            if (!string.IsNullOrWhiteSpace(_login.AuthenticationType) && _login.AuthenticationType == Constants.AuthenticationaType_UserNamePassword)
+            {
+                messageBody = GetAccessTokenFromRefreshTokenMessageBodyUP(refreshToken);
+            }
+            else
+            {
+               messageBody = GetAccessTokenFromRefreshTokenMessageBody(refreshToken);
+            }
             byte[] messageBodyAsByteArray = GetRefTokenMessageBodyEncoded(refreshToken);
             HttpWebRequest webRequest = CreateWebRequest(uri, messageBody, messageBodyAsByteArray, null);
             HttpWebResponse webResponse = HandleWebResponse(webRequest, "CxRESTApiLogin->getAccessTokenFromRefreshToken->Rest API, status message: ", "Session expired. Please login.");
@@ -94,13 +105,25 @@ namespace CxViewerAction.Services
 
         private byte[] GetRefTokenMessageBodyEncoded(string refreshToken)
         {
-            string messageBody = GetAccessTokenFromRefreshTokenMessageBody(refreshToken);
-            return Encoding.UTF8.GetBytes(messageBody);
+            string messageBody;
+            if (!string.IsNullOrWhiteSpace(_login.AuthenticationType) && _login.AuthenticationType == Constants.AuthenticationaType_UserNamePassword)
+            {
+                messageBody = GetAccessTokenFromRefreshTokenMessageBodyUP(refreshToken);
+            }
+            else
+            {
+                messageBody = GetAccessTokenFromRefreshTokenMessageBody(refreshToken);
+            }
+                return Encoding.UTF8.GetBytes(messageBody);
         }
 
         private string GetAccessTokenFromRefreshTokenMessageBody(string refreshToken)
         {
             return string.Format(_messageBodyTemplateTokenFromRefreshToken, Constants.REFRESH_TOKEN, Constants.CLIENT_VALUE, refreshToken);
+        }
+        private string GetAccessTokenFromRefreshTokenMessageBodyUP(string refreshToken)
+        {
+            return string.Format(_messageBodyTemplateTokenFromRefreshTokenUP, Constants.REFRESH_TOKEN, Constants.CLIENT_VALUE_ROPC, refreshToken, Constants.CLIENT_SECRET_ROPC);
         }
 
         private OidcLoginData ParseOidcInfo(HttpWebResponse webResponse)
@@ -116,6 +139,20 @@ namespace CxViewerAction.Services
 
         internal void GetPermissions(string accessToken)
         {
+            if (!string.IsNullOrWhiteSpace(_login.AuthenticationType) && _login.AuthenticationType == Constants.AuthenticationaType_UserNamePassword)
+            {
+                //Caveat of username+password
+                //GetPermissions requires 'openid' scope which is not relevant for username+password scenario
+                // because in this case we use resource_owner_client oauth client.
+                // Impact is that during traigging, VS plugin will still show UI fileds like Change State, Assign User editable
+                // but SAST server will return error if logged-in user does not have those permissions.
+                //Assume permission, which may be denied by the server.
+                _login.SaveSastScan = true;
+                _login.ManageResultsComment = true;
+                _login.ManageResultsExploitability = true;
+                return;
+            }
+
             Uri uri = GetUserInfoUri();
             byte[] messageEmptyBody = Encoding.UTF8.GetBytes("");
             HttpWebRequest webRequest = CreateWebRequest(uri, "", messageEmptyBody, accessToken);
