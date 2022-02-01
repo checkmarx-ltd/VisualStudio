@@ -112,6 +112,8 @@ namespace CxViewerAction.Helpers
             {
                 try
                 {
+                    Logger.Create().Debug("DoWork" + message);
+
                     if (Invoke(message, waitView) || canceling)
                     {
                         success = true;
@@ -153,7 +155,8 @@ namespace CxViewerAction.Helpers
             {
                 try
                 {
-                    ErrorFrm frmError = new ErrorFrm(errorMessage, delegate(object o, EventArgs e) { executionResult = Invoke("Reconnection...", waitView); }, _doReloginFunc);
+                    Logger.Create().Debug("DoWork - Reconnection " + message);
+                    ErrorFrm frmError = new ErrorFrm(errorMessage, delegate (object o, EventArgs e) { executionResult = Invoke("Reconnection...", waitView); }, _doReloginFunc);
                     DialogResult res = frmError.ShowDialog();
 
                     if (res == DialogResult.Cancel)

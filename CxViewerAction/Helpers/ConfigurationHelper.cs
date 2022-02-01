@@ -1,4 +1,5 @@
-﻿using CxViewerAction.CxVSWebService;
+﻿using Common;
+using CxViewerAction.CxVSWebService;
 using CxViewerAction.Entities.WebServiceEntity;
 using CxViewerAction.Services;
 using System;
@@ -11,6 +12,7 @@ namespace CxViewerAction.Helpers
     {
         public ConfigurationResult GetConfigurationList(string sessionId, BackgroundWorkerHelper bg, CxWebServiceClient client)
         {
+            Logger.Create().Debug("Getting configuration list.");
             ConfigurationResult configuration = null;
             bg.DoWorkFunc = delegate(object obj)
             {
@@ -31,6 +33,7 @@ namespace CxViewerAction.Helpers
             if (!bg.DoWork("Receive Configuration list..."))
                 return null;
 
+            Logger.Create().Debug("Configuration list received. " + configuration.ToString());
             return configuration;
         }
     }

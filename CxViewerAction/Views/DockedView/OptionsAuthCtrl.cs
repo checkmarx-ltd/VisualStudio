@@ -17,8 +17,8 @@ namespace CxViewerAction.Views.DockedView
 	/// <summary>
 	/// Control represent addin custom settings form, available through "Tools" - "Options" menu item
 	/// </summary>
-    public partial class OptionsAuthCtrl : UserControl
-    { 
+	public partial class OptionsAuthCtrl : UserControl
+	{
 		#region [Private Members]
 		private string _server = "";
 		#endregion
@@ -35,16 +35,16 @@ namespace CxViewerAction.Views.DockedView
 		public OptionsAuthCtrl()
 		{
 			InitializeComponent();
-            if (Connect.IsLoaded)
-            {
-                BindDataToView();
-            }
+			if (Connect.IsLoaded)
+			{
+				BindDataToView();
+			}
 		}
 		#endregion
 
 		#region [Public Methods]
 
-		
+
 
 
 		/// <summary>
@@ -54,7 +54,7 @@ namespace CxViewerAction.Views.DockedView
 		/// <param name="e"></param>
 		private void btnSave_Click(object sender, EventArgs e)
 		{
-            save();
+			save();
 			currentLogin = BindDataFromView();
 			if (currentLogin.BindedProjects != null)
 			{
@@ -74,13 +74,19 @@ namespace CxViewerAction.Views.DockedView
 					loginBtn.Enabled = false;
 					logoutBtn.Enabled = true;
 				}
-				else if(!loginResult.LoginResultMessage.Equals("Exit"))
+
+				else if (!string.IsNullOrWhiteSpace(currentLogin.AuthenticationType) && currentLogin.AuthenticationType == Common.Constants.AuthenticationaType_DefaultValue && loginResult.LoginResultMessage != null && !loginResult.LoginResultMessage.Equals("Exit"))
 				{
 					MessageBox.Show("Login Failed", "Information", MessageBoxButtons.OK);
 					loginBtn.Enabled = true;
 					logoutBtn.Enabled = false;
 				}
-				
+				else if (!string.IsNullOrWhiteSpace(currentLogin.AuthenticationType) && currentLogin.AuthenticationType != Common.Constants.AuthenticationaType_DefaultValue && !loginResult.IsSuccesfull)
+				{
+					MessageBox.Show("Login Failed", "Information", MessageBoxButtons.OK);
+					loginBtn.Enabled = true;
+					logoutBtn.Enabled = false;
+				}
 			}
 			catch (Exception ex)
 			{
@@ -89,26 +95,26 @@ namespace CxViewerAction.Views.DockedView
 		}
 
 		private void save()
-        {
-            if (!Connect.IsLoaded)
-            {
-                MessageBox.Show("Checkmarx Visual Studio Plugin is disabled. \r\nPlease enable the plugin in Tools->Add-In Manager", "Information", MessageBoxButtons.OK);
-                return;
-            }
-            try
-            {
-                txtServer_Validating(txtServer, new CancelEventArgs());
-                if (!string.IsNullOrEmpty(errorProvider.GetError(txtServer)) || string.IsNullOrEmpty(txtServer.Text))
-                {
-                    return;
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Create().Error(ex);
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
-            }
-        }
+		{
+			if (!Connect.IsLoaded)
+			{
+				MessageBox.Show("Checkmarx Visual Studio Plugin is disabled. \r\nPlease enable the plugin in Tools->Add-In Manager", "Information", MessageBoxButtons.OK);
+				return;
+			}
+			try
+			{
+				txtServer_Validating(txtServer, new CancelEventArgs());
+				if (!string.IsNullOrEmpty(errorProvider.GetError(txtServer)) || string.IsNullOrEmpty(txtServer.Text))
+				{
+					return;
+				}
+			}
+			catch (Exception ex)
+			{
+				Logger.Create().Error(ex);
+				MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
+			}
+		}
 
 		void CheckValidation()
 		{
@@ -124,19 +130,20 @@ namespace CxViewerAction.Views.DockedView
 		/// </summary>
 		private void BindDataToView()
 		{
-            OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
-            currentLogin = LoginHelper.Load(0);
-            txtServer.Text = currentLogin.ServerDomain;
-            if (oidcLoginData.AccessToken == null)
-            {
-                loginBtn.Enabled = true;
-                logoutBtn.Enabled = false;
-            }
-            else {
-                loginBtn.Enabled = false;
-                logoutBtn.Enabled = true;
-            }
-        }
+			OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
+			currentLogin = LoginHelper.Load(0);
+			txtServer.Text = currentLogin.ServerDomain;
+			if (oidcLoginData.AccessToken == null)
+			{
+				loginBtn.Enabled = true;
+				logoutBtn.Enabled = false;
+			}
+			else
+			{
+				loginBtn.Enabled = false;
+				logoutBtn.Enabled = true;
+			}
+		}
 
 		/// <summary>
 		/// Bind form contol values to object data
@@ -168,7 +175,7 @@ namespace CxViewerAction.Views.DockedView
 		}
 
 
-		
+
 
 		/// <summary>
 		/// "Restore default" button handler
@@ -183,30 +190,31 @@ namespace CxViewerAction.Views.DockedView
 
 		private void OptionsAuthCtrl_VisibleChanged(object sender, EventArgs e)
 		{
-            if (Connect.IsLoaded)
-            {
-                BindDataToView();
-                errorProvider.Clear();
-            }
+			if (Connect.IsLoaded)
+			{
+				BindDataToView();
+				errorProvider.Clear();
+			}
 		}
 
 
-        public void OnOK()
-        {
-            save();
-            if (Connect.IsLoaded && (string.IsNullOrEmpty(txtServer.Text)))
-            {
-                MessageBox.Show("Cannot save. Data is not valid.", "Error", MessageBoxButtons.OK);
-            }
-        }
+		public void OnOK()
+		{
+			save();
+			if (Connect.IsLoaded && (string.IsNullOrEmpty(txtServer.Text)))
+			{
+				MessageBox.Show("Cannot save. Data is not valid.", "Error", MessageBoxButtons.OK);
+			}
+		}
 
 		// Logout button
 		private void logoutBtn_Click(object sender, EventArgs e)
 		{
-            if (loginResult != null) {
-                loginResult.IsSuccesfull = false;
-            }
-            LoginHelper.DoLogout();
+			if (loginResult != null)
+			{
+				loginResult.IsSuccesfull = false;
+			}
+			LoginHelper.DoLogout();
 			MessageBox.Show("Logout Successful", "Information", MessageBoxButtons.OK);
 			loginBtn.Enabled = true;
 			logoutBtn.Enabled = false;

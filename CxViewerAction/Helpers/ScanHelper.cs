@@ -230,7 +230,9 @@ namespace CxViewerAction.Helpers
                     //User click cancel while info dialog was showed
                     if (!bCancel)
                     {
+                        Logger.Create().Debug("Zipping the proeject.");
                         byte[] zippedProject = ZipProject(_scan, project, bg);
+                        Logger.Create().Debug("Zipping is complete.");
 
                         if (!_scan.IsCancelPressed && zippedProject != null)
                         {

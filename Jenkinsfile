@@ -3,7 +3,7 @@
 
 def ipAddress
 def vmName = "Plugin-VisualStudio-" + UUID.randomUUID().toString()
-def msbuildLocation = "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\MSBuild\\15.0\\Bin\\MSBuild.exe\""
+def msbuildLocation = "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Professional\\MSBuild\\Current\\Bin\\MSBuild.exe\""
 
 pipeline {
     parameters {
@@ -17,7 +17,7 @@ pipeline {
         stage('Create VM') {
             steps {
                 script {
-                    kit.Create_Vm_Terraform(vmName, templateName, "18000", "8", "VMWARE", decommissionPeriod, "Auto", "Platform-Plugins-Developers")
+                    kit.Create_Vm_Terraform(vmName, templateName, "18000", "8", "VMWARE", decommissionPeriod, "Auto", "Plugins-Developers")
                     ipAddress = kit.getIpAddress(vmName, "VMWARE")
                     kit.Create_Jenkins_Slave_On_Master(vmName)
                     kit.Start_Jenkins_Slave_On_Windows_Pstools(ipAddress, vmName)
@@ -29,7 +29,7 @@ pipeline {
             agent { node { label vmName } }
             steps {
                 script {
-                    bat "${msbuildLocation} ${WORKSPACE}\\${JOB_NAME}\\ci.msbuild /t:CI /p:VisualStudioVersion=\"15.0\" /p:DeployExtension=false"
+                    bat "${msbuildLocation} ${WORKSPACE}\\${JOB_NAME}\\ci.msbuild /t:CI /p:VisualStudioVersion=\"16.0\" /p:DeployExtension=false"
                 }
             }
         }
@@ -38,8 +38,8 @@ pipeline {
             agent { node { label vmName } }
             steps {
                 script {
-		    fileOperations([folderRenameOperation(source: "${WORKSPACE}\\${JOB_NAME}\\Artifacts\\CxViewerVSIX.vsix", destination: "${WORKSPACE}\\${JOB_NAME}\\Artifacts\\CxViewerVSIX-9.00.7.vsix")])
-                    kit.Upload_To_Artifactory("${WORKSPACE}\\${JOB_NAME}\\Artifacts\\CxViewerVSIX-9.00.7.vsix", "plugins-release-local/com/checkmarx/visual-studio/")
+		    fileOperations([folderRenameOperation(source: "${WORKSPACE}\\${JOB_NAME}\\Artifacts\\CxViewerVSIX.vsix", destination: "${WORKSPACE}\\${JOB_NAME}\\Artifacts\\CxViewerVSIX-9.00.8.vsix")])
+                    kit.Upload_To_Artifactory("${WORKSPACE}\\${JOB_NAME}\\Artifacts\\CxViewerVSIX-9.00.8.vsix", "plugins-release-local/com/checkmarx/visual-studio/")
                 }
             }
         }
