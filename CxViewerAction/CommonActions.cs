@@ -185,7 +185,7 @@ namespace CxViewerAction
         /// <returns></returns>
         public Entities.Project GetSelectedProject()
         {
-            Logger.Create().Debug("GetSelectedProje3ct(): Find selected project.");
+            Logger.Create().Debug("GetSelectedProject(): Find selected project.");
             string projectName, projectPath;
             Array projects = (Array)_applicationObject.ActiveSolutionProjects;
 
