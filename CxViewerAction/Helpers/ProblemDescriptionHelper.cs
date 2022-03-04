@@ -17,7 +17,7 @@ namespace CxViewerAction.Helpers
         /// Find specified problem description
         /// </summary>
         /// <param name="queryId">Problem identifier</param>
-        /// <returns>If file description was found method returns full path to file, otherwise retutn null</returns>
+        /// <returns>If file description was found method returns full path to file, otherwise return null</returns>
         public static string GetStoredProblem(int queryId)
         {
             QueryDescriptionResult queryResult = new QueryDescriptionResult();

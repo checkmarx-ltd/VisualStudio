@@ -36,7 +36,7 @@ namespace CxViewerAction.Entities.WebServiceEntity
         }
 
         /// <summary>
-        /// Gets or sets value indication that object received succesfull
+        /// Gets or sets value indication that object received successful
         /// </summary>
         public bool IsSuccesfull
         {

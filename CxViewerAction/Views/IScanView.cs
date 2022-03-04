@@ -54,7 +54,7 @@ namespace CxViewerAction.Views
         EventHandler RunInBackgroundHandler { set; get; }
 
         /// <summary>
-        /// Cancel buttom handler
+        /// Cancel button handler
         /// </summary>
         EventHandler CancelHandler { set; get; }
 

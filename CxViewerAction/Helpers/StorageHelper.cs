@@ -27,7 +27,7 @@ namespace CxViewerAction.Helpers
         #region [Static Methods]
 
         /// <summary>
-        /// Retutn content of specific file
+        /// Returns contents of specific file
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>

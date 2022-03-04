@@ -42,7 +42,7 @@ namespace CxViewerAction.Entities.WebServiceEntity
         }
 
         /// <summary>
-        /// User authentification data
+        /// User authentication data
         /// </summary>
         public LoginData AuthenticationData
         {

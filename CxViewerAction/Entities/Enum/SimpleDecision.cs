@@ -5,7 +5,7 @@ using System.Text;
 namespace CxViewerAction.Entities.Enum
 {
     /// <summary>
-    /// Represent user choise
+    /// Represent user choice
     /// </summary>
     public enum SimpleDecision
     {
@@ -20,7 +20,7 @@ namespace CxViewerAction.Entities.Enum
         Yes = 1,
 
         /// <summary>
-        /// Disagree deicission
+        /// Disagree decision
         /// </summary>
         No = 2
     }

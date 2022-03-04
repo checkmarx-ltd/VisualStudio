@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 namespace CxViewerAction.Entities.Enumeration
 {
     /// <summary>
-    /// Class represent Dicitionary object with serialization capability
+    /// Class represent Dictionary object with serialization capability
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>

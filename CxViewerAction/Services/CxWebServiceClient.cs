@@ -22,7 +22,7 @@ namespace CxViewerAction.Services
         #region [Public Properties]
 
         /// <summary>
-        /// Servive client object
+        /// Service client object
         /// </summary>
         public CxViewerAction.Services.CxVSWebServiceWrapper ServiceClient { get { return _client; } }
 

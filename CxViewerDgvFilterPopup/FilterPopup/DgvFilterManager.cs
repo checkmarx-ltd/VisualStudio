@@ -17,7 +17,7 @@ namespace DgvFilterPopup {
      /// to right click on column headers and to perform some custom painting on the grid. 
      /// When the user right clicks a column header, the <b>DgvFilterManager</b> shows a popup near the column.
      /// This popup is a control that serves as host for other controls, one for each column. Only one of
-     /// these child controls is visibile, based on clicked column. 
+     /// these child controls is visible, based on clicked column. 
      /// We have one <i>filter host</i> control and many <i>column filter</i> child controls. 
      /// <para>
      /// The <i>filter host</i> control must be a derivation of the <see cref="DgvBaseFilterHost"/> class, while filter controls must be
@@ -55,7 +55,7 @@ namespace DgvFilterPopup {
 
 
         private string mBaseFilter = "";            // Developer provided filter expression
-        private int mCurrentColumnIndex = -1;       // Column Index of currently visibile filter
+        private int mCurrentColumnIndex = -1;       // Column Index of currently visible filter
 
         private List<DgvBaseColumnFilter> mColumnFilterList;    // List of ColumnFilter objects
         private bool mAutoCreateFilters = true;
@@ -327,7 +327,7 @@ namespace DgvFilterPopup {
         }
 
         /// <summary>
-        /// Performs customized column header painting when the popup is visibile. 
+        /// Performs customized column header painting when the popup is visible. 
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.Windows.Forms.DataGridViewCellPaintingEventArgs"/> instance containing the event data.</param>
