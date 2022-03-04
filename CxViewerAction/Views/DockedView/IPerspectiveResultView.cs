@@ -14,7 +14,7 @@ namespace CxViewerAction.Views.DockedView
         #region [Public Events]
 
         /// <summary>
-        /// Event that fired when user binded project and changed a scan by using UI
+        /// Event that fired when user binds project and changed a scan by using UI
         /// </summary>
         event Action<long> SelectedScanChanged;
 
@@ -45,7 +45,7 @@ namespace CxViewerAction.Views.DockedView
         #region[Public Methods]
 
         /// <summary>
-        /// Bind contols with object values
+        /// Bind controls with object values
         /// </summary>
         void BindData();
 

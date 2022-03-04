@@ -149,14 +149,14 @@ namespace CxViewerAction.Views.DockedView
         #region [Public Methods]
 
         /// <summary>
-        /// Bind object data to form controld
+        /// Bind object data to form control
         /// </summary>
         public void BindData()
         {
         }
 
         /// <summary>
-        /// Set form visiblity and show specified loading message if no active
+        /// Set form visibility and show specified loading message if no active
         /// </summary>
         /// <param name="active"></param>
         /// <param name="loadingMessage"></param>

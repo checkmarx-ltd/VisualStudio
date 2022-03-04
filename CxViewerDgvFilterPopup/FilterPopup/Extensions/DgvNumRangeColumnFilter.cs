@@ -41,14 +41,14 @@ namespace DgvFilterPopup {
 
 
         /// <summary>
-        /// Perform filter initialitazion and raises the FilterInitializing event.
+        /// Perform filter initialization and raises the FilterInitializing event.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.ComponentModel.CancelEventArgs"/> instance containing the event data.</param>
         /// <remarks>
         /// When this <i>column filter</i> control is added to the <i>column filters</i> array of the <i>filter manager</i>,
         /// the latter calls the <see cref="DgvBaseColumnFilter.Init"/> method which, in turn, calls this method.
-        /// You can ovverride this method to provide initialization code or you can create an event handler and 
+        /// You can override this method to provide initialization code or you can create an event handler and 
         /// set the <i>Cancel</i> property of event argument to true, to skip standard initialization.
         /// </remarks>
         protected override void OnFilterInitializing(object sender, CancelEventArgs e) {

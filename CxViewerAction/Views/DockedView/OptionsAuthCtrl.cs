@@ -139,7 +139,7 @@ namespace CxViewerAction.Views.DockedView
         }
 
 		/// <summary>
-		/// Bind form contol values to object data
+		/// Bind form control values to object data
 		/// </summary>
 		/// <returns></returns>
 		private LoginData BindDataFromView()

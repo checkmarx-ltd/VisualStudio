@@ -63,7 +63,7 @@ namespace DgvFilterPopup {
         /// <summary>
         /// Initializes a new instance of the <see cref="ColumnFilterEventArgs"/> class.
         /// </summary>
-        /// <param name="Column">The DstaGridView column.</param>
+        /// <param name="Column">The DataGridView column.</param>
         /// <param name="ColumnFilter">The column filter instance.</param>
         public ColumnFilterEventArgs(DataGridViewColumn Column, DgvBaseColumnFilter ColumnFilter) {
             this.mColumn = Column;

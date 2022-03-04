@@ -23,7 +23,7 @@ namespace CxViewerAction.Views.DockedView
         #region [Private Members]
 
         /// <summary>
-        /// Used for restoring scroll X position aftet rebinding
+        /// Used for restoring scroll X position after rebinding
         /// </summary>
         private int _scroll_pos_x = 0;
 

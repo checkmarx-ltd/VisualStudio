@@ -30,7 +30,7 @@ namespace CxViewerAction.Entities.WebServiceEntity
         Queued   = 3,
 
         /// <summary>
-        /// Scan cann't be processed
+        /// Scan can't be processed
         /// </summary>
         Failed   = 4
     }

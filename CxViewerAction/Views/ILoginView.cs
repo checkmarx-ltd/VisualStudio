@@ -10,7 +10,7 @@ namespace CxViewerAction.Views
     public interface ILoginView : IView
     {
         /// <summary>
-        /// Get or set entity identitifier
+        /// Get or set entity identifier
         /// </summary>
         EntityId EntityId { get; set; }
 

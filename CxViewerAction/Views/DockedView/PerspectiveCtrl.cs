@@ -93,7 +93,7 @@ namespace CxViewerAction.Views.DockedView
         }
 
         /// <summary>
-        /// Bind object data to form controld
+        /// Bind object data to form control
         /// </summary>
         public void BindData()
         {
@@ -105,7 +105,7 @@ namespace CxViewerAction.Views.DockedView
         }
 
         /// <summary>
-        /// Set form visiblity and show specified loading message if no active
+        /// Set form visibility and show specified loading message if no active
         /// </summary>
         /// <param name="active"></param>
         /// <param name="loadingMessage"></param>
