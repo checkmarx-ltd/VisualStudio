@@ -12,7 +12,7 @@ namespace CxViewerAction.Entities
     {
         #region [Properties]
         /// <summary>
-        /// Sulution project name
+        /// Solution project name
         /// </summary>
         private string _projectName;
 
@@ -26,7 +26,7 @@ namespace CxViewerAction.Entities
         }
 
         /// <summary>
-        /// Sulution path or single project path
+        /// Solution path or single project path
         /// </summary>
         private string _rootPath;
 
@@ -40,7 +40,7 @@ namespace CxViewerAction.Entities
         }
 
         /// <summary>
-        /// Sulution projects full file paths
+        /// Solution projects full file paths
         /// </summary>
         private List<Project> _projectPaths;
 

@@ -33,7 +33,7 @@ namespace CxViewerAction.BaseInterfaces
         int Height { get; }
 
         /// <summary>
-        /// Gets or sets list of path sequances
+        /// Gets or sets list of path sequences
         /// </summary>
         List<GraphPath> Paths { get; set; }
 
@@ -45,7 +45,7 @@ namespace CxViewerAction.BaseInterfaces
         /// <summary>
         /// Gets item position in graph matrix start from top-left corner
         /// </summary>
-        /// <param name="item">Grapth element</param>
+        /// <param name="item">Graph element</param>
         /// <returns>X-Y position of element inside graph</returns>
         Point GetPosition(IGraphItem item);
 
@@ -67,17 +67,17 @@ namespace CxViewerAction.BaseInterfaces
         IGraphItem Current { get; set; }
 
         /// <summary>
-        /// Problem sequance length
+        /// Problem sequence length
         /// </summary>
         int Width { get; }
 
         /// <summary>
-        /// Gets or sets problems sequance from begin to end
+        /// Gets or sets problems sequence from begin to end
         /// </summary>
         List<GraphItem> DirectFlow { get; set; }
 
         /// <summary>
-        /// Get the position of first path element in comparission 
+        /// Get the position of first path element in comparison 
         /// with most top element in all graph paths
         /// </summary>
         int Top { get; }

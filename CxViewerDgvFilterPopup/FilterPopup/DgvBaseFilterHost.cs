@@ -15,16 +15,16 @@ namespace DgvFilterPopup {
     /// The purpose of the <i>filter host</i> control is to show a popup near a right-clicked column and to 
     /// host child <i>column filter</i> controls. 
     /// When the popup is shown, only the <i>column filter</i> control related to right-clicked column
-    /// is visibile. 
+    /// is visible. 
     /// <b>DgvBaseFilterHost</b> is a derivation of <b>UserControl</b> and provide functionalities to 
     /// cooperate with <see cref="DgvFilterManager"/>.  
     /// <para>
     /// NOTE: 
     /// This class must be intended as an abstract class. However, declaring it as abstract,
-    /// would generate errors whitin the designer when designing derived classes.
+    /// would generate errors within the designer when designing derived classes.
     /// </para>
     /// <para>
-    /// In your derivation, you have to provide a host area (such as a panel) and ovverride the 
+    /// In your derivation, you have to provide a host area (such as a panel) and override the 
     /// <see cref="DgvBaseFilterHost.FilterClientArea"/> to return it. Also, create visual elements 
     /// for <i>remove filter</i>, <i>remove all filters</i>, <i>apply filter</i> and use the 
     /// <b>DgvFilterManager</b> methods <see cref="DgvFilterManager.ActivateFilter(bool)"/> and 
@@ -133,7 +133,7 @@ namespace DgvFilterPopup {
 
         
         /// <summary>
-        /// Gets or sets the currently visibile <i>column filter</i> control
+        /// Gets or sets the currently visible <i>column filter</i> control
         /// </summary> 
         public DgvBaseColumnFilter CurrentColumnFilter {
             get { return mCurrentColumnFilter; }
@@ -168,10 +168,10 @@ namespace DgvFilterPopup {
         #region HELPERS
 
         /// <summary>
-        /// Performs growing / shrinking of the <i>filter host</i> to best fit the current visibile <i>column filter</i>.
+        /// Performs growing / shrinking of the <i>filter host</i> to best fit the current visible <i>column filter</i>.
         /// </summary>
         /// <remarks>
-        /// Ovverride this method to provide your own resize logic.
+        /// Override this method to provide your own resize logic.
         /// </remarks>
         protected virtual void DoAutoFit() {
             Size NewHostSize = Size.Add(mSizeDifference, mCurrentColumnFilter.Size);
@@ -187,7 +187,7 @@ namespace DgvFilterPopup {
         /// Aligns the <i>column filter</i> into the filter client area.
         /// </summary>
         /// <remarks>
-        /// Ovverride this method to provide your own alignment logic.
+        /// Override this method to provide your own alignment logic.
         /// </remarks>
         protected void AlignFilter() { 
             int x = 0; // VFilterAlignmentType.Left:
@@ -253,7 +253,7 @@ namespace DgvFilterPopup {
         /// When the user clicks on an <b>ComboBox</b> item that is outside of the
         /// host area, this cause an unwanted closing of the <i>filter host</i>. 
         /// If you use a <b>ComboBox</b> in a customized <i>column filter</i>, 
-        /// be sure to call this method in your filter intitialitazion code.
+        /// be sure to call this method in your filter initialization code.
         /// </remarks>
         public void RegisterComboBox (ComboBox comboBox){
             comboBox.DropDown += new EventHandler(onDropDown);

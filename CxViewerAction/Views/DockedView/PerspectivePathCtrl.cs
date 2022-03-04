@@ -71,7 +71,7 @@ namespace CxViewerAction.Views.DockedView
         }
 
         /// <summary>
-        /// Bind object data to form controls. Generate path sequance
+        /// Bind object data to form controls. Generate path sequence
         /// </summary>
         public void BindData(int index)
         {

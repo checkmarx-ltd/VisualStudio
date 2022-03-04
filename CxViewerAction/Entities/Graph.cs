@@ -243,7 +243,7 @@ namespace CxViewerAction.Entities
     }
 
     /// <summary>
-    /// Grapth element
+    /// Graph element
     /// </summary>
     public class GraphItem : IGraphItem
     {

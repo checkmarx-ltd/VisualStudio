@@ -8,7 +8,7 @@ using CxViewerAction.Entities;
 namespace CxViewerAction.Dispatchers
 {
     /// <summary>
-    /// Handler for excution
+    /// Handler for execution
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>

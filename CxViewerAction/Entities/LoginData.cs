@@ -163,7 +163,7 @@ namespace CxViewerAction.Entities
         }
 
         /// <summary>
-        /// Gets or sets value indicating that connection must be established throw htts protocol
+        /// Gets or sets value indicating that connection must be established throw HTTPS protocol
         /// </summary>
         public bool Ssl
         {
@@ -172,7 +172,7 @@ namespace CxViewerAction.Entities
         }
 
         /// <summary>
-        /// Get or set Entity prorepty
+        /// Get or set Entity property
         /// </summary>
         public EntityId ID { get { return _id; } set { _id = value; } }
 
@@ -182,7 +182,7 @@ namespace CxViewerAction.Entities
         public int UpdateStatusInterval { get { return _updateStatusInterval; } set { _updateStatusInterval = value; } }
 
         /// <summary>
-        /// Get or set dialog state. If true - dialog validated sucessfull and user hit button go next step
+        /// Get or set dialog state. If true - dialog validated successful and user hit button go next step
         /// </summary>
         public bool IsLogging { get { return _isLogging; } set { _isLogging = value; } }
 
@@ -242,7 +242,7 @@ namespace CxViewerAction.Entities
         }
 
         /// <summary>
-        /// Gets or sets max allowed zip file size in megabites for scan
+        /// Gets or sets max allowed zip file size in megabytes for scan
         /// </summary>
         public int MaxZipFileSize
         {
