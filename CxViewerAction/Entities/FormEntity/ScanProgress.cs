@@ -6,7 +6,7 @@ using System.Text;
 namespace CxViewerAction.Entities.FormEntity
 {
     /// <summary>
-    /// Represent scanb dialod data
+    /// Represent scan dialog data
     /// </summary>
     public class ScanProgress
     {

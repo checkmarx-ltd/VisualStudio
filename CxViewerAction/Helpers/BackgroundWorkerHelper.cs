@@ -17,12 +17,12 @@ namespace CxViewerAction.Helpers
         #region [Private Constants]
 
         /// <summary>
-        /// Set the numbers of attempts to execute function in exeception occurs
+        /// Set the numbers of attempts to execute function in exception occurs
         /// </summary>
         private int _repeatCountOnException = 3;
 
         /// <summary>
-        /// Set the delay interval beetween repeat
+        /// Set the delay interval between repeat
         /// </summary>
         private int _repeatIntervalOnException = 15000;
 
@@ -36,12 +36,12 @@ namespace CxViewerAction.Helpers
         private delegate object _doWorkDelegate(object state);
 
         /// <summary>
-        /// Main background worker funck
+        /// Main background worker function
         /// </summary>
         private Action<object> _doWorkFunc = null;
 
         /// <summary>
-        /// Relogin handler
+        /// Re-login handler
         /// </summary>
         private EventHandler _doReloginFunc = null;
 
@@ -94,7 +94,7 @@ namespace CxViewerAction.Helpers
         /// Perform background job and show view while process executes
         /// </summary>
         /// <param name="message">View title message</param>
-        /// <returns>If false - cancel buton in supported view was pressed</returns>
+        /// <returns>If false - cancel button in supported view was pressed</returns>
         public bool DoWork(string message)
         {
             if (_doWorkFunc == null)

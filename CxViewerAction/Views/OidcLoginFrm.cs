@@ -69,7 +69,7 @@ namespace CxViewerAction.Views
         }
 
         /// <summary>
-        /// This fires everytime WebView2 loads a form but it only does something when a page load
+        /// This fires every time WebView2 loads a form but it only does something when a page load
         /// URL contains a "code=" values, this happens after a successful login.
         /// </summary>
         private void OnDocumentCompleted(object sender, CoreWebView2NavigationCompletedEventArgs eventArgs)

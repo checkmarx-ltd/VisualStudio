@@ -31,7 +31,7 @@ namespace DgvFilterPopup {
     /// <para>
     /// NOTE: 
     /// This class must be intended as an abstract class. However, declaring it as abstract,
-    /// would generate errors whitin the designer when designing derived classes.
+    /// would generate errors within the designer when designing derived classes.
     /// </para>
     /// <para>
     /// You should override <see cref="DgvBaseColumnFilter.OnFilterExpressionBuilding"/> to provide a filter expression construction 
@@ -186,7 +186,7 @@ namespace DgvFilterPopup {
         #region FILTER INITIALIZATION, EXPRESSION BUILDING, EVENT MANAGING
 
         /// <summary>
-        /// Called by the <i>filter manager</i>, inits the <i>column filter</i> and raises the FilterInitializing event.
+        /// Called by the <i>filter manager</i>, initializes the <i>column filter</i> and raises the FilterInitializing event.
         /// </summary>
         /// <param name="FilterManager">The <i>filter manager</i>.</param>
         /// <param name="FilterHost">The filter host.</param>
@@ -217,10 +217,10 @@ namespace DgvFilterPopup {
         /// <remarks>
         /// When this <i>column filter</i> control is added to the <i>column filters</i> array of the <i>filter manager</i>, 
         /// the latter calls the <see cref="DgvBaseColumnFilter.Init"/> method which, in turn, calls this method. 
-        /// You can ovverride this method to provide initialization code. 
+        /// You can override this method to provide initialization code. 
         /// </remarks>
         protected virtual void OnFilterInitializing(object sender, CancelEventArgs e) {
-            // Ovverride to add custom init code
+            // Override to add custom init code
             if (FilterInitializing != null) FilterInitializing(sender, e);
         }
 

@@ -19,7 +19,7 @@ namespace CxViewerAction.Views.DockedView
         event Action<TreeNodeData> SelectedNodeChanged;
 
         /// <summary>
-        /// Event that fired when user binded project and changed a scan by using UI
+        /// Event that fired when user binds project and changed a scan by using UI
         /// </summary>
         event Action<long> SelectedScanChanged;
 
@@ -47,7 +47,7 @@ namespace CxViewerAction.Views.DockedView
 
         void UpdateTreeItemInfo();
         /// <summary>
-        /// Bind contols with object values
+        /// Bind controls with object values
         /// </summary>
         void BindData();
 

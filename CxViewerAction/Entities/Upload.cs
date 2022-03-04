@@ -82,7 +82,7 @@ namespace CxViewerAction.Entities
         }
 
         /// <summary>
-        /// If true - upload form was validated sucessfully and user confirm to start scanning
+        /// If true - upload form was validated successfully and user confirm to start scanning
         /// </summary>
         public bool IsUploading
         {

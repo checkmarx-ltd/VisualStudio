@@ -219,7 +219,7 @@ namespace CxViewerAction.Views
         }
 
         /// <summary>
-        /// Validation handler to control thar preset item was selected
+        /// Validation handler to control the preset item, if selected
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -235,7 +235,7 @@ namespace CxViewerAction.Views
         }
 
         /// <summary>
-        /// Validation handler to control thar team item was selected
+        /// Validation handler to control the team item, if selected
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

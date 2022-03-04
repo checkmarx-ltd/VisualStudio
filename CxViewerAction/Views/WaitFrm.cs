@@ -15,7 +15,7 @@ namespace CxViewerAction.Views
         #region [Delegates]
 
         /// <summary>
-        /// Delegate mrthod. Used for async call Cancel handler function
+        /// Delegate method. Used for async call Cancel handler function
         /// </summary>
         private delegate void CancelingDelegate();
         
