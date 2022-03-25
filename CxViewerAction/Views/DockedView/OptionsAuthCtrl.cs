@@ -10,7 +10,7 @@ using CxViewerAction.Entities;
 using CxViewerAction.Entities.Enum;
 using CxViewerAction.Entities.WebServiceEntity;
 using Common;
-using EnvDTE;
+
 
 namespace CxViewerAction.Views.DockedView
 {

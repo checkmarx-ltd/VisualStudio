@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using EnvDTE;
 using CxViewerAction.Entities;
 using CxViewerAction.Helpers;
 using CxViewerAction.Views;

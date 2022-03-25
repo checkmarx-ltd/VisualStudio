@@ -2,7 +2,6 @@
 using CxViewerAction.Entities;
 using CxViewerAction.Helpers;
 using CxViewerAction.CxVSWebService;
-using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using Common;
 

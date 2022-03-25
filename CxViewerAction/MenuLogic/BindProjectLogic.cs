@@ -1,5 +1,4 @@
 ﻿using System;
-using EnvDTE;
 using CxViewerAction.Helpers;
 using CxViewerAction.Entities;
 using Common;

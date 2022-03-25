@@ -8,7 +8,6 @@ using System.Windows.Forms;
 using CxViewerAction.Entities;
 using CxViewerAction.Helpers;
 using CxViewerAction.Entities.Enum;
-using EnvDTE;
 using Common;
 
 namespace CxViewerAction.Views.DockedView

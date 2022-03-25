@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CxViewerVSIX", "CxViewerVSIX\CxViewerVSIX.csproj", "{0D4CC225-7BF6-4EB8-9936-C6FD86FABCAB}"
 EndProject
@@ -87,25 +87,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://tfs2013:8080/tfs/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = CxViewerVSIX\\CxViewerVSIX.csproj
-		SccProjectName1 = CxViewerVSIX
-		SccLocalPath1 = CxViewerVSIX
-		SccProjectUniqueName2 = Common\\Common.csproj
-		SccProjectName2 = Common
-		SccLocalPath2 = Common
-		SccProjectUniqueName3 = CxViewerColorButton\\ColorButton.csproj
-		SccProjectName3 = CxViewerColorButton
-		SccLocalPath3 = CxViewerColorButton
-		SccProjectUniqueName4 = CxViewerDgvFilterPopup\\DgvFilterPopup.csproj
-		SccProjectName4 = CxViewerDgvFilterPopup
-		SccLocalPath4 = CxViewerDgvFilterPopup
-		SccProjectUniqueName5 = CxViewerAction\\CxViewerAction.csproj
-		SccProjectName5 = CxViewerAction
-		SccLocalPath5 = CxViewerAction
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {47DBE260-BBD6-4AF4-8E33-F515131B7F63}
 	EndGlobalSection
 EndGlobal

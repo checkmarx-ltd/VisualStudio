@@ -1,5 +1,4 @@
-﻿using EnvDTE;
-
+﻿
 namespace CxViewerAction.MenuLogic
 {
     public interface IMenuLogic

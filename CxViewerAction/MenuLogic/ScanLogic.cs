@@ -4,8 +4,6 @@ using CxViewerAction.Entities.Enum;
 using CxViewerAction.Helpers;
 using CxViewerAction.Views;
 using CxViewerAction.Views.DockedView;
-using EnvDTE;
-using EnvDTE80;
 using System;
 using Microsoft.VisualStudio.Shell;
 

@@ -8,11 +8,12 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using EnvDTE80;
 using CxViewerVSIX.OptionsPages;
 using CxViewerVSIX.Commands;
-using EnvDTE80;
 using CxViewerAction;
-using Microsoft.VisualStudio.Shell.Interop;
+
 
 namespace CxViewerVSIX
 {

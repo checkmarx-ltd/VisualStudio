@@ -1,6 +1,5 @@
 ﻿using CxViewerAction.Entities;
 using CxViewerAction.Helpers;
-using EnvDTE;
 
 namespace CxViewerAction.MenuLogic
 {
