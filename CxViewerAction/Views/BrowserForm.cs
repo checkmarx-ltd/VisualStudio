@@ -46,7 +46,7 @@ namespace CxViewerAction.Views
 
         private void BrowserForm_Load(object sender, EventArgs e)
         {
-
+           
             browser = new ChromiumWebBrowser();
             this.pContainer.Controls.Add(browser);
             browser.Dock = DockStyle.Fill;

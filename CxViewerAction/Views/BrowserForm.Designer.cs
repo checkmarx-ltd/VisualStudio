@@ -44,13 +44,14 @@ namespace CxViewerAction.Views
             // 
             // pContainer
             // 
-            this.pContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.pContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pContainer.Location = new System.Drawing.Point(2, 1);
             this.pContainer.Name = "pContainer";
             this.pContainer.Size = new System.Drawing.Size(505, 607);
             this.pContainer.TabIndex = 1;
+            
             // 
             // BrowserForm
             // 
