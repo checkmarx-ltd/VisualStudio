@@ -384,7 +384,13 @@ namespace CxViewerAction.Helpers
             if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && login.AuthenticationType == Constants.AuthenticationaType_DefaultValue)
             {
                 _oidcLoginHelper.resetLatestResult();
-                oidcLoginResult = _oidcLoginHelper.ConnectToIdentidyProvider(login.ServerBaseUri);
+                oidcLoginResult = _oidcLoginHelper.ConnectToIdentidyProvider(login.ServerBaseUri, login.AuthenticationType);
+            }
+
+            else if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && login.AuthenticationType == Constants.AuthenticationaType_IE)
+            {
+                _oidcLoginHelper.resetLatestResult();
+                oidcLoginResult = _oidcLoginHelper.ConnectToIdentidyProvider(login.ServerBaseUri, login.AuthenticationType);
             }
             else if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && login.AuthenticationType == Constants.AuthenticationaType_UserNamePassword)
             {

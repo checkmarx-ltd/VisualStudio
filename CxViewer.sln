@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CxViewerVSIX", "CxViewerVSIX\CxViewerVSIX.csproj", "{0D4CC225-7BF6-4EB8-9936-C6FD86FABCAB}"
 EndProject
@@ -71,12 +71,12 @@ Global
 		{4B9BE5FD-303E-4270-9C4D-FA3BDE6C34EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4B9BE5FD-303E-4270-9C4D-FA3BDE6C34EB}.Release|x86.ActiveCfg = Release|Any CPU
 		{4B9BE5FD-303E-4270-9C4D-FA3BDE6C34EB}.Release|x86.Build.0 = Release|Any CPU
-		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Build|Any CPU.ActiveCfg = Build|Any CPU
-		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Build|Any CPU.Build.0 = Build|Any CPU
+		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Build|Any CPU.ActiveCfg = Build|x86
+		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Build|Any CPU.Build.0 = Build|x86
 		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Build|x86.ActiveCfg = Build|x86
 		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Build|x86.Build.0 = Build|x86
-		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Debug|Any CPU.Build.0 = Debug|x86
 		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Debug|x86.ActiveCfg = Debug|x86
 		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Debug|x86.Build.0 = Debug|x86
 		{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -87,25 +87,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://tfs2013:8080/tfs/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = CxViewerVSIX\\CxViewerVSIX.csproj
-		SccProjectName1 = CxViewerVSIX
-		SccLocalPath1 = CxViewerVSIX
-		SccProjectUniqueName2 = Common\\Common.csproj
-		SccProjectName2 = Common
-		SccLocalPath2 = Common
-		SccProjectUniqueName3 = CxViewerColorButton\\ColorButton.csproj
-		SccProjectName3 = CxViewerColorButton
-		SccLocalPath3 = CxViewerColorButton
-		SccProjectUniqueName4 = CxViewerDgvFilterPopup\\DgvFilterPopup.csproj
-		SccProjectName4 = CxViewerDgvFilterPopup
-		SccLocalPath4 = CxViewerDgvFilterPopup
-		SccProjectUniqueName5 = CxViewerAction\\CxViewerAction.csproj
-		SccProjectName5 = CxViewerAction
-		SccLocalPath5 = CxViewerAction
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3A7D1BD1-CBAD-4801-9BC2-7120E0EA84CF}
 	EndGlobalSection
 EndGlobal

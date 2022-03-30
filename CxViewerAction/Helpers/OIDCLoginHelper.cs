@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
+using Common;
+using CxViewerAction.Entities;
 using CxViewerAction.ValueObjects;
 using CxViewerAction.Views;
 
@@ -16,16 +18,13 @@ namespace CxViewerAction.Helpers
 
         public OIDCLoginHelper()
         {
-			_oidcLoginFrm.OidcLoginCtrl2.NavigationCompleted += OidcLoginCtrlOnNavigationCompleted;
-			_oidcLoginFrm.OidcLoginCtrl2.NavigationError += OidcLoginCtrlOnNavigationError;
-			_oidcLoginFrm.UserClosedForm += OnUserClosedForm;
-			_latestResult = new OidcLoginResult(false, string.Empty, null);
-		}
 
-		public void resetLatestResult()
-		{
-			_latestResult = new OidcLoginResult(false, string.Empty, null);
-		}
+        }
+
+        public void resetLatestResult()
+        {
+            _latestResult = new OidcLoginResult(false, string.Empty, null);
+        }
 
         private void OnUserClosedForm(object sender, EventArgs e)
         {
@@ -36,7 +35,7 @@ namespace CxViewerAction.Helpers
         private void OidcLoginCtrlOnNavigationError(object sender, string errorMessage)
         {
             errorWasShown = true;
-            MessageBox.Show(errorMessage,"Error", MessageBoxButtons.OK);
+            MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK);
             _latestResult = new OidcLoginResult(false, errorMessage, null);
             _oidcLoginEvent.Set();
         }
@@ -47,28 +46,56 @@ namespace CxViewerAction.Helpers
             _oidcLoginEvent.Set();
         }
 
-        private void ConectAndWait(string baseServerUri)
+        private void ConectAndWait(string baseServerUri, string AuthenticationType)
         {
-            _oidcLoginFrm.OidcLoginCtrl2.Invoke(new MethodInvoker(() =>
+            if (AuthenticationType == Constants.AuthenticationaType_DefaultValue)
             {
-                _oidcLoginFrm.Show();
-                _oidcLoginFrm.ConnectToIdentidyProvider(baseServerUri);
-            }));
-            _oidcLoginEvent.WaitOne();
+                var browserForm = new BrowserForm();
+                browserForm.NavigationCompleted += OidcLoginCtrlOnNavigationCompleted;
+                browserForm.NavigationError += OidcLoginCtrlOnNavigationError;
+                BrowserForm.IsbrowserIntialized();
+                browserForm.Show();
+                browserForm.Invoke(new MethodInvoker(() =>
+                {
+                    browserForm.Show();
+                    browserForm.ConnectToIdentidyProvider(baseServerUri);
+                    Application.Run(browserForm);
+
+                }));
+            }
+            else
+            {
+                _oidcLoginFrm.OidcLoginCtrl2.NavigationCompleted += OidcLoginCtrlOnNavigationCompleted;
+                _oidcLoginFrm.OidcLoginCtrl2.NavigationError += OidcLoginCtrlOnNavigationError;
+                _oidcLoginFrm.UserClosedForm += OnUserClosedForm;
+                _latestResult = new OidcLoginResult(false, string.Empty, null);
+                _oidcLoginFrm.OidcLoginCtrl2.Invoke(new MethodInvoker(() =>
+                {
+                    _oidcLoginFrm.Show();
+                    _oidcLoginFrm.ConnectToIdentidyProvider(baseServerUri);
+                }));
+                _oidcLoginEvent.WaitOne();
+            }
         }
 
-        public OidcLoginResult ConnectToIdentidyProvider(string baseServerUri)
+        public OidcLoginResult ConnectToIdentidyProvider(string baseServerUri, string AuthenticationType)
         {
 
-			ConectAndWait(baseServerUri);
+            ConectAndWait(baseServerUri, AuthenticationType);
+            if (AuthenticationType == Constants.AuthenticationaType_IE)
+            {
+                _oidcLoginFrm.CloseForm();
+            }
 
-            _oidcLoginFrm.CloseForm();
             return _latestResult;
         }
 
-		public void CloseLoginWindow()
-		{
-			_oidcLoginFrm.CloseForm();
-		}
+        public void CloseLoginWindow()
+        {
+            if (_oidcLoginFrm.Visible == true)
+            {
+                _oidcLoginFrm.CloseForm();
+            }
+        }
     }
 }
