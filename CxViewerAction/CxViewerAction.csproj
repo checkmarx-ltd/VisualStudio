@@ -443,7 +443,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\x86\Build\LICENSE" />
+    <Content Include="bin\x86\Build\LICENSE.txt" />
     <None Include="key.snk" />
     <None Include="packages.config" />
     <None Include="Web References\CxVSWebService\CxVSWebService.disco" />

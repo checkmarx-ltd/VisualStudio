@@ -51,6 +51,7 @@ namespace CxViewerAction.Helpers
             if (AuthenticationType == Constants.AuthenticationaType_DefaultValue)
             {
                 Thread.Sleep(3000);
+                Application.DoEvents();
                 var browserForm = new BrowserForm();
                 browserForm.NavigationCompleted += OidcLoginCtrlOnNavigationCompleted;
                 browserForm.NavigationError += OidcLoginCtrlOnNavigationError;
