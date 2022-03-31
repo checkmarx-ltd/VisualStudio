@@ -423,7 +423,7 @@ namespace CxViewerAction.Helpers
             }
             if (oidcLoginResult != null && oidcLoginResult.IsSuccessful)
             {
-                if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && login.AuthenticationType == Constants.AuthenticationaType_DefaultValue)
+                if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && (login.AuthenticationType == Constants.AuthenticationaType_DefaultValue || login.AuthenticationType == Constants.AuthenticationaType_IE))
                 {
                     //Add logs for print Server url and AccessToken
                     Logger.Create().Debug("Server URL: " + login.ServerBaseUri);
@@ -437,7 +437,7 @@ namespace CxViewerAction.Helpers
             }
             else
             {
-                if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && login.AuthenticationType == Constants.AuthenticationaType_DefaultValue)
+                if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && (login.AuthenticationType == Constants.AuthenticationaType_DefaultValue || login.AuthenticationType == Constants.AuthenticationaType_IE))
                 {
                     Logger.Create().Debug("Server URL: " + login.ServerBaseUri);
                     _oidcLoginHelper.CloseLoginWindow();
@@ -453,6 +453,7 @@ namespace CxViewerAction.Helpers
         /// </summary>
         internal static void DoLogout()
         {
+            Application.DoEvents();
             Logger.Create().Debug("Logging out, clear authentication data");
             OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
             oidcLoginData.AccessToken = null;

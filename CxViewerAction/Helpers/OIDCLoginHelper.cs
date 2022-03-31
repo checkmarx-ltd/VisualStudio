@@ -58,7 +58,7 @@ namespace CxViewerAction.Helpers
                 browserForm.Show();
                 browserForm.Invoke(new MethodInvoker(() =>
                 {
-                    browserForm.Show();
+                  //  browserForm.Show();
                     browserForm.ConnectToIdentidyProvider(baseServerUri);
                     Application.Run(browserForm);
 

@@ -109,11 +109,13 @@ namespace CxViewerAction.Views
 
             if (NavigationCompleted != null)
             {
+               
                 NavigationCompleted(this, code);
                 browser.LoadUrl(BLANK_PAGE);
                 browser.FrameLoadEnd -= chromium_FrameLoadEnd;
                 browser.Invoke(new MethodInvoker(() =>
                 {
+                    Application.DoEvents();
                     this.Close();
 
                 }));
@@ -189,6 +191,11 @@ namespace CxViewerAction.Views
                     UserClosedForm(this, new EventArgs());
                 }
             }
+            //if(e.CloseReason == CloseReason.UserClosing && !browser.Address.ToString().Contains("code="))
+            //{
+            //    string errorMessage = "Login Form Closed.Relogin";
+            //    NavigationError(this, errorMessage);
+            //}
         }
         public void CloseForm()
         {
@@ -197,8 +204,8 @@ namespace CxViewerAction.Views
                 Invoke(new MethodInvoker(CloseForm));
                 return;
             }
-
-            browser.Hide();
+            Application.DoEvents();
+            Hide();
         }
 
     }

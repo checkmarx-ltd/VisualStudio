@@ -75,13 +75,13 @@ namespace CxViewerAction.Views.DockedView
 					logoutBtn.Enabled = true;
 				}
 
-				else if (!string.IsNullOrWhiteSpace(currentLogin.AuthenticationType) && currentLogin.AuthenticationType == Common.Constants.AuthenticationaType_DefaultValue && loginResult.LoginResultMessage != null && !loginResult.LoginResultMessage.Equals("Exit"))
+				else if (!string.IsNullOrWhiteSpace(currentLogin.AuthenticationType) && (currentLogin.AuthenticationType == (Common.Constants.AuthenticationaType_DefaultValue) || (currentLogin.AuthenticationType ==  Common.Constants.AuthenticationaType_IE)) && loginResult.LoginResultMessage != null && !loginResult.LoginResultMessage.Equals("Exit"))
 				{
 					MessageBox.Show("Login Failed", "Information", MessageBoxButtons.OK);
 					loginBtn.Enabled = true;
 					logoutBtn.Enabled = false;
 				}
-				else if (!string.IsNullOrWhiteSpace(currentLogin.AuthenticationType) && currentLogin.AuthenticationType != Common.Constants.AuthenticationaType_DefaultValue && !loginResult.IsSuccesfull)
+				else if (!string.IsNullOrWhiteSpace(currentLogin.AuthenticationType) && (currentLogin.AuthenticationType != (Common.Constants.AuthenticationaType_DefaultValue) || (currentLogin.AuthenticationType != Common.Constants.AuthenticationaType_IE)) && !loginResult.IsSuccesfull)
 				{
 					MessageBox.Show("Login Failed", "Information", MessageBoxButtons.OK);
 					loginBtn.Enabled = true;
