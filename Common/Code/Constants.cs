@@ -5,6 +5,7 @@
 		#region AuthTypeUserpassword
 
 		public const string AuthenticationaType_DefaultValue = "access_control";
+		public const string AuthenticationaType_IE = "access_control_ie";
 		public const string AuthenticationaType_UserNamePassword = "username_password";
 
 		public const string USERNAME_KEY = "username";
@@ -49,6 +50,8 @@
 		public const string RESPONSE_TYPE_VALUE = "code";
 		public const string SCOPE_VALUE = "offline_access openid sast_api sast-permissions access_control_api";
 		public const string AUTHORIZATION_ENDPOINT = SAST_PREFIX + "/identity/connect/authorize";
+		public const string SAST_Login = "/CxRestAPI/auth/#/login?ReturnUrl=%2FCxRestAPI%2Fauth%2Fidentity%2Fconnect%2Fauthorize%2Fcallback%3Fclient_id%3Dide_client%26scope%3Doffline_access%2520openid%2520sast_api%2520sast-permissions%2520access_control_api%26response_type%3Dcode%26redirect_uri%3Dhttp%253A%252F%252F";
+		public const string SAST_Suffix = "%252F";
 		public const string AUTHORIZATION_HEADER = "Authorization";
 		public const string BEARER = "Bearer ";
 		public const string USER_INFO_ENDPOINT = SAST_PREFIX + "/identity/connect/userinfo";
