@@ -52,7 +52,10 @@ namespace CxViewerAction.Views.DockedView
 			webBrowserIdentityProvider.AllowNavigation = true;
             
             Uri urlAddress = new Uri(eventArgs.Url.ToString());
-            Logger.Create().Debug("Navigation complete for " + urlAddress.ToString());
+            if (!urlAddress.ToString().Contains("code="))
+            {
+                Logger.Create().Debug("Navigation complete for " + urlAddress.ToString());
+            }
             string queryString = urlAddress.Query;
             if (string.IsNullOrWhiteSpace(queryString))
             {
@@ -85,13 +88,14 @@ namespace CxViewerAction.Views.DockedView
 
         private void OnDocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs eventArgs)
         {
-            Logger.Create().Debug("Checking for presence of authorization code in the URL. "+ eventArgs.Url.AbsoluteUri.ToLower());
+            
             if (!eventArgs.Url.AbsoluteUri.ToLower().Contains("code="))
             {
+                Logger.Create().Debug("Checking for presence of authorization code in the URL. " + eventArgs.Url.AbsoluteUri.ToLower());
                 return;
             }
 
-            Logger.Create().Debug("Extracting authorization code from the URL. " );
+            Logger.Create().Debug("Authorization code found.Extracting authorization code from the URL. ");
             string code = ExtractCodeFromUrl(eventArgs.Url.AbsoluteUri);
 
             if (NavigationCompleted != null)

@@ -191,11 +191,7 @@ namespace CxViewerAction.Views
                     UserClosedForm(this, new EventArgs());
                 }
             }
-            //if(e.CloseReason == CloseReason.UserClosing && !browser.Address.ToString().Contains("code="))
-            //{
-            //    string errorMessage = "Login Form Closed.Relogin";
-            //    NavigationError(this, errorMessage);
-            //}
+           
         }
         public void CloseForm()
         {
