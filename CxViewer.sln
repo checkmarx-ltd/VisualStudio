@@ -13,7 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DgvFilterPopup", "CxViewerD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CxViewerAction", "CxViewerAction\CxViewerAction.csproj", "{A3841A67-DAE8-42BD-B0D4-9D0D1657F902}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "vsixshared", "vsixshared\vsixshared.shproj", "{B831182E-8063-4FF7-B645-DBFF9863B570}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		vsixshared\vsixshared.projitems*{0d4cc225-7bf6-4eb8-9936-c6fd86fabcab}*SharedItemsImports = 4
+		vsixshared\vsixshared.projitems*{b831182e-8063-4ff7-b645-dbff9863b570}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Build|Any CPU = Build|Any CPU
 		Build|x86 = Build|x86
