@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://localhost:1515/cxwebinterface/VS/CxVSWebService.asmx?wsdl" docRef="http://localhost:1515/cxwebinterface/VS/CxVSWebService.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://localhost:1515/cxwebinterface/VS/CxVSWebService.asmx" xmlns:q1="http://Checkmarx.com/v7" binding="q1:CxVSWebServiceSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://localhost:1515/cxwebinterface/VS/CxVSWebService.asmx" xmlns:q2="http://Checkmarx.com/v7" binding="q2:CxVSWebServiceSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

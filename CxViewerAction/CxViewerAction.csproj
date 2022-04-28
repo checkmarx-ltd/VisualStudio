@@ -15,7 +15,7 @@
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>CxViewerAction</AssemblyName>
     <DeploymentDirectory>.\bin\</DeploymentDirectory>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <SccProjectName>SAK</SccProjectName>
@@ -37,7 +37,8 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <ApplicationIcon>Resources\cx.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -76,9 +77,22 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>..\Output\</OutputPath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <PlatformTarget>x86</PlatformTarget>
     <OutputPath>bin\x86\Release\</OutputPath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -97,11 +111,18 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build|x64'">
+    <OutputPath>bin\x64\Build\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CefSharp, Version=99.2.120.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
@@ -112,12 +133,6 @@
     </Reference>
     <Reference Include="CefSharp.WinForms, Version=99.2.120.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
       <HintPath>..\packages\CefSharp.WinForms.99.2.120\lib\net462\CefSharp.WinForms.dll</HintPath>
-    </Reference>
-    <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="EnvDTE80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="EnvDTE90, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -149,20 +164,49 @@
     <Reference Include="Microsoft.VisualStudio.CommandBars, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.Imaging, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Imaging.14.3.25407\lib\net45\Microsoft.VisualStudio.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Interop, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Modeling.SDK.Integration.Shell.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\Microsoft.VisualStudio.Modeling.SDK.Integration.Shell.10.0.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.Shell.10.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\References\Microsoft.VisualStudio.Shell.10.0.dll</HintPath>
+    <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\Microsoft.VisualStudio.OLE.Interop.7.10.6070\lib\Microsoft.VisualStudio.OLE.Interop.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Microsoft.VisualStudio.Shell.Interop.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+    <Reference Include="Microsoft.VisualStudio.Shell.15.0, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Framework, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Immutable.11.0.11.0.50727\lib\net45\Microsoft.VisualStudio.Shell.Immutable.11.0.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.12.0, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Immutable.12.0.12.0.21003\lib\net45\Microsoft.VisualStudio.Shell.Immutable.12.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Immutable.14.0.14.3.25407\lib\net45\Microsoft.VisualStudio.Shell.Immutable.14.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.8.0.8.0.50727\lib\Microsoft.VisualStudio.Shell.Interop.8.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.9.0.9.0.30729\lib\Microsoft.VisualStudio.Shell.Interop.9.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\Microsoft.VisualStudio.TextManager.Interop.7.10.6070\lib\Microsoft.VisualStudio.TextManager.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TextManager.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\Microsoft.VisualStudio.TextManager.Interop.8.0.8.0.50727\lib\Microsoft.VisualStudio.TextManager.Interop.8.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Threading, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Threading.14.1.111\lib\net45\Microsoft.VisualStudio.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Utilities, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Utilities.14.3.25407\lib\net45\Microsoft.VisualStudio.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Validation, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Validation.14.1.111\lib\net45\Microsoft.VisualStudio.Validation.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -183,94 +227,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseInterfaces\ICommandResult.cs" />
-    <Compile Include="BaseInterfaces\IDispatcher.cs" />
-    <Compile Include="BaseInterfaces\IGraph.cs" />
-    <Compile Include="BaseInterfaces\IPresenter.cs" />
-    <Compile Include="BaseInterfaces\IProblem.cs" />
-    <Compile Include="BaseInterfaces\IView.cs" />
-    <Compile Include="CommandBar.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CommandBar.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Commands\CommandExecutor.cs" />
-    <Compile Include="CommonActions.cs" />
-    <Compile Include="Connect.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CommonData.cs" />
-    <Compile Include="Dispatchers\Dispatcher.cs" />
-    <Compile Include="Entities\BindProjectEntity.cs" />
-    <Compile Include="Entities\OidcLoginData.cs" />
-    <Compile Include="Entities\EntityId.cs" />
-    <Compile Include="Entities\Enumeration\SerializableDictionary.cs" />
-    <Compile Include="Entities\Enum\ProjectScanStatuses.cs" />
-    <Compile Include="Entities\Enum\SimpleDecision.cs" />
-    <Compile Include="Entities\FormEntity\ScanProgress.cs" />
-    <Compile Include="Entities\Graph.cs" />
-    <Compile Include="Entities\IEntity.cs" />
-    <Compile Include="Entities\LoginData.cs" />
-    <Compile Include="Entities\Project.cs" />
-    <Compile Include="Entities\RestEntities\UserInfoDTO.cs" />
-    <Compile Include="Entities\RestEntities\AccessTokenDTO.cs" />
-    <Compile Include="Entities\ResultEntity.cs" />
-    <Compile Include="Entities\ScanReportInfo.cs" />
-    <Compile Include="Entities\ScanStatusBar.cs" />
-    <Compile Include="Entities\WebServiceEntity\PerspectiveResult.cs" />
-    <Compile Include="Entities\Scan.cs" />
-    <Compile Include="Entities\Upload.cs" />
-    <Compile Include="Entities\WebServiceEntity\ConfigurationResult.cs" />
-    <Compile Include="Entities\WebServiceEntity\LoginResult.cs" />
-    <Compile Include="Entities\WebServiceEntity\PresetResult.cs" />
-    <Compile Include="Entities\WebServiceEntity\QueryDescriptionResult.cs" />
-    <Compile Include="Entities\WebServiceEntity\ReportQueryResult.cs" />
-    <Compile Include="Entities\WebServiceEntity\ReportResult.cs" />
-    <Compile Include="Entities\WebServiceEntity\RunScanResult.cs" />
-    <Compile Include="Entities\WebServiceEntity\StatusScanResult.cs" />
-    <Compile Include="Entities\WebServiceEntity\TeamResult.cs" />
-    <Compile Include="Helpers\BackgroundWorkerHelper.cs" />
-    <Compile Include="Helpers\BindProjectHelper.cs" />
-    <Compile Include="Helpers\ConfigurationHelper.cs" />
-    <Compile Include="Helpers\DrawingHelper\DirectLine.cs" />
-    <Compile Include="Helpers\DrawingHelper\DrawingHelper.cs" />
-    <Compile Include="Helpers\DrawingHelper\NodeTypes.cs" />
-    <Compile Include="Helpers\EncryptHelper.cs" />
-    <Compile Include="Helpers\GraphHelper.cs" />
-    <Compile Include="Helpers\HttpHelper.cs" />
-    <Compile Include="Helpers\ChangeResultHelper.cs" />
-    <Compile Include="Helpers\IConfigurationHelper.cs" />
-    <Compile Include="Helpers\IScanHelper.cs" />
-    <Compile Include="Helpers\LoginHelper.cs" />
-    <Compile Include="Helpers\ObserversManager.cs" />
-    <Compile Include="Helpers\PerspectiveHelper.cs" />
-    <Compile Include="Helpers\ProblemDescriptionHelper.cs" />
-    <Compile Include="Helpers\OIDCLoginHelper.cs" />
-    <Compile Include="Helpers\SavedResultsManager.cs" />
-    <Compile Include="Helpers\StorageHelper.cs" />
-    <Compile Include="Helpers\TopMostMessageBox.cs" />
-    <Compile Include="Helpers\UploadHelper.cs" />
-    <Compile Include="Helpers\ScanHelper.cs" />
-    <Compile Include="Helpers\XmlHelper.cs" />
-    <Compile Include="Helpers\ZipHelper.cs" />
-    <Compile Include="MenuLogic\ActionStatus.cs" />
-    <Compile Include="MenuLogic\BindProjectLogic.cs" />
-    <Compile Include="MenuLogic\CommandStatus.cs" />
-    <Compile Include="MenuLogic\IMenuLogic.cs" />
-    <Compile Include="MenuLogic\RetrievedScanResultLogic.cs" />
-    <Compile Include="MenuLogic\IncrementalScanLogic.cs" />
-    <Compile Include="MenuLogic\ScanLogic.cs" />
-    <Compile Include="MenuLogic\ShowResultLogic.cs" />
-    <Compile Include="MenuLogic\ShowSavedScanResultLogic.cs" />
-    <Compile Include="Presenters\BindProjectPresenter.cs" />
-    <Compile Include="Presenters\IBindProjectPresenter.cs" />
-    <Compile Include="Presenters\ILoginPresenter.cs" />
-    <Compile Include="Presenters\IRetrieveResultsFromServerPresenter.cs" />
-    <Compile Include="Presenters\IScanPresenter.cs" />
-    <Compile Include="Presenters\IUploadPresenter.cs" />
-    <Compile Include="Presenters\LoginPresenter.cs" />
-    <Compile Include="Presenters\ScanPresenter.cs" />
-    <Compile Include="Presenters\UploadPresenter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -280,156 +236,6 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\CxViewerResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CxViewerResources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="QueryDescription\QueryDescriptionUrlBuilder.cs" />
-    <Compile Include="ServiceLocator\ServiceLocator.cs" />
-    <Compile Include="Services\RESTApi\CxRESTApi.cs" />
-    <Compile Include="Services\CxVSWebServiceWrapper.cs" />
-    <Compile Include="Services\CxWebServiceClient.cs" />
-    <Compile Include="Services\CxWSResolverWrapper.cs" />
-    <Compile Include="Services\EnvDTEConstants.cs" />
-    <Compile Include="Services\RESTApi\CxRESTApiPortalConfiguration.cs" />
-    <Compile Include="Services\RESTApi\CxRESTApiWebRequestBase.cs" />
-    <Compile Include="Services\WinCookieHelper.cs" />
-    <Compile Include="ValueObjects\WebPortal\Models\CxPortalConfiguration.cs" />
-    <Compile Include="ValueObjects\RESTApi\CxRESTApiLoginResponse.cs" />
-    <Compile Include="ValueObjects\Results.cs" />
-    <Compile Include="ValueObjects\OidcLoginResult.cs" />
-    <Compile Include="Views\BindingPrjList.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\BindingPrjList.Designer.cs">
-      <DependentUpon>BindingPrjList.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\BrowserForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\BrowserForm.Designer.cs">
-      <DependentUpon>BrowserForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\ConnectionCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\ConnectionCtrl.Designer.cs">
-      <DependentUpon>ConnectionCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\PerspectiveResultCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\PerspectiveResultCtrl.Designer.cs">
-      <DependentUpon>PerspectiveResultCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\IPerspectiveResultView.cs" />
-    <Compile Include="Views\DockedView\IPerspectiveEntity.cs" />
-    <Compile Include="Views\DockedView\IPerspectiveGraphView.cs" />
-    <Compile Include="Views\DockedView\IPerspectivePath.cs" />
-    <Compile Include="Views\DockedView\IPerspectiveView.cs" />
-    <Compile Include="Views\DockedView\OptionsAuthCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\OptionsAuthCtrl.Designer.cs">
-      <DependentUpon>OptionsAuthCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\OptionsZipCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\OptionsZipCtrl.Designer.cs">
-      <DependentUpon>OptionsZipCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\PerspectiveGraphCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\PerspectiveGraphCtrl.Designer.cs">
-      <DependentUpon>PerspectiveGraphCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\PerspectivePathCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\PerspectivePathCtrl.Designer.cs">
-      <DependentUpon>PerspectivePathCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\PerspectiveCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\PerspectiveCtrl.Designer.cs">
-      <DependentUpon>PerspectiveCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\OidcLoginCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\OidcLoginCtrl.Designer.cs">
-      <DependentUpon>OidcLoginCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\ScanProcessCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\ScanProcessCtrl.Designer.cs">
-      <DependentUpon>ScanProcessCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\EditRemarkPopUp.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\EditRemarkPopUp.Designer.cs">
-      <DependentUpon>EditRemarkPopUp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ErrorFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\ErrorFrm.Designer.cs">
-      <DependentUpon>ErrorFrm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\IBindProjectView.cs" />
-    <Compile Include="Views\ILoginView.cs" />
-    <Compile Include="Views\IScanView.cs" />
-    <Compile Include="Views\IUploadView.cs" />
-    <Compile Include="Views\IWaitView.cs" />
-    <Compile Include="Views\OpenPercspectiveDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\OpenPercspectiveDialog.Designer.cs">
-      <DependentUpon>OpenPercspectiveDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ProjectListEntity.cs" />
-    <Compile Include="Views\OidcLoginFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\OidcLoginFrm.Designer.cs">
-      <DependentUpon>OidcLoginFrm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ScanProcessFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\ScanProcessFrm.Designer.cs">
-      <DependentUpon>ScanProcessFrm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Shapes\NodeButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Views\Shapes\TableLayout.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Views\SubmitUserFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\SubmitUserFrm.designer.cs">
-      <DependentUpon>SubmitUserFrm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UploadFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\UploadFrm.Designer.cs">
-      <DependentUpon>UploadFrm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WaitFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\WaitFrm.Designer.cs">
-      <DependentUpon>WaitFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="Web References\CxVSWebService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -444,7 +250,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\x86\Build\LICENSE.txt" />
-    <None Include="key.snk" />
     <None Include="packages.config" />
     <None Include="Web References\CxVSWebService\CxVSWebService.disco" />
     <None Include="Web References\CxVSWebService\CxWSResponseAssignUsers.datasource">
@@ -455,19 +260,8 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EmbeddedResource Include="Resources\down.gif" />
-    <None Include="Resources\cx.gif" />
-    <None Include="Resources\cx.ico" />
-    <None Include="Resources\Disabled.png" />
-    <None Include="Resources\Enabled.png" />
-    <EmbeddedResource Include="Resources\empty.gif" />
-    <None Include="Resources\MultiRelaitions.png" />
-    <None Include="Resources\NormalNode.png" />
-    <None Include="Resources\NormalSelected.png" />
-    <None Include="Resources\MultiRelaitionsSelected.PNG" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Views\app.config" />
     <None Include="Web References\CxVSWebService\CxVSWebService.wsdl">
       <SubType>Designer</SubType>
     </None>
@@ -557,91 +351,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CommandBar.resx">
-      <SubType>Designer</SubType>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>CommandBar.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\CxViewerResources.resx">
-      <SubType>Designer</SubType>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>CxViewerResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\BindingPrjList.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>BindingPrjList.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\BrowserForm.resx">
-      <DependentUpon>BrowserForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\ConnectionCtrl.resx">
-      <DependentUpon>ConnectionCtrl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\PerspectiveResultCtrl.resx">
-      <DependentUpon>PerspectiveResultCtrl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\OptionsAuthCtrl.resx">
-      <DependentUpon>OptionsAuthCtrl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\OptionsZipCtrl.resx">
-      <DependentUpon>OptionsZipCtrl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\PerspectiveCtrl.resx">
-      <DependentUpon>PerspectiveCtrl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\PerspectiveGraphCtrl.resx">
-      <DependentUpon>PerspectiveGraphCtrl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\PerspectivePathCtrl.resx">
-      <DependentUpon>PerspectivePathCtrl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\OidcLoginCtrl.resx">
-      <DependentUpon>OidcLoginCtrl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\ScanProcessCtrl.resx">
-      <DependentUpon>ScanProcessCtrl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\EditRemarkPopUp.resx">
-      <DependentUpon>EditRemarkPopUp.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\ErrorFrm.resx">
-      <DependentUpon>ErrorFrm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\OpenPercspectiveDialog.resx">
-      <DependentUpon>OpenPercspectiveDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\OidcLoginFrm.resx">
-      <DependentUpon>OidcLoginFrm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\ScanProcessFrm.resx">
-      <DependentUpon>ScanProcessFrm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\SubmitUserFrm.resx">
-      <DependentUpon>SubmitUserFrm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\UploadFrm.resx">
-      <DependentUpon>UploadFrm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\WaitFrm.resx">
-      <DependentUpon>WaitFrm.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -715,6 +428,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <Import Project="..\CxActionShared\CxActionShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>
     <PreBuildEvent>
