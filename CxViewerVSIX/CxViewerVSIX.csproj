@@ -165,7 +165,6 @@
       <HintPath>..\packages\Microsoft.VisualStudio.RpcContracts.17.1.13\lib\netstandard2.0\Microsoft.VisualStudio.RpcContracts.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Microsoft.VisualStudio.Shell.Design, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Shell.Framework, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Shell.Framework.17.1.32210.191\lib\net472\Microsoft.VisualStudio.Shell.Framework.dll</HintPath>
     </Reference>
