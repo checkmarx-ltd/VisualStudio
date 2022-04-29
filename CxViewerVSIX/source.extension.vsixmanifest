@@ -5,8 +5,8 @@
         <DisplayName>CxViewer</DisplayName>
         <Description xml:space="preserve" >Checkmarx Visual Studio Plugin</Description>
         <MoreInfo>http://www.checkmarx.com</MoreInfo>
-        <Icon>Resources\Checkmarx.ico</Icon>
-        <PreviewImage>Resources\Checkmarx.ico</PreviewImage>
+        <Icon>Checkmarx.ico</Icon>
+        <PreviewImage>Checkmarx.ico</PreviewImage>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[10.0,17.0)" />

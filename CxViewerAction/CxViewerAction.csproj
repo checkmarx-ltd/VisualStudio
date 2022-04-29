@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+  <Import Project="..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.2\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.props" Condition="Exists('..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.2\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.props')" />
   <Import Project="..\packages\CefSharp.Common.99.2.120\build\CefSharp.Common.props" Condition="Exists('..\packages\CefSharp.Common.99.2.120\build\CefSharp.Common.props')" />
   <Import Project="..\packages\cef.redist.x86.99.2.12\build\cef.redist.x86.props" Condition="Exists('..\packages\cef.redist.x86.99.2.12\build\cef.redist.x86.props')" />
   <Import Project="..\packages\cef.redist.x64.99.2.12\build\cef.redist.x64.props" Condition="Exists('..\packages\cef.redist.x64.99.2.12\build\cef.redist.x64.props')" />
@@ -15,7 +16,7 @@
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>CxViewerAction</AssemblyName>
     <DeploymentDirectory>.\bin\</DeploymentDirectory>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <SccProjectName>SAK</SccProjectName>
@@ -37,7 +38,8 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <ApplicationIcon>Resources\cx.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -76,9 +78,22 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>..\Output\</OutputPath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <PlatformTarget>x86</PlatformTarget>
     <OutputPath>bin\x86\Release\</OutputPath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -97,11 +112,18 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build|x64'">
+    <OutputPath>bin\x64\Build\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CefSharp, Version=99.2.120.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
@@ -112,12 +134,6 @@
     </Reference>
     <Reference Include="CefSharp.WinForms, Version=99.2.120.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
       <HintPath>..\packages\CefSharp.WinForms.99.2.120\lib\net462\CefSharp.WinForms.dll</HintPath>
-    </Reference>
-    <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="EnvDTE80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="EnvDTE90, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -133,6 +149,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="MessagePack, Version=2.2.0.0, Culture=neutral, PublicKeyToken=b4a0369545f0a1be, processorArchitecture=MSIL">
+      <HintPath>..\packages\MessagePack.2.2.85\lib\netstandard2.0\MessagePack.dll</HintPath>
+    </Reference>
+    <Reference Include="MessagePack.Annotations, Version=2.2.0.0, Culture=neutral, PublicKeyToken=b4a0369545f0a1be, processorArchitecture=MSIL">
+      <HintPath>..\packages\MessagePack.Annotations.2.2.85\lib\netstandard2.0\MessagePack.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build.Framework, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Build.Framework.16.5.0\lib\net472\Microsoft.Build.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Msagl, Version=2.0.1.0, Culture=neutral, PublicKeyToken=7f84f738e1fc245c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -146,131 +174,204 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\Microsoft.Msagl.GraphViewerGdi.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ServiceHub.Client, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ServiceHub.Client.3.1.2036\lib\net472\Microsoft.ServiceHub.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceHub.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ServiceHub.Framework.3.1.2036\lib\netstandard2.0\Microsoft.ServiceHub.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.CommandBars, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.ComponentModelHost, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.ComponentModelHost.17.1.386\lib\net472\Microsoft.VisualStudio.ComponentModelHost.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.GraphModel, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.GraphModel.17.1.32210.191\lib\net472\Microsoft.VisualStudio.GraphModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.ImageCatalog, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.ImageCatalog.17.1.32210.191\lib\net472\Microsoft.VisualStudio.ImageCatalog.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Imaging, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Imaging.17.1.32210.191\lib\net472\Microsoft.VisualStudio.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Imaging.Interop.14.0.DesignTime, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Imaging.Interop.14.0.DesignTime.17.1.32210.191\lib\net472\Microsoft.VisualStudio.Imaging.Interop.14.0.DesignTime.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Interop, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Interop.17.1.32210.191\lib\net472\Microsoft.VisualStudio.Interop.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Modeling.SDK.Integration.Shell.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\Microsoft.VisualStudio.Modeling.SDK.Integration.Shell.10.0.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.Shell.10.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\References\Microsoft.VisualStudio.Shell.10.0.dll</HintPath>
+    <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\Microsoft.VisualStudio.OLE.Interop.7.10.6070\lib\Microsoft.VisualStudio.OLE.Interop.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Microsoft.VisualStudio.Shell.Interop.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.VisualStudio.ProjectAggregator, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.ProjectAggregator.17.1.32210.191\lib\net472\Microsoft.VisualStudio.ProjectAggregator.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.VisualStudio.RemoteControl, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.RemoteControl.16.3.44\lib\net45\Microsoft.VisualStudio.RemoteControl.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.RpcContracts, Version=17.1.13.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.RpcContracts.17.1.13\lib\netstandard2.0\Microsoft.VisualStudio.RpcContracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.15.0, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.15.0.17.1.32210.191\lib\net472\Microsoft.VisualStudio.Shell.15.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Framework, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Framework.17.1.32210.191\lib\net472\Microsoft.VisualStudio.Shell.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Immutable.11.0.11.0.50727\lib\net45\Microsoft.VisualStudio.Shell.Immutable.11.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.12.0, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Immutable.12.0.12.0.21003\lib\net45\Microsoft.VisualStudio.Shell.Immutable.12.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Immutable.14.0.14.3.25407\lib\net45\Microsoft.VisualStudio.Shell.Immutable.14.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.8.0.8.0.50727\lib\Microsoft.VisualStudio.Shell.Interop.8.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.9.0.9.0.30729\lib\Microsoft.VisualStudio.Shell.Interop.9.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Telemetry, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Telemetry.16.4.22\lib\net45\Microsoft.VisualStudio.Telemetry.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\Microsoft.VisualStudio.TextManager.Interop.7.10.6070\lib\Microsoft.VisualStudio.TextManager.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TextManager.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\Microsoft.VisualStudio.TextManager.Interop.8.0.8.0.50727\lib\Microsoft.VisualStudio.TextManager.Interop.8.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Threading, Version=17.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Threading.17.1.46\lib\net472\Microsoft.VisualStudio.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Utilities, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Utilities.17.1.32210.191\lib\net472\Microsoft.VisualStudio.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Utilities.Internal, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Utilities.Internal.16.3.36\lib\net45\Microsoft.VisualStudio.Utilities.Internal.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Validation, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Validation.17.0.43\lib\netstandard2.0\Microsoft.VisualStudio.Validation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Registry, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Registry.5.0.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="Nerdbank.Streams, Version=2.6.0.0, Culture=neutral, PublicKeyToken=cac503e1823ce71c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nerdbank.Streams.2.6.81\lib\netstandard2.0\Nerdbank.Streams.dll</HintPath>
+    </Reference>
+    <Reference Include="netstandard" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="StreamJsonRpc, Version=2.8.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\StreamJsonRpc.2.8.28\lib\netstandard2.0\StreamJsonRpc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.5.0.0\lib\net461\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.5.0.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Pipelines, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Pipelines.5.0.1\lib\net461\System.IO.Pipelines.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.WebSockets, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.WebSockets.4.3.0\lib\net46\System.Net.WebSockets.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.AccessControl, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.6.0.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.AccessControl, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.AccessControl.6.0.0\lib\net461\System.Threading.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Dataflow.6.0.0\lib\net461\System.Threading.Tasks.Dataflow.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseInterfaces\ICommandResult.cs" />
-    <Compile Include="BaseInterfaces\IDispatcher.cs" />
-    <Compile Include="BaseInterfaces\IGraph.cs" />
-    <Compile Include="BaseInterfaces\IPresenter.cs" />
-    <Compile Include="BaseInterfaces\IProblem.cs" />
-    <Compile Include="BaseInterfaces\IView.cs" />
-    <Compile Include="CommandBar.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CommandBar.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Commands\CommandExecutor.cs" />
-    <Compile Include="CommonActions.cs" />
-    <Compile Include="Connect.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CommonData.cs" />
-    <Compile Include="Dispatchers\Dispatcher.cs" />
-    <Compile Include="Entities\BindProjectEntity.cs" />
-    <Compile Include="Entities\OidcLoginData.cs" />
-    <Compile Include="Entities\EntityId.cs" />
-    <Compile Include="Entities\Enumeration\SerializableDictionary.cs" />
-    <Compile Include="Entities\Enum\ProjectScanStatuses.cs" />
-    <Compile Include="Entities\Enum\SimpleDecision.cs" />
-    <Compile Include="Entities\FormEntity\ScanProgress.cs" />
-    <Compile Include="Entities\Graph.cs" />
-    <Compile Include="Entities\IEntity.cs" />
-    <Compile Include="Entities\LoginData.cs" />
-    <Compile Include="Entities\Project.cs" />
-    <Compile Include="Entities\RestEntities\UserInfoDTO.cs" />
-    <Compile Include="Entities\RestEntities\AccessTokenDTO.cs" />
-    <Compile Include="Entities\ResultEntity.cs" />
-    <Compile Include="Entities\ScanReportInfo.cs" />
-    <Compile Include="Entities\ScanStatusBar.cs" />
-    <Compile Include="Entities\WebServiceEntity\PerspectiveResult.cs" />
-    <Compile Include="Entities\Scan.cs" />
-    <Compile Include="Entities\Upload.cs" />
-    <Compile Include="Entities\WebServiceEntity\ConfigurationResult.cs" />
-    <Compile Include="Entities\WebServiceEntity\LoginResult.cs" />
-    <Compile Include="Entities\WebServiceEntity\PresetResult.cs" />
-    <Compile Include="Entities\WebServiceEntity\QueryDescriptionResult.cs" />
-    <Compile Include="Entities\WebServiceEntity\ReportQueryResult.cs" />
-    <Compile Include="Entities\WebServiceEntity\ReportResult.cs" />
-    <Compile Include="Entities\WebServiceEntity\RunScanResult.cs" />
-    <Compile Include="Entities\WebServiceEntity\StatusScanResult.cs" />
-    <Compile Include="Entities\WebServiceEntity\TeamResult.cs" />
-    <Compile Include="Helpers\BackgroundWorkerHelper.cs" />
-    <Compile Include="Helpers\BindProjectHelper.cs" />
-    <Compile Include="Helpers\ConfigurationHelper.cs" />
-    <Compile Include="Helpers\DrawingHelper\DirectLine.cs" />
-    <Compile Include="Helpers\DrawingHelper\DrawingHelper.cs" />
-    <Compile Include="Helpers\DrawingHelper\NodeTypes.cs" />
-    <Compile Include="Helpers\EncryptHelper.cs" />
-    <Compile Include="Helpers\GraphHelper.cs" />
-    <Compile Include="Helpers\HttpHelper.cs" />
-    <Compile Include="Helpers\ChangeResultHelper.cs" />
-    <Compile Include="Helpers\IConfigurationHelper.cs" />
-    <Compile Include="Helpers\IScanHelper.cs" />
-    <Compile Include="Helpers\LoginHelper.cs" />
-    <Compile Include="Helpers\ObserversManager.cs" />
-    <Compile Include="Helpers\PerspectiveHelper.cs" />
-    <Compile Include="Helpers\ProblemDescriptionHelper.cs" />
-    <Compile Include="Helpers\OIDCLoginHelper.cs" />
-    <Compile Include="Helpers\SavedResultsManager.cs" />
-    <Compile Include="Helpers\StorageHelper.cs" />
-    <Compile Include="Helpers\TopMostMessageBox.cs" />
-    <Compile Include="Helpers\UploadHelper.cs" />
-    <Compile Include="Helpers\ScanHelper.cs" />
-    <Compile Include="Helpers\XmlHelper.cs" />
-    <Compile Include="Helpers\ZipHelper.cs" />
-    <Compile Include="MenuLogic\ActionStatus.cs" />
-    <Compile Include="MenuLogic\BindProjectLogic.cs" />
-    <Compile Include="MenuLogic\CommandStatus.cs" />
-    <Compile Include="MenuLogic\IMenuLogic.cs" />
-    <Compile Include="MenuLogic\RetrievedScanResultLogic.cs" />
-    <Compile Include="MenuLogic\IncrementalScanLogic.cs" />
-    <Compile Include="MenuLogic\ScanLogic.cs" />
-    <Compile Include="MenuLogic\ShowResultLogic.cs" />
-    <Compile Include="MenuLogic\ShowSavedScanResultLogic.cs" />
-    <Compile Include="Presenters\BindProjectPresenter.cs" />
-    <Compile Include="Presenters\IBindProjectPresenter.cs" />
-    <Compile Include="Presenters\ILoginPresenter.cs" />
-    <Compile Include="Presenters\IRetrieveResultsFromServerPresenter.cs" />
-    <Compile Include="Presenters\IScanPresenter.cs" />
-    <Compile Include="Presenters\IUploadPresenter.cs" />
-    <Compile Include="Presenters\LoginPresenter.cs" />
-    <Compile Include="Presenters\ScanPresenter.cs" />
-    <Compile Include="Presenters\UploadPresenter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -280,156 +381,6 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\CxViewerResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CxViewerResources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="QueryDescription\QueryDescriptionUrlBuilder.cs" />
-    <Compile Include="ServiceLocator\ServiceLocator.cs" />
-    <Compile Include="Services\RESTApi\CxRESTApi.cs" />
-    <Compile Include="Services\CxVSWebServiceWrapper.cs" />
-    <Compile Include="Services\CxWebServiceClient.cs" />
-    <Compile Include="Services\CxWSResolverWrapper.cs" />
-    <Compile Include="Services\EnvDTEConstants.cs" />
-    <Compile Include="Services\RESTApi\CxRESTApiPortalConfiguration.cs" />
-    <Compile Include="Services\RESTApi\CxRESTApiWebRequestBase.cs" />
-    <Compile Include="Services\WinCookieHelper.cs" />
-    <Compile Include="ValueObjects\WebPortal\Models\CxPortalConfiguration.cs" />
-    <Compile Include="ValueObjects\RESTApi\CxRESTApiLoginResponse.cs" />
-    <Compile Include="ValueObjects\Results.cs" />
-    <Compile Include="ValueObjects\OidcLoginResult.cs" />
-    <Compile Include="Views\BindingPrjList.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\BindingPrjList.Designer.cs">
-      <DependentUpon>BindingPrjList.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\BrowserForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\BrowserForm.Designer.cs">
-      <DependentUpon>BrowserForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\ConnectionCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\ConnectionCtrl.Designer.cs">
-      <DependentUpon>ConnectionCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\PerspectiveResultCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\PerspectiveResultCtrl.Designer.cs">
-      <DependentUpon>PerspectiveResultCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\IPerspectiveResultView.cs" />
-    <Compile Include="Views\DockedView\IPerspectiveEntity.cs" />
-    <Compile Include="Views\DockedView\IPerspectiveGraphView.cs" />
-    <Compile Include="Views\DockedView\IPerspectivePath.cs" />
-    <Compile Include="Views\DockedView\IPerspectiveView.cs" />
-    <Compile Include="Views\DockedView\OptionsAuthCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\OptionsAuthCtrl.Designer.cs">
-      <DependentUpon>OptionsAuthCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\OptionsZipCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\OptionsZipCtrl.Designer.cs">
-      <DependentUpon>OptionsZipCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\PerspectiveGraphCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\PerspectiveGraphCtrl.Designer.cs">
-      <DependentUpon>PerspectiveGraphCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\PerspectivePathCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\PerspectivePathCtrl.Designer.cs">
-      <DependentUpon>PerspectivePathCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\PerspectiveCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\PerspectiveCtrl.Designer.cs">
-      <DependentUpon>PerspectiveCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\OidcLoginCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\OidcLoginCtrl.Designer.cs">
-      <DependentUpon>OidcLoginCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DockedView\ScanProcessCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DockedView\ScanProcessCtrl.Designer.cs">
-      <DependentUpon>ScanProcessCtrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\EditRemarkPopUp.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\EditRemarkPopUp.Designer.cs">
-      <DependentUpon>EditRemarkPopUp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ErrorFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\ErrorFrm.Designer.cs">
-      <DependentUpon>ErrorFrm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\IBindProjectView.cs" />
-    <Compile Include="Views\ILoginView.cs" />
-    <Compile Include="Views\IScanView.cs" />
-    <Compile Include="Views\IUploadView.cs" />
-    <Compile Include="Views\IWaitView.cs" />
-    <Compile Include="Views\OpenPercspectiveDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\OpenPercspectiveDialog.Designer.cs">
-      <DependentUpon>OpenPercspectiveDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ProjectListEntity.cs" />
-    <Compile Include="Views\OidcLoginFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\OidcLoginFrm.Designer.cs">
-      <DependentUpon>OidcLoginFrm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ScanProcessFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\ScanProcessFrm.Designer.cs">
-      <DependentUpon>ScanProcessFrm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Shapes\NodeButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Views\Shapes\TableLayout.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Views\SubmitUserFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\SubmitUserFrm.designer.cs">
-      <DependentUpon>SubmitUserFrm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UploadFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\UploadFrm.Designer.cs">
-      <DependentUpon>UploadFrm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WaitFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\WaitFrm.Designer.cs">
-      <DependentUpon>WaitFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="Web References\CxVSWebService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -444,7 +395,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\x86\Build\LICENSE.txt" />
-    <None Include="key.snk" />
     <None Include="packages.config" />
     <None Include="Web References\CxVSWebService\CxVSWebService.disco" />
     <None Include="Web References\CxVSWebService\CxWSResponseAssignUsers.datasource">
@@ -455,19 +405,8 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EmbeddedResource Include="Resources\down.gif" />
-    <None Include="Resources\cx.gif" />
-    <None Include="Resources\cx.ico" />
-    <None Include="Resources\Disabled.png" />
-    <None Include="Resources\Enabled.png" />
-    <EmbeddedResource Include="Resources\empty.gif" />
-    <None Include="Resources\MultiRelaitions.png" />
-    <None Include="Resources\NormalNode.png" />
-    <None Include="Resources\NormalSelected.png" />
-    <None Include="Resources\MultiRelaitionsSelected.PNG" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Views\app.config" />
     <None Include="Web References\CxVSWebService\CxVSWebService.wsdl">
       <SubType>Designer</SubType>
     </None>
@@ -557,91 +496,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CommandBar.resx">
-      <SubType>Designer</SubType>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>CommandBar.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\CxViewerResources.resx">
-      <SubType>Designer</SubType>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>CxViewerResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\BindingPrjList.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>BindingPrjList.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\BrowserForm.resx">
-      <DependentUpon>BrowserForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\ConnectionCtrl.resx">
-      <DependentUpon>ConnectionCtrl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\PerspectiveResultCtrl.resx">
-      <DependentUpon>PerspectiveResultCtrl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\OptionsAuthCtrl.resx">
-      <DependentUpon>OptionsAuthCtrl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\OptionsZipCtrl.resx">
-      <DependentUpon>OptionsZipCtrl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\PerspectiveCtrl.resx">
-      <DependentUpon>PerspectiveCtrl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\PerspectiveGraphCtrl.resx">
-      <DependentUpon>PerspectiveGraphCtrl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\PerspectivePathCtrl.resx">
-      <DependentUpon>PerspectivePathCtrl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\OidcLoginCtrl.resx">
-      <DependentUpon>OidcLoginCtrl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DockedView\ScanProcessCtrl.resx">
-      <DependentUpon>ScanProcessCtrl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\EditRemarkPopUp.resx">
-      <DependentUpon>EditRemarkPopUp.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\ErrorFrm.resx">
-      <DependentUpon>ErrorFrm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\OpenPercspectiveDialog.resx">
-      <DependentUpon>OpenPercspectiveDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\OidcLoginFrm.resx">
-      <DependentUpon>OidcLoginFrm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\ScanProcessFrm.resx">
-      <DependentUpon>ScanProcessFrm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\SubmitUserFrm.resx">
-      <DependentUpon>SubmitUserFrm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\UploadFrm.resx">
-      <DependentUpon>UploadFrm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\WaitFrm.resx">
-      <DependentUpon>WaitFrm.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -714,7 +572,20 @@
       <Name>DgvFilterPopup</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.2\analyzers\dotnet\cs\Microsoft.CodeAnalysis.BannedApiAnalyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.2\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.BannedApiAnalyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.ServiceHub.Analyzers.3.1.2036\analyzers\Microsoft.ServiceHub.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.10.10\analyzers\cs\Microsoft.VisualStudio.SDK.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.10.10\analyzers\cs\Microsoft.VisualStudio.SDK.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.1.46\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.1.46\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.CSharp.dll" />
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.1.46\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.1.46\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.1.46\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.1.46\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.VisualBasic.dll" />
+  </ItemGroup>
+  <Import Project="..\CxActionShared\CxActionShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>
     <PreBuildEvent>
@@ -733,8 +604,15 @@
     <Error Condition="!Exists('..\packages\cef.redist.x86.99.2.12\build\cef.redist.x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x86.99.2.12\build\cef.redist.x86.props'))" />
     <Error Condition="!Exists('..\packages\CefSharp.Common.99.2.120\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.99.2.120\build\CefSharp.Common.props'))" />
     <Error Condition="!Exists('..\packages\CefSharp.Common.99.2.120\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.99.2.120\build\CefSharp.Common.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.2\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.2\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.2\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.2\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.1.46\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.1.46\build\Microsoft.VisualStudio.Threading.Analyzers.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.10.10\build\Microsoft.VisualStudio.SDK.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.10.10\build\Microsoft.VisualStudio.SDK.Analyzers.targets'))" />
   </Target>
   <Import Project="..\packages\CefSharp.Common.99.2.120\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.99.2.120\build\CefSharp.Common.targets')" />
+  <Import Project="..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.2\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.targets" Condition="Exists('..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.2\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.targets')" />
+  <Import Project="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.1.46\build\Microsoft.VisualStudio.Threading.Analyzers.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.1.46\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" />
+  <Import Project="..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.10.10\build\Microsoft.VisualStudio.SDK.Analyzers.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.10.10\build\Microsoft.VisualStudio.SDK.Analyzers.targets')" />
   <!--<Target Name="AfterBuild">
     <PropertyGroup>
       <DllName>$(AssemblyName).dll</DllName>

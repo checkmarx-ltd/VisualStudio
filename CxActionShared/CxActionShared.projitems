@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>74fad639-8ff8-41a4-b1df-1930bfba319b</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>CxActionShared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BaseInterfaces\ICommandResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BaseInterfaces\IDispatcher.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BaseInterfaces\IGraph.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BaseInterfaces\IPresenter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BaseInterfaces\IProblem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BaseInterfaces\IView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CommandBar.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\CommandExecutor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CommonActions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CommonData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Connect.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dispatchers\Dispatcher.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\BindProjectEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\EntityId.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Enumeration\SerializableDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Enum\ProjectScanStatuses.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Enum\SimpleDecision.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\FormEntity\ScanProgress.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Graph.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\IEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\LoginData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\OidcLoginData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Project.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\RestEntities\AccessTokenDTO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\RestEntities\UserInfoDTO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\ResultEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Scan.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\ScanReportInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\ScanStatusBar.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Upload.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\WebServiceEntity\ConfigurationResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\WebServiceEntity\LoginResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\WebServiceEntity\PerspectiveResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\WebServiceEntity\PresetResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\WebServiceEntity\QueryDescriptionResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\WebServiceEntity\ReportQueryResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\WebServiceEntity\ReportResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\WebServiceEntity\RunScanResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\WebServiceEntity\StatusScanResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\WebServiceEntity\TeamResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\BackgroundWorkerHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\BindProjectHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ChangeResultHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ConfigurationHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\DrawingHelper\DirectLine.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\DrawingHelper\DrawingHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\DrawingHelper\NodeTypes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\EncryptHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\GraphHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\HttpHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\IConfigurationHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\IScanHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\LoginHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObserversManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\OIDCLoginHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\PerspectiveHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProblemDescriptionHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\SavedResultsManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ScanHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\StorageHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\TopMostMessageBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\UploadHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\XmlHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ZipHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuLogic\ActionStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuLogic\BindProjectLogic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuLogic\CommandStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuLogic\IMenuLogic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuLogic\IncrementalScanLogic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuLogic\RetrievedScanResultLogic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuLogic\ScanLogic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuLogic\ShowResultLogic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuLogic\ShowSavedScanResultLogic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Presenters\BindProjectPresenter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Presenters\IBindProjectPresenter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Presenters\ILoginPresenter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Presenters\IRetrieveResultsFromServerPresenter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Presenters\IScanPresenter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Presenters\IUploadPresenter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Presenters\LoginPresenter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Presenters\ScanPresenter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Presenters\UploadPresenter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)QueryDescription\QueryDescriptionUrlBuilder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resources\CxViewerResources.Designer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ServiceLocator\ServiceLocator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\CxVSWebServiceWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\CxWebServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\CxWSResolverWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\EnvDTEConstants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApiPortalConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApiWebRequestBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\WinCookieHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\OidcLoginResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\RESTApi\CxRESTApiLoginResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\Results.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\WebPortal\Models\CxPortalConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\BindingPrjList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\BindingPrjList.Designer.cs">
+      <DependentUpon>BindingPrjList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\BrowserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\BrowserForm.Designer.cs">
+      <DependentUpon>BrowserForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\ConnectionCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\ConnectionCtrl.Designer.cs">
+      <DependentUpon>ConnectionCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\IPerspectiveEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\IPerspectiveGraphView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\IPerspectivePath.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\IPerspectiveResultView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\IPerspectiveView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\OidcLoginCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\OidcLoginCtrl.Designer.cs">
+      <DependentUpon>OidcLoginCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\OptionsAuthCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\OptionsAuthCtrl.Designer.cs">
+      <DependentUpon>OptionsAuthCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\OptionsZipCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\OptionsZipCtrl.Designer.cs">
+      <DependentUpon>OptionsZipCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\PerspectiveCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\PerspectiveCtrl.Designer.cs">
+      <DependentUpon>PerspectiveCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\PerspectiveGraphCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\PerspectiveGraphCtrl.Designer.cs">
+      <DependentUpon>PerspectiveGraphCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\PerspectivePathCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\PerspectivePathCtrl.Designer.cs">
+      <DependentUpon>PerspectivePathCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\PerspectiveResultCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\PerspectiveResultCtrl.Designer.cs">
+      <DependentUpon>PerspectiveResultCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\ScanProcessCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DockedView\ScanProcessCtrl.Designer.cs">
+      <DependentUpon>ScanProcessCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\EditRemarkPopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\EditRemarkPopUp.Designer.cs">
+      <DependentUpon>EditRemarkPopUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ErrorFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ErrorFrm.Designer.cs">
+      <DependentUpon>ErrorFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IBindProjectView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ILoginView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IScanView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IUploadView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IWaitView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\OidcLoginFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\OidcLoginFrm.Designer.cs">
+      <DependentUpon>OidcLoginFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\OpenPercspectiveDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\OpenPercspectiveDialog.Designer.cs">
+      <DependentUpon>OpenPercspectiveDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ProjectListEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ScanProcessFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ScanProcessFrm.Designer.cs">
+      <DependentUpon>ScanProcessFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Shapes\NodeButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Shapes\TableLayout.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SubmitUserFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SubmitUserFrm.designer.cs">
+      <DependentUpon>SubmitUserFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UploadFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UploadFrm.Designer.cs">
+      <DependentUpon>UploadFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\WaitFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\WaitFrm.Designer.cs">
+      <DependentUpon>WaitFrm.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)CommandBar.resx">
+      <SubType>Designer</SubType>
+      <LastGenOutput>CommandBar.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\CxViewerResources.resx" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\BindingPrjList.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BindingPrjList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\BrowserForm.resx">
+      <DependentUpon>BrowserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DockedView\ConnectionCtrl.resx">
+      <DependentUpon>ConnectionCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DockedView\OidcLoginCtrl.resx">
+      <DependentUpon>OidcLoginCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DockedView\OptionsAuthCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>OptionsAuthCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DockedView\OptionsZipCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>OptionsZipCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DockedView\PerspectiveCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PerspectiveCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DockedView\PerspectiveGraphCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PerspectiveGraphCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DockedView\PerspectivePathCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PerspectivePathCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DockedView\PerspectiveResultCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PerspectiveResultCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DockedView\ScanProcessCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ScanProcessCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\EditRemarkPopUp.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EditRemarkPopUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ErrorFrm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ErrorFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\OidcLoginFrm.resx">
+      <DependentUpon>OidcLoginFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\OpenPercspectiveDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>OpenPercspectiveDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ScanProcessFrm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ScanProcessFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\SubmitUserFrm.resx">
+      <DependentUpon>SubmitUserFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\UploadFrm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>UploadFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WaitFrm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>WaitFrm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)key.snk" />
+    <None Include="$(MSBuildThisFileDirectory)Views\app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Resources\1.ico" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\cx.gif" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\cx.ico" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\Disabled.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\down.gif" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\empty.gif" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\Enabled.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\High.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\Low.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\Medium.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\MultiRelaitions.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\MultiRelaitionsSelected.PNG" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\NormalNode.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\NormalSelected.png" />
+  </ItemGroup>
+</Project>
