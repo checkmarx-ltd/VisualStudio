@@ -66,7 +66,6 @@ namespace CxViewerAction.Views
             this.Name = "BrowserForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
-            this.TransparencyKey = System.Drawing.Color.White;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.BrowserForm_FormClosed);
             this.Load += new System.EventHandler(this.BrowserForm_Load);
             this.ResumeLayout(false);
