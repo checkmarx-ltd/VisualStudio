@@ -70,7 +70,7 @@ namespace CxViewerAction.Views
             
             if (!urlAddress.ToString().Contains("code=") )
             {
-               
+
                 if (!urlAddress.ToString().Contains("CxRestAPI"))
                 {
                     string serverurl = urlAddress + Constants.AUTHORIZATION_ENDPOINT1;
@@ -88,9 +88,13 @@ namespace CxViewerAction.Views
                     System.Text.Encoding encoding = System.Text.Encoding.UTF8;
                     byte[] postDataBytes = encoding.GetBytes(postData);
                     browser.LoadUrlWithPostData(serverurl, postDataBytes, contentType);
-                    
+
                 }
-              
+                else 
+                {
+                    Logger.Create().Debug("Navigating to " + browser.Address.ToString());
+                }
+
             }
            
             string queryString = urlAddress.Query;
@@ -177,12 +181,8 @@ namespace CxViewerAction.Views
         private void NavigateToOidcLogin(String serverUri)
         {
 
-            string serverurl = serverUri + Constants.AUTHORIZATION_ENDPOINT;
-            string header = string.Format("Content-Type: application/x-www-form-urlencoded", Environment.NewLine);
-            Logger.Create().Debug("Navigating to " + serverurl + " headers " + header);
             browser.LoadUrl(serverUri);
-           
-
+        
         }
 
         private void BrowserForm_FormClosed(object sender, FormClosedEventArgs e)
