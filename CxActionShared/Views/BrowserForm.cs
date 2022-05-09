@@ -68,7 +68,36 @@ namespace CxViewerAction.Views
             Uri urlAddress = new Uri(browser.Address.ToString());
             if (!urlAddress.ToString().Contains("code="))
             {
-                Logger.Create().Debug("Navigation complete for " + urlAddress.ToString());
+                if ((browser.Address.Contains("ReturnUrl") || browser.Address.Contains("returnUrl")) && !browser.Address.Contains("ide_client"))
+                {
+                    int position = browser.Address.IndexOf("access_control");
+                    int uripoistion = browser.Address.IndexOf("/CxRestAPI/");
+                    string newuri = browser.Address.Substring(0, uripoistion);
+                    string newurl = browser.Address.Substring(0, position);
+                    if(browser.Address.Contains("http:"))
+                    {
+                        string uri = newuri.Substring(7);
+                        string finalurl = newurl + Constants.SAST_New_Login + Constants.Http + Constants.SAST_End + uri + Constants.SAST_Suffix;
+                        browser.LoadUrl(finalurl);
+                        Logger.Create().Debug("Navigation complete for " + finalurl);
+                    }
+                   else if (browser.Address.Contains("https:"))
+                    {
+                        string uri = newuri.Substring(8);
+                        string finalurl = newurl + Constants.SAST_New_Login + Constants.Https + Constants.SAST_End + uri + Constants.SAST_Suffix;
+                        browser.LoadUrl(finalurl);
+                        Logger.Create().Debug("Navigation complete for " + finalurl);
+                    }
+                    else
+                    {
+                        string uri = newuri.Substring(7);
+                        string finalurl = newurl + Constants.SAST_New_Login + Constants.Http + Constants.SAST_End + uri + Constants.SAST_Suffix;
+                        browser.LoadUrl(finalurl);
+                        Logger.Create().Debug("Navigation complete for " + finalurl);
+                    }
+
+                }
+
             }
             string queryString = urlAddress.Query;
 
@@ -101,9 +130,15 @@ namespace CxViewerAction.Views
 
             if (!e.Url.ToLower().Contains("code="))
             {
-                Logger.Create().Debug("Checking for presence of authorization code in the URL. " + e.Url.ToLower());
+                if(e.Url.Contains("ide_client"))
+                {
+                    Logger.Create().Debug("Checking for presence of authorization code in the URL. " + e.Url);
+                }
+                
+
                 return;
             }
+            
             Logger.Create().Debug("Authorization code found. Extracting authorization code from the URL. ");
             string code = ExtractCodeFromUrl(e.Url);
 
@@ -149,8 +184,8 @@ namespace CxViewerAction.Views
         }
         private void NavigateToOidcLogin(String serverUri)
         {
-            string address = serverUri.Substring(7);
-            string serverURL1 = serverUri + Constants.SAST_Login + address + Constants.SAST_Suffix;
+            
+            string serverURL1 = serverUri + Constants.SAST_PREFIX;
             string serverurl = serverUri + Constants.AUTHORIZATION_ENDPOINT;
             string header = string.Format("Content-Type: application/x-www-form-urlencoded", Environment.NewLine);
             string redirectUri = serverUri;

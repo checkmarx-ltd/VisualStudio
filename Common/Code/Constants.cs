@@ -50,7 +50,10 @@
 		public const string RESPONSE_TYPE_VALUE = "code";
 		public const string SCOPE_VALUE = "offline_access openid sast_api sast-permissions access_control_api";
 		public const string AUTHORIZATION_ENDPOINT = SAST_PREFIX + "/identity/connect/authorize";
-		public const string SAST_Login = "/CxRestAPI/auth/#/login?ReturnUrl=%2FCxRestAPI%2Fauth%2Fidentity%2Fconnect%2Fauthorize%2Fcallback%3Fclient_id%3Dide_client%26scope%3Doffline_access%2520openid%2520sast_api%2520sast-permissions%2520access_control_api%26response_type%3Dcode%26redirect_uri%3Dhttp%253A%252F%252F";
+		public const string SAST_New_Login = "ide_client%26scope%3Doffline_access%2520openid%2520sast_api%2520sast-permissions%2520access_control_api%26response_type%3Dcode%26redirect_uri%3D";
+		public const string Http = "http";
+		public const string Https = "https";
+		public const string SAST_End = "%253A%252F%252F";
 		public const string SAST_Suffix = "%252F";
 		public const string AUTHORIZATION_HEADER = "Authorization";
 		public const string BEARER = "Bearer ";
