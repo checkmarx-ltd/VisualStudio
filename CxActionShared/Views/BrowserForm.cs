@@ -65,11 +65,38 @@ namespace CxViewerAction.Views
         private void OnBrowserAddressChanged(object sender, AddressChangedEventArgs e)
         {
             browser.ExecuteScriptAsync("document.oncontextmenu = function() { return false; };");
+
             Uri urlAddress = new Uri(browser.Address.ToString());
-            if (!urlAddress.ToString().Contains("code="))
+            
+            if (!urlAddress.ToString().Contains("code=") )
             {
-                Logger.Create().Debug("Navigation complete for " + urlAddress.ToString());
+
+                if (!urlAddress.ToString().Contains("CxRestAPI"))
+                {
+                    string serverurl = urlAddress + Constants.AUTHORIZATION_ENDPOINT1;
+                    string header = string.Format("Content-Type: application/x-www-form-urlencoded", Environment.NewLine);
+                    string redirectUri = (browser.Address.ToString());
+                    string contentType = " application/x-www-form-urlencoded";
+                    if (!redirectUri.EndsWith("/"))
+                    {
+                        redirectUri = redirectUri + "/";
+                    }
+                    string postData = Constants.CLIENT_ID_KEY + "=" + Constants.CLIENT_VALUE + "&" +
+                        Constants.SCOPE_KEY + "=" + Constants.SCOPE_VALUE + "&" +
+                        Constants.RESPONSE_TYPE_KEY + "=" + Constants.RESPONSE_TYPE_VALUE + "&" +
+                        Constants.REDIRECT_URI_KEY + "=" + redirectUri;
+                    System.Text.Encoding encoding = System.Text.Encoding.UTF8;
+                    byte[] postDataBytes = encoding.GetBytes(postData);
+                    browser.LoadUrlWithPostData(serverurl, postDataBytes, contentType);
+
+                }
+                else 
+                {
+                    Logger.Create().Debug("Navigating to " + browser.Address.ToString());
+                }
+
             }
+           
             string queryString = urlAddress.Query;
 
             if (string.IsNullOrWhiteSpace(queryString))
@@ -101,7 +128,11 @@ namespace CxViewerAction.Views
 
             if (!e.Url.ToLower().Contains("code="))
             {
-                Logger.Create().Debug("Checking for presence of authorization code in the URL. " + e.Url.ToLower());
+                if (e.Url.ToString().Contains("CxRestAPI"))
+                {
+                    Logger.Create().Debug("Navigation complete for " + e.Url.ToString());
+                    Logger.Create().Debug("Checking for presence of authorization code in the URL. " + e.Url.ToLower());
+                }
                 return;
             }
             Logger.Create().Debug("Authorization code found. Extracting authorization code from the URL. ");
@@ -144,40 +175,14 @@ namespace CxViewerAction.Views
                 Invoke(new MethodInvoker(() => ConnectToIdentidyProvider(serverUri)));
                 return;
             }
-            Logger.Create().Debug("Initiating navigation to OIDC authorization endpoint " + serverUri);
+           
             NavigateToOidcLogin(serverUri);
         }
         private void NavigateToOidcLogin(String serverUri)
         {
-            string address = serverUri.Substring(7);
-            string serverURL1 = serverUri + Constants.SAST_Login + address + Constants.SAST_Suffix;
-            string serverurl = serverUri + Constants.AUTHORIZATION_ENDPOINT;
-            string header = string.Format("Content-Type: application/x-www-form-urlencoded", Environment.NewLine);
-            string redirectUri = serverUri;
-            string contentType = " application/x-www-form-urlencoded";
-            if (!redirectUri.EndsWith("/"))
-            {
-                redirectUri = redirectUri + "/";
-            }
-            string postData = Constants.CLIENT_ID_KEY + "=" + Constants.CLIENT_VALUE + "&" +
-                Constants.SCOPE_KEY + "=" + Constants.SCOPE_VALUE + "&" +
-                Constants.RESPONSE_TYPE_KEY + "=" + Constants.RESPONSE_TYPE_VALUE + "&" +
-                Constants.REDIRECT_URI_KEY + "=" + redirectUri;
-            System.Text.Encoding encoding = System.Text.Encoding.UTF8;
-            byte[] postDataBytes = encoding.GetBytes(postData);
 
-            if (browser.IsBrowserInitialized == true)
-            {
-
-                browser.LoadUrlWithPostData(serverurl, postDataBytes, contentType);
-
-            }
-            else
-            {
-                browser.LoadUrl(serverURL1);
-
-            }
-
+            browser.LoadUrl(serverUri);
+        
         }
 
         private void BrowserForm_FormClosed(object sender, FormClosedEventArgs e)
