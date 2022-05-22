@@ -102,11 +102,35 @@ namespace CxViewerAction.MenuLogic
         public CommandStatus GetStatus()
         {
             Logger.Create().Debug("BindLogic GetStatus");
-            CommandStatus status = CommandStatus.CommandStatusNull;           
+            CommandStatus status = CommandStatus.CommandStatusNull;
             _isBinded = false;
+            bool val = false;
             status = (CommandStatus)CommandStatus.CommandStatusSupported |
                          CommandStatus.CommandStatusEnabled;
             LoginData login = LoginHelper.LoadSaved();
+            if (login.BindedProjects != null)
+            {
+                Entities.Project selectedProject2 = CommonActionsInstance.getInstance().GetSelectedProject();
+                foreach (LoginData.BindProject project in login.BindedProjects)
+                {
+                    if (selectedProject2.RootPath == project.RootPath && selectedProject2.ProjectName == project.ProjectName)
+                    {
+                        val = true;
+                    }
+                }
+                CommonData.IsWorkingOffline = false;
+                LoginHelper.Save(login);
+
+                if (!val)
+                {
+                    login.BindedProjects.Clear();
+                    CommonData.IsProjectBound = false;
+                    LoginHelper.IsLogged = false;
+                    LoginHelper.Save(login);
+                }
+            }
+
+
             Logger.Create().Debug("BindLogic GetSelectedProject");
             Entities.Project selectedProject = CommonActionsInstance.getInstance().GetSelectedProject();
             if (selectedProject == null)
