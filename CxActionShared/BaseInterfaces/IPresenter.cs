@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CxViewerAction.Presenters
+namespace CxViewerAction2022.Presenters
 {
     /// <summary>
     /// Represent presenter class structure

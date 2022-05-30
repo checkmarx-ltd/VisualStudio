@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using CxViewerAction.Dispatchers;
-using CxViewerAction.Entities.WebServiceEntity;
-using CxViewerAction.Commands;
-using CxViewerAction.Entities;
-using CxViewerAction.Services;
-using CxViewerAction.Presenters;
-using CxViewerAction.Views;
+using CxViewerAction2022.Dispatchers;
+using CxViewerAction2022.Entities.WebServiceEntity;
+using CxViewerAction2022.Commands;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Services;
+using CxViewerAction2022.Presenters;
+using CxViewerAction2022.Views;
 using System.Windows.Forms;
-using CxViewerAction.Entities.Enum;
-using CxViewerAction.Entities.FormEntity;
+using CxViewerAction2022.Entities.Enum;
+using CxViewerAction2022.Entities.FormEntity;
 using System.Threading;
-using CxViewerAction.CxVSWebService;
+using CxViewerAction2022.CxVSWebService;
 using Common;
 
-namespace CxViewerAction.Helpers
+namespace CxViewerAction2022.Helpers
 {
     /// <summary>
     /// Helper class for scan execution

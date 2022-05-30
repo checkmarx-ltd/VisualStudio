@@ -1,7 +1,7 @@
-﻿using CxViewerAction.Entities;
-using CxViewerAction.Commands;
+﻿using CxViewerAction2022.Entities;
+using CxViewerAction2022.Commands;
 
-namespace CxViewerAction.Presenters
+namespace CxViewerAction2022.Presenters
 {
     /// <summary>
     /// Represent main upload view class methods

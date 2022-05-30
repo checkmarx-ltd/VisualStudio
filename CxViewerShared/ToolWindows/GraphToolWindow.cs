@@ -4,10 +4,10 @@
 // </copyright>
 //------------------------------------------------------------------------------
 
-using CxViewerAction.Views.DockedView;
+using CxViewerAction2022.Views.DockedView;
 using EnvDTE;
 
-namespace CxViewerVSIX.ToolWindows
+namespace CxViewer2019VSIX.ToolWindows
 {
     using System;
     using System.Runtime.InteropServices;

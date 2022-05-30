@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.Collections.Generic;
-using CxViewerAction.Entities;
-using CxViewerAction.Entities.WebServiceEntity;
-using CxViewerAction.Views.DockedView;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Entities.WebServiceEntity;
+using CxViewerAction2022.Views.DockedView;
 
-namespace CxViewerAction.BaseInterfaces
+namespace CxViewerAction2022.BaseInterfaces
 {
     /// <summary>
     /// Represent base methods-properties graph object

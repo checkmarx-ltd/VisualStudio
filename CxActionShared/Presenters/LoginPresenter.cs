@@ -1,14 +1,14 @@
 ﻿using System;
 
-// using CxViewerAction.Managers;
-using CxViewerAction.Entities;
-using CxViewerAction.Dispatchers;
-using CxViewerAction.ServiceLocators;
-using CxViewerAction.Views;
-using CxViewerAction.Services;
-using CxViewerAction.Helpers;
+// using CxViewerAction2022.Managers;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Dispatchers;
+using CxViewerAction2022.ServiceLocators;
+using CxViewerAction2022.Views;
+using CxViewerAction2022.Services;
+using CxViewerAction2022.Helpers;
 
-namespace CxViewerAction.Presenters
+namespace CxViewerAction2022.Presenters
 {
     /// <summary>
     /// Represent login controller object

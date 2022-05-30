@@ -7,9 +7,9 @@
 using System;
 using Microsoft.VisualStudio.Shell;
 using EnvDTE;
-using CxViewerAction.MenuLogic;
+using CxViewerAction2022.MenuLogic;
 
-namespace CxViewerVSIX.Commands
+namespace CxViewer2019VSIX.Commands
 {
     /// <summary>
     /// Command handler

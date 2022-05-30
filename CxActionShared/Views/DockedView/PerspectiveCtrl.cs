@@ -6,13 +6,13 @@ using System.Data;
 
 using System.Text;
 using System.Windows.Forms;
-using CxViewerAction.Entities.WebServiceEntity;
+using CxViewerAction2022.Entities.WebServiceEntity;
 using System.Collections;
-using CxViewerAction.Helpers;
-using CxViewerAction.Helpers.DrawingHelper;
-using CxViewerAction.Entities;
+using CxViewerAction2022.Helpers;
+using CxViewerAction2022.Helpers.DrawingHelper;
+using CxViewerAction2022.Entities;
 
-namespace CxViewerAction.Views.DockedView
+namespace CxViewerAction2022.Views.DockedView
 {
     public partial class PerspectiveCtrl : UserControl, IPerspectiveView
     {

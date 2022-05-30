@@ -1,4 +1,4 @@
-﻿namespace CxViewerAction.ValueObjects
+﻿namespace CxViewerAction2022.ValueObjects
 {
     public class OidcLoginResult : Results
     {

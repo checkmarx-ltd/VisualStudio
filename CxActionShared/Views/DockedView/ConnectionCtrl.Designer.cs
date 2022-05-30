@@ -1,4 +1,4 @@
-﻿namespace CxViewerAction.Views.DockedView
+﻿namespace CxViewerAction2022.Views.DockedView
 {
 	partial class ConnectionCtrl
 	{

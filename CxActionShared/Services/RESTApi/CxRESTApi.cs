@@ -3,13 +3,13 @@ using Common;
 using System.IO;
 using System.Net;
 using System.Text;
-using CxViewerAction.Entities;
+using CxViewerAction2022.Entities;
 using System.Web.Script.Serialization;
-using CxViewerAction.Entities.RestEntities;
+using CxViewerAction2022.Entities.RestEntities;
 using System.Collections;
 using Newtonsoft.Json;
 
-namespace CxViewerAction.Services
+namespace CxViewerAction2022.Services
 {
     public class CxRESTApi
     {

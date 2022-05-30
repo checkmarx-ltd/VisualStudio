@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using EnvDTE;
-using CxViewerAction.Entities;
-using CxViewerAction.Helpers;
-using CxViewerAction.Views;
-using CxViewerAction.Views.DockedView;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Helpers;
+using CxViewerAction2022.Views;
+using CxViewerAction2022.Views.DockedView;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 
-namespace CxViewerAction.MenuLogic
+namespace CxViewerAction2022.MenuLogic
 {
     public class ShowSavedScanResultLogic : IMenuLogic
     {
@@ -50,7 +50,7 @@ namespace CxViewerAction.MenuLogic
         {
             LoginData login = LoginHelper.LoadSaved();
   
-            CxViewerAction.CxVSWebService.CxWSQueryVulnerabilityData[] scanData = null;
+            CxViewerAction2022.CxVSWebService.CxWSQueryVulnerabilityData[] scanData = null;
             long scanId = 0;
             
             scanId = CommonData.SelectedScanId;

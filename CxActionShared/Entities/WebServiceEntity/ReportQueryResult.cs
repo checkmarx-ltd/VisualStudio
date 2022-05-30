@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 
 using System.Text;
-using CxViewerAction.Views.DockedView;
+using CxViewerAction2022.Views.DockedView;
 
-namespace CxViewerAction.Entities.WebServiceEntity
+namespace CxViewerAction2022.Entities.WebServiceEntity
 {
     public enum ReportQuerySeverityType
     {

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 
 using System.Text;
-using CxViewerAction.Entities.WebServiceEntity;
+using CxViewerAction2022.Entities.WebServiceEntity;
 using System.Xml;
-using CxViewerAction.Entities;
+using CxViewerAction2022.Entities;
 
-namespace CxViewerAction.Helpers
+namespace CxViewerAction2022.Helpers
 {
     /// <summary>
     /// Class encapsulates methods for transforming XML string to system objects

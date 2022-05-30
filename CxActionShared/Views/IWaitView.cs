@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CxViewerAction.Views
+namespace CxViewerAction2022.Views
 {
     public interface IWaitView : IView
     {

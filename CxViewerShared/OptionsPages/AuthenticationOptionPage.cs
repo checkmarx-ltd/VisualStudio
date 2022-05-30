@@ -1,4 +1,4 @@
-﻿using CxViewerAction.Views.DockedView;
+﻿using CxViewerAction2022.Views.DockedView;
 using Microsoft.VisualStudio.Shell;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CxViewerVSIX.OptionsPages
+namespace CxViewer2019VSIX.OptionsPages
 {
     [Guid("CF7539CD-011B-4D31-9DEA-1297078C05A0")]
     public class AuthenticationOptionPage : DialogPage

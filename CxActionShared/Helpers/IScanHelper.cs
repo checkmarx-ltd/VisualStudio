@@ -1,12 +1,12 @@
-﻿using CxViewerAction.CxVSWebService;
-using CxViewerAction.Entities;
-using CxViewerAction.Entities.Enum;
-using CxViewerAction.Views;
+﻿using CxViewerAction2022.CxVSWebService;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Entities.Enum;
+using CxViewerAction2022.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CxViewerAction.Helpers
+namespace CxViewerAction2022.Helpers
 {
     interface IScanHelper
     {

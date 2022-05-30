@@ -1,10 +1,10 @@
 ﻿using System;
-using CxViewerAction.BaseInterfaces;
+using CxViewerAction2022.BaseInterfaces;
 using System.Collections.Generic;
-using CxViewerAction.Entities.WebServiceEntity;
-using CxViewerAction.Helpers;
+using CxViewerAction2022.Entities.WebServiceEntity;
+using CxViewerAction2022.Helpers;
 
-namespace CxViewerAction.Entities
+namespace CxViewerAction2022.Entities
 {
     /// <summary>
     /// Ordered graph data representation
@@ -375,9 +375,9 @@ namespace CxViewerAction.Entities
                 else
                     return 1;
             }
-            else if (obj is CxViewerAction.CxVSWebService.CxWSPathNode)
+            else if (obj is CxViewerAction2022.CxVSWebService.CxWSPathNode)
             {
-                CxViewerAction.CxVSWebService.CxWSPathNode compareItem = (CxViewerAction.CxVSWebService.CxWSPathNode)obj;
+                CxViewerAction2022.CxVSWebService.CxWSPathNode compareItem = (CxViewerAction2022.CxVSWebService.CxWSPathNode)obj;
 
                 if (compareItem.Name == Name &&
                     compareItem.FileName == FileName &&

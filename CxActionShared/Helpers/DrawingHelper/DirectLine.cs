@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using CxViewerAction.Views.Shapes;
+using CxViewerAction2022.Views.Shapes;
 using System.Drawing.Drawing2D;
 
-namespace CxViewerAction.Helpers.DrawingHelper
+namespace CxViewerAction2022.Helpers.DrawingHelper
 {
     public class DirectLine
     {

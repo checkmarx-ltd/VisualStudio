@@ -5,15 +5,15 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using Common;
-using CxViewerAction.Entities.WebServiceEntity;
+using CxViewerAction2022.Entities.WebServiceEntity;
 using System.Collections;
-using CxViewerAction.Helpers;
-using CxViewerAction.CxVSWebService;
+using CxViewerAction2022.Helpers;
+using CxViewerAction2022.CxVSWebService;
 
 
 
 
-namespace CxViewerAction.Views.DockedView
+namespace CxViewerAction2022.Views.DockedView
 {
     public partial class PerspectiveResultCtrl : UserControl, IPerspectiveResultView
     {
@@ -594,7 +594,7 @@ namespace CxViewerAction.Views.DockedView
              
             long pathId = reportQueryItemPathResult.PathId;
             long resultId = Convert.ToInt64(dgvProjects.Rows[rowIndex].Cells["ScanId"].Value);
-            CxViewerAction.CxVSWebService.CxWSResultPath resultPath = PerspectiveHelper.GetPathCommentsHistory(resultId, pathId);
+            CxViewerAction2022.CxVSWebService.CxWSResultPath resultPath = PerspectiveHelper.GetPathCommentsHistory(resultId, pathId);
             string commentHistory = string.Empty;
             if (resultPath != null && !string.IsNullOrEmpty(resultPath.Comment))
             {
@@ -716,7 +716,7 @@ namespace CxViewerAction.Views.DockedView
                             data = item.Id.ToString(),
                             PathId = pathId,
                             Remarks = string.Empty,
-                            ResultLabelType = (int)CxViewerAction.Helpers.ResultLabelTypeEnum.State,
+                            ResultLabelType = (int)CxViewerAction2022.Helpers.ResultLabelTypeEnum.State,
                             scanId = resultId
                         });
                       
@@ -792,7 +792,7 @@ namespace CxViewerAction.Views.DockedView
                             data = item.Id.ToString(),
                             PathId = pathId,
                             Remarks = string.Empty,
-                            ResultLabelType = (int)CxViewerAction.Helpers.ResultLabelTypeEnum.Severity,
+                            ResultLabelType = (int)CxViewerAction2022.Helpers.ResultLabelTypeEnum.Severity,
                             scanId = resultId
                         });
                     }
@@ -843,7 +843,7 @@ namespace CxViewerAction.Views.DockedView
                             data = item,
                             PathId = pathId,
                             Remarks = string.Empty,
-                            ResultLabelType = (int)CxViewerAction.Helpers.ResultLabelTypeEnum.Assign,
+                            ResultLabelType = (int)CxViewerAction2022.Helpers.ResultLabelTypeEnum.Assign,
                             scanId = resultId
                         });
                     }

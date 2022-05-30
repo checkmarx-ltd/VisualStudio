@@ -5,16 +5,16 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using Common;
-using CxViewerAction.CxVSWebService;
-using CxViewerAction.Dispatchers;
-using CxViewerAction.Entities;
-using CxViewerAction.Entities.WebServiceEntity;
-using CxViewerAction.Services;
-using CxViewerAction.ValueObjects;
-using CxViewerAction.Views;
-using CxViewerAction.WebPortal;
+using CxViewerAction2022.CxVSWebService;
+using CxViewerAction2022.Dispatchers;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Entities.WebServiceEntity;
+using CxViewerAction2022.Services;
+using CxViewerAction2022.ValueObjects;
+using CxViewerAction2022.Views;
+using CxViewerAction2022.WebPortal;
 
-namespace CxViewerAction.Helpers
+namespace CxViewerAction2022.Helpers
 {
     public class LoginHelper
     {

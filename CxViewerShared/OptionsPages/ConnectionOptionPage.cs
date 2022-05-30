@@ -1,4 +1,4 @@
-﻿using CxViewerAction.Views.DockedView;
+﻿using CxViewerAction2022.Views.DockedView;
 using Microsoft.VisualStudio.Shell;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CxViewerVSIX.OptionsPages
+namespace CxViewer2019VSIX.OptionsPages
 {
     [Guid("DE81EF74-9A1A-4175-A780-6E6F7BA5B8C7")]
     public class ConnectionOptionPage : DialogPage

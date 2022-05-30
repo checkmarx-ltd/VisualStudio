@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CxViewerAction
+namespace CxViewerAction2022
 {
     static class CommonData
     {

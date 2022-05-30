@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace CxViewerAction.Services
+namespace CxViewerAction2022.Services
 {
 	public static class WinCookieHelper
 	{

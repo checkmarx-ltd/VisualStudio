@@ -1,11 +1,11 @@
 ﻿using Common;
-using CxViewerAction.Entities;
-using CxViewerAction.Services;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Services;
 using System;
 using System.Net;
 using System.Windows.Forms;
 
-namespace CxViewerAction.Views
+namespace CxViewerAction2022.Views
 {
     /// <summary>
     /// SubmitUserFrm

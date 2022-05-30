@@ -6,10 +6,10 @@ using System.Drawing;
 
 using System.Text;
 using System.Windows.Forms;
-using CxViewerAction.Entities.FormEntity;
-using CxViewerAction.Entities;
+using CxViewerAction2022.Entities.FormEntity;
+using CxViewerAction2022.Entities;
 
-namespace CxViewerAction.Views
+namespace CxViewerAction2022.Views
 {
     public partial class ScanProcessFrm : Form, IScanView
     {

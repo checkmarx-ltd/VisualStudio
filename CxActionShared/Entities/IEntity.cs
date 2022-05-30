@@ -1,4 +1,4 @@
-﻿namespace CxViewerAction.Entities
+﻿namespace CxViewerAction2022.Entities
 {
     /// <summary>
     /// Represent command class structure

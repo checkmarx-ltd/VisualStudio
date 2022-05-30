@@ -2,11 +2,11 @@
 using System.Threading;
 using System.Windows.Forms;
 using Common;
-using CxViewerAction.Entities;
-using CxViewerAction.ValueObjects;
-using CxViewerAction.Views;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.ValueObjects;
+using CxViewerAction2022.Views;
 
-namespace CxViewerAction.Helpers
+namespace CxViewerAction2022.Helpers
 {
     public class OIDCLoginHelper
     {

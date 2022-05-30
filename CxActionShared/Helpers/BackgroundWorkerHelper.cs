@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using CxViewerAction.Views;
+using CxViewerAction2022.Views;
 using Common;
 
-namespace CxViewerAction.Helpers
+namespace CxViewerAction2022.Helpers
 {
     /// <summary>
     /// Perform background work by parallel threads to improve UI responsibility

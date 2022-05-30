@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CxViewerVSIX
+namespace CxViewer2019VSIX
 {
     static internal class CxViewerPackageGuids
     {

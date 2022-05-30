@@ -1,4 +1,4 @@
-﻿using CxViewerAction.Services;
+﻿using CxViewerAction2022.Services;
 using System;
 using System.Web;
 using System.Windows.Forms;
@@ -6,7 +6,7 @@ using Common;
 using Microsoft.Win32;
 
 
-namespace CxViewerAction.Views.DockedView
+namespace CxViewerAction2022.Views.DockedView
 {
 
 	public partial class OidcLoginCtrl : UserControl

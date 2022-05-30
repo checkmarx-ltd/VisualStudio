@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 
 using System.Text;
-using CxViewerAction.Views;
-using CxViewerAction.ServiceLocators;
-using CxViewerAction.Dispatchers;
-using CxViewerAction.Entities;
+using CxViewerAction2022.Views;
+using CxViewerAction2022.ServiceLocators;
+using CxViewerAction2022.Dispatchers;
+using CxViewerAction2022.Entities;
 
-namespace CxViewerAction.Presenters
+namespace CxViewerAction2022.Presenters
 {
     /// <summary>
     /// Represent scan controller

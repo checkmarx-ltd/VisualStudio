@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 
-namespace CxViewerAction.Views
+namespace CxViewerAction2022.Views
 {
     public partial class WaitFrm : Form, IWaitView
     {

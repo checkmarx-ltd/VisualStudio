@@ -1,6 +1,6 @@
-﻿using CxViewerAction.Helpers;
+﻿using CxViewerAction2022.Helpers;
 
-namespace CxViewerAction.QueryDescription
+namespace CxViewerAction2022.QueryDescription
 {
     public class QueryDescriptionUrlBuilder
     {

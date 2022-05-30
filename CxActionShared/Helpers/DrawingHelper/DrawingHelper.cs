@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
-using CxViewerAction.Views.Shapes;
+using CxViewerAction2022.Views.Shapes;
 using System.Drawing.Drawing2D;
 using System.Collections.Generic;
-using CxViewerAction.Entities.WebServiceEntity;
-using CxViewerAction.BaseInterfaces;
-using CxViewerAction.Entities;
-using CxViewerAction.Views.DockedView;
+using CxViewerAction2022.Entities.WebServiceEntity;
+using CxViewerAction2022.BaseInterfaces;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Views.DockedView;
 using Microsoft.Msagl.GraphViewerGdi;
 using Microsoft.Msagl.Drawing;
 using P2 = Microsoft.Msagl.Point;
 using GeomNode = Microsoft.Msagl.Node;
 using System.Reflection;
-using CxViewerAction.Resources;
+using CxViewerAction2022.Resources;
 using System.IO;
 using System.Drawing.Imaging;
 
-namespace CxViewerAction.Helpers.DrawingHelper
+namespace CxViewerAction2022.Helpers.DrawingHelper
 {
     public class DrawingHelper
     {

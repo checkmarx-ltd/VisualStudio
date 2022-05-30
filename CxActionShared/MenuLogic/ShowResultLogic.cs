@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using EnvDTE;
-using CxViewerAction.Views.DockedView;
-using CxViewerAction.Helpers;
+using CxViewerAction2022.Views.DockedView;
+using CxViewerAction2022.Helpers;
 using Common;
 using Microsoft.VisualStudio.Shell;
 
-namespace CxViewerAction.MenuLogic
+namespace CxViewerAction2022.MenuLogic
 {
     public class ShowResultLogic : IMenuLogic
     {

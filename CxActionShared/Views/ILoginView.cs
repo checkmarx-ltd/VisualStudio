@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using CxViewerAction.Entities;
+using CxViewerAction2022.Entities;
 
-namespace CxViewerAction.Views
+namespace CxViewerAction2022.Views
 {
     /// <summary>
     /// Represent login view obligatory properties and methods

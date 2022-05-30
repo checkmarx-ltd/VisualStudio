@@ -6,11 +6,11 @@
 
 using System;
 using Microsoft.VisualStudio.Shell;
-using CxViewerAction.MenuLogic;
-using CxViewerVSIX.ToolWindows;
+using CxViewerAction2022.MenuLogic;
+using CxViewer2019VSIX.ToolWindows;
 using EnvDTE;
 
-namespace CxViewerVSIX.Commands
+namespace CxViewer2019VSIX.Commands
 {
     /// <summary>
     /// Command handler

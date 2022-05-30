@@ -4,7 +4,7 @@ using System.Text;
 using System.IO;
 using System.Security.Cryptography;
 
-namespace CxViewerAction.Helpers
+namespace CxViewerAction2022.Helpers
 {
     public class EncryptHelper
     {

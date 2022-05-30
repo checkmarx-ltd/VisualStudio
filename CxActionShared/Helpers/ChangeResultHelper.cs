@@ -1,12 +1,12 @@
 using System;
-using CxViewerAction.Entities.Enum;
-using CxViewerAction.Entities.WebServiceEntity;
-using CxViewerAction.Services;
-using CxViewerAction.CxVSWebService;
+using CxViewerAction2022.Entities.Enum;
+using CxViewerAction2022.Entities.WebServiceEntity;
+using CxViewerAction2022.Services;
+using CxViewerAction2022.CxVSWebService;
 using System.Threading;
-using CxViewerAction.Entities;
+using CxViewerAction2022.Entities;
 
-namespace CxViewerAction.Helpers
+namespace CxViewerAction2022.Helpers
 {
     public class ChangeResultHelper
     {

@@ -8,15 +8,15 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell;
-using CxViewerVSIX.OptionsPages;
-using CxViewerVSIX.Commands;
+using CxViewer2019VSIX.OptionsPages;
+using CxViewer2019VSIX.Commands;
 using EnvDTE80;
-using CxViewerAction;
+using CxViewerAction2022;
 using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
+using Microsoft.VisualStudio;
 
-
-namespace CxViewerVSIX
+namespace CxViewer2019VSIX
 {
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
@@ -45,16 +45,16 @@ namespace CxViewerVSIX
     [ProvideOptionPage(typeof(ConnectionOptionPage), "CxViewer", "Connection", 0, 1, true)]
     [ProvideOptionPage(typeof(CompressionOptionPage), "CxViewer", "Compression", 0, 2, true)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
-    [ProvideToolWindow(typeof(CxViewerVSIX.ToolWindows.ResultsToolWindow))]
-    //[ProvideToolWindowVisibility(typeof(CxViewerVSIX.ToolWindows.ResultsToolWindow), VSConstants.UICONTEXT.SolutionExists_string)]
-    [ProvideToolWindow(typeof(CxViewerVSIX.ToolWindows.ScanProcessToolWindow))]
-    //[ProvideToolWindowVisibility(typeof(CxViewerVSIX.ToolWindows.ScanProcessToolWindow), VSConstants.UICONTEXT.SolutionExists_string)]
-    [ProvideToolWindow(typeof(CxViewerVSIX.ToolWindows.ReportToolWindow))]
-    //[ProvideToolWindowVisibility(typeof(CxViewerVSIX.ToolWindows.ReportToolWindow), VSConstants.UICONTEXT.SolutionExists_string)]
-    [ProvideToolWindow(typeof(CxViewerVSIX.ToolWindows.PathToolWindow))]
-    //[ProvideToolWindowVisibility(typeof(CxViewerVSIX.ToolWindows.PathToolWindow), VSConstants.UICONTEXT.SolutionExists_string)]
-    [ProvideToolWindow(typeof(CxViewerVSIX.ToolWindows.GraphToolWindow))]
-    //[ProvideToolWindowVisibility(typeof(CxViewerVSIX.ToolWindows.GraphToolWindow), VSConstants.UICONTEXT.SolutionExists_string)]
+    [ProvideToolWindow(typeof(CxViewer2019VSIX.ToolWindows.ResultsToolWindow))]
+    //[ProvideToolWindowVisibility(typeof(CxViewer2019VSIX.ToolWindows.ResultsToolWindow), VSConstants.UICONTEXT.SolutionExists_string)]
+    [ProvideToolWindow(typeof(CxViewer2019VSIX.ToolWindows.ScanProcessToolWindow))]
+    //[ProvideToolWindowVisibility(typeof(CxViewer2019VSIX.ToolWindows.ScanProcessToolWindow), VSConstants.UICONTEXT.SolutionExists_string)]
+    [ProvideToolWindow(typeof(CxViewer2019VSIX.ToolWindows.ReportToolWindow))]
+    //[ProvideToolWindowVisibility(typeof(CxViewer2019VSIX.ToolWindows.ReportToolWindow), VSConstants.UICONTEXT.SolutionExists_string)]
+    [ProvideToolWindow(typeof(CxViewer2019VSIX.ToolWindows.PathToolWindow))]
+    //[ProvideToolWindowVisibility(typeof(CxViewer2019VSIX.ToolWindows.PathToolWindow), VSConstants.UICONTEXT.SolutionExists_string)]
+    [ProvideToolWindow(typeof(CxViewer2019VSIX.ToolWindows.GraphToolWindow))]
+    //[ProvideToolWindowVisibility(typeof(CxViewer2019VSIX.ToolWindows.GraphToolWindow), VSConstants.UICONTEXT.SolutionExists_string)]
     public sealed class CxViewerPackage : Package
     {
         /// <summary>
@@ -95,7 +95,7 @@ namespace CxViewerVSIX
             CommonActions ca = CommonActionsInstance.getInstance();
             ca.ApplicationObject = GetDTE();
         }
-#if CxViewer2022
+#if CxViewer2022VSIX
         public DTE2 GetDTE() {
             return GetService(typeof(SDTE)) as DTE2;
         }
@@ -107,7 +107,7 @@ namespace CxViewerVSIX
         }
 #endif
 
-#endregion
+        #endregion
 
     }
 }

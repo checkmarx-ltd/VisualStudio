@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Windows.Forms;
-using CxViewerAction.BaseInterfaces;
-using CxViewerAction.Helpers;
-using CxViewerAction.Views.DockedView;
+using CxViewerAction2022.BaseInterfaces;
+using CxViewerAction2022.Helpers;
+using CxViewerAction2022.Views.DockedView;
 using System.Drawing;
 using System.Collections.Generic;
-using CxViewerAction.Entities;
+using CxViewerAction2022.Entities;
 using System.Drawing.Drawing2D;
 using Microsoft.Msagl.Drawing;
-using CxViewerAction.Helpers.DrawingHelper;
-using CxViewerAction.Resources;
+using CxViewerAction2022.Helpers.DrawingHelper;
+using CxViewerAction2022.Resources;
 using System.IO;
 using System.Drawing.Imaging;
 using P2 = Microsoft.Msagl.Point;
 using GeomNode = Microsoft.Msagl.Node;
-using CxViewerAction.CxVSWebService;
+using CxViewerAction2022.CxVSWebService;
 
-namespace CxViewerAction.Views.Shapes
+namespace CxViewerAction2022.Views.Shapes
 {
     public class TableLayout : TableLayoutPanel
     {

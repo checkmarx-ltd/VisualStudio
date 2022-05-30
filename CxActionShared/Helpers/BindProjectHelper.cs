@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
-using CxViewerAction.Entities.WebServiceEntity;
-using CxViewerAction.Entities;
-using CxViewerAction.Entities.Enum;
-using CxViewerAction.Dispatchers;
-using CxViewerAction.Services;
-using CxViewerAction.CxVSWebService;
+using CxViewerAction2022.Entities.WebServiceEntity;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Entities.Enum;
+using CxViewerAction2022.Dispatchers;
+using CxViewerAction2022.Services;
+using CxViewerAction2022.CxVSWebService;
 using Common;
-using CxViewerAction.MenuLogic;
+using CxViewerAction2022.MenuLogic;
 
-namespace CxViewerAction.Helpers
+namespace CxViewerAction2022.Helpers
 {
 	public class BindProjectHelper
 	{

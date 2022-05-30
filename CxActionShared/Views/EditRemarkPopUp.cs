@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace CxViewerAction.Views
+namespace CxViewerAction2022.Views
 {
     public partial class EditRemarkPopUp : Form
     {

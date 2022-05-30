@@ -1,13 +1,13 @@
 ﻿using System;
-using CxViewerAction.Dispatchers;
-using CxViewerAction.Commands;
-using CxViewerAction.Entities.WebServiceEntity;
-using CxViewerAction.Entities;
-using CxViewerAction.Services;
-using CxViewerAction.CxVSWebService;
+using CxViewerAction2022.Dispatchers;
+using CxViewerAction2022.Commands;
+using CxViewerAction2022.Entities.WebServiceEntity;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Services;
+using CxViewerAction2022.CxVSWebService;
 using System.Collections.Generic;
 
-namespace CxViewerAction.Helpers
+namespace CxViewerAction2022.Helpers
 {
 	/// <summary>
 	/// Settings upload project params

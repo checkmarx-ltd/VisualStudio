@@ -1,8 +1,8 @@
-﻿using CxViewerAction.Entities;
-using CxViewerAction.Helpers;
+﻿using CxViewerAction2022.Entities;
+using CxViewerAction2022.Helpers;
 using EnvDTE;
 
-namespace CxViewerAction.MenuLogic
+namespace CxViewerAction2022.MenuLogic
 {
     public class IncrementalScanLogic : IMenuLogic
     {

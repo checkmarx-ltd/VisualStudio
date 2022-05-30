@@ -2,7 +2,7 @@
 using System.IO;
 using Common;
 
-namespace CxViewerAction.Helpers
+namespace CxViewerAction2022.Helpers
 {
     public class StorageHelper
     {

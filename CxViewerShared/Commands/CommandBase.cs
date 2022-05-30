@@ -1,14 +1,14 @@
 ﻿using System;
 using System.ComponentModel.Design;
-using CxViewerAction;
-using CxViewerAction.MenuLogic;
-using CxViewerVSIX.ToolWindows;
+using CxViewerAction2022;
+using CxViewerAction2022.MenuLogic;
+using CxViewer2019VSIX.ToolWindows;
 using EnvDTE;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace CxViewerVSIX.Commands
+namespace CxViewer2019VSIX.Commands
 {
     public abstract class CommandBase
     {

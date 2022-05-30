@@ -1,8 +1,8 @@
 ﻿using System;
-using CxViewerAction.Helpers;
+using CxViewerAction2022.Helpers;
 using System.Collections.Generic;
 
-namespace CxViewerAction.Entities.WebServiceEntity
+namespace CxViewerAction2022.Entities.WebServiceEntity
 {
     /// <summary>
     /// Represent report result object

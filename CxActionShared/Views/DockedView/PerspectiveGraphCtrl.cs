@@ -2,14 +2,14 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using CxViewerAction.BaseInterfaces;
-using CxViewerAction.Entities;
-using CxViewerAction.Helpers;
-using CxViewerAction.Views.Shapes;
+using CxViewerAction2022.BaseInterfaces;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Helpers;
+using CxViewerAction2022.Views.Shapes;
 using Microsoft.Msagl.GraphViewerGdi;
-using CxViewerAction.CxVSWebService;
+using CxViewerAction2022.CxVSWebService;
 
-namespace CxViewerAction.Views.DockedView
+namespace CxViewerAction2022.Views.DockedView
 {
     /// <summary>
     /// Graph view

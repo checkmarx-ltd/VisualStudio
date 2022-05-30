@@ -1,6 +1,6 @@
-﻿using CxViewerAction.Views.DockedView;
+﻿using CxViewerAction2022.Views.DockedView;
 
-namespace CxViewerAction.Views
+namespace CxViewerAction2022.Views
 {
     partial class OidcLoginFrm
     {
@@ -31,7 +31,7 @@ namespace CxViewerAction.Views
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OidcLoginFrm));
-            this.oidcLoginCtrl2 = new CxViewerAction.Views.DockedView.OidcLoginCtrl();
+            this.oidcLoginCtrl2 = new CxViewerAction2022.Views.DockedView.OidcLoginCtrl();
             this.SuspendLayout();
             // 
             // oidcLoginCtrl2

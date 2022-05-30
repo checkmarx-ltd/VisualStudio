@@ -1,10 +1,10 @@
 ﻿using System;
-using CxViewerAction.BaseInterfaces;
-using CxViewerAction.Entities.WebServiceEntity;
-using CxViewerAction.Entities;
-using CxViewerAction.CxVSWebService;
+using CxViewerAction2022.BaseInterfaces;
+using CxViewerAction2022.Entities.WebServiceEntity;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.CxVSWebService;
 
-namespace CxViewerAction.Views.DockedView
+namespace CxViewerAction2022.Views.DockedView
 {
     /// <summary>
     /// Represent main method-properties for perspective graph view

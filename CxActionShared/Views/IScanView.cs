@@ -1,8 +1,8 @@
 ﻿using System;
-using CxViewerAction.Entities;
-using CxViewerAction.Entities.FormEntity;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Entities.FormEntity;
 
-namespace CxViewerAction.Views
+namespace CxViewerAction2022.Views
 {
     /// <summary>
     /// Represent scan view obligatory properties and methods

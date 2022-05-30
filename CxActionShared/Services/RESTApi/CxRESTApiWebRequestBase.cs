@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace CxViewerAction.Services
+namespace CxViewerAction2022.Services
 {
     public class CxRESTApiWebRequestCore
     {

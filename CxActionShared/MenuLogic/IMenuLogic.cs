@@ -1,6 +1,6 @@
 ﻿using EnvDTE;
 
-namespace CxViewerAction.MenuLogic
+namespace CxViewerAction2022.MenuLogic
 {
     public interface IMenuLogic
     {
