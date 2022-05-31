@@ -102,7 +102,8 @@ namespace CxViewerAction2022.Helpers
                     {
                         //Compress Level
                         oZip.CompressionLevel = Ionic.Zlib.CompressionLevel.Level9;
-
+                        //changes for Plug-72 update zip32 to zip64
+                        oZip.EnableZip64 = Zip64Option.Always;
                         int commonPathLength = 0;
 
                         if (projects.Count() > 1)
