@@ -1,11 +1,11 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CxViewerAction2022.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CxViewerAction.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="CxViewerAction2022_CxWsResolver_CxWSResolver" Type="(Web Service URL)" Scope="Application">
+    <Setting Name="CxViewerAction_CxWsResolver_CxWSResolver" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">http://localhost:1515/Cxwebinterface/CxWsResolver.asmx</Value>
     </Setting>
-    <Setting Name="CxViewerAction2022_CxVSWebService_CxVSWebService" Type="(Web Service URL)" Scope="Application">
+    <Setting Name="CxViewerAction_CxVSWebService_CxVSWebService" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">http://localhost:1515/cxwebinterface/VS/CxVSWebService.asmx</Value>
     </Setting>
   </Settings>
