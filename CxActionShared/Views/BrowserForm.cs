@@ -12,7 +12,7 @@ using CefSharp.Web;
 using CefSharp.Handler;
 using Common;
 using System.Web;
-using CxViewerAction.Helpers;
+using CxViewerAction.Entities;
 using CefSharp.WinForms;
 using System.Collections.Specialized;
 
@@ -52,7 +52,7 @@ namespace CxViewerAction.Views
             browser.Dock = DockStyle.Fill;
             browser.AddressChanged += OnBrowserAddressChanged;
             browser.FrameLoadEnd += chromium_FrameLoadEnd;
-
+            
         }
 
         public void LoadUrl(string url)
@@ -67,20 +67,21 @@ namespace CxViewerAction.Views
             browser.ExecuteScriptAsync("document.oncontextmenu = function() { return false; };");
 
             Uri urlAddress = new Uri(browser.Address.ToString());
-            
             if (!urlAddress.ToString().Contains("code=") )
             {
 
                 if (!urlAddress.ToString().Contains("CxRestAPI"))
                 {
-                    string serverurl = urlAddress + Constants.AUTHORIZATION_ENDPOINT1;
+                    string urlpath = urlAddress.AbsolutePath;
+                    string uri = urlAddress.ToString().Remove(browser.Address.Length - urlpath.Length);
                     string header = string.Format("Content-Type: application/x-www-form-urlencoded", Environment.NewLine);
-                    string redirectUri = (browser.Address.ToString());
+                    string redirectUri = uri;
                     string contentType = " application/x-www-form-urlencoded";
                     if (!redirectUri.EndsWith("/"))
                     {
                         redirectUri = redirectUri + "/";
                     }
+                    string serverurl = redirectUri + Constants.AUTHORIZATION_ENDPOINT_BROWSER;
                     string postData = Constants.CLIENT_ID_KEY + "=" + Constants.CLIENT_VALUE + "&" +
                         Constants.SCOPE_KEY + "=" + Constants.SCOPE_VALUE + "&" +
                         Constants.RESPONSE_TYPE_KEY + "=" + Constants.RESPONSE_TYPE_VALUE + "&" +
@@ -182,7 +183,7 @@ namespace CxViewerAction.Views
         {
 
             browser.LoadUrl(serverUri);
-        
+
         }
 
         private void BrowserForm_FormClosed(object sender, FormClosedEventArgs e)
