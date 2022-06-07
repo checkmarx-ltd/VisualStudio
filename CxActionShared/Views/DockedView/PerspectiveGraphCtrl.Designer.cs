@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
-using CxViewerAction.Views.Shapes;
-namespace CxViewerAction.Views.DockedView
+using CxViewerAction2022.Views.Shapes;
+namespace CxViewerAction2022.Views.DockedView
 {
     partial class PerspectiveGraphCtrl
     {
@@ -32,7 +32,7 @@ namespace CxViewerAction.Views.DockedView
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PerspectiveGraphCtrl));
             this.gViewer1 = new Microsoft.Msagl.GraphViewerGdi.GViewer();
-            this.tblLayout = new CxViewerAction.Views.Shapes.TableLayout();
+            this.tblLayout = new CxViewerAction2022.Views.Shapes.TableLayout();
             this.SuspendLayout();
             // 
             // gViewer1

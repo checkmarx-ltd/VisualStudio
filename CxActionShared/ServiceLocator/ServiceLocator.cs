@@ -1,9 +1,9 @@
 ﻿using System;
-using CxViewerAction.Dispatchers;
-using CxViewerAction.Presenters;
-using CxViewerAction.Views;
+using CxViewerAction2022.Dispatchers;
+using CxViewerAction2022.Presenters;
+using CxViewerAction2022.Views;
 
-namespace CxViewerAction.ServiceLocators
+namespace CxViewerAction2022.ServiceLocators
 {
     public static class ServiceLocator
     {

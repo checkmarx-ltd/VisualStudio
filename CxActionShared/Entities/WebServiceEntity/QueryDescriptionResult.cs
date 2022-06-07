@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 
 using System.Text;
-using CxViewerAction.Helpers;
-using CxViewerAction.Services;
-using CxViewerAction.CxVSWebService;
+using CxViewerAction2022.Helpers;
+using CxViewerAction2022.Services;
+using CxViewerAction2022.CxVSWebService;
 
-namespace CxViewerAction.Entities.WebServiceEntity
+namespace CxViewerAction2022.Entities.WebServiceEntity
 {
     public class QueryDescriptionResult
     {

@@ -1,12 +1,12 @@
 ﻿using System;
 using EnvDTE;
-using CxViewerAction.Helpers;
-using CxViewerAction.Entities;
+using CxViewerAction2022.Helpers;
+using CxViewerAction2022.Entities;
 using Common;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 
-namespace CxViewerAction.MenuLogic
+namespace CxViewerAction2022.MenuLogic
 {
     public class BindProjectLogic : IMenuLogic
     {

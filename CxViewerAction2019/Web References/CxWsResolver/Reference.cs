@@ -13,7 +13,7 @@
 // 
 #pragma warning disable 1591
 
-namespace CxViewerAction.CxWsResolver {
+namespace CxViewerAction2022.CxWsResolver {
     using System;
     using System.Web.Services;
     using System.Diagnostics;
@@ -36,7 +36,7 @@ namespace CxViewerAction.CxWsResolver {
         
         /// <remarks/>
         public CxWSResolver() {
-            this.Url = global::CxViewerAction.Properties.Settings.Default.CxViewerAction_CxWsResolver_CxWSResolver;
+            this.Url = global::CxViewerAction2019.Properties.Settings.Default.CxViewerAction2022_CxWsResolver_CxWSResolver;
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;

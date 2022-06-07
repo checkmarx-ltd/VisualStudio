@@ -13,7 +13,7 @@
 // 
 #pragma warning disable 1591
 
-namespace CxViewerAction.CxVSWebService {
+namespace CxViewerAction2022.CxVSWebService {
     using System;
     using System.Web.Services;
     using System.Diagnostics;
@@ -117,7 +117,7 @@ namespace CxViewerAction.CxVSWebService {
         
         /// <remarks/>
         public CxVSWebService() {
-            this.Url = global::CxViewerAction.Properties.Settings.Default.CxViewerAction_CxVSWebService_CxVSWebService;
+            this.Url = global::CxViewerAction2019.Properties.Settings.Default.CxViewerAction2022_CxVSWebService_CxVSWebService;
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;

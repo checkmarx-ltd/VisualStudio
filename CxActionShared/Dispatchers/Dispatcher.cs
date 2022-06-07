@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using CxViewerAction.Commands;
-using CxViewerAction.Entities;
+using CxViewerAction2022.Commands;
+using CxViewerAction2022.Entities;
 
-// using CxViewerAction.CommandExecutors;
+// using CxViewerAction2022.CommandExecutors;
 
-namespace CxViewerAction.Dispatchers
+namespace CxViewerAction2022.Dispatchers
 {
     /// <summary>
     /// Handler for excution

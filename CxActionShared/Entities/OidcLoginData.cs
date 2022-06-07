@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CxViewerAction.Entities
+namespace CxViewerAction2022.Entities
 {
 	public class OidcLoginData
 	{

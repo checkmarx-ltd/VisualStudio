@@ -6,9 +6,9 @@ using System.Drawing;
 
 using System.Text;
 using System.Windows.Forms;
-using CxViewerAction.Helpers;
+using CxViewerAction2022.Helpers;
 
-namespace CxViewerAction.Views
+namespace CxViewerAction2022.Views
 {
     public partial class ErrorFrm : Form
     {

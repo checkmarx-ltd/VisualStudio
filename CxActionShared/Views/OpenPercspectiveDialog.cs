@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace CxViewerAction.Views
+namespace CxViewerAction2022.Views
 {
     public partial class OpenPercspectiveDialog : Form
     {

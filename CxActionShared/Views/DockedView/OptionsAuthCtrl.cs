@@ -5,14 +5,14 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
-using CxViewerAction.Helpers;
-using CxViewerAction.Entities;
-using CxViewerAction.Entities.Enum;
-using CxViewerAction.Entities.WebServiceEntity;
+using CxViewerAction2022.Helpers;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Entities.Enum;
+using CxViewerAction2022.Entities.WebServiceEntity;
 using Common;
 using EnvDTE;
 
-namespace CxViewerAction.Views.DockedView
+namespace CxViewerAction2022.Views.DockedView
 {
 	/// <summary>
 	/// Control represent addin custom settings form, available through "Tools" - "Options" menu item

@@ -1,11 +1,11 @@
 ﻿using Common;
-using CxViewerAction.Entities;
-using CxViewerAction.Entities.WebServiceEntity;
-using CxViewerAction.Helpers;
-using CxViewerAction.Helpers.DrawingHelper;
-using CxViewerAction.MenuLogic;
-using CxViewerAction.Services;
-using CxViewerAction.Views.DockedView;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Entities.WebServiceEntity;
+using CxViewerAction2022.Helpers;
+using CxViewerAction2022.Helpers.DrawingHelper;
+using CxViewerAction2022.MenuLogic;
+using CxViewerAction2022.Services;
+using CxViewerAction2022.Views.DockedView;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
@@ -13,11 +13,11 @@ using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using CxViewerAction.Views;
-using CxViewerAction.QueryDescription;
+using CxViewerAction2022.Views;
+using CxViewerAction2022.QueryDescription;
 using System.Windows.Forms;
 
-namespace CxViewerAction
+namespace CxViewerAction2022
 {
     static public class CommonActionsInstance
     {
@@ -324,7 +324,7 @@ namespace CxViewerAction
             return false;
         }
 
-        public void reportWinObject_SelectedNodeChanged(CxViewerAction.Entities.WebServiceEntity.TreeNodeData obj)
+        public void reportWinObject_SelectedNodeChanged(CxViewerAction2022.Entities.WebServiceEntity.TreeNodeData obj)
         {
             ShowProblemFile(obj);
         }
@@ -378,7 +378,7 @@ namespace CxViewerAction
                 //Commands2 commands = (Commands2)_applicationObject.Commands;
                 //EnvDTE.Command prevCommand;
 
-                //prevCommand = commands.Item("CxViewerAction.Connect.ShowResults", 1);
+                //prevCommand = commands.Item("CxViewerAction2022.Connect.ShowResults", 1);
 
                 //object customin = null, customout = null;
                 //commands.Raise(prevCommand.Guid, prevCommand.ID, ref customin, ref customout);
@@ -607,7 +607,7 @@ namespace CxViewerAction
             }
         }
 
-        private void AddProjectToSolution(CxViewerAction.Entities.Project outputProject, Projects projects)
+        private void AddProjectToSolution(CxViewerAction2022.Entities.Project outputProject, Projects projects)
         {
             foreach (EnvDTE.Project solutionProject in projects)
             {
@@ -645,7 +645,7 @@ namespace CxViewerAction
             }
         }
 
-        private void AddProjectToSolution(CxViewerAction.Entities.Project outputProject, ProjectItems projectItems)
+        private void AddProjectToSolution(CxViewerAction2022.Entities.Project outputProject, ProjectItems projectItems)
         {
             foreach (EnvDTE.ProjectItem solutionProject in projectItems)
             {
@@ -733,7 +733,7 @@ namespace CxViewerAction
         }
 
 
-        private void ShowProblemFile(CxViewerAction.Entities.WebServiceEntity.TreeNodeData treeNode)
+        private void ShowProblemFile(CxViewerAction2022.Entities.WebServiceEntity.TreeNodeData treeNode)
         {
 
             #region [Bind graph view]
@@ -813,7 +813,7 @@ namespace CxViewerAction
             try
             {
                 ResultData data = (ResultData)e;
-                CxViewerAction.CxVSWebService.CxWSResultPath resultPath = PerspectiveHelper.GetResultPath(data.ScanId, data.Result.PathId);
+                CxViewerAction2022.CxVSWebService.CxWSResultPath resultPath = PerspectiveHelper.GetResultPath(data.ScanId, data.Result.PathId);
 
                 PerspectiveGraphCtrl viewGraph = null;
                 if (_graphWin != null)
@@ -821,7 +821,7 @@ namespace CxViewerAction
                     viewGraph = _graphWin.Window as PerspectiveGraphCtrl;
                     if (viewGraph != null)
                     {
-                        CxViewerAction.BaseInterfaces.IGraphPath path = viewGraph.FindPath(resultPath);
+                        CxViewerAction2022.BaseInterfaces.IGraphPath path = viewGraph.FindPath(resultPath);
                         viewGraph.SelectEdgeGraphByPath(path.DirectFlow[0], path.DirectFlow[1], path);
                         viewGraph.BindData();
                         viewGraph.PathItemClick = GraphClick;
@@ -832,7 +832,7 @@ namespace CxViewerAction
                 if (_pathWin != null)
                 {
                     IPerspectivePathView viewPath = _pathWin.Window as IPerspectivePathView;
-                    CxViewerAction.Entities.WebServiceEntity.ReportQueryItemResult path = new CxViewerAction.Entities.WebServiceEntity.ReportQueryItemResult()
+                    CxViewerAction2022.Entities.WebServiceEntity.ReportQueryItemResult path = new CxViewerAction2022.Entities.WebServiceEntity.ReportQueryItemResult()
                     {
                         Column = resultPath.Nodes[0].Column,
                         FileName = resultPath.Nodes[0].FileName,

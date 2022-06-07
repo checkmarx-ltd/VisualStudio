@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+    <Metadata>
+        <Identity Id="37506746-5265-481e-ac06-32f67910eedd" Publisher="Checkmarx" Version="9.00.10" Language="en-US" />
+        <DisplayName>CxViewer</DisplayName>
+        <Description xml:space="preserve" >Checkmarx Visual Studio Plugin</Description>
+        <MoreInfo>https://checkmarx.atlassian.net/wiki/spaces/SD/pages/1339392185/Visual+Studio+Plugin</MoreInfo>
+        <Icon>Checkmarx-X.ico</Icon>
+        <PreviewImage>Checkmarx-X.ico</PreviewImage>
+    </Metadata>
+    <Installation>
+        <InstallationTarget Version="[14.0,17.0)" Id="Microsoft.VisualStudio.Pro" />
+        <InstallationTarget Version="[14.0,17.0)" Id="Microsoft.VisualStudio.Community" />
+        <InstallationTarget Version="[14.0,17.0)" Id="Microsoft.VisualStudio.Enterprise" />
+        <InstallationTarget Version="[14.0,17.0)" Id="Microsoft.VisualStudio.IntegratedShell" />
+    </Installation>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+    </Assets>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,17.0)" DisplayName="Visual Studio core editor" />
+    </Prerequisites>
+</PackageManifest>

@@ -5,12 +5,12 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
-using CxViewerAction.Entities.WebServiceEntity;
+using CxViewerAction2022.Entities.WebServiceEntity;
 using System.Resources;
 using System.Reflection;
-using CxViewerAction.Helpers.DrawingHelper;
+using CxViewerAction2022.Helpers.DrawingHelper;
 
-namespace CxViewerAction.Views.DockedView
+namespace CxViewerAction2022.Views.DockedView
 {
     /// <summary>
     /// User control to visualize problem path flow
@@ -83,8 +83,8 @@ namespace CxViewerAction.Views.DockedView
 
             pnlPath.RowCount = _queryItemResult.Paths.Count;
 
-            System.IO.Stream file = Assembly.GetExecutingAssembly().GetManifestResourceStream("CxViewerAction.Resources.down.gif");
-            System.IO.Stream fileEmpty = Assembly.GetExecutingAssembly().GetManifestResourceStream("CxViewerAction.Resources.empty.gif");
+            System.IO.Stream file = Assembly.GetExecutingAssembly().GetManifestResourceStream("CxViewerAction2022.Resources.down.gif");
+            System.IO.Stream fileEmpty = Assembly.GetExecutingAssembly().GetManifestResourceStream("CxViewerAction2022.Resources.empty.gif");
 
             
             for (int i = 0; i < _queryItemResult.Paths.Count; i++)

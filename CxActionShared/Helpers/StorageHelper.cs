@@ -2,7 +2,7 @@
 using System.IO;
 using Common;
 
-namespace CxViewerAction.Helpers
+namespace CxViewerAction2022.Helpers
 {
     public class StorageHelper
     {
@@ -11,13 +11,13 @@ namespace CxViewerAction.Helpers
         /// <summary>
         /// Main storage folder under VS path
         /// </summary>
-        //private static readonly string _baseDir = "CxViewerActionStore";
+        //private static readonly string _baseDir = "CxViewerAction2022Store";
 
         static string BaseDir
         {
             get
             {
-                string addinTargetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Checkmarx\Visual Studio Plugin\CxViewerActionStore");
+                string addinTargetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Checkmarx\Visual Studio Plugin\CxViewerAction2022Store");
                 return addinTargetPath;
             }
         }

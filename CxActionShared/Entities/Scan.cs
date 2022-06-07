@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 
 using System.Text;
-using CxViewerAction.Services;
-using CxViewerAction.Entities.WebServiceEntity;
+using CxViewerAction2022.Services;
+using CxViewerAction2022.Entities.WebServiceEntity;
 using System.Threading;
-using CxViewerAction.Views;
+using CxViewerAction2022.Views;
 
-namespace CxViewerAction.Entities
+namespace CxViewerAction2022.Entities
 {
     /// <summary>
     /// Scan Data Class

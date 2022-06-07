@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 
-namespace CxViewerAction.Services
+namespace CxViewerAction2022.Services
 {
-    public class CxWSResolverWrapper : CxViewerAction.CxWsResolver.CxWSResolver
+    public class CxWSResolverWrapper : CxViewerAction2022.CxWsResolver.CxWSResolver
     {
         public bool DisableConnectionOptimizations = false;
 

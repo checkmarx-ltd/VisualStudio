@@ -1,7 +1,7 @@
-﻿using CxViewerAction.Commands;
-using CxViewerAction.Entities;
+﻿using CxViewerAction2022.Commands;
+using CxViewerAction2022.Entities;
 
-namespace CxViewerAction.Dispatchers
+namespace CxViewerAction2022.Dispatchers
 {
     /// <summary>
     /// Represent dispatcher class structure

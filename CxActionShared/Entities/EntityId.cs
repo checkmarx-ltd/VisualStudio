@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Text;
 using System.Globalization;
 
-namespace CxViewerAction.Entities
+namespace CxViewerAction2022.Entities
 {
     /// <summary>
     /// Entity data

@@ -5,13 +5,13 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using CxViewerAction.Entities;
-using CxViewerAction.Entities.WebServiceEntity;
-using CxViewerAction.Helpers;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Entities.WebServiceEntity;
+using CxViewerAction2022.Helpers;
 using System.Text.RegularExpressions;
 using System.IO;
 
-namespace CxViewerAction.Views
+namespace CxViewerAction2022.Views
 {
     public partial class UploadFrm : Form, IUploadView
     {

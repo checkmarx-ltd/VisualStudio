@@ -1,11 +1,11 @@
 ﻿using System;
-using CxViewerAction.ServiceLocators;
-using CxViewerAction.Presenters;
-using CxViewerAction.Views;
-using CxViewerAction.Entities.WebServiceEntity;
-using CxViewerAction.Entities;
+using CxViewerAction2022.ServiceLocators;
+using CxViewerAction2022.Presenters;
+using CxViewerAction2022.Views;
+using CxViewerAction2022.Entities.WebServiceEntity;
+using CxViewerAction2022.Entities;
 
-namespace CxViewerAction.Commands
+namespace CxViewerAction2022.Commands
 {
     /// <summary>
     /// Execute command

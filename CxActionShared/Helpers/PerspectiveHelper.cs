@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Threading;
-using CxViewerAction.CxVSWebService;
-using CxViewerAction.Entities;
+using CxViewerAction2022.CxVSWebService;
+using CxViewerAction2022.Entities;
 using System.Xml.Serialization;
 using System.IO;
-using CxViewerAction.Services;
-using CxViewerAction.Views;
+using CxViewerAction2022.Services;
+using CxViewerAction2022.Views;
 using System.Windows.Forms;
-using CxViewerAction.Entities.Enum;
-using CxViewerAction.Views.DockedView;
-using CxViewerAction.Entities.WebServiceEntity;
+using CxViewerAction2022.Entities.Enum;
+using CxViewerAction2022.Views.DockedView;
+using CxViewerAction2022.Entities.WebServiceEntity;
 using System.Collections.Generic;
 using Common;
 
-namespace CxViewerAction.Helpers
+namespace CxViewerAction2022.Helpers
 {
     /// <summary>
     /// Helper class for perspective manipulation
@@ -289,7 +289,7 @@ namespace CxViewerAction.Helpers
 
             if (dlg.RememberDecision)
             {
-                login.IsOpenPerspective = (r == DialogResult.OK) ? CxViewerAction.Entities.Enum.SimpleDecision.Yes : Entities.Enum.SimpleDecision.No;
+                login.IsOpenPerspective = (r == DialogResult.OK) ? CxViewerAction2022.Entities.Enum.SimpleDecision.Yes : Entities.Enum.SimpleDecision.No;
                 LoginHelper.Save(login);
             }
 

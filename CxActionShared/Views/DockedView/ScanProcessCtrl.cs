@@ -6,10 +6,10 @@ using System.Data;
 
 using System.Text;
 using System.Windows.Forms;
-using CxViewerAction.Entities.FormEntity;
-using CxViewerAction.Entities;
+using CxViewerAction2022.Entities.FormEntity;
+using CxViewerAction2022.Entities;
 
-namespace CxViewerAction.Views.DockedView
+namespace CxViewerAction2022.Views.DockedView
 {
     public partial class ScanProcessCtrl : UserControl, IScanView
     {

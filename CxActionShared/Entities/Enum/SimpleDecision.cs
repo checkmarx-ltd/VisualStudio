@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CxViewerAction.Entities.Enum
+namespace CxViewerAction2022.Entities.Enum
 {
     /// <summary>
     /// Represent user choise

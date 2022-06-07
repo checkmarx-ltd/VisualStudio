@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace CxViewerAction
+namespace CxViewerAction2022
 {
     /// <summary>
     /// Represent View class structure

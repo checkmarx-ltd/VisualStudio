@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 
 using System.Text;
-using CxViewerAction.Helpers;
-using CxViewerAction.CxVSWebService;
+using CxViewerAction2022.Helpers;
+using CxViewerAction2022.CxVSWebService;
 using Common;
 
-namespace CxViewerAction.Entities.WebServiceEntity
+namespace CxViewerAction2022.Entities.WebServiceEntity
 {
     /// <summary>
     /// Represent service login object

@@ -1,10 +1,10 @@
 ﻿using System;
 using Common;
 using System.Net;
-using CxViewerAction.Entities;
-using CxViewerAction.Helpers;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Helpers;
 
-namespace CxViewerAction.Services
+namespace CxViewerAction2022.Services
 {
     public class CxVSWebServiceWrapper : CxVSWebService.CxVSWebService
     {

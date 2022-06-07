@@ -1,14 +1,14 @@
 ﻿using Common;
-using CxViewerAction.Entities;
-using CxViewerAction.Helpers;
-using CxViewerAction.WebPortal;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Helpers;
+using CxViewerAction2022.WebPortal;
 using System;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Web.Script.Serialization;
 
-namespace CxViewerAction.Services
+namespace CxViewerAction2022.Services
 {
     public class CxRESTApiPortalConfiguration
     {

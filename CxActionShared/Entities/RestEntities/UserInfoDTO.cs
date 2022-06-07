@@ -2,7 +2,7 @@
 using System.Collections;
 using Newtonsoft.Json;
 
-namespace CxViewerAction.Entities.RestEntities
+namespace CxViewerAction2022.Entities.RestEntities
 {
 	class UserInfoDTO
 	{

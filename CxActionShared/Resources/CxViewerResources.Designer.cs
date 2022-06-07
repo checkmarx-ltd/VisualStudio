@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CxViewerAction.Resources {
+namespace CxViewerAction2022.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace CxViewerAction.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CxViewerAction.Resources.CxViewerResources", typeof(CxViewerResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CxViewerAction2022.Resources.CxViewerResources", typeof(CxViewerResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -95,7 +95,7 @@ namespace CxViewerAction.Resources {
         ///// &lt;/auto-generated&gt;
         /////------------------------------------------------------------------------------
         ///
-        ///namespace CxViewerAction.Resources {
+        ///namespace CxViewerAction2022.Resources {
         ///    using System;
         ///    
         ///    

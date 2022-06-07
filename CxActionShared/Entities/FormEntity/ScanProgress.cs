@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using System.Text;
 
-namespace CxViewerAction.Entities.FormEntity
+namespace CxViewerAction2022.Entities.FormEntity
 {
     /// <summary>
     /// Represent scanb dialod data

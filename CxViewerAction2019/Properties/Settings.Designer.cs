@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CxViewerAction.Properties {
+namespace CxViewerAction2019.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -27,9 +27,9 @@ namespace CxViewerAction.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
         [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:1515/Cxwebinterface/CxWsResolver.asmx")]
-        public string CxViewerAction_CxWsResolver_CxWSResolver {
+        public string CxViewerAction2022_CxWsResolver_CxWSResolver {
             get {
-                return ((string)(this["CxViewerAction_CxWsResolver_CxWSResolver"]));
+                return ((string)(this["CxViewerAction2022_CxWsResolver_CxWSResolver"]));
             }
         }
         
@@ -37,9 +37,9 @@ namespace CxViewerAction.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
         [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:1515/cxwebinterface/VS/CxVSWebService.asmx")]
-        public string CxViewerAction_CxVSWebService_CxVSWebService {
+        public string CxViewerAction2022_CxVSWebService_CxVSWebService {
             get {
-                return ((string)(this["CxViewerAction_CxVSWebService_CxVSWebService"]));
+                return ((string)(this["CxViewerAction2022_CxVSWebService_CxVSWebService"]));
             }
         }
     }

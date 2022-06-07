@@ -4,11 +4,11 @@ using System.Text;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using CxViewerAction.Entities;
+using CxViewerAction2022.Entities;
 using Common;
 using Ionic.Zip;
 
-namespace CxViewerAction.Helpers
+namespace CxViewerAction2022.Helpers
 {
     /// <summary>
     /// Creates ZIP archives

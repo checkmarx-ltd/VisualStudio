@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 
 using System.Text;
-using CxViewerAction.Helpers;
+using CxViewerAction2022.Helpers;
 
-namespace CxViewerAction.Entities.WebServiceEntity
+namespace CxViewerAction2022.Entities.WebServiceEntity
 {
     /// <summary>
     /// Represent remote service team object

@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Reflection;
 
-namespace CxViewerAction.Views
+namespace CxViewerAction2022.Views
 {
     public partial class OidcLoginFrm : Form
     {

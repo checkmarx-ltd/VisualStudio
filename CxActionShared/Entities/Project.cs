@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using System.Text;
 
-namespace CxViewerAction.Entities
+namespace CxViewerAction2022.Entities
 {
     /// <summary>
     /// Class represent project entity

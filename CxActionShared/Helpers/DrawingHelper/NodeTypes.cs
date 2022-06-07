@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CxViewerAction.Helpers.DrawingHelper
+namespace CxViewerAction2022.Helpers.DrawingHelper
 {
     public enum NodeTypes
     {

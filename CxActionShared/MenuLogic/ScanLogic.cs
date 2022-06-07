@@ -1,15 +1,15 @@
 ﻿using Common;
-using CxViewerAction.Entities;
-using CxViewerAction.Entities.Enum;
-using CxViewerAction.Helpers;
-using CxViewerAction.Views;
-using CxViewerAction.Views.DockedView;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Entities.Enum;
+using CxViewerAction2022.Helpers;
+using CxViewerAction2022.Views;
+using CxViewerAction2022.Views.DockedView;
 using EnvDTE;
 using EnvDTE80;
 using System;
 using Microsoft.VisualStudio.Shell;
 
-namespace CxViewerAction.MenuLogic
+namespace CxViewerAction2022.MenuLogic
 {
     public class ScanLogic : IMenuLogic
     {
@@ -93,7 +93,7 @@ namespace CxViewerAction.MenuLogic
                     {
                         try
                         {
-                            CxViewerAction.CxVSWebService.CxWSQueryVulnerabilityData[] scanData = null;
+                            CxViewerAction2022.CxVSWebService.CxWSQueryVulnerabilityData[] scanData = null;
                             long scanId = 0;
 
                             ProjectScanStatuses status = _scanHelper.DoScan(project, IsIncremental, ref scanData, ref scanId);

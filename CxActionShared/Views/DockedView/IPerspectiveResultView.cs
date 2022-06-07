@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 
 using System.Text;
-using CxViewerAction.Entities.WebServiceEntity;
+using CxViewerAction2022.Entities.WebServiceEntity;
 
-namespace CxViewerAction.Views.DockedView
+namespace CxViewerAction2022.Views.DockedView
 {
     /// <summary>
     /// Interface that represent main report view problem properties and methods

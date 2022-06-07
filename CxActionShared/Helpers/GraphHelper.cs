@@ -1,10 +1,10 @@
 ﻿using System;
-using CxViewerAction.Entities;
+using CxViewerAction2022.Entities;
 using System.Collections.Generic;
-using CxViewerAction.BaseInterfaces;
-using CxViewerAction.Entities.WebServiceEntity;
+using CxViewerAction2022.BaseInterfaces;
+using CxViewerAction2022.Entities.WebServiceEntity;
 
-namespace CxViewerAction.Helpers
+namespace CxViewerAction2022.Helpers
 {
     public class GraphHelper
     {
@@ -28,7 +28,7 @@ namespace CxViewerAction.Helpers
         {
             IGraph outputGraph = new Graph();
 
-            CxViewerAction.CxVSWebService.CxWSResultPath[] paths = PerspectiveHelper.GetResultPathsForQuery(treeNode.ScanId, treeNode.Id);
+            CxViewerAction2022.CxVSWebService.CxWSResultPath[] paths = PerspectiveHelper.GetResultPathsForQuery(treeNode.ScanId, treeNode.Id);
             treeNode.QueryResult.Paths = ConvertAllNodesToPathes(paths, treeNode.Id, treeNode.QueryResult);
             outputGraph.Severity = treeNode.Severity;
             outputGraph.Paths = new List<GraphPath>();
@@ -51,11 +51,11 @@ namespace CxViewerAction.Helpers
             return outputGraph;
         }
 
-        public static List<ReportQueryItemPathResult> ConvertNodesToPathes(CxViewerAction.CxVSWebService.CxWSPathNode[] cxWSPathNode, ReportQueryResult queryResult, ReportQueryItemResult queryItemResult)
+        public static List<ReportQueryItemPathResult> ConvertNodesToPathes(CxViewerAction2022.CxVSWebService.CxWSPathNode[] cxWSPathNode, ReportQueryResult queryResult, ReportQueryItemResult queryItemResult)
         {
             List<ReportQueryItemPathResult> list = new List<ReportQueryItemPathResult>();
 
-            foreach (CxViewerAction.CxVSWebService.CxWSPathNode node in cxWSPathNode)
+            foreach (CxViewerAction2022.CxVSWebService.CxWSPathNode node in cxWSPathNode)
             {
                 list.Add(new ReportQueryItemPathResult()
                 {
@@ -72,11 +72,11 @@ namespace CxViewerAction.Helpers
             return list;
         }
 
-        private static List<ReportQueryItemResult> ConvertAllNodesToPathes(CxViewerAction.CxVSWebService.CxWSResultPath[] cxWSPathNode, int resultId, ReportQueryResult queryResult)
+        private static List<ReportQueryItemResult> ConvertAllNodesToPathes(CxViewerAction2022.CxVSWebService.CxWSResultPath[] cxWSPathNode, int resultId, ReportQueryResult queryResult)
         {
             List<ReportQueryItemResult> list = new List<ReportQueryItemResult>();
 
-            foreach (CxViewerAction.CxVSWebService.CxWSResultPath node in cxWSPathNode)
+            foreach (CxViewerAction2022.CxVSWebService.CxWSResultPath node in cxWSPathNode)
             {
                 list.Add(new ReportQueryItemResult()
                 {

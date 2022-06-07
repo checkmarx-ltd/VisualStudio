@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using CxViewerAction.Entities;
-using CxViewerAction.CxVSWebService;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.CxVSWebService;
 
-namespace CxViewerAction.Views
+namespace CxViewerAction2022.Views
 {
     /// <summary>
     /// Represent upload view obligatory methods and properties

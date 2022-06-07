@@ -5,10 +5,10 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using CxViewerAction.CxVSWebService;
+using CxViewerAction2022.CxVSWebService;
 using Common;
 
-namespace CxViewerAction.Views
+namespace CxViewerAction2022.Views
 {
     public partial class frmBindingPrjList : Form, IBindProjectView
     {

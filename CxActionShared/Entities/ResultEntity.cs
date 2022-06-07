@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CxViewerAction.Entities
+namespace CxViewerAction2022.Entities
 {
     //public class ResultEntity
     //{

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using CxViewerAction.Entities.Enum;
-using CxViewerAction.Entities.Enumeration;
+using CxViewerAction2022.Entities.Enum;
+using CxViewerAction2022.Entities.Enumeration;
 using System.Xml.Serialization;
-using CxViewerAction.Helpers;
+using CxViewerAction2022.Helpers;
 
-namespace CxViewerAction.Entities
+namespace CxViewerAction2022.Entities
 {
     /// <summary>
     /// Login data

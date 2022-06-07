@@ -1,7 +1,7 @@
 ﻿using System;
-using CxViewerAction.Entities.WebServiceEntity;
+using CxViewerAction2022.Entities.WebServiceEntity;
 
-namespace CxViewerAction.Views.DockedView
+namespace CxViewerAction2022.Views.DockedView
 {
     /// <summary>
     /// Interface that represent main problematic file entity properties and methods

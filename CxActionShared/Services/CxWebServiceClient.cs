@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Net;
-using CxViewerAction.Helpers;
-using CxViewerAction.Entities;
+using CxViewerAction2022.Helpers;
+using CxViewerAction2022.Entities;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
-using CxViewerAction.CxVSWebService;
-using CxViewerAction.Entities.WebServiceEntity;
+using CxViewerAction2022.CxVSWebService;
+using CxViewerAction2022.Entities.WebServiceEntity;
 
-namespace CxViewerAction.Services
+namespace CxViewerAction2022.Services
 {
     /// <summary>
     /// Wrapper for service client
@@ -15,7 +15,7 @@ namespace CxViewerAction.Services
     public class CxWebServiceClient
     {
         #region [Private Members]
-        private readonly CxViewerAction.Services.CxVSWebServiceWrapper _client;
+        private readonly CxViewerAction2022.Services.CxVSWebServiceWrapper _client;
         private const int INTERFACE_VERSION = 1;
         #endregion
 
@@ -24,7 +24,7 @@ namespace CxViewerAction.Services
         /// <summary>
         /// Servive client object
         /// </summary>
-        public CxViewerAction.Services.CxVSWebServiceWrapper ServiceClient { get { return _client; } }
+        public CxViewerAction2022.Services.CxVSWebServiceWrapper ServiceClient { get { return _client; } }
 
         #endregion
 
@@ -63,11 +63,11 @@ namespace CxViewerAction.Services
         {
             ServicePointManager.ServerCertificateValidationCallback += delegate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
 
-            CxViewerAction.Services.CxWSResolverWrapper resolver = new CxViewerAction.Services.CxWSResolverWrapper { Url = pLogin.Server };
+            CxViewerAction2022.Services.CxWSResolverWrapper resolver = new CxViewerAction2022.Services.CxWSResolverWrapper { Url = pLogin.Server };
             resolver.DisableConnectionOptimizations = pLogin.DisableConnectionOptimizations;
             resolver.Credentials = System.Net.CredentialCache.DefaultNetworkCredentials;
             resolver.UseDefaultCredentials = true;
-            CxWsResolver.CxWSResponseDiscovery discoveryResponse = resolver.GetWebServiceUrl(CxViewerAction.CxWsResolver.CxClientType.VS, INTERFACE_VERSION);
+            CxWsResolver.CxWSResponseDiscovery discoveryResponse = resolver.GetWebServiceUrl(CxViewerAction2022.CxWsResolver.CxClientType.VS, INTERFACE_VERSION);
 
             if (!discoveryResponse.IsSuccesfull)
             {

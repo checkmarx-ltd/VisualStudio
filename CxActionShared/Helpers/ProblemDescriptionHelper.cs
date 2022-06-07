@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 
 using System.Text;
-using CxViewerAction.Entities.WebServiceEntity;
-using CxViewerAction.CxVSWebService;
+using CxViewerAction2022.Entities.WebServiceEntity;
+using CxViewerAction2022.CxVSWebService;
 using System.Windows.Forms;
 
-namespace CxViewerAction.Helpers
+namespace CxViewerAction2022.Helpers
 {
     /// <summary>
     /// Helper class that manipulate with stored problem description

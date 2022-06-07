@@ -1,4 +1,4 @@
-﻿namespace CxViewerAction.WebPortal
+﻿namespace CxViewerAction2022.WebPortal
 {
     public class CxPortalConfiguration
     {

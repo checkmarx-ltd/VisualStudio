@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
-namespace CxViewerAction.Helpers
+namespace CxViewerAction2022.Helpers
 {
     /// <summary>
     /// Show Message on the top of all windows

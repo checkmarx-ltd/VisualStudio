@@ -12,13 +12,13 @@ using CefSharp.Web;
 using CefSharp.Handler;
 using Common;
 using System.Web;
-using CxViewerAction.Helpers;
+using CxViewerAction2022.Helpers;
 using CefSharp.WinForms;
 using System.Collections.Specialized;
 
 //This code is using CefSharp Browser for Login.
 // Use of this source code is governed by a BSD-style license that can be found in the CxViewerVSIX Resource LICENSE file.
-namespace CxViewerAction.Views
+namespace CxViewerAction2022.Views
 {
     public partial class BrowserForm : Form
     {

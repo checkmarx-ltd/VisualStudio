@@ -1,4 +1,4 @@
-﻿namespace CxViewerAction.Views
+﻿namespace CxViewerAction2022.Views
 {
     partial class EditRemarkPopUp
     {

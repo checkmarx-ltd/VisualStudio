@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace CxViewerAction.Entities.Enumeration
+namespace CxViewerAction2022.Entities.Enumeration
 {
     /// <summary>
     /// Class represent Dicitionary object with serialization capability

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CxViewerAction.Services
+namespace CxViewerAction2022.Services
 {
     class EnvDTEConstants
     {

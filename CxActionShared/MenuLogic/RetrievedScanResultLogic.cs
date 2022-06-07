@@ -1,12 +1,12 @@
 ﻿using EnvDTE;
-using CxViewerAction.Entities;
-using CxViewerAction.Helpers;
-using CxViewerAction.CxVSWebService;
+using CxViewerAction2022.Entities;
+using CxViewerAction2022.Helpers;
+using CxViewerAction2022.CxVSWebService;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using Common;
 
-namespace CxViewerAction.MenuLogic
+namespace CxViewerAction2022.MenuLogic
 {
     public class RetrievedScanResultLogic : IMenuLogic
     {

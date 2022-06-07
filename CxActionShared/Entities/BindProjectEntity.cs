@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using CxViewerAction.CxVSWebService;
+using CxViewerAction2022.CxVSWebService;
 using System.Windows.Forms;
 
-namespace CxViewerAction.Entities
+namespace CxViewerAction2022.Entities
 {
     public class BindProjectEntity : IEntity
     {
