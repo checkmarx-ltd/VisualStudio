@@ -14,7 +14,9 @@ using Common;
 using System.Web;
 using CxViewerAction.Entities;
 using CefSharp.WinForms;
+using CxViewerAction.Helpers;
 using System.Collections.Specialized;
+using static CxViewerAction.Views.BrowserForm.MyCustomResourceRequestHandler;
 
 //This code is using CefSharp Browser for Login.
 // Use of this source code is governed by a BSD-style license that can be found in the CxViewerVSIX Resource LICENSE file.
@@ -22,8 +24,8 @@ namespace CxViewerAction.Views
 {
     public partial class BrowserForm : Form
     {
-        public event EventHandler<string> NavigationCompleted;
-        public event EventHandler<string> NavigationError;
+        public static event EventHandler<string> NavigationCompleted;
+        public static event EventHandler<string> NavigationError;
         public event EventHandler UserClosedForm;
         public const string ERROR_QUERY_KEY = "Error";
         public const string BLANK_PAGE = "about:blank";
@@ -53,12 +55,15 @@ namespace CxViewerAction.Views
             browser.AddressChanged += OnBrowserAddressChanged;
             browser.FrameLoadEnd += chromium_FrameLoadEnd;
             
+            browser.RequestHandler = new NewCustomRequestHandler();
+
         }
+
+        
 
         public void LoadUrl(string url)
         {
-            browser.ExecuteScriptAsync("document.oncontextmenu = function() { return false; };");
-            browser.Load(url);
+           
 
         }
 
@@ -209,6 +214,54 @@ namespace CxViewerAction.Views
             Application.DoEvents();
             Hide();
         }
+        public class MyCustomResourceRequestHandler : CefSharp.Handler.ResourceRequestHandler
+        {
+            private readonly System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
 
+            protected override IResponseFilter GetResourceResponseFilter(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, IResponse response)
+            {
+                return new CefSharp.ResponseFilter.StreamResponseFilter(memoryStream);
+            }
+
+            public class NewCustomRequestHandler : RequestHandler
+            {
+                protected override IResourceRequestHandler GetResourceRequestHandler(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame,
+                    IRequest request, bool isNavigation, bool isDownload, string requestInitiator, ref bool disableDefaultHandling)
+                {
+                    return new CustomResourceRequestHandler();
+                }
+            }
+
+            public class CustomResourceRequestHandler : ResourceRequestHandler
+            {
+                public readonly BrowserForm _oidcLoginHelper = new BrowserForm();
+                protected override CefReturnValue OnBeforeResourceLoad(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request,
+                    IRequestCallback callback)
+                {
+                    var Url = request.Url.ToString();
+                    Uri myUri = new Uri(request.Url);
+                    Logger.Create().Debug("new url " + Url);
+                    if(Url.ToLower().Contains("code="))
+                    {
+                       
+                        string code= HttpUtility.ParseQueryString(myUri.Query).Get("code");
+                        NavigationCompleted(this, code);
+                        Logger.Create().Debug("Authorization code found. Extracting authorization code from the URL. ");
+                        browser.CloseBrowser(false);
+                       
+                    }
+                    if (Url.ToLower().Contains("error="))
+                    {
+
+                        string error = HttpUtility.ParseQueryString(myUri.Query).Get("error");
+                        NavigationError(this, error);
+                        browser.CloseBrowser(false);
+
+                    }
+
+                    return CefReturnValue.Continue;
+                }
+            }
+        }
     }
 }
