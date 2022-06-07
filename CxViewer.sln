@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.1.32421.90
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32413.511
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{9B747803-8500-4115-953E-CE7CBF2A14C2}"
 EndProject
@@ -17,17 +17,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CxViewerAction2022", "CxVie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CxViewerVSIX-2019", "CxViewerVSIX-2019\CxViewerVSIX-2019.csproj", "{0D4CC225-7BF6-4EB8-9936-C6FD86FABCAB}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CxViewerActionShared", "CxActionShared\CxViewerActionShared.shproj", "{74FAD639-8FF8-41A4-B1DF-1930BFBA319B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CxViewerAction2019", "CxViewerAction2019\CxViewerAction2019.csproj", "{3F7B5740-0C62-4CFB-883A-02B5722DAE37}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CxViewerActionShared", "CxViewerActionShared\CxViewerActionShared.shproj", "{74FAD639-8FF8-41A4-B1DF-1930BFBA319B}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		CxViewerVSIXShared\CxViewerVSIXShared.projitems*{0627d27e-4065-4b98-94a7-01f77f1357e1}*SharedItemsImports = 13
 		CxViewerVSIXShared\CxViewerVSIXShared.projitems*{0d4cc225-7bf6-4eb8-9936-c6fd86fabcab}*SharedItemsImports = 4
-		CxActionShared\CxViewerActionShared.projitems*{3f7b5740-0c62-4cfb-883a-02b5722dae37}*SharedItemsImports = 4
-		CxActionShared\CxViewerActionShared.projitems*{74fad639-8ff8-41a4-b1df-1930bfba319b}*SharedItemsImports = 13
-		CxActionShared\CxViewerActionShared.projitems*{a3841a67-dae8-42bd-b0d4-9d0d1657f902}*SharedItemsImports = 4
+		CxViewerActionShared\CxViewerActionShared.projitems*{3f7b5740-0c62-4cfb-883a-02b5722dae37}*SharedItemsImports = 4
+		CxViewerActionShared\CxViewerActionShared.projitems*{74fad639-8ff8-41a4-b1df-1930bfba319b}*SharedItemsImports = 13
+		CxViewerActionShared\CxViewerActionShared.projitems*{a3841a67-dae8-42bd-b0d4-9d0d1657f902}*SharedItemsImports = 4
 		CxViewerVSIXShared\CxViewerVSIXShared.projitems*{f6aa03fa-0258-4291-837f-ed4d94a5d9bb}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -156,8 +156,8 @@ Global
 		{3F7B5740-0C62-4CFB-883A-02B5722DAE37}.Build|x64.Build.0 = Build|x64
 		{3F7B5740-0C62-4CFB-883A-02B5722DAE37}.Build|x86.ActiveCfg = Build|x86
 		{3F7B5740-0C62-4CFB-883A-02B5722DAE37}.Build|x86.Build.0 = Build|x86
-		{3F7B5740-0C62-4CFB-883A-02B5722DAE37}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{3F7B5740-0C62-4CFB-883A-02B5722DAE37}.Debug|Any CPU.Build.0 = Debug|x64
+		{3F7B5740-0C62-4CFB-883A-02B5722DAE37}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{3F7B5740-0C62-4CFB-883A-02B5722DAE37}.Debug|Any CPU.Build.0 = Debug|x86
 		{3F7B5740-0C62-4CFB-883A-02B5722DAE37}.Debug|x64.ActiveCfg = Debug|x64
 		{3F7B5740-0C62-4CFB-883A-02B5722DAE37}.Debug|x64.Build.0 = Debug|x64
 		{3F7B5740-0C62-4CFB-883A-02B5722DAE37}.Debug|x86.ActiveCfg = Debug|x86
