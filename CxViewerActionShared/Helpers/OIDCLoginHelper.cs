@@ -44,6 +44,7 @@ namespace CxViewerAction2022.Helpers
         {
             _latestResult = new OidcLoginResult(true, string.Empty, code);
             _oidcLoginEvent.Set();
+
         }
 
         private void ConectAndWait(string baseServerUri, string AuthenticationType)
@@ -53,13 +54,13 @@ namespace CxViewerAction2022.Helpers
                 Thread.Sleep(3000);
                 Application.DoEvents();
                 var browserForm = new BrowserForm();
-                browserForm.NavigationCompleted += OidcLoginCtrlOnNavigationCompleted;
-                browserForm.NavigationError += OidcLoginCtrlOnNavigationError;
+                BrowserForm.NavigationCompleted += OidcLoginCtrlOnNavigationCompleted;
+                BrowserForm.NavigationError += OidcLoginCtrlOnNavigationError;
                 BrowserForm.IsbrowserIntialized();
                 browserForm.Show();
                 browserForm.Invoke(new MethodInvoker(() =>
                 {
-                  //  browserForm.Show();
+                    //  browserForm.Show();
                     browserForm.ConnectToIdentidyProvider(baseServerUri);
                     Application.Run(browserForm);
 

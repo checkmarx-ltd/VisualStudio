@@ -12,9 +12,11 @@ using CefSharp.Web;
 using CefSharp.Handler;
 using Common;
 using System.Web;
-using CxViewerAction2022.Helpers;
+using CxViewerAction2022.Entities;
 using CefSharp.WinForms;
+using CxViewerAction2022.Helpers;
 using System.Collections.Specialized;
+using static CxViewerAction2022.Views.BrowserForm.MyCustomResourceRequestHandler;
 
 //This code is using CefSharp Browser for Login.
 // Use of this source code is governed by a BSD-style license that can be found in the CxViewerVSIX Resource LICENSE file.
@@ -22,8 +24,8 @@ namespace CxViewerAction2022.Views
 {
     public partial class BrowserForm : Form
     {
-        public event EventHandler<string> NavigationCompleted;
-        public event EventHandler<string> NavigationError;
+        public static event EventHandler<string> NavigationCompleted;
+        public static event EventHandler<string> NavigationError;
         public event EventHandler UserClosedForm;
         public const string ERROR_QUERY_KEY = "Error";
         public const string BLANK_PAGE = "about:blank";
@@ -46,20 +48,22 @@ namespace CxViewerAction2022.Views
 
         private void BrowserForm_Load(object sender, EventArgs e)
         {
-            Logger.Create().Debug("Chrome browser form loading");
+
             browser = new ChromiumWebBrowser();
             this.pContainer.Controls.Add(browser);
             browser.Dock = DockStyle.Fill;
-            Logger.Create().Debug("Chrome browser address changed event calling");
             browser.AddressChanged += OnBrowserAddressChanged;
             browser.FrameLoadEnd += chromium_FrameLoadEnd;
-            Logger.Create().Debug("Chrome browser load end");
+
+            browser.RequestHandler = new NewCustomRequestHandler();
+
         }
+
+
 
         public void LoadUrl(string url)
         {
-            browser.ExecuteScriptAsync("document.oncontextmenu = function() { return false; };");
-            browser.Load(url);
+
 
         }
 
@@ -68,39 +72,37 @@ namespace CxViewerAction2022.Views
             browser.ExecuteScriptAsync("document.oncontextmenu = function() { return false; };");
 
             Uri urlAddress = new Uri(browser.Address.ToString());
-            
-            if (!urlAddress.ToString().Contains("code=") )
+            if (!urlAddress.ToString().Contains("code="))
             {
 
                 if (!urlAddress.ToString().Contains("CxRestAPI"))
                 {
-                    string serverurl = urlAddress + Constants.AUTHORIZATION_ENDPOINT1;
-                    Logger.Create().Debug("On browser adress changed server url " + serverurl);
+                    string urlpath = urlAddress.AbsolutePath;
+                    string uri = urlAddress.ToString().Remove(browser.Address.Length - urlpath.Length);
                     string header = string.Format("Content-Type: application/x-www-form-urlencoded", Environment.NewLine);
-                    string redirectUri = (browser.Address.ToString());
-                    Logger.Create().Debug("Redirect url " + redirectUri);
+                    string redirectUri = uri;
                     string contentType = " application/x-www-form-urlencoded";
                     if (!redirectUri.EndsWith("/"))
                     {
                         redirectUri = redirectUri + "/";
                     }
+                    string serverurl = redirectUri + Constants.AUTHORIZATION_ENDPOINT_BROWSER;
                     string postData = Constants.CLIENT_ID_KEY + "=" + Constants.CLIENT_VALUE + "&" +
                         Constants.SCOPE_KEY + "=" + Constants.SCOPE_VALUE + "&" +
                         Constants.RESPONSE_TYPE_KEY + "=" + Constants.RESPONSE_TYPE_VALUE + "&" +
                         Constants.REDIRECT_URI_KEY + "=" + redirectUri;
                     System.Text.Encoding encoding = System.Text.Encoding.UTF8;
                     byte[] postDataBytes = encoding.GetBytes(postData);
-                    Logger.Create().Debug("On browser adress changed post data " + postData);
                     browser.LoadUrlWithPostData(serverurl, postDataBytes, contentType);
-                    Logger.Create().Debug("Url loaded with post data ");
+
                 }
-                else 
+                else
                 {
                     Logger.Create().Debug("Navigating to " + browser.Address.ToString());
                 }
 
             }
-           
+
             string queryString = urlAddress.Query;
 
             if (string.IsNullOrWhiteSpace(queryString))
@@ -144,12 +146,10 @@ namespace CxViewerAction2022.Views
 
             if (NavigationCompleted != null)
             {
-               
+
                 NavigationCompleted(this, code);
-                Logger.Create().Debug("Navigation completed with authorization code: " + code);
                 browser.LoadUrl(BLANK_PAGE);
                 browser.FrameLoadEnd -= chromium_FrameLoadEnd;
-                Logger.Create().Debug("Chrome browser load ended");
                 browser.Invoke(new MethodInvoker(() =>
                 {
                     Application.DoEvents();
@@ -161,19 +161,15 @@ namespace CxViewerAction2022.Views
         private string ExtractCodeFromUrl(string absoluteUri)
         {
             Uri myUri = new Uri(absoluteUri);
-            Logger.Create().Debug("Extracted authorization code from url is " + HttpUtility.ParseQueryString(myUri.Query).Get("code"));
             return HttpUtility.ParseQueryString(myUri.Query).Get("code");
         }
         private string TryGetErrorFromQueryString(string queryString)
         {
             string errorMessage = string.Empty;
             var queryParameters = HttpUtility.ParseQueryString(queryString);
-            Logger.Create().Debug("Query string is " + queryString);
-            Logger.Create().Debug("Query parameters are " + queryParameters);
             if (queryParameters.HasKeys())
             {
                 errorMessage = queryParameters[ERROR_QUERY_KEY];
-                Logger.Create().Debug("Query string has errors ");
             }
             return errorMessage;
         }
@@ -183,17 +179,16 @@ namespace CxViewerAction2022.Views
             if (InvokeRequired)
             {
                 Invoke(new MethodInvoker(() => ConnectToIdentidyProvider(serverUri)));
-                Logger.Create().Debug("Connection to identity provider successful");
                 return;
             }
-           
+
             NavigateToOidcLogin(serverUri);
         }
         private void NavigateToOidcLogin(String serverUri)
         {
-            Logger.Create().Debug("Oidc login server uri " + serverUri);
+
             browser.LoadUrl(serverUri);
-        
+
         }
 
         private void BrowserForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -204,11 +199,10 @@ namespace CxViewerAction2022.Views
             {
                 if (UserClosedForm != null)
                 {
-                    Logger.Create().Debug("Browser form closed");
                     UserClosedForm(this, new EventArgs());
                 }
             }
-           
+
         }
         public void CloseForm()
         {
@@ -220,10 +214,6 @@ namespace CxViewerAction2022.Views
             Application.DoEvents();
             Hide();
         }
-
-        /// <summary>
-        /// Plug-533 Authentication fix that impacted hosted customers
-        /// </summary>
         public class MyCustomResourceRequestHandler : CefSharp.Handler.ResourceRequestHandler
         {
             private readonly System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
@@ -255,7 +245,7 @@ namespace CxViewerAction2022.Views
                     {
 
                         string code = HttpUtility.ParseQueryString(myUri.Query).Get("code");
-                        _oidcLoginHelper.NavigationCompleted(this, code);
+                        NavigationCompleted(this, code);
                         Logger.Create().Debug("Authorization code found. Extracting authorization code from the URL. ");
                         browser.CloseBrowser(false);
 
@@ -264,7 +254,7 @@ namespace CxViewerAction2022.Views
                     {
 
                         string error = HttpUtility.ParseQueryString(myUri.Query).Get("error");
-                        _oidcLoginHelper.NavigationError(this, error);
+                        NavigationError(this, error);
                         browser.CloseBrowser(false);
 
                     }
