@@ -192,7 +192,7 @@ namespace CxViewerAction2022.Helpers
             Logger.Create().Debug("Save preferences");
             server = null; // reset server
             string fileName = FullConfigPath; // Directory.GetCurrentDirectory() + "\\" + FileName;
-            Logger.Create().Debug("Save To File : " + fileName);
+            Logger.Create().Debug("Save to file : " + fileName);
 
             try
             {
@@ -215,6 +215,7 @@ namespace CxViewerAction2022.Helpers
                     {
                         writer.Serialize(file, login);
                     }
+                    Logger.Create().Debug("Saved to file: " + fileName);
                 }
             }
             catch (Exception ex)
@@ -236,7 +237,9 @@ namespace CxViewerAction2022.Helpers
         internal static LoginResult DoLoginWithoutForm(out bool cancelPressed, bool relogin)
         {
             //loads the preferences
+            Logger.Create().Debug("Loading preferneces");
             Entities.LoginData login = LoadSaved();
+            Logger.Create().Debug("Loaded preferences");
             if (login == null)
             {
                 cancelPressed = false;
@@ -400,6 +403,7 @@ namespace CxViewerAction2022.Helpers
                 if (dialogResult == DialogResult.OK)
                 {
                     oidcLoginResult = new OidcLoginResult(true, string.Empty, "");
+                    Logger.Create().Debug("Oidc login successful");
                 }
                 if (dialogResult == DialogResult.Retry)
                 {
@@ -431,6 +435,7 @@ namespace CxViewerAction2022.Helpers
                     cxRestApi = new CxRESTApi(login);
                     string accessToken = cxRestApi.Login(oidcLoginResult.Code);
                     cxRestApi.GetPermissions(accessToken);
+                    Logger.Create().Debug("Oidc Access token:" + accessToken);
                 }
 
                 loginSucceeded = true;
@@ -474,6 +479,7 @@ namespace CxViewerAction2022.Helpers
                 return loginCache;
             }
             LoginData login = Helpers.LoginHelper.Load(0);
+            Logger.Create().Debug("Login data loaded");
             server = login.Server;
             loginCache = login;
             return login;
@@ -485,10 +491,12 @@ namespace CxViewerAction2022.Helpers
         {
             if (loginResult.LoginResultType == LoginResultType.UnknownServerName)
             {
+                Logger.Create().Debug("Verify authority" + Constants.ERR_UNKNOWN_SERVER);
                 TopMostMessageBox.Show(Constants.ERR_UNKNOWN_SERVER, "Verify authority", MessageBoxButtons.OK);
             }
             else
             {
+                Logger.Create().Debug("Verify authority" + Constants.ERR_UNKNOWN_USER_PASSWORD);
                 TopMostMessageBox.Show(Constants.ERR_UNKNOWN_USER_PASSWORD, "Verify authority", MessageBoxButtons.OK);
             }
         }

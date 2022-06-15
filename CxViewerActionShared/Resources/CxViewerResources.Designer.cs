@@ -8,10 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CxViewerAction2022.Resources {
+namespace CxViewerAction2022.Resources
+{
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,40 +23,48 @@ namespace CxViewerAction2022.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class CxViewerResources {
-        
+    internal class CxViewerResources
+    {
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal CxViewerResources() {
+        internal CxViewerResources()
+        {
         }
-        
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
-            get {
-                if (object.ReferenceEquals(resourceMan, null)) {
+        internal static global::System.Resources.ResourceManager ResourceManager
+        {
+            get
+            {
+                if (object.ReferenceEquals(resourceMan, null))
+                {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CxViewerAction2022.Resources.CxViewerResources", typeof(CxViewerResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
-            get {
+        internal static global::System.Globalization.CultureInfo Culture
+        {
+            get
+            {
                 return resourceCulture;
             }
-            set {
+            set
+            {
                 resourceCulture = value;
             }
         }
@@ -102,70 +111,261 @@ namespace CxViewerAction2022.Resources {
         ///    /// &lt;summary&gt;
         ///    ///   A stron [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CxViewerResources_Designer {
-            get {
+        internal static string CxViewerResources_Designer
+        {
+            get
+            {
                 return ResourceManager.GetString("CxViewerResources_Designer", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Disabled {
-            get {
+        internal static System.Drawing.Bitmap Disabled
+        {
+            get
+            {
                 object obj = ResourceManager.GetObject("Disabled", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Enabled {
-            get {
+        internal static System.Drawing.Bitmap Enabled
+        {
+            get
+            {
                 object obj = ResourceManager.GetObject("Enabled", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap MultiRelaitions {
-            get {
+        internal static System.Drawing.Bitmap MultiRelaitions
+        {
+            get
+            {
                 object obj = ResourceManager.GetObject("MultiRelaitions", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap MultiRelaitionsSelected {
-            get {
+        internal static System.Drawing.Bitmap MultiRelaitionsSelected
+        {
+            get
+            {
                 object obj = ResourceManager.GetObject("MultiRelaitionsSelected", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap NormalNode {
-            get {
+        internal static System.Drawing.Bitmap NormalNode
+        {
+            get
+            {
                 object obj = ResourceManager.GetObject("NormalNode", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap NormalSelected {
-            get {
+        internal static System.Drawing.Bitmap NormalSelected
+        {
+            get
+            {
                 object obj = ResourceManager.GetObject("NormalSelected", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
     }
+
+    /// <summary>
+    ///Changes for bug Plug-513 unable to see scan results
+    /// </summary>
+    //Created new resource class for CxViewerACtion2019 
+    //Start
+    internal class CxViewerResources2019
+    {
+
+        private static global::System.Resources.ResourceManager resourceMan;
+
+        private static global::System.Globalization.CultureInfo resourceCulture;
+
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        internal CxViewerResources2019()
+        {
+            var type = typeof(CxViewerResources).Assembly;
+        }
+
+        /// <summary>
+        ///   Returns the cached ResourceManager instance used by this class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Resources.ResourceManager ResourceManager
+        {
+            get
+            {
+                if (object.ReferenceEquals(resourceMan, null))
+                {
+
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CxViewerAction2019.Resources.CxViewerResources", typeof(CxViewerResources).Assembly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+
+        /// <summary>
+        ///   Overrides the current thread's CurrentUICulture property for all
+        ///   resource lookups using this strongly typed resource class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Globalization.CultureInfo Culture
+        {
+            get
+            {
+                return resourceCulture;
+            }
+            set
+            {
+                resourceCulture = value;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;root&gt;
+        ///  &lt;!-- 
+        ///    Microsoft ResX Schema 
+        ///    
+        ///    Version 2.0
+        ///    
+        ///    The primary goals of this format is to allow a simple XML format 
+        ///    that is mostly human readable. The generation and parsing of the 
+        ///    various data types are done through the TypeConverter classes 
+        ///    associated with the data types.
+        ///    
+        ///    Example:
+        ///    
+        ///    ... ado.net/XML headers &amp; schema ...
+        ///    &lt;resheader name=&quot;resmimetype&quot;&gt;text/microsoft-resx&lt;/resheader&gt;
+        ///    &lt;resheader n [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GetCxViewerResources()
+        {
+            return ResourceManager.GetString("CxViewerResources", resourceCulture);
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to //------------------------------------------------------------------------------
+        ///// &lt;auto-generated&gt;
+        /////     This code was generated by a tool.
+        /////     Runtime Version:4.0.30319.42000
+        /////
+        /////     Changes to this file may cause incorrect behavior and will be lost if
+        /////     the code is regenerated.
+        ///// &lt;/auto-generated&gt;
+        /////------------------------------------------------------------------------------
+        ///
+        ///namespace CxViewerAction.Resources {
+        ///    using System;
+        ///    
+        ///    
+        ///    /// &lt;summary&gt;
+        ///    ///   A stron [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CxViewerResources_Designer
+        {
+            get
+            {
+                return ResourceManager.GetString("CxViewerResources_Designer", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Disabled
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("Disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Enabled
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("Enabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MultiRelaitions
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("MultiRelaitions", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MultiRelaitionsSelected
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("MultiRelaitionsSelected", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NormalNode
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("NormalNode", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NormalSelected
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("NormalSelected", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+    }
+    //End
 }

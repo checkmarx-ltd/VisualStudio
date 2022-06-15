@@ -102,7 +102,7 @@ namespace CxViewerAction2022.Helpers.DrawingHelper
                         edge.Attr.LineWidth = 2;
                         edge.Attr.Weight = 2;
                         path.QueryItemResult = nodeId1.QueryItem;
-                        edge.UserData = path;                        
+                        edge.UserData = path;
                     }
                     SetMaxReletions(edge);
 
@@ -186,7 +186,7 @@ namespace CxViewerAction2022.Helpers.DrawingHelper
                         edge.Attr.ArrowheadAtTarget = ArrowStyle.Normal;
                         edge.Attr.ArrowheadLength = 10;
                         path.QueryItemResult = nodeId2.QueryItem;
-                        edge.UserData = path;                        
+                        edge.UserData = path;
                     }
                     SetMaxReletions(edge);
 
@@ -492,7 +492,7 @@ namespace CxViewerAction2022.Helpers.DrawingHelper
         {
             if (gLocalViewer.InvokeRequired)
             {
-                gLocalViewer.Invoke(new MethodInvoker(delegate() { DrawNode(gLocalViewer, item, selected, maxRelations); }));
+                gLocalViewer.Invoke(new MethodInvoker(delegate () { DrawNode(gLocalViewer, item, selected, maxRelations); }));
                 return;
             }
 
@@ -577,19 +577,51 @@ namespace CxViewerAction2022.Helpers.DrawingHelper
                 Graphics g = (Graphics)graphics;
 
                 MemoryStream ms = new MemoryStream();
+                ///<summary>
+                ///Changes for plug-513 unable to see scan results
+                ///</summary>
+                var assemName = Assembly.GetCallingAssembly().GetName();
                 switch (nodeType)
                 {
                     case NodeTypes.Normal:
-                        CxViewerResources.NormalNode.Save(ms, ImageFormat.Png);
+                        if (assemName.Name.Equals("CxViewerAction2022"))
+                        {
+                            CxViewerResources.NormalNode.Save(ms, ImageFormat.Png);
+                        }
+                        else
+                        {
+                            CxViewerResources2019.NormalNode.Save(ms, ImageFormat.Png);
+                        }
                         break;
                     case NodeTypes.NormalSelected:
-                        CxViewerResources.NormalSelected.Save(ms, ImageFormat.Png);
+                        if (assemName.Name.Equals("CxViewerAction2022"))
+                        {
+                            CxViewerResources.NormalSelected.Save(ms, ImageFormat.Png);
+                        }
+                        else
+                        {
+                            CxViewerResources2019.NormalSelected.Save(ms, ImageFormat.Png);
+                        }
                         break;
                     case NodeTypes.MultiRelaitions:
-                        CxViewerResources.MultiRelaitions.Save(ms, ImageFormat.Png);
+                        if (assemName.Name.Equals("CxViewerAction2022"))
+                        {
+                            CxViewerResources.MultiRelaitions.Save(ms, ImageFormat.Png);
+                        }
+                        else
+                        {
+                            CxViewerResources2019.MultiRelaitions.Save(ms, ImageFormat.Png);
+                        }
                         break;
                     case NodeTypes.MultiRelaitionsSelected:
-                        CxViewerResources.MultiRelaitionsSelected.Save(ms, ImageFormat.Png);
+                        if (assemName.Name.Equals("CxViewerAction2022"))
+                        {
+                            CxViewerResources.MultiRelaitionsSelected.Save(ms, ImageFormat.Png);
+                        }
+                        else
+                        {
+                            CxViewerResources2019.MultiRelaitionsSelected.Save(ms, ImageFormat.Png);
+                        }
                         break;
                 }
                 System.Drawing.Image image = System.Drawing.Image.FromStream(ms);

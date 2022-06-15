@@ -1,6 +1,7 @@
 ﻿using CxViewerAction2022.Entities;
 using CxViewerAction2022.Helpers;
 using EnvDTE;
+using Common;
 
 namespace CxViewerAction2022.MenuLogic
 {
@@ -25,14 +26,18 @@ namespace CxViewerAction2022.MenuLogic
 
         public CommandStatus GetStatus()
         {
+            Logger.Create().Info("For incremental scan getting status from conf file");
             LoginData login = LoginHelper.LoadSaved();
-            Entities.Project selectedProject = CommonActionsInstance.getInstance().GetSelectedProject();
+            Logger.Create().Debug("Getting selected project");
+            Entities.Project selectedProject = CommonActionsInstance.getInstance().GetSelectedProject();            
             if (selectedProject == null)
             {
                 return CommandStatus.CommandStatusUnsupported;
             }
+                        
             if (login != null && login.BindedProjects != null)
             {
+                Logger.Create().Debug("Found selected project " + selectedProject.ProjectName);
                 LoginData.BindProject bindPro = login.BindedProjects.Find(delegate (LoginData.BindProject bp)
                 {
                     return bp.ProjectName == selectedProject.ProjectName && bp.RootPath == selectedProject.RootPath && bp.IsBound == true;

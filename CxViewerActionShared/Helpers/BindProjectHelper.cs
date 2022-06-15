@@ -56,11 +56,11 @@ namespace CxViewerAction2022.Helpers
 			ProjectScanStatuses status = ProjectScanStatuses.CanceledByUser;
 			try
 			{
-                
-                    status = LoginAndBindSelectedProject(project);
+                Logger.Create().Debug("Binding project");
+                status = LoginAndBindSelectedProject(project);
                 if (status == ProjectScanStatuses.Success)
                 {
-
+                    Logger.Create().Debug("Bind project operation successful");
                     ShowResultLogic showResultLogic = new ShowResultLogic();
                     showResultLogic.Act();
 
@@ -69,6 +69,7 @@ namespace CxViewerAction2022.Helpers
                 else if (status == ProjectScanStatuses.CanceledByUser)
                 {
                     //Do nothing...
+                    Logger.Create().Debug("Bind project cancelled by user");
                     CommonData.IsProjectBound = false;
                 }
                 else
@@ -111,8 +112,10 @@ namespace CxViewerAction2022.Helpers
 
             if (loginResult.IsSuccesfull)
 			{
-				_canceled = false;
+                Logger.Create().Debug("Login successful for bind project operation");
+                _canceled = false;
                 BindSelectedProject(loginResult, project);
+
 				if (!_canceled)
 					return ProjectScanStatuses.Success;
 				else
@@ -172,6 +175,7 @@ namespace CxViewerAction2022.Helpers
 
             //            if (projectID < 0)
             //            {
+            Logger.Create().Debug("Showing select ptoject window");
             if (_dispatcher == null)
                 _dispatcher = ServiceLocators.ServiceLocator.GetDispatcher();
 

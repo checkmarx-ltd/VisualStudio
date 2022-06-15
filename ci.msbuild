@@ -35,7 +35,7 @@ msbuild ci.msbuild /t:Pack - for pack
   </Target>
   
   <Target Name="CopyToArtifacts">
-    <Copy SourceFiles="$(WorkingFolder)\CxViewerVSIX\bin\Release\CxViewerVSIX.vsix"
+    <Copy SourceFiles="$(WorkingFolder)\CxViewerVSIX-2019\bin\Release\CxViewerVSIX-2019.vsix;$(WorkingFolder)\CxViewerVSIX-2022\bin\Release\CxViewerVSIX-2022.vsix"
           DestinationFolder="$(WorkingFolder)\Artifacts" />
   </Target>
 

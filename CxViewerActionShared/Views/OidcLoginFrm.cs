@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Reflection;
+using Common;
 
 namespace CxViewerAction2022.Views
 {
@@ -15,7 +16,9 @@ namespace CxViewerAction2022.Views
 
         public void ConnectToIdentidyProvider(string baseServerUri)
         {
+            Logger.Create().Debug("Connecting with identity provider with url:" + baseServerUri);
             OidcLoginCtrl2.ConnectToIdentidyProvider(baseServerUri);
+            Logger.Create().Debug("Connected by identity provider" );
         }
 
         public void CloseForm()
@@ -23,6 +26,7 @@ namespace CxViewerAction2022.Views
             if (InvokeRequired)
             {
                 Invoke(new MethodInvoker(CloseForm));
+                Logger.Create().Debug("form closed");
                 return;
             }
 
@@ -38,6 +42,7 @@ namespace CxViewerAction2022.Views
                 if (UserClosedForm != null)
                 {
                     UserClosedForm(this, new EventArgs());
+                    Logger.Create().Debug("Saml login form closed");
                 }
             }
         }

@@ -330,10 +330,10 @@
     <Content Include="$(MSBuildThisFileDirectory)Resources\1.ico" />
     <Content Include="$(MSBuildThisFileDirectory)Resources\cx.gif" />
     <Content Include="$(MSBuildThisFileDirectory)Resources\cx.ico" />
-    <Content Include="$(MSBuildThisFileDirectory)Resources\Disabled.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Resources\down.gif" />
-    <Content Include="$(MSBuildThisFileDirectory)Resources\empty.gif" />
-    <Content Include="$(MSBuildThisFileDirectory)Resources\Enabled.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\Disabled.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\down.gif" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\empty.gif" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\Enabled.png" />
     <Content Include="$(MSBuildThisFileDirectory)Resources\High.png" />
     <Content Include="$(MSBuildThisFileDirectory)Resources\Low.png" />
     <Content Include="$(MSBuildThisFileDirectory)Resources\Medium.png" />

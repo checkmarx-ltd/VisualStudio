@@ -142,8 +142,9 @@ namespace CxViewerAction2022
             {
 
                 fileMapping.Clear();
-
+                Logger.Create().Debug("BuildFileMapping(): getting solution projects.");
                 IList<EnvDTE.Project> projects = GetSolutionProjects();
+                Logger.Create().Debug("BuildFileMapping(): got solution projects.");
                 foreach (EnvDTE.Project project in projects)
                 {
                     if (project.ProjectItems != null)
@@ -518,13 +519,14 @@ namespace CxViewerAction2022
             {
 
                 Projects projects = _applicationObject.Solution.Projects;
-
+                Logger.Create().Debug("GetSolutionProjects(): got solution projects.");
                 foreach (EnvDTE.Project project in projects)
                 {
                     if (project == null)
                     {
                         continue;
                     }
+                    Logger.Create().Debug("GetSolutionProjects(): checking solution projects kind.");
                     if (project.Kind == ProjectKinds.vsProjectKindSolutionFolder)
                     {
                         list.AddRange(GetSolutionFolderProjects(project));
@@ -547,9 +549,10 @@ namespace CxViewerAction2022
         {
 
             List<EnvDTE.Project> list = new List<EnvDTE.Project>();
-
+            Logger.Create().Debug("GetSolutionFolderProjects(): got solution folder projects.");
             try
             {
+                Logger.Create().Debug("GetSolutionFolderProjects(): looping through solution folder projects.");
 
                 foreach (ProjectItem projectItem in solutionFolder.ProjectItems)
                 {
@@ -581,6 +584,7 @@ namespace CxViewerAction2022
         {
             try
             {
+                Logger.Create().Debug("AddFilesToMappingTable(): adding files to mapping table.");
 
                 for (short j = 1; j < projectItem.FileCount + 1; j++)
                 {
@@ -609,10 +613,12 @@ namespace CxViewerAction2022
 
         private void AddProjectToSolution(CxViewerAction2022.Entities.Project outputProject, Projects projects)
         {
+            Logger.Create().Debug("AddProjectToSolution(): adding project to solution.");
             foreach (EnvDTE.Project solutionProject in projects)
             {
                 try
                 {
+                    Logger.Create().Debug("AddProjectToSolution(): checking solution project full name not empty.");
                     if (!string.IsNullOrEmpty(solutionProject.FullName))
                     {
                         string projectFullPath = solutionProject.FullName;
@@ -621,6 +627,7 @@ namespace CxViewerAction2022
                         // The following line returns the project full path for all project kinds.
                         // for versions prior to 2013 for web projects, project.FullName return the project loaction with '/' in the end. Our algorithm is based on that behaviour.
                         // in order to maintain this behaviour, we always trim '//' '\' from fullPAth, and append "//". This way the rest of the code would execute as usual.                    
+                        Logger.Create().Debug("AddProjectToSolution(): checking solution project kind if it is web type.");
                         if (solutionProject.Kind == vsProjectKindWeb) //if project is web
                         {
                             string webProjectPath = solutionProject.Properties.Item("FullPath").Value as string;
@@ -635,6 +642,7 @@ namespace CxViewerAction2022
                     }
                     else // can be virtual folder
                     {
+                        Logger.Create().Debug("AddProjectToSolution(): if solution project full name is empty then can be virtual folder");
                         AddProjectToSolution(outputProject, solutionProject.ProjectItems);
                     }
                 }
@@ -685,6 +693,7 @@ namespace CxViewerAction2022
         /// <returns></returns>
         private bool ShowProblemFile(string file, int row, int column, int length)
         {
+            Logger.Create().Debug("ShowProblemFile(): getting file info.");
             FileInfo fileInfo = new FileInfo(file);
         
             if (fileInfo.Exists)
@@ -737,7 +746,7 @@ namespace CxViewerAction2022
         {
 
             #region [Bind graph view]
-
+            Logger.Create().Debug("ShowProblemFile(): bind graph view.");
             try
             {
                 PerspectiveGraphCtrl viewGraph = null;
@@ -758,11 +767,13 @@ namespace CxViewerAction2022
                     }
 
                     showView(_graphWin);
+                    Logger.Create().Debug("ShowProblemFile(): graph window has been shown.");
                 }
 
                 #endregion
 
                 #region [Bind result view]
+                Logger.Create().Debug("ShowProblemFile(): bind result view.");
                 if (_resultWin != null)
                 {
                     PerspectiveResultCtrl viewResult = _resultWin.Window as PerspectiveResultCtrl;
@@ -772,6 +783,7 @@ namespace CxViewerAction2022
                     //{
                     if (!wasInit)
                     {
+                        Logger.Create().Debug("ShowProblemFile(): calling result table row changed event .");
                         viewResult.SelectedRowChanged += new EventHandler(viewResult_SelectedRowChanged);
                         viewResult.Refresh += new EventHandler(viewResult_Refresh);
                         wasInit = true;
@@ -782,6 +794,7 @@ namespace CxViewerAction2022
                     //}
 
                     showView(_resultWin);
+                    Logger.Create().Debug("ShowProblemFile(): result window has been shown.");
 
                 }
             }
@@ -804,7 +817,9 @@ namespace CxViewerAction2022
 
         private void viewResult_Refresh(object sender, EventArgs e)
         {
+            Logger.Create().Debug("In result window refresh event.");
             TreeNodeData nodeData = (TreeNodeData)e;
+            Logger.Create().Debug("viewResult_Refresh():calling show problem file.");
             ShowProblemFile(nodeData);
         }
 
@@ -812,9 +827,10 @@ namespace CxViewerAction2022
         {
             try
             {
+                Logger.Create().Debug("In result window selected row changed event.");
                 ResultData data = (ResultData)e;
                 CxViewerAction2022.CxVSWebService.CxWSResultPath resultPath = PerspectiveHelper.GetResultPath(data.ScanId, data.Result.PathId);
-
+                Logger.Create().Debug("viewResult_SelectedRowChanged():received result path.");
                 PerspectiveGraphCtrl viewGraph = null;
                 if (_graphWin != null)
                 {
@@ -823,8 +839,10 @@ namespace CxViewerAction2022
                     {
                         CxViewerAction2022.BaseInterfaces.IGraphPath path = viewGraph.FindPath(resultPath);
                         viewGraph.SelectEdgeGraphByPath(path.DirectFlow[0], path.DirectFlow[1], path);
+                        Logger.Create().Debug("viewResult_SelectedRowChanged():calling BindData().");
                         viewGraph.BindData();
                         viewGraph.PathItemClick = GraphClick;
+                        Logger.Create().Debug("viewResult_SelectedRowChanged():called graph click event.");
                     }
                 }
 
@@ -841,13 +859,16 @@ namespace CxViewerAction2022
                         PathId = resultPath.PathId,
                         Query = data.NodeData.QueryResult
                     };
+                    Logger.Create().Debug("viewResult_SelectedRowChanged():received query item result.");
+                    Logger.Create().Debug("viewResult_SelectedRowChanged():converting nodes to paths.");
                     path.Paths = GraphHelper.ConvertNodesToPathes(resultPath.Nodes, data.NodeData.QueryResult, path);
                     viewPath.PathButtonClickHandler = PathButtonClick;
-
+                    Logger.Create().Debug("viewResult_SelectedRowChanged():called path button click event.");
                     viewPath.QueryItemResult = path;
 
+                    Logger.Create().Debug("viewResult_SelectedRowChanged():calling BindData() for path window.");
                     viewPath.BindData(resultPath.Nodes[0].PathNodeId);
-
+                    Logger.Create().Debug("viewResult_SelectedRowChanged():showing path window.");
                     showView(_pathWin);
                 }
                 #endregion
@@ -872,6 +893,7 @@ namespace CxViewerAction2022
 
         private void GraphClick(object sender, EventArgs e)
         {
+            Logger.Create().Debug("In graph click event.");
             ReportQueryItemPathResult graphItem = ((ReportQueryItemPathResult)sender);
             PerspectiveGraphCtrl viewGraph = null;
             if (_graphWin != null)
@@ -888,7 +910,8 @@ namespace CxViewerAction2022
                         viewGraph.MsGalViewer.ResumeLayout();
                         viewGraph.MsGalViewer.Update();
                     }
-                    viewGraph.BindData();
+                    Logger.Create().Debug("Calling Bind data for graph.");
+                    viewGraph.BindData();                    
                 }
             }
 

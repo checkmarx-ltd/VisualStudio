@@ -3,6 +3,7 @@ using CxViewerAction2022.Entities;
 using System.Collections.Generic;
 using CxViewerAction2022.BaseInterfaces;
 using CxViewerAction2022.Entities.WebServiceEntity;
+using Common;
 
 namespace CxViewerAction2022.Helpers
 {
@@ -74,6 +75,7 @@ namespace CxViewerAction2022.Helpers
 
         private static List<ReportQueryItemResult> ConvertAllNodesToPathes(CxViewerAction2022.CxVSWebService.CxWSResultPath[] cxWSPathNode, int resultId, ReportQueryResult queryResult)
         {
+            Logger.Create().Info("Converting all nodes to pathes");
             List<ReportQueryItemResult> list = new List<ReportQueryItemResult>();
 
             foreach (CxViewerAction2022.CxVSWebService.CxWSResultPath node in cxWSPathNode)

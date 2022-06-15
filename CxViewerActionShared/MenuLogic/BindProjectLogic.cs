@@ -27,6 +27,7 @@ namespace CxViewerAction2022.MenuLogic
                     return ActionStatus.Failed;
                 }
                 Entities.Project project = CommonActionsInstance.getInstance().GetSelectedProject();
+                Logger.Create().Debug("Getting selected projects");
                 CommonData.ProjectName = project.ProjectName;
                 CommonData.ProjectRootPath = project.RootPath;
                 DoRetrieveResults(project);
@@ -45,6 +46,7 @@ namespace CxViewerAction2022.MenuLogic
                 //unbind
                 if (!setBindProject(false))
                 {
+                    Logger.Create().Debug("Unbound projects");
                     return ActionStatus.Failed;
                 }
                 CommonData.IsProjectBound = false;
@@ -69,6 +71,7 @@ namespace CxViewerAction2022.MenuLogic
                 }
             }
             LoginHelper.Save(login);
+            Logger.Create().Debug("Set Bind project successful");
             return true;
         }
 
@@ -79,13 +82,14 @@ namespace CxViewerAction2022.MenuLogic
 
                 // First call save all command to save project changes
                 CommonActionsInstance.getInstance().ExecuteSystemCommand("File.SaveAll", string.Empty);
-
+                Logger.Create().Debug("File save all called to save project changes");
                 // verify that was selected correct project           
                 System.Threading.ThreadPool.QueueUserWorkItem(delegate (object state)
                 {
                     try
                     {
                         Helpers.BindProjectHelper.BindProject(project);
+                        Logger.Create().Debug("Project bind successful");
                     }
                     catch (Exception ex)
                     {
@@ -102,11 +106,44 @@ namespace CxViewerAction2022.MenuLogic
         public CommandStatus GetStatus()
         {
             Logger.Create().Debug("BindLogic GetStatus");
-            CommandStatus status = CommandStatus.CommandStatusNull;           
+            CommandStatus status = CommandStatus.CommandStatusNull;
             _isBinded = false;
+            bool currentBind = false;
             status = (CommandStatus)CommandStatus.CommandStatusSupported |
                          CommandStatus.CommandStatusEnabled;
             LoginData login = LoginHelper.LoadSaved();
+            Logger.Create().Debug("Bind logic login saved data loaded");
+            ///<summary>
+            /// Changes for Plug-488 clear bound project when switching to another solution 
+            ///</summary>
+            ///Start
+            if (login.BindedProjects != null)
+            {
+                Logger.Create().Debug("GetSatus():Checking bound projects not empty");
+                Entities.Project selectedProject2 = CommonActionsInstance.getInstance().GetSelectedProject();
+                foreach (LoginData.BindProject project in login.BindedProjects)
+                {
+                    Logger.Create().Debug("Checking for current solution bound projects");
+                    if (selectedProject2.RootPath == project.RootPath && selectedProject2.ProjectName == project.ProjectName)
+                    {
+                        currentBind = true;
+                    }
+                }
+                CommonData.IsWorkingOffline = false;
+                LoginHelper.Save(login);
+
+                if (!currentBind)
+                {
+                    Logger.Create().Debug("Checking for current solution bound projects false");
+                    login.BindedProjects.Clear();
+                    Logger.Create().Debug("Clearing for current solution bound projects");
+                    CommonData.IsProjectBound = false;
+                    LoginHelper.IsLogged = false;
+                    LoginHelper.Save(login);
+                    Logger.Create().Debug("Saving data in conf file");
+                }
+            }
+            ///End
             Logger.Create().Debug("BindLogic GetSelectedProject");
             Entities.Project selectedProject = CommonActionsInstance.getInstance().GetSelectedProject();
             if (selectedProject == null)
@@ -116,8 +153,8 @@ namespace CxViewerAction2022.MenuLogic
             }
             if (login != null && login.BindedProjects != null)
             {
-                LoginData.BindProject bindPro = login.BindedProjects.Find(project => project.ProjectName == selectedProject.ProjectName && 
-                                                                                     project.RootPath == selectedProject.RootPath && 
+                LoginData.BindProject bindPro = login.BindedProjects.Find(project => project.ProjectName == selectedProject.ProjectName &&
+                                                                                     project.RootPath == selectedProject.RootPath &&
                                                                                      project.IsBound == true);
 
                 if (bindPro != null)

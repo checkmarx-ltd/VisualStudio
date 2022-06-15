@@ -97,18 +97,22 @@ namespace CxViewerAction2022.Views.DockedView
 
             Logger.Create().Debug("Authorization code found.Extracting authorization code from the URL. ");
             string code = ExtractCodeFromUrl(eventArgs.Url.AbsoluteUri);
+            Logger.Create().Debug("Authorization code from the URL. " + code);
 
             if (NavigationCompleted != null)
             {
+                Logger.Create().Debug("Navigation completed not null" );
                 webBrowserIdentityProvider.Navigate(BLANK_PAGE);
                 NavigationCompleted(this, code);
+                Logger.Create().Debug("Navigation completed with authorization code");
             }
         }
 
 		private string ExtractCodeFromUrl(string absoluteUri)
 		{
 			Uri myUri = new Uri(absoluteUri);
-			return HttpUtility.ParseQueryString(myUri.Query).Get("code");
+            Logger.Create().Debug("Authorization code from the URL. " + HttpUtility.ParseQueryString(myUri.Query).Get("code"));
+            return HttpUtility.ParseQueryString(myUri.Query).Get("code");
 		}
 
 		public void ConnectToIdentidyProvider(String serverUri)
@@ -125,7 +129,10 @@ namespace CxViewerAction2022.Views.DockedView
         private void NavigateToOidcLogin(String serverUri)
         {
 			string serverURL = serverUri + Constants.AUTHORIZATION_ENDPOINT;
-			string header = string.Format("Content-Type: application/x-www-form-urlencoded", Environment.NewLine);
+            Logger.Create().Debug("Navigation to OIDC authorization endpoint " + serverURL);
+            string header = string.Format("Content-Type: application/x-www-form-urlencoded", Environment.NewLine);
+            Logger.Create().Debug("Oidc url header data " + header);
+            Logger.Create().Debug("Oidc url header data " + header);
             string redirectUri = serverUri;
             if (!redirectUri.EndsWith("/"))
             {
@@ -137,8 +144,9 @@ namespace CxViewerAction2022.Views.DockedView
 				Constants.REDIRECT_URI_KEY + "=" + redirectUri;
 			System.Text.Encoding encoding = System.Text.Encoding.UTF8;
 			byte[] postDataBytes = encoding.GetBytes(postData);
+            Logger.Create().Debug("OIDC login post data " + postData);
 
-			WinCookieHelper.SupressCookiePersist();
+            WinCookieHelper.SupressCookiePersist();
             Logger.Create().Debug("Changing IE version to IE11.");
             ChangeIeVersion();
             Logger.Create().Debug("Navigating to " + serverURL + " headers " + header);

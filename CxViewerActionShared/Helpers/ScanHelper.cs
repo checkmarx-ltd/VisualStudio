@@ -44,6 +44,7 @@ namespace CxViewerAction2022.Helpers
         /// <returns></returns>
         public ProjectScanStatuses DoScan(Project project, bool isIncremental, ref CxWSQueryVulnerabilityData[] scanData, ref long scanId)
         {
+            Logger.Create().Debug("DoScan():");
             if (_scan != null && _scan.InProcess)
                 {
                 return ProjectScanStatuses.CanceledByUser;
@@ -54,7 +55,7 @@ namespace CxViewerAction2022.Helpers
                 //Release old view data
 
                 CommonActionsInstance.getInstance().ClearScanProgressView();
-
+                Logger.Create().Debug("Released old view data");
                 LoginData logindata = LoginHelper.LoadSaved();
                 OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
                 //Execute login
@@ -119,7 +120,7 @@ namespace CxViewerAction2022.Helpers
         private Upload GetUploadSettings(Project project, LoginResult loginResult)
         {
             Upload uploadSettings;
-
+            Logger.Create().Debug("Getting upload settings");
             if (!CommonData.IsProjectBound)
             {
                 uploadSettings = UploadHelper.SetUploadSettings(loginResult, project, _cancelPressed);
@@ -144,6 +145,7 @@ namespace CxViewerAction2022.Helpers
 
         private LoginResult Login()
         {
+            Logger.Create().Debug("Login for scan operation");
             LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out _cancelPressed, true);
 
             if (!loginResult.IsSuccesfull)

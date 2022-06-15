@@ -1,29 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <!--  This is the file that defines the actual layout and type of the commands.
+	<!--  This is the file that defines the actual layout and type of the commands.
         It is divided in different sections (e.g. command definition, command
         placement, ...), with each defining a specific set of properties.
         See the comment before each section for more details about how to
         use it. -->
 
-  <!--  The VSCT compiler (the tool that translates this file into the binary
+	<!--  The VSCT compiler (the tool that translates this file into the binary
         format that VisualStudio will consume) has the ability to run a preprocessor
         on the vsct file; this preprocessor is (usually) the C++ preprocessor, so
         it is possible to define includes and macros with the same syntax used
         in C++ files. Using this ability of the compiler here, we include some files
         defining some of the constants that we will use inside the file. -->
 
-  <!--This is the file that defines the IDs for all the commands exposed by VisualStudio. -->
-  <Extern href="stdidcmd.h" />
+	<!--This is the file that defines the IDs for all the commands exposed by VisualStudio. -->
+	<Extern href="stdidcmd.h" />
 
-  <!--This header contains the command ids for the menus provided by the shell. -->
-  <Extern href="vsshlids.h" />
+	<!--This header contains the command ids for the menus provided by the shell. -->
+	<Extern href="vsshlids.h" />
 
-  <!--The Commands section is where commands, menus, and menu groups are defined.
+	<!--The Commands section is where commands, menus, and menu groups are defined.
       This section uses a Guid to identify the package that provides the command defined inside it. -->
-  <Commands package="guidCxViewerPackage">
-    <!-- Inside this section we have different sub-sections: one for the menus, another
+	<Commands package="guidCxViewerPackage">
+		<!-- Inside this section we have different sub-sections: one for the menus, another
     for the menu groups, one for the buttons (the actual commands), one for the combos
     and the last one for the bitmaps used. Each element is identified by a command id that
     is a unique pair of guid and numeric identifier; the guid part of the identifier is usually
@@ -31,248 +31,293 @@
     group; your package should define its own command set in order to avoid collisions
     with command ids defined by other packages. -->
 
-    <!-- In this section you can define new menu groups. A menu group is a container for
+		<!-- In this section you can define new menu groups. A menu group is a container for
          other menus or buttons (commands); from a visual point of view you can see the
          group as the part of a menu contained between two lines. The parent of a group
          must be a menu. -->
-    <Groups>
+		<Groups>
 
-      <Group guid="guidCxViewerPackageCmdSet" id="SolutionExplorerSolutionGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_SOLNNODE" />
-      </Group>
-      
-      <Group guid="guidCxViewerPackageCmdSet" id="SolutionExplorerProjectGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE" />
-      </Group>
-      
-      <Group guid="guidCxViewerPackageCmdSet" id="SolutionExplorerFileGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE" />
-      </Group>
+			<Group guid="guidCxViewerPackageCmdSet" id="SolutionExplorerSolutionGroup" priority="0x0600">
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_SOLNNODE" />
+			</Group>
 
-      <Group guid="guidCxViewerPackageCmdSet" id="SolutionExplorerFolderGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_FOLDERNODE" />
-      </Group>
+			<Group guid="guidCxViewerPackageCmdSet" id="SolutionExplorerProjectGroup" priority="0x0600">
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE" />
+			</Group>
+
+			<Group guid="guidCxViewerPackageCmdSet" id="SolutionExplorerFileGroup" priority="0x0600">
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE" />
+			</Group>
+
+			<Group guid="guidCxViewerPackageCmdSet" id="SolutionExplorerFolderGroup" priority="0x0600">
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_FOLDERNODE" />
+			</Group>
 
 
-      <Group guid="guidCxViewerPackageCmdSet" id="CxViewerGroup" priority="0x1000">
-        <Parent guid="guidCxViewerPackageCmdSet" id="CxViewerMenu" />
-      </Group>
+			<Group guid="guidCxViewerPackageCmdSet" id="CxViewerGroup" priority="0x1000">
+				<Parent guid="guidCxViewerPackageCmdSet" id="CxViewerMenu" />
+			</Group>
 
-      <Group guid="guidCxViewerPackageCmdSet" id="CxViewerScanGroup" priority="0x1000">
-        <Parent guid="guidCxViewerPackageCmdSet" id="CxViewerScanMenu" />
-      </Group>
+			<Group guid="guidCxViewerPackageCmdSet" id="CxViewerScanGroup" priority="0x1000">
+				<Parent guid="guidCxViewerPackageCmdSet" id="CxViewerScanMenu" />
+			</Group>
 
-    </Groups>
-    
-    <!--Buttons section. -->
-    <!--This section defines the elements the user can interact with, like a menu command or a button
+			<!--Changes for Plug-497 support complex solutions -->
+			<!--Start-->
+
+			<Group guid="guidCxViewerPackageCmdSet" id="WebProjectGroup" priority="0x0600">
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBPROJECT" />
+			</Group>
+
+			<Group guid="guidCxViewerPackageCmdSet" id="WebProjectFolderGroup" priority="0x0600">
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBFOLDER" />
+			</Group>
+
+			<Group guid="guidCxViewerPackageCmdSet" id="WebProjectFileGroup" priority="0x0600">
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBITEMNODE" />
+			</Group>
+
+			<!--End-->
+
+		</Groups>
+
+		<!--Buttons section. -->
+		<!--This section defines the elements the user can interact with, like a menu command or a button
         or combo box in a toolbar. -->
-    <Buttons>
-      <!--To define a menu group you have to specify its ID, the parent menu and its display priority.
+		<Buttons>
+			<!--To define a menu group you have to specify its ID, the parent menu and its display priority.
           The command is visible and enabled by default. If you need to change the visibility, status, etc, you can use
           the CommandFlag node.
           You can add more than one CommandFlag node e.g.:
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidCxViewerPackageCmdSet" id="cmdidScanCommand" priority="0x0100" type="Button">
-        <Parent guid="guidCxViewerPackageCmdSet" id="CxViewerGroup" />
-        <Icon guid="guidImagesScan" id="scanIcon" />
-        <Strings>
-          <ButtonText>Scan</ButtonText>
-        </Strings>
-      </Button>
+			<Button guid="guidCxViewerPackageCmdSet" id="cmdidScanCommand" priority="0x0100" type="Button">
+				<Parent guid="guidCxViewerPackageCmdSet" id="CxViewerGroup" />
+				<Icon guid="guidImagesScan" id="scanIcon" />
+				<Strings>
+					<ButtonText>Scan</ButtonText>
+				</Strings>
+			</Button>
 
-      <Button guid="guidCxViewerPackageCmdSet" id="cmdidIncrementalScanCommand" priority="0x0101" type="Button">
-        <Parent guid="guidCxViewerPackageCmdSet" id="CxViewerGroup" />
-        <Icon guid="guidImagesIncrementalScan" id="incrementalScanIcon" />
-        <Strings>
-          <ButtonText>Incremental Scan</ButtonText>
-        </Strings>
-      </Button>
+			<Button guid="guidCxViewerPackageCmdSet" id="cmdidIncrementalScanCommand" priority="0x0101" type="Button">
+				<Parent guid="guidCxViewerPackageCmdSet" id="CxViewerGroup" />
+				<Icon guid="guidImagesIncrementalScan" id="incrementalScanIcon" />
+				<Strings>
+					<ButtonText>Incremental Scan</ButtonText>
+				</Strings>
+			</Button>
 
 
-      <Button guid="guidCxViewerPackageCmdSet" id="cmdidBindCommand" priority="0x0102" type="Button">
-        <Parent guid="guidCxViewerPackageCmdSet" id="CxViewerGroup" />
-        <Icon guid="guidImagesBind" id="bindIcon" />
-        <CommandFlag>DynamicVisibility</CommandFlag>
-        <CommandFlag>TextChanges</CommandFlag>
-        <Strings>
-          <ButtonText>Bind...</ButtonText>
-        </Strings>
-      </Button>
-    
-      <Button guid="guidCxViewerPackageCmdSet" id="cmdidRetrieveResultsCommand" priority="0x0103" type="Button">
-        <Parent guid="guidCxViewerPackageCmdSet" id="CxViewerGroup" />
-        <Icon guid="guidImagesRetrieveResults" id="retrieveResultsIcon" />
-        <Strings>
-          <ButtonText>Retrieve Results</ButtonText>
-        </Strings>
-      </Button>      
-      
-      <Button guid="guidCxViewerPackageCmdSet" id="cmdidResultsToolWindowCommand" priority="0x0104" type="Button">
-        <Parent guid="guidCxViewerPackageCmdSet" id="CxViewerGroup" />
-        <Icon guid="guidImagesStoredResults" id="storedResultsIcon" />
-        <Strings>
-          <ButtonText>Show Stored Results</ButtonText>
-        </Strings>
-      </Button>
-     </Buttons>
-    
-    <Menus>
-      
-      <Menu guid="guidCxViewerPackageCmdSet" id="CxViewerMenu" type="Menu" priority="0x1000">
-        <Parent guid="guidCxViewerPackageCmdSet" id="SolutionExplorerProjectGroup" />
-        <CommandFlag>IconAndText</CommandFlag>
-        <Strings>
-          <ButtonText>CxViewer</ButtonText>
-          <CommandName>CxViewer</CommandName>
-        </Strings>
-      </Menu>
+			<Button guid="guidCxViewerPackageCmdSet" id="cmdidBindCommand" priority="0x0102" type="Button">
+				<Parent guid="guidCxViewerPackageCmdSet" id="CxViewerGroup" />
+				<Icon guid="guidImagesBind" id="bindIcon" />
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<CommandFlag>TextChanges</CommandFlag>
+				<Strings>
+					<ButtonText>Bind...</ButtonText>
+				</Strings>
+			</Button>
 
-      <Menu guid="guidCxViewerPackageCmdSet" id="CxViewerScanMenu" type="Menu" priority="0x1000">
-        <Parent guid="guidCxViewerPackageCmdSet" id="SolutionExplorerFileGroup" />
-        <CommandFlag>IconAndText</CommandFlag>
-        <Strings>
-          <ButtonText>CxViewer</ButtonText>
-          <CommandName>CxViewer</CommandName>
-        </Strings>
-      </Menu>
-      
-    </Menus>
-    
-    <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
-    <Bitmaps>
-      <!--  The bitmap id is defined in a way that is a little bit different from the others:
+			<Button guid="guidCxViewerPackageCmdSet" id="cmdidRetrieveResultsCommand" priority="0x0103" type="Button">
+				<Parent guid="guidCxViewerPackageCmdSet" id="CxViewerGroup" />
+				<Icon guid="guidImagesRetrieveResults" id="retrieveResultsIcon" />
+				<Strings>
+					<ButtonText>Retrieve Results</ButtonText>
+				</Strings>
+			</Button>
+
+			<Button guid="guidCxViewerPackageCmdSet" id="cmdidResultsToolWindowCommand" priority="0x0104" type="Button">
+				<Parent guid="guidCxViewerPackageCmdSet" id="CxViewerGroup" />
+				<Icon guid="guidImagesStoredResults" id="storedResultsIcon" />
+				<Strings>
+					<ButtonText>Show Stored Results</ButtonText>
+				</Strings>
+			</Button>
+		</Buttons>
+
+		<Menus>
+
+			<Menu guid="guidCxViewerPackageCmdSet" id="CxViewerMenu" type="Menu" priority="0x1000">
+				<Parent guid="guidCxViewerPackageCmdSet" id="SolutionExplorerProjectGroup" />
+				<CommandFlag>IconAndText</CommandFlag>
+				<Strings>
+					<ButtonText>CxViewer</ButtonText>
+					<CommandName>CxViewer</CommandName>
+				</Strings>
+			</Menu>
+
+			<Menu guid="guidCxViewerPackageCmdSet" id="CxViewerScanMenu" type="Menu" priority="0x1000">
+				<Parent guid="guidCxViewerPackageCmdSet" id="SolutionExplorerFileGroup" />
+				<CommandFlag>IconAndText</CommandFlag>
+				<Strings>
+					<ButtonText>CxViewer</ButtonText>
+					<CommandName>CxViewer</CommandName>
+				</Strings>
+			</Menu>
+
+			<Menu guid="guidCxViewerPackageCmdSet" id="CxViewerMenu" priority="0x1000" type="Menu">
+				<Parent guid="guidCxViewerPackageCmdSet" id="WebProjectGroup" />
+				<CommandFlag>IconAndText</CommandFlag>
+				<Strings>
+					<ButtonText>CxViewer</ButtonText>
+					<CommandName>CxViewer</CommandName>
+				</Strings>
+			</Menu>
+			<Menu guid="guidCxViewerPackageCmdSet" id="CxViewerScanMenu" type="Menu" priority="0x1000">
+				<Parent guid="guidCxViewerPackageCmdSet" id="WebProjectFileGroup" />
+				<CommandFlag>IconAndText</CommandFlag>
+				<Strings>
+					<ButtonText>CxViewer</ButtonText>
+					<CommandName>CxViewer</CommandName>
+				</Strings>
+			</Menu>
+
+
+		</Menus>
+
+		<!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
+		<Bitmaps>
+			<!--  The bitmap id is defined in a way that is a little bit different from the others:
             the declaration starts with a guid for the bitmap strip, then there is the resource id of the
             bitmap strip containing the bitmaps and then there are the numeric ids of the elements used
             inside a button definition. An important aspect of this declaration is that the element id
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
-      <!--<Bitmap guid="guidImages" href="Resources\MyCommand.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />-->
-      <Bitmap guid="guidImagesScan" href="Resources\scan.png" usedList="scanIcon" />
-      <Bitmap guid="guidImagesIncrementalScan" href="Resources\incremental_scan.png" usedList="incrementalScanIcon" />
-      <Bitmap guid="guidImagesBind" href="Resources\bind.png" usedList="bindIcon" />
-      <Bitmap guid="guidImagesRetrieveResults" href="Resources\retrieve_results.png" usedList="retrieveResultsIcon" />
-      <Bitmap guid="guidImagesStoredResults" href="Resources\stored_results.png" usedList="storedResultsIcon" />
-    </Bitmaps>
-  </Commands>
+			<!--<Bitmap guid="guidImages" href="Resources\MyCommand.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />-->
+			<Bitmap guid="guidImagesScan" href="Resources\scan.png" usedList="scanIcon" />
+			<Bitmap guid="guidImagesIncrementalScan" href="Resources\incremental_scan.png" usedList="incrementalScanIcon" />
+			<Bitmap guid="guidImagesBind" href="Resources\bind.png" usedList="bindIcon" />
+			<Bitmap guid="guidImagesRetrieveResults" href="Resources\retrieve_results.png" usedList="retrieveResultsIcon" />
+			<Bitmap guid="guidImagesStoredResults" href="Resources\stored_results.png" usedList="storedResultsIcon" />
+		</Bitmaps>
+	</Commands>
 
-  <CommandPlacements>
+	<CommandPlacements>
 
-    <CommandPlacement guid="guidCxViewerPackageCmdSet" id="CxViewerMenu" priority="0x105">
-      <Parent guid="guidCxViewerPackageCmdSet" id="SolutionExplorerSolutionGroup" />
-    </CommandPlacement>
-    
-    <CommandPlacement guid="guidCxViewerPackageCmdSet" id="CxViewerScanMenu" priority="0x105">
-      <Parent guid="guidCxViewerPackageCmdSet" id="SolutionExplorerFolderGroup" />
-    </CommandPlacement>
+		<CommandPlacement guid="guidCxViewerPackageCmdSet" id="CxViewerMenu" priority="0x105">
+			<Parent guid="guidCxViewerPackageCmdSet" id="SolutionExplorerSolutionGroup" />
+		</CommandPlacement>
 
-    <CommandPlacement guid="guidCxViewerPackageCmdSet" id="cmdidScanCommand" priority="0x105">
-      <Parent guid="guidCxViewerPackageCmdSet" id="CxViewerScanGroup" />
-    </CommandPlacement>
+		<CommandPlacement guid="guidCxViewerPackageCmdSet" id="CxViewerScanMenu" priority="0x105">
+			<Parent guid="guidCxViewerPackageCmdSet" id="SolutionExplorerFolderGroup" />
+		</CommandPlacement>
 
-    <CommandPlacement guid="guidCxViewerPackageCmdSet" id="cmdidIncrementalScanCommand" priority="0x105">
-      <Parent guid="guidCxViewerPackageCmdSet" id="CxViewerScanGroup" />
-    </CommandPlacement>
-    
-  </CommandPlacements>
+		<CommandPlacement guid="guidCxViewerPackageCmdSet" id="cmdidScanCommand" priority="0x105">
+			<Parent guid="guidCxViewerPackageCmdSet" id="CxViewerScanGroup" />
+		</CommandPlacement>
 
-  <Symbols>
-    <!-- This is the package guid. -->
-    <GuidSymbol name="guidCxViewerPackage" value="{a0f2f05a-074f-4c52-9af8-a14f1e28cf09}" />
+		<CommandPlacement guid="guidCxViewerPackageCmdSet" id="cmdidIncrementalScanCommand" priority="0x105">
+			<Parent guid="guidCxViewerPackageCmdSet" id="CxViewerScanGroup" />
+		</CommandPlacement>
 
-    <!-- This is the guid used to group the menu commands together -->
-    <GuidSymbol name="guidCxViewerPackageCmdSet" value="{6fe6907c-5802-49b0-9203-e9f5a52a01cb}">
-      <IDSymbol name="SolutionExplorerFileGroup" value="0x1020" />
-      <IDSymbol name="SolutionExplorerProjectGroup" value="0x1021" />
-      <IDSymbol name="SolutionExplorerFolderGroup" value="0x1022" />
-      <IDSymbol name="SolutionExplorerSolutionGroup" value="0x1023" />
-      <IDSymbol name="CxViewerMenu" value="0x1024" />
-      <IDSymbol name="CxViewerGroup" value="0x1025" />
-      <IDSymbol name="CxViewerScanMenu" value="0x1026" />
-      <IDSymbol name="CxViewerScanGroup" value="0x1027" />
-      <IDSymbol name="cmdidScanCommand" value="0x0100" />
-      <IDSymbol name="cmdidIncrementalScanCommand" value="0x0101" />
-      <IDSymbol name="cmdidBindCommand" value="0x0102" />
-      <IDSymbol name="cmdidRetrieveResultsCommand" value="0x0103" />
-      <IDSymbol name="cmdidResultsToolWindowCommand" value="0x0104" />
-      <IDSymbol value="4136" name="cmdidTestCommand" />
-    </GuidSymbol>
+		<CommandPlacement guid="guidCxViewerPackageCmdSet" id="CxViewerScanMenu" priority="0x105">
+			<Parent guid="guidCxViewerPackageCmdSet" id="WebProjectFolderGroup" />
+		</CommandPlacement>
 
-    <GuidSymbol name="guidImages" value="{cabd7b34-49ae-4574-bd93-6fcdd900e1d0}">
-      <IDSymbol name="bmpPic1" value="1" />
-      <IDSymbol name="bmpPic2" value="2" />
-      <IDSymbol name="bmpPicSearch" value="3" />
-      <IDSymbol name="bmpPicX" value="4" />
-      <IDSymbol name="bmpPicArrows" value="5" />
-      <IDSymbol name="bmpPicStrikethrough" value="6" />
-    </GuidSymbol>
+	</CommandPlacements>
 
-  
-    <GuidSymbol name="guidImagesScan" value="{5e06ef08-d98b-4922-99c3-a88ae86aa5c4}">
-      <IDSymbol name="scanIcon" value="1" />
-    </GuidSymbol>
+	<Symbols>
+		<!-- This is the package guid. -->
+		<GuidSymbol name="guidCxViewerPackage" value="{a0f2f05a-074f-4c52-9af8-a14f1e28cf09}" />
 
-    <GuidSymbol name="guidImagesIncrementalScan" value="{A76D0242-5CAA-418E-9BC1-3325A09A7830}">
-      <IDSymbol name="incrementalScanIcon" value="1" />
-    </GuidSymbol>
-    
-    <GuidSymbol name="guidImagesBind" value="{BDA2E5CF-5B72-449E-8C29-70EF3B7D2411}">
-      <IDSymbol name="bindIcon" value="1" />
-    </GuidSymbol>
-    
-    <GuidSymbol name="guidImagesRetrieveResults" value="{150E0679-C703-4A84-9670-BBE2305F9EBC}">
-      <IDSymbol name="retrieveResultsIcon" value="1" />
-    </GuidSymbol>
-    
-    <GuidSymbol name="guidImagesStoredResults" value="{91899DF1-1E89-4FF4-97F8-D39AC969DA88}">
-      <IDSymbol name="storedResultsIcon" value="1" />
-    </GuidSymbol>
-    
-  
-    <GuidSymbol value="{1fdae178-de7f-4a1b-a6df-da3322d26405}" name="guidImages1">
-      <IDSymbol name="bmpPic1" value="1" />
-      <IDSymbol name="bmpPic2" value="2" />
-      <IDSymbol name="bmpPicSearch" value="3" />
-      <IDSymbol name="bmpPicX" value="4" />
-      <IDSymbol name="bmpPicArrows" value="5" />
-      <IDSymbol name="bmpPicStrikethrough" value="6" />
-    </GuidSymbol>
-  
-    <GuidSymbol value="{c755aac5-ae48-4f08-a121-d3bcccf8731d}" name="guidImages2">
-      <IDSymbol name="bmpPic1" value="1" />
-      <IDSymbol name="bmpPic2" value="2" />
-      <IDSymbol name="bmpPicSearch" value="3" />
-      <IDSymbol name="bmpPicX" value="4" />
-      <IDSymbol name="bmpPicArrows" value="5" />
-      <IDSymbol name="bmpPicStrikethrough" value="6" />
-    </GuidSymbol>
-  
-    <GuidSymbol value="{229a5193-f343-40e9-986f-4aa84feb80c7}" name="guidImages3">
-      <IDSymbol name="bmpPic1" value="1" />
-      <IDSymbol name="bmpPic2" value="2" />
-      <IDSymbol name="bmpPicSearch" value="3" />
-      <IDSymbol name="bmpPicX" value="4" />
-      <IDSymbol name="bmpPicArrows" value="5" />
-      <IDSymbol name="bmpPicStrikethrough" value="6" />
-    </GuidSymbol>
-  
-    <GuidSymbol value="{c86bb5e4-0907-4f39-9edf-34a33c963673}" name="guidImages4">
-      <IDSymbol name="bmpPic1" value="1" />
-      <IDSymbol name="bmpPic2" value="2" />
-      <IDSymbol name="bmpPicSearch" value="3" />
-      <IDSymbol name="bmpPicX" value="4" />
-      <IDSymbol name="bmpPicArrows" value="5" />
-      <IDSymbol name="bmpPicStrikethrough" value="6" />
-    </GuidSymbol>
-  
-    <GuidSymbol value="{c96531bc-d8e6-4688-a4d9-01505fa18308}" name="guidImages5">
-      <IDSymbol name="bmpPic1" value="1" />
-      <IDSymbol name="bmpPic2" value="2" />
-      <IDSymbol name="bmpPicSearch" value="3" />
-      <IDSymbol name="bmpPicX" value="4" />
-      <IDSymbol name="bmpPicArrows" value="5" />
-      <IDSymbol name="bmpPicStrikethrough" value="6" />
-    </GuidSymbol>
-  </Symbols>
+		<!-- This is the guid used to group the menu commands together -->
+		<GuidSymbol name="guidCxViewerPackageCmdSet" value="{6fe6907c-5802-49b0-9203-e9f5a52a01cb}">
+			<IDSymbol name="SolutionExplorerFileGroup" value="0x1020" />
+			<IDSymbol name="SolutionExplorerProjectGroup" value="0x1021" />
+			<IDSymbol name="SolutionExplorerFolderGroup" value="0x1022" />
+			<IDSymbol name="SolutionExplorerSolutionGroup" value="0x1023" />
+			<IDSymbol name="CxViewerMenu" value="0x1024" />
+			<IDSymbol name="CxViewerGroup" value="0x1025" />
+			<IDSymbol name="CxViewerScanMenu" value="0x1026" />
+			<IDSymbol name="CxViewerScanGroup" value="0x1027" />
+			<IDSymbol name="cmdidScanCommand" value="0x0100" />
+			<IDSymbol name="cmdidIncrementalScanCommand" value="0x0101" />
+			<IDSymbol name="cmdidBindCommand" value="0x0102" />
+			<IDSymbol name="cmdidRetrieveResultsCommand" value="0x0103" />
+			<IDSymbol name="cmdidResultsToolWindowCommand" value="0x0104" />
+			<IDSymbol value="4136" name="cmdidTestCommand" />
+			<!--Changes for Plug-497 support complex solutions -->
+			<!--Start-->
+			<IDSymbol name="WebProjectGroup" value="0x0106" />
+			<IDSymbol name="WebProjectFolderGroup" value="0x0107" />
+			<IDSymbol name="WebProjectFileGroup" value="0x0108" />
+			<!--End-->
+		</GuidSymbol>
+
+		<GuidSymbol name="guidImages" value="{cabd7b34-49ae-4574-bd93-6fcdd900e1d0}">
+			<IDSymbol name="bmpPic1" value="1" />
+			<IDSymbol name="bmpPic2" value="2" />
+			<IDSymbol name="bmpPicSearch" value="3" />
+			<IDSymbol name="bmpPicX" value="4" />
+			<IDSymbol name="bmpPicArrows" value="5" />
+			<IDSymbol name="bmpPicStrikethrough" value="6" />
+		</GuidSymbol>
+
+
+		<GuidSymbol name="guidImagesScan" value="{5e06ef08-d98b-4922-99c3-a88ae86aa5c4}">
+			<IDSymbol name="scanIcon" value="1" />
+		</GuidSymbol>
+
+		<GuidSymbol name="guidImagesIncrementalScan" value="{A76D0242-5CAA-418E-9BC1-3325A09A7830}">
+			<IDSymbol name="incrementalScanIcon" value="1" />
+		</GuidSymbol>
+
+		<GuidSymbol name="guidImagesBind" value="{BDA2E5CF-5B72-449E-8C29-70EF3B7D2411}">
+			<IDSymbol name="bindIcon" value="1" />
+		</GuidSymbol>
+
+		<GuidSymbol name="guidImagesRetrieveResults" value="{150E0679-C703-4A84-9670-BBE2305F9EBC}">
+			<IDSymbol name="retrieveResultsIcon" value="1" />
+		</GuidSymbol>
+
+		<GuidSymbol name="guidImagesStoredResults" value="{91899DF1-1E89-4FF4-97F8-D39AC969DA88}">
+			<IDSymbol name="storedResultsIcon" value="1" />
+		</GuidSymbol>
+
+
+		<GuidSymbol value="{1fdae178-de7f-4a1b-a6df-da3322d26405}" name="guidImages1">
+			<IDSymbol name="bmpPic1" value="1" />
+			<IDSymbol name="bmpPic2" value="2" />
+			<IDSymbol name="bmpPicSearch" value="3" />
+			<IDSymbol name="bmpPicX" value="4" />
+			<IDSymbol name="bmpPicArrows" value="5" />
+			<IDSymbol name="bmpPicStrikethrough" value="6" />
+		</GuidSymbol>
+
+		<GuidSymbol value="{c755aac5-ae48-4f08-a121-d3bcccf8731d}" name="guidImages2">
+			<IDSymbol name="bmpPic1" value="1" />
+			<IDSymbol name="bmpPic2" value="2" />
+			<IDSymbol name="bmpPicSearch" value="3" />
+			<IDSymbol name="bmpPicX" value="4" />
+			<IDSymbol name="bmpPicArrows" value="5" />
+			<IDSymbol name="bmpPicStrikethrough" value="6" />
+		</GuidSymbol>
+
+		<GuidSymbol value="{229a5193-f343-40e9-986f-4aa84feb80c7}" name="guidImages3">
+			<IDSymbol name="bmpPic1" value="1" />
+			<IDSymbol name="bmpPic2" value="2" />
+			<IDSymbol name="bmpPicSearch" value="3" />
+			<IDSymbol name="bmpPicX" value="4" />
+			<IDSymbol name="bmpPicArrows" value="5" />
+			<IDSymbol name="bmpPicStrikethrough" value="6" />
+		</GuidSymbol>
+
+		<GuidSymbol value="{c86bb5e4-0907-4f39-9edf-34a33c963673}" name="guidImages4">
+			<IDSymbol name="bmpPic1" value="1" />
+			<IDSymbol name="bmpPic2" value="2" />
+			<IDSymbol name="bmpPicSearch" value="3" />
+			<IDSymbol name="bmpPicX" value="4" />
+			<IDSymbol name="bmpPicArrows" value="5" />
+			<IDSymbol name="bmpPicStrikethrough" value="6" />
+		</GuidSymbol>
+
+		<GuidSymbol value="{c96531bc-d8e6-4688-a4d9-01505fa18308}" name="guidImages5">
+			<IDSymbol name="bmpPic1" value="1" />
+			<IDSymbol name="bmpPic2" value="2" />
+			<IDSymbol name="bmpPicSearch" value="3" />
+			<IDSymbol name="bmpPicX" value="4" />
+			<IDSymbol name="bmpPicArrows" value="5" />
+			<IDSymbol name="bmpPicStrikethrough" value="6" />
+		</GuidSymbol>
+	</Symbols>
 </CommandTable>

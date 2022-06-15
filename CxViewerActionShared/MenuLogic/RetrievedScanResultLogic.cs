@@ -19,7 +19,7 @@ namespace CxViewerAction2022.MenuLogic
             LoginData login = LoginHelper.LoadSaved();
             Logger.Create().Debug("Getting selected project");
             Entities.Project selectedProject = CommonActionsInstance.getInstance().GetSelectedProject();
-            Logger.Create().Debug("Found selected project " + selectedProject.ProjectName) ;
+            
             if (selectedProject == null)
             {
                 return ActionStatus.Failed;
@@ -27,6 +27,7 @@ namespace CxViewerAction2022.MenuLogic
             LoginData.BindProject bindPro = null;
             if (login != null && login.BindedProjects != null)
             {
+                Logger.Create().Debug("Found selected project " + selectedProject.ProjectName);
                 bindPro = login.BindedProjects.Find(delegate (LoginData.BindProject bp)
                 {
                     return bp.ProjectName == selectedProject.ProjectName && bp.RootPath == selectedProject.RootPath && bp.IsBound == true;
@@ -95,6 +96,7 @@ namespace CxViewerAction2022.MenuLogic
         public CommandStatus GetStatus()
         {
             LoginData login = LoginHelper.LoadSaved();
+            Logger.Create().Debug("Getting selected project");
             Entities.Project selectedProject = CommonActionsInstance.getInstance().GetSelectedProject();
             if (selectedProject == null)
             {
@@ -102,6 +104,7 @@ namespace CxViewerAction2022.MenuLogic
             }
             if (login != null && login.BindedProjects != null)
             {
+                Logger.Create().Debug("Found selected project " + selectedProject.ProjectName);
                 LoginData.BindProject bindPro = login.BindedProjects.Find(delegate (LoginData.BindProject bp)
                 {
                     return bp.ProjectName == selectedProject.ProjectName && bp.RootPath == selectedProject.RootPath && bp.IsBound == true;
