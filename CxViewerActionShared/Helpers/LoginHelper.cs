@@ -134,7 +134,7 @@ namespace CxViewerAction2022.Helpers
         /// <returns></returns>
         internal static LoginData Load(int tryNum)
         {
-            Logger.Create().Debug("Load preferences");
+            Logger.Create().Info("Loading login data preferences.");
             LoginData login = LoginData.GetLoginDataInstance;
 
             if (tryNum > 2)
@@ -189,10 +189,11 @@ namespace CxViewerAction2022.Helpers
         internal static void Save(LoginData login)
         {
             loginCache = null;
-            Logger.Create().Debug("Save preferences");
+            //Logger.Create().Debug("Save preferences");
+            Logger.Create().Info("Saving login preferences info.");
             server = null; // reset server
             string fileName = FullConfigPath; // Directory.GetCurrentDirectory() + "\\" + FileName;
-            Logger.Create().Debug("Save to file : " + fileName);
+            Logger.Create().Debug("Saving to file : " + fileName);
 
             try
             {
@@ -220,7 +221,7 @@ namespace CxViewerAction2022.Helpers
             }
             catch (Exception ex)
             {
-                Logger.Create().Error("Failed to save preferences");
+                Logger.Create().Error("Failed to save preferences.");
                 Logger.Create().Error(ex);
             }
         }
@@ -237,9 +238,10 @@ namespace CxViewerAction2022.Helpers
         internal static LoginResult DoLoginWithoutForm(out bool cancelPressed, bool relogin)
         {
             //loads the preferences
-            Logger.Create().Debug("Loading preferneces");
+            //Logger.Create().Debug("Loading preferneces");
+            Logger.Create().Info("Loading login preferneces.");
             Entities.LoginData login = LoadSaved();
-            Logger.Create().Debug("Loaded preferences");
+            Logger.Create().Debug("Login preferences loaded.");
             if (login == null)
             {
                 cancelPressed = false;
@@ -322,7 +324,7 @@ namespace CxViewerAction2022.Helpers
                 {
                     try
                     {
-                        Logger.Create().Debug("Initializing Web service client.");
+                        Logger.Create().Info("Initializing Web service client.");
                         client = new CxWebServiceClient(login);
                     }
                     catch (Exception e)
@@ -342,7 +344,7 @@ namespace CxViewerAction2022.Helpers
                     try
                     {
                         serverBaseUrl = login.ServerBaseUri;
-                        Logger.Create().Debug("DoLogin in backgroundworkerhelper.");
+                        Logger.Create().Info("Do login in background worker helper.");
                         bool loginSucceeded = DolLogin(login, client);
                         if (loginSucceeded)
                         {
@@ -403,7 +405,7 @@ namespace CxViewerAction2022.Helpers
                 if (dialogResult == DialogResult.OK)
                 {
                     oidcLoginResult = new OidcLoginResult(true, string.Empty, "");
-                    Logger.Create().Debug("Oidc login successful");
+                    Logger.Create().Info("Oidc login successful.");
                 }
                 if (dialogResult == DialogResult.Retry)
                 {
@@ -435,11 +437,11 @@ namespace CxViewerAction2022.Helpers
                     cxRestApi = new CxRESTApi(login);
                     string accessToken = cxRestApi.Login(oidcLoginResult.Code);
                     cxRestApi.GetPermissions(accessToken);
-                    Logger.Create().Debug("Oidc Access token:" + accessToken);
+                    //Logger.Create().Debug("Oidc Access token:" + accessToken);
                 }
 
                 loginSucceeded = true;
-                Logger.Create().Debug("Succeeded to login. ");
+                Logger.Create().Info("Login successful.");
             }
             else
             {
@@ -448,7 +450,7 @@ namespace CxViewerAction2022.Helpers
                     Logger.Create().Debug("Server URL: " + login.ServerBaseUri);
                     _oidcLoginHelper.CloseLoginWindow();
                 }
-                Logger.Create().Debug("Failed to login. ");
+                Logger.Create().Info("Login failed.");
             }
             return loginSucceeded;
 
@@ -460,7 +462,7 @@ namespace CxViewerAction2022.Helpers
         internal static void DoLogout()
         {
             Application.DoEvents();
-            Logger.Create().Debug("Logging out, clear authentication data");
+            Logger.Create().Info("Logging out, clear authentication data.");
             OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
             oidcLoginData.AccessToken = null;
             oidcLoginData.RefreshToken = null;
@@ -479,7 +481,7 @@ namespace CxViewerAction2022.Helpers
                 return loginCache;
             }
             LoginData login = Helpers.LoginHelper.Load(0);
-            Logger.Create().Debug("Login data loaded");
+            Logger.Create().Info("Login data loaded.");
             server = login.Server;
             loginCache = login;
             return login;

@@ -13,8 +13,7 @@ namespace CxViewerAction2022.Views
     public partial class frmBindingPrjList : Form, IBindProjectView
     {
         public frmBindingPrjList()
-        {
-            Logger.Create().Debug("frmBindingPrjList in");
+        {            
             InitializeComponent();
         }
 

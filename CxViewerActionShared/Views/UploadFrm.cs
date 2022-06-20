@@ -200,7 +200,7 @@ namespace CxViewerAction2022.Views
         /// <param name="e"></param>
         private void txtProjectName_Validating(object sender, CancelEventArgs e)
         {
-            Logger.Create().Debug("Validating project name ");
+            Logger.Create().Info("Validating project name.");
             if (string.IsNullOrEmpty(txtProjectName.Text)) //Check for non empty project name field
             {
                 e.Cancel = true;
@@ -227,7 +227,7 @@ namespace CxViewerAction2022.Views
         /// <param name="e"></param>
         private void cmbPreset_Validating(object sender, CancelEventArgs e)
         {
-            Logger.Create().Debug("Validating preset field");
+            Logger.Create().Info("Validating preset field.");
             if (cmbPreset.SelectedItem == null)
             {
                 e.Cancel = true;
@@ -244,7 +244,7 @@ namespace CxViewerAction2022.Views
         /// <param name="e"></param>
         private void cmbTeams_Validating(object sender, CancelEventArgs e)
         {
-            Logger.Create().Debug("Validating teams field");
+            Logger.Create().Info("Validating teams field.");
             if (cmbTeams.SelectedItem == null)
             {
                 e.Cancel = true;
@@ -256,7 +256,7 @@ namespace CxViewerAction2022.Views
 
         private void txtDescription_Validating(object sender, CancelEventArgs e)
         {
-            Logger.Create().Debug("Validating description field");
+            Logger.Create().Info("Validating description field.");
             if (string.IsNullOrEmpty(txtDescription.Text))
             {
                 e.Cancel = true;
@@ -268,7 +268,7 @@ namespace CxViewerAction2022.Views
 
         void CheckValidation()
         {
-            Logger.Create().Debug("Validating upload form fields");
+            Logger.Create().Info("Validating upload form fields.");
             txtProjectName_Validating(txtProjectName, new CancelEventArgs());
             txtDescription_Validating(txtDescription, new CancelEventArgs());
             cmbPreset_Validating(cmbPreset, new CancelEventArgs());
@@ -277,7 +277,7 @@ namespace CxViewerAction2022.Views
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            Logger.Create().Debug("On Ok button click:");
+            Logger.Create().Info("In Ok button click:");
             CheckValidation();
             if (!string.IsNullOrEmpty(errorProvider.GetError(txtProjectName)) ||
             !string.IsNullOrEmpty(errorProvider.GetError(txtDescription)) ||
@@ -290,7 +290,7 @@ namespace CxViewerAction2022.Views
 
         private void UploadFrm_KeyUp(object sender, KeyEventArgs e)
         {
-            Logger.Create().Debug("Calling upload form key up eevnt");
+            Logger.Create().Info("Calling upload form key up event.");
             if (e.KeyValue == 13)
             {
                 this.DialogResult = DialogResult.OK;
@@ -299,7 +299,7 @@ namespace CxViewerAction2022.Views
 
         private void txtProjectName_KeyUp(object sender, KeyEventArgs e)
         {
-            Logger.Create().Debug("Calling project name text key up event");
+            Logger.Create().Info("Calling project name text key up event.");
             if (e.KeyValue == 13)
             {
                 this.DialogResult = DialogResult.OK;
@@ -308,7 +308,7 @@ namespace CxViewerAction2022.Views
 
         private void cmbPreset_KeyUp(object sender, KeyEventArgs e)
         {
-            Logger.Create().Debug("Calling preset key up event");
+            Logger.Create().Info("Calling preset key up event.");
             if (e.KeyValue == 13)
             {
                 this.DialogResult = DialogResult.OK;
@@ -317,7 +317,7 @@ namespace CxViewerAction2022.Views
 
         private void cmbTeams_KeyUp(object sender, KeyEventArgs e)
         {
-            Logger.Create().Debug("Calling teams key up event");
+            Logger.Create().Info("Calling teams key up event.");
             if (e.KeyValue == 13)
             {
                 this.DialogResult = DialogResult.OK;

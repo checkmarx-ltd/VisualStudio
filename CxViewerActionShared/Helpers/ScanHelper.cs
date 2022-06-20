@@ -44,7 +44,7 @@ namespace CxViewerAction2022.Helpers
         /// <returns></returns>
         public ProjectScanStatuses DoScan(Project project, bool isIncremental, ref CxWSQueryVulnerabilityData[] scanData, ref long scanId)
         {
-            Logger.Create().Debug("DoScan():");
+            Logger.Create().Info("DoScan():");
             if (_scan != null && _scan.InProcess)
                 {
                 return ProjectScanStatuses.CanceledByUser;
@@ -55,7 +55,7 @@ namespace CxViewerAction2022.Helpers
                 //Release old view data
 
                 CommonActionsInstance.getInstance().ClearScanProgressView();
-                Logger.Create().Debug("Released old view data");
+                Logger.Create().Info("Released old view data.");
                 LoginData logindata = LoginHelper.LoadSaved();
                 OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
                 //Execute login
@@ -120,7 +120,7 @@ namespace CxViewerAction2022.Helpers
         private Upload GetUploadSettings(Project project, LoginResult loginResult)
         {
             Upload uploadSettings;
-            Logger.Create().Debug("Getting upload settings");
+            Logger.Create().Info("Getting upload settings.");
             if (!CommonData.IsProjectBound)
             {
                 uploadSettings = UploadHelper.SetUploadSettings(loginResult, project, _cancelPressed);
@@ -145,7 +145,7 @@ namespace CxViewerAction2022.Helpers
 
         private LoginResult Login()
         {
-            Logger.Create().Debug("Login for scan operation");
+            Logger.Create().Info("Login for scan operation.");
             LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out _cancelPressed, true);
 
             if (!loginResult.IsSuccesfull)
@@ -178,7 +178,7 @@ namespace CxViewerAction2022.Helpers
         /// <returns></returns>
         private ProjectScanStatuses ExecuteScan(Project project, ref CxWSQueryVulnerabilityData[] scanData, ref long scanId)
         {
-            Logger.Create().Debug("DoScan in");
+            Logger.Create().Info("DoScan in");
             bool bCancel = false;
             bool backgroundMode = _scan.LoginResult.AuthenticationData.IsRunScanInBackground == SimpleDecision.Yes;
 
@@ -232,9 +232,9 @@ namespace CxViewerAction2022.Helpers
                     //User click cancel while info dialog was showed
                     if (!bCancel)
                     {
-                        Logger.Create().Debug("Zipping the proeject.");
+                        Logger.Create().Info("Zipping the proeject.");
                         byte[] zippedProject = ZipProject(_scan, project, bg);
-                        Logger.Create().Debug("Zipping is complete.");
+                        Logger.Create().Info("Zipping is complete.");
 
                         if (!_scan.IsCancelPressed && zippedProject != null)
                         {

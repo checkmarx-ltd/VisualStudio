@@ -52,15 +52,14 @@ namespace CxViewerAction2022.Helpers
 
         internal static ProjectScanStatuses BindProject(Entities.Project project)
 		{
-            Logger.Create().Debug("BindProjectByType in");
-			ProjectScanStatuses status = ProjectScanStatuses.CanceledByUser;
+  			ProjectScanStatuses status = ProjectScanStatuses.CanceledByUser;
 			try
 			{
-                Logger.Create().Debug("Binding project");
+                Logger.Create().Info("Binding selected project.");
                 status = LoginAndBindSelectedProject(project);
                 if (status == ProjectScanStatuses.Success)
                 {
-                    Logger.Create().Debug("Bind project operation successful");
+                    Logger.Create().Info("Bind project operation successful.");
                     ShowResultLogic showResultLogic = new ShowResultLogic();
                     showResultLogic.Act();
 
@@ -69,7 +68,7 @@ namespace CxViewerAction2022.Helpers
                 else if (status == ProjectScanStatuses.CanceledByUser)
                 {
                     //Do nothing...
-                    Logger.Create().Debug("Bind project cancelled by user");
+                    Logger.Create().Debug("Bind project operation cancelled by user.");
                     CommonData.IsProjectBound = false;
                 }
                 else
@@ -98,6 +97,7 @@ namespace CxViewerAction2022.Helpers
             bool cancelPressed = false;
             if (oidcLoginData.AccessToken == null)
             {
+                Logger.Create().Info("Login for bind project operation as access token is null.");
                 //Execute login
                 loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
                 if (!loginResult.IsSuccesfull)
@@ -112,7 +112,7 @@ namespace CxViewerAction2022.Helpers
 
             if (loginResult.IsSuccesfull)
 			{
-                Logger.Create().Debug("Login successful for bind project operation");
+                Logger.Create().Info("Login successful for bind project operation.");
                 _canceled = false;
                 BindSelectedProject(loginResult, project);
 
@@ -156,7 +156,7 @@ namespace CxViewerAction2022.Helpers
                     isThrewError = true;
                     return;
                 }
-                Logger.Create().Debug("Getting project display data.");
+                Logger.Create().Info("Getting project display data.");
                 cxWSResponseProjectsDisplayData = client.ServiceClient.GetProjectsDisplayData(loginResult.SessionId);
                 Logger.Create().Debug("Received project display data. Count "+ cxWSResponseProjectsDisplayData.projectList.Length);
 
@@ -197,7 +197,7 @@ namespace CxViewerAction2022.Helpers
             long selectedProjectId = 0;
             if (client != null && ((bindProjectEntity.SelectedProject != null && bindProjectEntity.CommandResult == System.Windows.Forms.DialogResult.OK)))
             {
-                Logger.Create().Info("Loading project id: " + bindProjectEntity.SelectedProject.projectID);
+                Logger.Create().Debug("Loading project id: " + bindProjectEntity.SelectedProject.projectID);
                 bg.DoWorkFunc = delegate(object obj)
                                {
                                    selectedProjectId = bindProjectEntity.SelectedProject.projectID;
@@ -235,7 +235,7 @@ namespace CxViewerAction2022.Helpers
                                        isNewProject = true;
                                    }
 
-                                   Logger.Create().Info("Getting Scans display data for selected project " + selectedProjectId);
+                                   Logger.Create().Debug("Getting Scans display data for selected project " + selectedProjectId);
                                    CxWSResponseScansDisplayData cxWSResponseScansDisplayData = PerspectiveHelper.GetScansDisplayData(selectedProjectId);
                                    if (cxWSResponseScansDisplayData.ScanList.Length == 0)
                                    {
@@ -245,7 +245,7 @@ namespace CxViewerAction2022.Helpers
                                        return;
                                    }
 
-                                   Logger.Create().Info("Received Scans display data for selected project. Count " + cxWSResponseScansDisplayData.ScanList.Length);
+                                   Logger.Create().Debug("Received Scans display data for selected project. Count " + cxWSResponseScansDisplayData.ScanList.Length);
                                    foreach (ScanDisplayData item in cxWSResponseScansDisplayData.ScanList)
                                    {
 

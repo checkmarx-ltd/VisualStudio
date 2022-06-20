@@ -115,7 +115,7 @@ namespace CxViewerAction2022.Views
                     cxRestApi = new CxRESTApi(_login);
                     accessToken = cxRestApi.LoginUserNamePassword(username, password);
                     cxRestApi.GetPermissions(accessToken);
-                    Logger.Create().Debug("Login successful");
+                    Logger.Create().Info("Login successful.");
                 }
                 catch (WebException ex)
                 {
@@ -166,8 +166,7 @@ namespace CxViewerAction2022.Views
             {
                 if (UserClosedForm != null)
                 {
-                    UserClosedForm(this, new EventArgs());
-                    Logger.Create().Debug("Saml login form closed");
+                    UserClosedForm(this, new EventArgs());                    
                 }
             }
         }

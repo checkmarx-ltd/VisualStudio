@@ -18,15 +18,14 @@ namespace CxViewerAction2022.Views
         {
             Logger.Create().Debug("Connecting with identity provider with url:" + baseServerUri);
             OidcLoginCtrl2.ConnectToIdentidyProvider(baseServerUri);
-            Logger.Create().Debug("Connected by identity provider" );
+            Logger.Create().Info("Connected by identity provider." );
         }
 
         public void CloseForm()
         {
             if (InvokeRequired)
             {
-                Invoke(new MethodInvoker(CloseForm));
-                Logger.Create().Debug("form closed");
+                Invoke(new MethodInvoker(CloseForm));                
                 return;
             }
 
@@ -41,8 +40,7 @@ namespace CxViewerAction2022.Views
             {
                 if (UserClosedForm != null)
                 {
-                    UserClosedForm(this, new EventArgs());
-                    Logger.Create().Debug("Saml login form closed");
+                    UserClosedForm(this, new EventArgs());                    
                 }
             }
         }

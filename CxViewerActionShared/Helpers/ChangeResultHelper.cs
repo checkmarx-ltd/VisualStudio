@@ -21,14 +21,14 @@ namespace CxViewerAction2022.Helpers
             bool cancelPressed = false;
             if (oidcLoginData.AccessToken == null) {
                 //Execute login
-                Logger.Create().Debug("EditRemark():calling login without form");
+                Logger.Create().Info("EditRemark():calling login without form.");
                 loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
                 if (!loginResult.IsSuccesfull)
                     loginResult = LoginHelper.DoLogin(out cancelPressed);
 
                 if (loginResult.IsSuccesfull)
                 {
-                    Logger.Create().Debug("EditRemark():login successful");
+                    Logger.Create().Info("EditRemark():login successful.");
                     return EditRemark(loginResult, resultId, pathId, remark);
                 }
                 else if (!cancelPressed)

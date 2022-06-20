@@ -22,7 +22,7 @@ namespace CxViewerAction2022.Views
 
         private void EditRemarkPopUp_Load(object sender, EventArgs e)
         {
-            Logger.Create().Debug("Editing remark pop up ");
+            Logger.Create().Info("Editing remark pop up.");
             MinimizeBox = false;
             MaximizeBox = false;
             MinimumSize = MaximumSize = Size;

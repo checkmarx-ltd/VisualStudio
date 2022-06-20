@@ -16,13 +16,13 @@ namespace CxViewerAction2022.Views
         public ErrorFrm(string errorDescription, EventHandler onReconnect, EventHandler onRelogin)
         {
             InitializeComponent();
-            Logger.Create().Debug("Error form loading ");
+            Logger.Create().Info("Error form loading.");
             txtErrorDescription.Text = errorDescription;
-            Logger.Create().Debug("Reconnect on button click event calling");
+            Logger.Create().Info("Reconnect on button click event calling.");
             btnReconnect.Click += new EventHandler(delegate(object o, EventArgs e) { Visible = false; });
             btnReconnect.Click += onReconnect;
             btnReconnect.Click += new EventHandler(delegate(object o, EventArgs e) { Visible = true; });
-            Logger.Create().Debug("Reconnect on button click event called");
+            Logger.Create().Info("Reconnect on button click event called.");
             //btnRelogin.Click += new EventHandler(delegate(object o, EventArgs e) { this.DialogResult = DialogResult.Cancel; });
             //if (onRelogin != null)
             //    btnRelogin.Click += onRelogin;

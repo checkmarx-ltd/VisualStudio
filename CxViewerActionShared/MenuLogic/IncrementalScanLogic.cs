@@ -26,9 +26,9 @@ namespace CxViewerAction2022.MenuLogic
 
         public CommandStatus GetStatus()
         {
-            Logger.Create().Info("For incremental scan getting status from conf file");
+            Logger.Create().Info("For incremental scan getting saved login data from conf file.");
             LoginData login = LoginHelper.LoadSaved();
-            Logger.Create().Debug("Getting selected project");
+            Logger.Create().Info("Getting selected project.");
             Entities.Project selectedProject = CommonActionsInstance.getInstance().GetSelectedProject();            
             if (selectedProject == null)
             {

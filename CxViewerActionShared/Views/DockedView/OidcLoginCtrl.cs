@@ -54,7 +54,7 @@ namespace CxViewerAction2022.Views.DockedView
             Uri urlAddress = new Uri(eventArgs.Url.ToString());
             if (!urlAddress.ToString().Contains("code="))
             {
-                Logger.Create().Debug("Navigation complete for " + urlAddress.ToString());
+                Logger.Create().Debug("Navigation complete for " + urlAddress.ToString() + ".");
             }
             string queryString = urlAddress.Query;
             if (string.IsNullOrWhiteSpace(queryString))
@@ -67,7 +67,7 @@ namespace CxViewerAction2022.Views.DockedView
                 return;
             }
             errorMessage = string.IsNullOrWhiteSpace(errorMessage) ? "Internal server error" : errorMessage;
-            Logger.Create().Debug("Navigation complete with error " + errorMessage);
+            Logger.Create().Debug("Navigation completed with error " + errorMessage + ".");
             if (NavigationError != null)
             {
                 webBrowserIdentityProvider.Navigate(BLANK_PAGE);
@@ -91,27 +91,26 @@ namespace CxViewerAction2022.Views.DockedView
             
             if (!eventArgs.Url.AbsoluteUri.ToLower().Contains("code="))
             {
-                Logger.Create().Debug("Checking for presence of authorization code in the URL. " + eventArgs.Url.AbsoluteUri.ToLower());
+                Logger.Create().Info("Checking for presence of authorization code in the URL. ");
                 return;
             }
 
-            Logger.Create().Debug("Authorization code found.Extracting authorization code from the URL. ");
+            Logger.Create().Info("Authorization code found.Extracting authorization code from the URL.");
             string code = ExtractCodeFromUrl(eventArgs.Url.AbsoluteUri);
             Logger.Create().Debug("Authorization code from the URL. " + code);
 
             if (NavigationCompleted != null)
             {
-                Logger.Create().Debug("Navigation completed not null" );
+                Logger.Create().Info("Navigation completed is not null." );
                 webBrowserIdentityProvider.Navigate(BLANK_PAGE);
                 NavigationCompleted(this, code);
-                Logger.Create().Debug("Navigation completed with authorization code");
+                Logger.Create().Debug("Navigation completed with authorization code.");
             }
         }
 
 		private string ExtractCodeFromUrl(string absoluteUri)
 		{
-			Uri myUri = new Uri(absoluteUri);
-            Logger.Create().Debug("Authorization code from the URL. " + HttpUtility.ParseQueryString(myUri.Query).Get("code"));
+			Uri myUri = new Uri(absoluteUri);            
             return HttpUtility.ParseQueryString(myUri.Query).Get("code");
 		}
 
@@ -122,7 +121,8 @@ namespace CxViewerAction2022.Views.DockedView
                 Invoke(new MethodInvoker(() => ConnectToIdentidyProvider(serverUri)));
                 return;
             }
-            Logger.Create().Debug("Initiating navigation to OIDC authorization endpoint "+serverUri);
+            Logger.Create().Debug("Initiating navigation to OIDC authorization endpoint " + serverUri);
+            Logger.Create().Info("Initiating navigation to OIDC authorization endpoint " + serverUri);
             NavigateToOidcLogin(serverUri);
         }
 

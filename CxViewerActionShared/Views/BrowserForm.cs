@@ -51,8 +51,11 @@ namespace CxViewerAction2022.Views
 
             browser = new ChromiumWebBrowser();
             this.pContainer.Controls.Add(browser);
+            Logger.Create().Info("BrowserForm() " + browser);
             browser.Dock = DockStyle.Fill;
+            Logger.Create().Info("In browser form load calling address changed event.");
             browser.AddressChanged += OnBrowserAddressChanged;
+            Logger.Create().Info("On browser form load calling load end event.");
             browser.FrameLoadEnd += chromium_FrameLoadEnd;
 
             browser.RequestHandler = new NewCustomRequestHandler();
@@ -141,7 +144,7 @@ namespace CxViewerAction2022.Views
                 }
                 return;
             }
-            Logger.Create().Debug("Authorization code found. Extracting authorization code from the URL. ");
+            Logger.Create().Info("Authorization code found. Extracting authorization code from the URL. ");
             string code = ExtractCodeFromUrl(e.Url);
 
             if (NavigationCompleted != null)
@@ -238,15 +241,16 @@ namespace CxViewerAction2022.Views
                 protected override CefReturnValue OnBeforeResourceLoad(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request,
                     IRequestCallback callback)
                 {
+                    Logger.Create().Info("In on before resource load event of chrome browser login page.");
                     var Url = request.Url.ToString();
                     Uri myUri = new Uri(request.Url);
-                    Logger.Create().Debug("new url " + Url);
+                    Logger.Create().Debug("New url " + Url + ".");
                     if (Url.ToLower().Contains("code="))
                     {
 
                         string code = HttpUtility.ParseQueryString(myUri.Query).Get("code");
                         NavigationCompleted(this, code);
-                        Logger.Create().Debug("Authorization code found. Extracting authorization code from the URL. ");
+                        Logger.Create().Info("Authorization code found. Extracting authorization code from the URL. ");
                         browser.CloseBrowser(false);
 
                     }

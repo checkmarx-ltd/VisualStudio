@@ -12,7 +12,7 @@ namespace CxViewerAction2022.Helpers
     {
         public ConfigurationResult GetConfigurationList(string sessionId, BackgroundWorkerHelper bg, CxWebServiceClient client)
         {
-            Logger.Create().Debug("Getting configuration list.");
+            Logger.Create().Info("Getting configuration list.");
             ConfigurationResult configuration = null;
             bg.DoWorkFunc = delegate(object obj)
             {

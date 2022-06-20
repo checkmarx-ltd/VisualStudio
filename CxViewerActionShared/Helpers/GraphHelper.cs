@@ -75,7 +75,7 @@ namespace CxViewerAction2022.Helpers
 
         private static List<ReportQueryItemResult> ConvertAllNodesToPathes(CxViewerAction2022.CxVSWebService.CxWSResultPath[] cxWSPathNode, int resultId, ReportQueryResult queryResult)
         {
-            Logger.Create().Info("Converting all nodes to pathes");
+            Logger.Create().Info("Converting all nodes to pathes.");
             List<ReportQueryItemResult> list = new List<ReportQueryItemResult>();
 
             foreach (CxViewerAction2022.CxVSWebService.CxWSResultPath node in cxWSPathNode)

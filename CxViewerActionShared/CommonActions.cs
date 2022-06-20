@@ -186,7 +186,7 @@ namespace CxViewerAction2022
         /// <returns></returns>
         public Entities.Project GetSelectedProject()
         {
-            Logger.Create().Debug("GetSelectedProject(): Find selected project.");
+            Logger.Create().Debug("GetSelectedProject(): find selected project.");
             string projectName, projectPath;
             Array projects = (Array)_applicationObject.ActiveSolutionProjects;
 
@@ -195,7 +195,7 @@ namespace CxViewerAction2022
             //Context menu are displayed on project item in solution explorer
             if (_applicationObject.SelectedItems != null)
             {
-                Logger.Create().Debug("Looping for SelectedItems ");
+                Logger.Create().Info("Looping for selected items.");
                 foreach (SelectedItem selectedItem in _applicationObject.SelectedItems)
                 {
                     if (selectedItem.ProjectItem != null)
@@ -263,7 +263,7 @@ namespace CxViewerAction2022
                 Logger.Create().Error(ae.ToString());
                 if (false == string.IsNullOrEmpty(projectFullPath))
                 {
-                    Logger.Create().Error("projectFullPath = " + projectFullPath);
+                    Logger.Create().Error("project full path = " + projectFullPath);
                 }
             }
             catch (Exception ex)
@@ -767,7 +767,7 @@ namespace CxViewerAction2022
                     }
 
                     showView(_graphWin);
-                    Logger.Create().Debug("ShowProblemFile(): graph window has been shown.");
+                    Logger.Create().Debug("ShowProblemFile(): graph window has shown.");
                 }
 
                 #endregion
@@ -794,7 +794,7 @@ namespace CxViewerAction2022
                     //}
 
                     showView(_resultWin);
-                    Logger.Create().Debug("ShowProblemFile(): result window has been shown.");
+                    Logger.Create().Debug("ShowProblemFile(): result table window has shown.");
 
                 }
             }
@@ -817,9 +817,9 @@ namespace CxViewerAction2022
 
         private void viewResult_Refresh(object sender, EventArgs e)
         {
-            Logger.Create().Debug("In result window refresh event.");
+            Logger.Create().Info("Result table window refresh event.");
             TreeNodeData nodeData = (TreeNodeData)e;
-            Logger.Create().Debug("viewResult_Refresh():calling show problem file.");
+            Logger.Create().Info("viewResult_Refresh():calling show problem file.");
             ShowProblemFile(nodeData);
         }
 
@@ -827,10 +827,10 @@ namespace CxViewerAction2022
         {
             try
             {
-                Logger.Create().Debug("In result window selected row changed event.");
+                Logger.Create().Info("In result table window selected row changed event.");
                 ResultData data = (ResultData)e;
                 CxViewerAction2022.CxVSWebService.CxWSResultPath resultPath = PerspectiveHelper.GetResultPath(data.ScanId, data.Result.PathId);
-                Logger.Create().Debug("viewResult_SelectedRowChanged():received result path.");
+                Logger.Create().Info("viewResult_SelectedRowChanged():received result path.");
                 PerspectiveGraphCtrl viewGraph = null;
                 if (_graphWin != null)
                 {
@@ -839,7 +839,7 @@ namespace CxViewerAction2022
                     {
                         CxViewerAction2022.BaseInterfaces.IGraphPath path = viewGraph.FindPath(resultPath);
                         viewGraph.SelectEdgeGraphByPath(path.DirectFlow[0], path.DirectFlow[1], path);
-                        Logger.Create().Debug("viewResult_SelectedRowChanged():calling BindData().");
+                        Logger.Create().Info("viewResult_SelectedRowChanged():calling BindData().");
                         viewGraph.BindData();
                         viewGraph.PathItemClick = GraphClick;
                         Logger.Create().Debug("viewResult_SelectedRowChanged():called graph click event.");
@@ -859,16 +859,16 @@ namespace CxViewerAction2022
                         PathId = resultPath.PathId,
                         Query = data.NodeData.QueryResult
                     };
-                    Logger.Create().Debug("viewResult_SelectedRowChanged():received query item result.");
-                    Logger.Create().Debug("viewResult_SelectedRowChanged():converting nodes to paths.");
+                    Logger.Create().Info("viewResult_SelectedRowChanged():received query item result.");
+                    Logger.Create().Info("viewResult_SelectedRowChanged():converting nodes to paths.");
                     path.Paths = GraphHelper.ConvertNodesToPathes(resultPath.Nodes, data.NodeData.QueryResult, path);
                     viewPath.PathButtonClickHandler = PathButtonClick;
-                    Logger.Create().Debug("viewResult_SelectedRowChanged():called path button click event.");
+                    Logger.Create().Info("viewResult_SelectedRowChanged():called path button click event.");
                     viewPath.QueryItemResult = path;
 
-                    Logger.Create().Debug("viewResult_SelectedRowChanged():calling BindData() for path window.");
+                    Logger.Create().Info("viewResult_SelectedRowChanged():calling BindData() for path window.");
                     viewPath.BindData(resultPath.Nodes[0].PathNodeId);
-                    Logger.Create().Debug("viewResult_SelectedRowChanged():showing path window.");
+                    Logger.Create().Info("viewResult_SelectedRowChanged():showing path window.");
                     showView(_pathWin);
                 }
                 #endregion
@@ -893,7 +893,7 @@ namespace CxViewerAction2022
 
         private void GraphClick(object sender, EventArgs e)
         {
-            Logger.Create().Debug("In graph click event.");
+            Logger.Create().Info("In graph click event.");
             ReportQueryItemPathResult graphItem = ((ReportQueryItemPathResult)sender);
             PerspectiveGraphCtrl viewGraph = null;
             if (_graphWin != null)
@@ -910,7 +910,7 @@ namespace CxViewerAction2022
                         viewGraph.MsGalViewer.ResumeLayout();
                         viewGraph.MsGalViewer.Update();
                     }
-                    Logger.Create().Debug("Calling Bind data for graph.");
+                    Logger.Create().Info("Calling Bind data for graph.");
                     viewGraph.BindData();                    
                 }
             }
