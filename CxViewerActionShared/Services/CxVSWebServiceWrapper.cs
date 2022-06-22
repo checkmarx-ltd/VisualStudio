@@ -36,7 +36,7 @@ namespace CxViewerAction2022.Services
             bool isExpired = false;
             if (oidcLoginData.AccessToken != null)
             {
-                Logger.Create().Info("IsTokenExpired: Token is not null.");
+                Logger.Create().Info("IsTokenExpired(): Token is not null.");
                 DateTime tokenTime = DateTimeOffset.FromUnixTimeMilliseconds(oidcLoginData.AccessTokenExpiration).UtcDateTime;
                 isExpired = DateTime.Compare(DateTime.UtcNow, tokenTime ) > 0 ? true : false;
                 if (isExpired)

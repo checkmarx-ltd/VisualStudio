@@ -107,7 +107,7 @@ namespace Common
                 roller.ActivateOptions();
                 hierarchy.Root.AddAppender(roller);
 
-                hierarchy.Root.Level = Level.All;
+                hierarchy.Root.Level = Level.Info;
                 hierarchy.Configured = true;
             }
             catch (Exception ex)
