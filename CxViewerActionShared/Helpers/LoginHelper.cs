@@ -386,8 +386,7 @@ namespace CxViewerAction2022.Helpers
 
 
         public static bool DolLogin(LoginData login, CxWebServiceClient client)
-        {
-            Log.Info("This is DolLogin");
+        {            
             bool loginSucceeded = false;
             OidcLoginResult oidcLoginResult = null;
 

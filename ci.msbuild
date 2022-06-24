@@ -13,6 +13,7 @@ msbuild ci.msbuild /t:Pack - for pack
     <MSBuildCommunityTasksPath>$(WorkingFolder)\.build</MSBuildCommunityTasksPath>
     <ArtifactsFolder>$(WorkingFolder)\Artifacts</ArtifactsFolder>
 	<CodeCoverage></CodeCoverage>
+	<RuntimeIdentifier>win</RuntimeIdentifier>
   </PropertyGroup>
 
   <Import Project="$(WorkingFolder)\Build\.build\MSBuild.Community.Tasks.Targets" />
