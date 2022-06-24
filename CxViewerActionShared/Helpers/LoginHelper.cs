@@ -13,6 +13,8 @@ using CxViewerAction2022.Services;
 using CxViewerAction2022.ValueObjects;
 using CxViewerAction2022.Views;
 using CxViewerAction2022.WebPortal;
+using CefSharp;
+using log4net;
 
 namespace CxViewerAction2022.Helpers
 {
@@ -20,7 +22,8 @@ namespace CxViewerAction2022.Helpers
     {
         static readonly object lockObj = new object();
         private static readonly OIDCLoginHelper _oidcLoginHelper = new OIDCLoginHelper();
-
+        private static readonly ILog Log =
+             LogManager.GetLogger(typeof(LoginHelper));
         #region [ Constants ]
 
         /// <summary>
@@ -384,6 +387,7 @@ namespace CxViewerAction2022.Helpers
 
         public static bool DolLogin(LoginData login, CxWebServiceClient client)
         {
+            Log.Info("This is DolLogin");
             bool loginSucceeded = false;
             OidcLoginResult oidcLoginResult = null;
 
@@ -466,8 +470,10 @@ namespace CxViewerAction2022.Helpers
             OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
             oidcLoginData.AccessToken = null;
             oidcLoginData.RefreshToken = null;
-            oidcLoginData.AccessTokenExpiration = -1;
+            oidcLoginData.AccessTokenExpiration = -1;            
             _isLogged = false;
+            IsLogged = false;            
+            Cef.GetGlobalCookieManager().DeleteCookies("", "");
         }
 
         /// <summary>

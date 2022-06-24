@@ -160,6 +160,7 @@ namespace CxViewerAction2022.Views
 
                 }));
             }
+            Cef.GetGlobalCookieManager().DeleteCookies("", "");
         }
         private string ExtractCodeFromUrl(string absoluteUri)
         {
