@@ -10,7 +10,7 @@ msbuild ci.msbuild /t:Pack - for pack
     <Configuration>Release</Configuration>
     <Platform>AnyCPU</Platform>
     <SolutionFile>$(WorkingFolder)\CxViewer.sln</SolutionFile>
-    <ProjectFile>$(WorkingFolder)\CxViewerVSIX\CxViewerVSIX.csproj</ProjectFile>    
+    <ProjectFile>$(WorkingFolder)\CxViewer2022\CxViewer2022.csproj</ProjectFile>
     <MSBuildCommunityTasksPath>$(WorkingFolder)\.build</MSBuildCommunityTasksPath>
     <ArtifactsFolder>$(WorkingFolder)\Artifacts</ArtifactsFolder>
 	<CodeCoverage></CodeCoverage>
@@ -36,8 +36,8 @@ msbuild ci.msbuild /t:Pack - for pack
   </Target>
   
   <Target Name="CopyToArtifacts">
-    <Copy SourceFiles="$(WorkingFolder)\CxViewerVSIX\bin\Release\CxViewerVSIX.vsix"
-          DestinationFiles="$(WorkingFolder)\Artifacts\CxViewerVSIX-2019.vsix" />
+    <Copy SourceFiles="$(WorkingFolder)\CxViewer2022\bin\Release\CxViewer2022.vsix"
+          DestinationFiles="$(WorkingFolder)\Artifacts\CxViewerVSIX-2022.vsix" />
   </Target>
 
 
