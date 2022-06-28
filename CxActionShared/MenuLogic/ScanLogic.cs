@@ -28,19 +28,19 @@ namespace CxViewerAction.MenuLogic
 
         public ActionStatus Act()
         {
-            Logger.Create().Debug("Scanlogic Act");
+            Logger.Create().Info("Scan logic Act().");
             if (PerspectiveHelper.LoginToServer() == null)
             {
-                Logger.Create().Debug("LoginToServer() return null");
+                Logger.Create().Info("LoginToServer() returned null.");
                 return ActionStatus.Failed;
             }
-            Logger.Create().Debug("LoginToServer() return success");
+            Logger.Create().Info("LoginToServer() return success.");
             LoginData login = LoginHelper.LoadSaved();
             Logger.Create().Debug("Load Saved "+login.ToString());
             Entities.Project selectedProject = CommonActionsInstance.getInstance().GetSelectedProject();
             if (selectedProject == null)
             {
-                Logger.Create().Debug("Selected project is null");
+                Logger.Create().Info("Selected project is null.");
                 return ActionStatus.Failed;
             }
             Logger.Create().Debug("Selected project is not null" + selectedProject.ProjectName);
@@ -66,11 +66,11 @@ namespace CxViewerAction.MenuLogic
                     CommonData.IsProjectBound = false;
                 }
             }
-            Logger.Create().Debug("BuildFileMapping");
+            Logger.Create().Info("Calling BuildFileMapping().");
             CommonActionsInstance.getInstance().BuildFileMapping();
-            Logger.Create().Debug("Calling File.SaveAll");
+            Logger.Create().Info("Calling File.SaveAll.");
             CommonActionsInstance.getInstance().ExecuteSystemCommand("File.SaveAll", string.Empty);
-            Logger.Create().Debug("Initiating scan....");
+            Logger.Create().Info("Initiating scan....");
             DoScan(selectedProject);
             CommonData.IsWorkingOffline = false;
             return ActionStatus.Success;

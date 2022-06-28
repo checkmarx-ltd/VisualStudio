@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Common;
 
 namespace CxViewerAction.Views
 {
@@ -21,6 +22,7 @@ namespace CxViewerAction.Views
 
         private void EditRemarkPopUp_Load(object sender, EventArgs e)
         {
+            Logger.Create().Info("Editing remark pop up.");
             MinimizeBox = false;
             MaximizeBox = false;
             MinimumSize = MaximumSize = Size;

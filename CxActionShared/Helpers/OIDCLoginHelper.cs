@@ -53,8 +53,8 @@ namespace CxViewerAction.Helpers
                 Thread.Sleep(3000);
                 Application.DoEvents();
                 var browserForm = new BrowserForm();
-                browserForm.NavigationCompleted += OidcLoginCtrlOnNavigationCompleted;
-                browserForm.NavigationError += OidcLoginCtrlOnNavigationError;
+                BrowserForm.NavigationCompleted += OidcLoginCtrlOnNavigationCompleted;
+                BrowserForm.NavigationError += OidcLoginCtrlOnNavigationError;
                 BrowserForm.IsbrowserIntialized();
                 browserForm.Show();
                 browserForm.Invoke(new MethodInvoker(() =>

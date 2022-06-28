@@ -11,6 +11,7 @@ using CxViewerAction.Entities.Enum;
 using CxViewerAction.Entities.WebServiceEntity;
 using Common;
 using EnvDTE;
+using CefSharp;
 
 namespace CxViewerAction.Views.DockedView
 {
@@ -80,12 +81,14 @@ namespace CxViewerAction.Views.DockedView
 					MessageBox.Show("Login Failed", "Information", MessageBoxButtons.OK);
 					loginBtn.Enabled = true;
 					logoutBtn.Enabled = false;
+					Cef.GetGlobalCookieManager().DeleteCookies("", "");
 				}
 				else if (!string.IsNullOrWhiteSpace(currentLogin.AuthenticationType) && (currentLogin.AuthenticationType != (Common.Constants.AuthenticationaType_DefaultValue) || (currentLogin.AuthenticationType != Common.Constants.AuthenticationaType_IE)) && !loginResult.IsSuccesfull)
 				{
 					MessageBox.Show("Login Failed", "Information", MessageBoxButtons.OK);
 					loginBtn.Enabled = true;
 					logoutBtn.Enabled = false;
+					Cef.GetGlobalCookieManager().DeleteCookies("", "");
 				}
 			}
 			catch (Exception ex)
@@ -218,7 +221,7 @@ namespace CxViewerAction.Views.DockedView
 			MessageBox.Show("Logout Successful", "Information", MessageBoxButtons.OK);
 			loginBtn.Enabled = true;
 			logoutBtn.Enabled = false;
-
+			currentLogin.Clear();
 		}
 
 

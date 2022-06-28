@@ -44,6 +44,7 @@ namespace CxViewerAction.Helpers
         /// <returns></returns>
         public ProjectScanStatuses DoScan(Project project, bool isIncremental, ref CxWSQueryVulnerabilityData[] scanData, ref long scanId)
         {
+            Logger.Create().Info("DoScan():");
             if (_scan != null && _scan.InProcess)
                 {
                 return ProjectScanStatuses.CanceledByUser;
@@ -54,7 +55,7 @@ namespace CxViewerAction.Helpers
                 //Release old view data
 
                 CommonActionsInstance.getInstance().ClearScanProgressView();
-
+                Logger.Create().Info("Released old view data.");
                 LoginData logindata = LoginHelper.LoadSaved();
                 OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
                 //Execute login
@@ -119,7 +120,7 @@ namespace CxViewerAction.Helpers
         private Upload GetUploadSettings(Project project, LoginResult loginResult)
         {
             Upload uploadSettings;
-
+            Logger.Create().Info("Getting upload settings.");
             if (!CommonData.IsProjectBound)
             {
                 uploadSettings = UploadHelper.SetUploadSettings(loginResult, project, _cancelPressed);
@@ -144,6 +145,7 @@ namespace CxViewerAction.Helpers
 
         private LoginResult Login()
         {
+            Logger.Create().Info("Login for scan operation.");
             LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out _cancelPressed, true);
 
             if (!loginResult.IsSuccesfull)
@@ -176,7 +178,7 @@ namespace CxViewerAction.Helpers
         /// <returns></returns>
         private ProjectScanStatuses ExecuteScan(Project project, ref CxWSQueryVulnerabilityData[] scanData, ref long scanId)
         {
-            Logger.Create().Debug("DoScan in");
+            Logger.Create().Info("DoScan in");
             bool bCancel = false;
             bool backgroundMode = _scan.LoginResult.AuthenticationData.IsRunScanInBackground == SimpleDecision.Yes;
 
@@ -230,9 +232,9 @@ namespace CxViewerAction.Helpers
                     //User click cancel while info dialog was showed
                     if (!bCancel)
                     {
-                        Logger.Create().Debug("Zipping the proeject.");
+                        Logger.Create().Info("Zipping the proeject.");
                         byte[] zippedProject = ZipProject(_scan, project, bg);
-                        Logger.Create().Debug("Zipping is complete.");
+                        Logger.Create().Info("Zipping is complete.");
 
                         if (!_scan.IsCancelPressed && zippedProject != null)
                         {
@@ -278,12 +280,14 @@ namespace CxViewerAction.Helpers
                                         try
                                         {
                                             // Wait while scan operation complete
+                                            Logger.Create().Info("Wait till scan operation complete.");
                                             while (true)
                                             {
                                                 StatusScanResult statusScan = UpdateScanStatus(ref bCancel, backgroundMode, view, bg, client, ref isIISStoped);
 
                                                 // if scan complete with sucess or failure or cancel button was pressed
                                                 // operation complete
+                                                Logger.Create().Info("If scan complete with sucess or failure or cancel button was pressed operation complete.");
                                                 bCancel = bCancel ? bCancel : _scan.WaitForCancel();
                                                 
                                                 if (isIISStoped || bCancel ||
@@ -302,7 +306,7 @@ namespace CxViewerAction.Helpers
                                             // show error
                                             waitEnd.Set();
                                             isIISStoped = true;
-                                            Logger.Create().Debug(err);
+                                            Logger.Create().Debug("Error: " +err);
 
                                         }
 

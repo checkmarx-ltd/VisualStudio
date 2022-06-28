@@ -15,6 +15,7 @@ using System.Web;
 using CxViewerAction.Helpers;
 using CefSharp.WinForms;
 using System.Collections.Specialized;
+using static CxViewerAction.Views.BrowserForm.MyCustomResourceRequestHandler;
 
 //This code is using CefSharp Browser for Login.
 // Use of this source code is governed by a BSD-style license that can be found in the CxViewerVSIX Resource LICENSE file.
@@ -22,8 +23,8 @@ namespace CxViewerAction.Views
 {
     public partial class BrowserForm : Form
     {
-        public event EventHandler<string> NavigationCompleted;
-        public event EventHandler<string> NavigationError;
+        public static event EventHandler<string> NavigationCompleted;
+        public static event EventHandler<string> NavigationError;
         public event EventHandler UserClosedForm;
         public const string ERROR_QUERY_KEY = "Error";
         public const string BLANK_PAGE = "about:blank";
@@ -49,17 +50,19 @@ namespace CxViewerAction.Views
            
             browser = new ChromiumWebBrowser();
             this.pContainer.Controls.Add(browser);
+            Logger.Create().Info("BrowserForm() " + browser);
             browser.Dock = DockStyle.Fill;
+            Logger.Create().Info("In browser form load calling address changed event.");
             browser.AddressChanged += OnBrowserAddressChanged;
+            Logger.Create().Info("On browser form load calling load end event.");
             browser.FrameLoadEnd += chromium_FrameLoadEnd;
+            browser.RequestHandler = new NewCustomRequestHandler();
 
         }
 
         public void LoadUrl(string url)
         {
-            browser.ExecuteScriptAsync("document.oncontextmenu = function() { return false; };");
-            browser.Load(url);
-
+            
         }
 
         private void OnBrowserAddressChanged(object sender, AddressChangedEventArgs e)
@@ -67,20 +70,30 @@ namespace CxViewerAction.Views
             browser.ExecuteScriptAsync("document.oncontextmenu = function() { return false; };");
 
             Uri urlAddress = new Uri(browser.Address.ToString());
-            
-            if (!urlAddress.ToString().Contains("code=") )
+            if (urlAddress.ToString().Contains("saml"))
+            {
+                LoadUrl(urlAddress.ToString());
+            }
+            else if (urlAddress.ToString().Contains("okta"))
+            {
+                LoadUrl(urlAddress.ToString());
+            }
+          else if (!urlAddress.ToString().Contains("code=") )
             {
 
                 if (!urlAddress.ToString().Contains("CxRestAPI"))
                 {
-                    string serverurl = urlAddress + Constants.AUTHORIZATION_ENDPOINT1;
+                    string urlpath = urlAddress.AbsolutePath;
+                    string uri = urlAddress.ToString().Remove(browser.Address.Length - urlpath.Length);
+                    //string serverurl = urlAddress + Constants.AUTHORIZATION_ENDPOINT;
                     string header = string.Format("Content-Type: application/x-www-form-urlencoded", Environment.NewLine);
-                    string redirectUri = (browser.Address.ToString());
+                    string redirectUri = uri;
                     string contentType = " application/x-www-form-urlencoded";
                     if (!redirectUri.EndsWith("/"))
                     {
                         redirectUri = redirectUri + "/";
                     }
+                    string serverurl = redirectUri + Constants.AUTHORIZATION_ENDPOINT_BROWSER;
                     string postData = Constants.CLIENT_ID_KEY + "=" + Constants.CLIENT_VALUE + "&" +
                         Constants.SCOPE_KEY + "=" + Constants.SCOPE_VALUE + "&" +
                         Constants.RESPONSE_TYPE_KEY + "=" + Constants.RESPONSE_TYPE_VALUE + "&" +
@@ -89,7 +102,7 @@ namespace CxViewerAction.Views
                     byte[] postDataBytes = encoding.GetBytes(postData);
                     browser.LoadUrlWithPostData(serverurl, postDataBytes, contentType);
 
-                }
+                }                
                 else 
                 {
                     Logger.Create().Debug("Navigating to " + browser.Address.ToString());
@@ -133,9 +146,13 @@ namespace CxViewerAction.Views
                     Logger.Create().Debug("Navigation complete for " + e.Url.ToString());
                     Logger.Create().Debug("Checking for presence of authorization code in the URL. " + e.Url.ToLower());
                 }
+                //else
+                //{
+                //    browser.LoadUrl(e.Url);
+                //}
                 return;
             }
-            Logger.Create().Debug("Authorization code found. Extracting authorization code from the URL. ");
+            Logger.Create().Info("Authorization code found. Extracting authorization code from the URL. ");
             string code = ExtractCodeFromUrl(e.Url);
 
             if (NavigationCompleted != null)
@@ -151,6 +168,7 @@ namespace CxViewerAction.Views
 
                 }));
             }
+            Cef.GetGlobalCookieManager().DeleteCookies("", "");
         }
         private string ExtractCodeFromUrl(string absoluteUri)
         {
@@ -209,5 +227,57 @@ namespace CxViewerAction.Views
             Hide();
         }
 
+        public class MyCustomResourceRequestHandler : CefSharp.Handler.ResourceRequestHandler
+        {
+            private readonly System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
+
+            protected override IResponseFilter GetResourceResponseFilter(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, IResponse response)
+            {
+                return new CefSharp.ResponseFilter.StreamResponseFilter(memoryStream);
+            }
+
+            public class NewCustomRequestHandler : RequestHandler
+            {
+                protected override IResourceRequestHandler GetResourceRequestHandler(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame,
+                    IRequest request, bool isNavigation, bool isDownload, string requestInitiator, ref bool disableDefaultHandling)
+                {
+                    return new CustomResourceRequestHandler();
+                }
+            }
+
+            public class CustomResourceRequestHandler : ResourceRequestHandler
+            {
+                public readonly BrowserForm _oidcLoginHelper = new BrowserForm();
+                protected override CefReturnValue OnBeforeResourceLoad(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request,
+                    IRequestCallback callback)
+                {
+                    Logger.Create().Info("In on before resource load event of chrome browser login page.");
+                    var Url = request.Url.ToString();
+                    Uri myUri = new Uri(request.Url);
+                    Logger.Create().Debug("New url " + Url + ".");
+                    if (Url.ToLower().Contains("code="))
+                    {
+
+                        string code = HttpUtility.ParseQueryString(myUri.Query).Get("code");
+                        NavigationCompleted(this, code);
+                        Logger.Create().Info("Authorization code found. Extracting authorization code from the URL.");
+                        browser.CloseBrowser(false);
+
+                    }
+                    if (Url.ToLower().Contains("error="))
+                    {
+
+                        string error = HttpUtility.ParseQueryString(myUri.Query).Get("error");
+                        NavigationError(this, error);
+                        browser.CloseBrowser(false);
+
+                    }
+
+                    return CefReturnValue.Continue;
+                }
+            }
+        }
     }
 }
+    //}
+//}

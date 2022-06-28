@@ -185,7 +185,7 @@ namespace CxViewerAction
         /// <returns></returns>
         public Entities.Project GetSelectedProject()
         {
-            Logger.Create().Debug("GetSelectedProject(): Find selected project.");
+            Logger.Create().Info("GetSelectedProject(): find selected project.");
             string projectName, projectPath;
             Array projects = (Array)_applicationObject.ActiveSolutionProjects;
 
@@ -194,7 +194,7 @@ namespace CxViewerAction
             //Context menu are displayed on project item in solution explorer
             if (_applicationObject.SelectedItems != null)
             {
-                Logger.Create().Debug("Looping for SelectedItems ");
+                Logger.Create().Info("Looping for selected items ");
                 foreach (SelectedItem selectedItem in _applicationObject.SelectedItems)
                 {
                     if (selectedItem.ProjectItem != null)
@@ -262,7 +262,7 @@ namespace CxViewerAction
                 Logger.Create().Error(ae.ToString());
                 if (false == string.IsNullOrEmpty(projectFullPath))
                 {
-                    Logger.Create().Error("projectFullPath = " + projectFullPath);
+                    Logger.Create().Error("project full path = " + projectFullPath);
                 }
             }
             catch (Exception ex)
@@ -758,6 +758,7 @@ namespace CxViewerAction
                     }
 
                     showView(_graphWin);
+                    Logger.Create().Info("ShowProblemFile(): graph window has shown.");
                 }
 
                 #endregion
@@ -782,7 +783,7 @@ namespace CxViewerAction
                     //}
 
                     showView(_resultWin);
-
+                    Logger.Create().Info("ShowProblemFile(): result table window has shown.");
                 }
             }
             catch (Exception ex)
@@ -804,7 +805,9 @@ namespace CxViewerAction
 
         private void viewResult_Refresh(object sender, EventArgs e)
         {
+            Logger.Create().Info("Result table window refresh event.");
             TreeNodeData nodeData = (TreeNodeData)e;
+            Logger.Create().Info("viewResult_Refresh():calling show problem file.");
             ShowProblemFile(nodeData);
         }
 
@@ -812,8 +815,10 @@ namespace CxViewerAction
         {
             try
             {
+                Logger.Create().Info("In result table window selected row changed event.");
                 ResultData data = (ResultData)e;
                 CxViewerAction.CxVSWebService.CxWSResultPath resultPath = PerspectiveHelper.GetResultPath(data.ScanId, data.Result.PathId);
+                Logger.Create().Info("viewResult_SelectedRowChanged():received result path.");
 
                 PerspectiveGraphCtrl viewGraph = null;
                 if (_graphWin != null)
@@ -823,6 +828,7 @@ namespace CxViewerAction
                     {
                         CxViewerAction.BaseInterfaces.IGraphPath path = viewGraph.FindPath(resultPath);
                         viewGraph.SelectEdgeGraphByPath(path.DirectFlow[0], path.DirectFlow[1], path);
+                        Logger.Create().Info("viewResult_SelectedRowChanged():calling BindData().");
                         viewGraph.BindData();
                         viewGraph.PathItemClick = GraphClick;
                     }
@@ -841,13 +847,16 @@ namespace CxViewerAction
                         PathId = resultPath.PathId,
                         Query = data.NodeData.QueryResult
                     };
+                    Logger.Create().Info("viewResult_SelectedRowChanged():received query item result.");
+                    Logger.Create().Info("viewResult_SelectedRowChanged():converting nodes to paths.");
                     path.Paths = GraphHelper.ConvertNodesToPathes(resultPath.Nodes, data.NodeData.QueryResult, path);
                     viewPath.PathButtonClickHandler = PathButtonClick;
-
+                    Logger.Create().Info("viewResult_SelectedRowChanged():called path button click event.");
                     viewPath.QueryItemResult = path;
 
+                    Logger.Create().Info("viewResult_SelectedRowChanged():calling BindData() for path window.");
                     viewPath.BindData(resultPath.Nodes[0].PathNodeId);
-
+                    Logger.Create().Info("viewResult_SelectedRowChanged():showing path window.");
                     showView(_pathWin);
                 }
                 #endregion
@@ -872,6 +881,7 @@ namespace CxViewerAction
 
         private void GraphClick(object sender, EventArgs e)
         {
+            Logger.Create().Info("In graph click event.");
             ReportQueryItemPathResult graphItem = ((ReportQueryItemPathResult)sender);
             PerspectiveGraphCtrl viewGraph = null;
             if (_graphWin != null)
@@ -888,6 +898,7 @@ namespace CxViewerAction
                         viewGraph.MsGalViewer.ResumeLayout();
                         viewGraph.MsGalViewer.Update();
                     }
+                    Logger.Create().Info("Calling Bind data for graph.");
                     viewGraph.BindData();
                 }
             }

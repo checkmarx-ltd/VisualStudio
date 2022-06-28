@@ -16,8 +16,9 @@ namespace CxViewerAction.MenuLogic
             {
                 return ActionStatus.Failed;
             }
+            Logger.Create().Info("For retrieve results getting saved login data from conf file.");
             LoginData login = LoginHelper.LoadSaved();
-            Logger.Create().Debug("Getting selected project");
+            Logger.Create().Info("Getting selected project.");
             Entities.Project selectedProject = CommonActionsInstance.getInstance().GetSelectedProject();
             Logger.Create().Debug("Found selected project " + selectedProject.ProjectName) ;
             if (selectedProject == null)
@@ -52,7 +53,7 @@ namespace CxViewerAction.MenuLogic
 
         private void RetrieveResultsFromServer(LoginData.BindProject bindPro, LoginData login)
         {
-            Logger.Create().Debug("Retrieving  results from server.");
+            Logger.Create().Info("Retrieving results from server.");
             CxWSResponseScansDisplayData cxWSResponseScansDisplayData = PerspectiveHelper.GetScansDisplayData(CommonData.ProjectId);
             if (cxWSResponseScansDisplayData == null)
             { //error occured

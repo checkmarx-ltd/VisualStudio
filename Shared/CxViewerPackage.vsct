@@ -96,6 +96,7 @@
 			<Button guid="guidCxViewerPackageCmdSet" id="cmdidIncrementalScanCommand" priority="0x0101" type="Button">
 				<Parent guid="guidCxViewerPackageCmdSet" id="CxViewerGroup" />
 				<Icon guid="guidImagesIncrementalScan" id="incrementalScanIcon" />
+				<CommandFlag>DefaultDisabled</CommandFlag>
 				<Strings>
 					<ButtonText>Incremental Scan</ButtonText>
 				</Strings>
@@ -115,6 +116,7 @@
 			<Button guid="guidCxViewerPackageCmdSet" id="cmdidRetrieveResultsCommand" priority="0x0103" type="Button">
 				<Parent guid="guidCxViewerPackageCmdSet" id="CxViewerGroup" />
 				<Icon guid="guidImagesRetrieveResults" id="retrieveResultsIcon" />
+				<CommandFlag>DefaultDisabled</CommandFlag>
 				<Strings>
 					<ButtonText>Retrieve Results</ButtonText>
 				</Strings>
@@ -123,6 +125,7 @@
 			<Button guid="guidCxViewerPackageCmdSet" id="cmdidResultsToolWindowCommand" priority="0x0104" type="Button">
 				<Parent guid="guidCxViewerPackageCmdSet" id="CxViewerGroup" />
 				<Icon guid="guidImagesStoredResults" id="storedResultsIcon" />
+				<CommandFlag>DefaultDisabled</CommandFlag>
 				<Strings>
 					<ButtonText>Show Stored Results</ButtonText>
 				</Strings>
@@ -211,6 +214,10 @@
 			<Parent guid="guidCxViewerPackageCmdSet" id="CxViewerScanGroup" />
 		</CommandPlacement>
 
+		<CommandPlacement guid="guidCxViewerPackageCmdSet" id="cmdidRetrieveResultsCommand" priority="0x105">
+			<Parent guid="guidCxViewerPackageCmdSet" id="CxViewerScanGroup" />
+		</CommandPlacement>
+		
 		<CommandPlacement guid="guidCxViewerPackageCmdSet" id="CxViewerMenu" priority="0x105">
 			<Parent guid="guidCxViewerPackageCmdSet" id="SolutionExplorerFolderView" />
 		</CommandPlacement>
