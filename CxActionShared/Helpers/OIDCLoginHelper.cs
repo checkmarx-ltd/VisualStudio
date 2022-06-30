@@ -57,10 +57,10 @@ namespace CxViewerAction.Helpers
                 BrowserForm.NavigationError += OidcLoginCtrlOnNavigationError;
                 BrowserForm.IsbrowserIntialized();
                 browserForm.Show();
+                string txturl = "about:blank";
                 browserForm.Invoke(new MethodInvoker(() =>
                 {
-                  //  browserForm.Show();
-                    browserForm.ConnectToIdentidyProvider(baseServerUri);
+                    browserForm.ConnectToIdentidyProvider(txturl);
                     Application.Run(browserForm);
 
                 }));
