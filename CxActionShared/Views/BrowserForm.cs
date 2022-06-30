@@ -73,7 +73,7 @@ namespace CxViewerAction.Views
             if (!urlAddress.ToString().ToLower().Contains("code="))
             {
 
-                if (urlAddress.ToString().Contains("about:blank"))
+                if (urlAddress.ToString() == "about:blank")
                 {
                    
                     string uri = LoginHelper.ServerBaseUrl;
