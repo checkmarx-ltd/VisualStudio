@@ -241,8 +241,7 @@ namespace CxViewerAction.Views
                     Logger.Create().Info("In on before resource load event of chrome browser login page.");
                     var Url = request.Url.ToString();
                     Uri myUri = new Uri(request.Url);
-                    Logger.Create().Debug("New url " + Url + ".");
-                  
+
                         if (Url.ToLower().Contains("code="))
                         {
 
@@ -252,7 +251,7 @@ namespace CxViewerAction.Views
                             browser.CloseBrowser(false);
 
                         }
-                        if (Url.ToLower().Contains("error="))
+                        else if (Url.ToLower().Contains("error="))
                         {
 
                             string error = HttpUtility.ParseQueryString(myUri.Query).Get("error");
@@ -260,8 +259,12 @@ namespace CxViewerAction.Views
                             browser.CloseBrowser(false);
 
                         }
+                       else
+                       {
+                            Logger.Create().Debug("New url " + Url + ".");
+                       }
 
-                        return CefReturnValue.Continue;
+                    return CefReturnValue.Continue;
                     }
                 }
             }
