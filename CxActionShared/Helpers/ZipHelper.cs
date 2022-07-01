@@ -72,9 +72,8 @@ namespace CxViewerAction.Helpers
             }
             part = part.Remove(part.Length - 1, 1);
             part = part.Replace("*", ".*");
-
-            Logger.Create().Info("Excluded file extensions from zip operation");
-            Logger.Create().Info("Excluded file extensions from zip operation are : " + string.Format("^((?!({0})).)*$", part));
+                        
+            Logger.Create().Info("Excluded file extensions from zip operation are : " + part);
             return string.Format("^((?!({0})).)*$", part);
         }
 
@@ -92,8 +91,7 @@ namespace CxViewerAction.Helpers
             part = part.Remove(part.Length - 1, 1);
             part = part.Replace("*", ".*");
 
-            Logger.Create().Info("Excluded folders from zip operation.");
-            Logger.Create().Debug("Excluded folders are : " + string.Format("^((?!({0})).)*$", part));
+            Logger.Create().Debug("Excluded folders are : " + part);
             return string.Format("^((?!({0})).)*$", part);
         }
 

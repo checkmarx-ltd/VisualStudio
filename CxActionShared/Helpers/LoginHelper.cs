@@ -459,13 +459,19 @@ namespace CxViewerAction.Helpers
         internal static void DoLogout()
         {
             Application.DoEvents();
+            LoginData login = LoginData.GetLoginDataInstance;
             Logger.Create().Info("Logging out, clearing authentication data.");
             OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
             oidcLoginData.AccessToken = null;
             oidcLoginData.RefreshToken = null;
             oidcLoginData.AccessTokenExpiration = -1;
             _isLogged = false;
-            Cef.GetGlobalCookieManager().DeleteCookies("", "");
+            if (string.IsNullOrWhiteSpace(login.AuthenticationType) && (login.AuthenticationType == Constants.AuthenticationaType_DefaultValue))
+            {
+                loginCache = null;
+                Cef.GetGlobalCookieManager().DeleteCookies("", "");                
+            }
+            
         }
 
         /// <summary>

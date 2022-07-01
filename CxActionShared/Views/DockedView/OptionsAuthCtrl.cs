@@ -80,15 +80,13 @@ namespace CxViewerAction.Views.DockedView
 				{
 					MessageBox.Show("Login Failed", "Information", MessageBoxButtons.OK);
 					loginBtn.Enabled = true;
-					logoutBtn.Enabled = false;
-					Cef.GetGlobalCookieManager().DeleteCookies("", "");
+					logoutBtn.Enabled = false;					
 				}
 				else if (!string.IsNullOrWhiteSpace(currentLogin.AuthenticationType) && (currentLogin.AuthenticationType != (Common.Constants.AuthenticationaType_DefaultValue) || (currentLogin.AuthenticationType != Common.Constants.AuthenticationaType_IE)) && !loginResult.IsSuccesfull)
 				{
 					MessageBox.Show("Login Failed", "Information", MessageBoxButtons.OK);
 					loginBtn.Enabled = true;
-					logoutBtn.Enabled = false;
-					Cef.GetGlobalCookieManager().DeleteCookies("", "");
+					logoutBtn.Enabled = false;					
 				}
 			}
 			catch (Exception ex)

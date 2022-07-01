@@ -332,6 +332,10 @@ namespace CxViewerAction.Helpers
 
                             if (!bCancel && !isIISStoped)
                             {
+                                if (scanData == null)
+                                {
+                                    TopMostMessageBox.Show("There are no vulnerabilities to show.");
+                                }
                                 ShowScanData(ref scanData, ref scanId, client);
                             }
                             else
@@ -671,6 +675,7 @@ namespace CxViewerAction.Helpers
                     }
                     else
                     {
+                        Logger.Create().Info("Scan completed successfully.");
                         LoginHelper.Save(_scan.LoginResult.AuthenticationData);
                     }
                 }
@@ -682,7 +687,7 @@ namespace CxViewerAction.Helpers
                 }
 
             };
-            
+            Logger.Create().Info("Uploading project zipped source for scanning.");
             if (!bg.DoWork("Upload project zipped source for scanning..."))
                 return null;
 
