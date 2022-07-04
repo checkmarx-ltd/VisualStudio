@@ -36,7 +36,7 @@ namespace CxViewerAction.MenuLogic
             }
             Logger.Create().Info("LoginToServer() return success.");
             LoginData login = LoginHelper.LoadSaved();
-            Logger.Create().Debug("Load Saved "+login.ToString());
+            Logger.Create().Debug("Load Saved " + login.ToString());
             Entities.Project selectedProject = CommonActionsInstance.getInstance().GetSelectedProject();
             if (selectedProject == null)
             {
@@ -100,6 +100,7 @@ namespace CxViewerAction.MenuLogic
 
                             if (status == ProjectScanStatuses.Success)
                             {
+                                Logger.Create().Info("Scan completed successfully.");
                                 LoginData login = LoginHelper.LoadSaved();
                                 PerspectiveHelper.ShowStored(scanData, login, scanId);
                                 CommonActionsInstance.getInstance().ShowReportView();

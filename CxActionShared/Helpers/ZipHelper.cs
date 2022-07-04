@@ -41,7 +41,7 @@ namespace CxViewerAction.Helpers
             Project[] projectList = project.ProjectPaths.Count == 0 ? new Project[] { project } : project.ProjectPaths.ToArray();
 
 
-         
+
 
 
             data = Compress(projectList, GetFileExcludeRegex(fileExtToExclude), GetFolderToExcludeRegex(foldersToExclude),
@@ -54,7 +54,7 @@ namespace CxViewerAction.Helpers
             }
             Logger.Create().Info("Zip generation the archive size exceeded max allowed zip file size value so operation cancelled.");
             return null;
-            
+
         }
 
 
@@ -68,11 +68,11 @@ namespace CxViewerAction.Helpers
 
             foreach (string ext in filesExtToExclude)
             {
-                part.AppendFormat("({0}$)|", ext.Trim());                
+                part.AppendFormat("({0}$)|", ext.Trim());
             }
             part = part.Remove(part.Length - 1, 1);
             part = part.Replace("*", ".*");
-                        
+
             Logger.Create().Info("Excluded file extensions from zip operation are : " + part);
             return string.Format("^((?!({0})).)*$", part);
         }
@@ -277,11 +277,12 @@ namespace CxViewerAction.Helpers
         {
             List<string> items = new List<string>();
             bool empty = true;
-            Logger.Create().Info("Extracting files from directories and adding in items list.");
+            Logger.Create().Debug("Extracting files from directories and adding in it items list.");
             foreach (string file in Directory.GetFiles(Dir))
             {
                 if (fileMatch.IsMatch(file))
                 {
+                    Logger.Create().Debug("Extracted " + file + "from directory " + Dir + " and adding it in items list.");
                     items.Add(file);
                 }
 
@@ -296,12 +297,13 @@ namespace CxViewerAction.Helpers
                 }
             }
 
-            Logger.Create().Info("Extracting sub directories from directories and adding in items list.");
+            Logger.Create().Debug("Extracting sub directories from directories and adding it in items list.");
 
             foreach (string dirs in Directory.GetDirectories(Dir))
             {
                 if (dirMatch.IsMatch(Path.GetFileName(dirs)))
                 {
+                    Logger.Create().Debug("Extracted " + dirs + "sub directory from directory " + Dir + " and adding it in items list.");
                     foreach (string item in GenerateFileList(dirs, fileMatch, dirMatch))
                     {
                         items.Add(item);

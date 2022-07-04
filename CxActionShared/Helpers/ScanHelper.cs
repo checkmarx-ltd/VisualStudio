@@ -46,7 +46,7 @@ namespace CxViewerAction.Helpers
         {
             Logger.Create().Info("DoScan():");
             if (_scan != null && _scan.InProcess)
-                {
+            {
                 return ProjectScanStatuses.CanceledByUser;
             }
             LoginResult loginResult = new LoginResult();
@@ -73,7 +73,7 @@ namespace CxViewerAction.Helpers
                     loginResult.AuthenticationData = logindata;
                     loginResult.IsSuccesfull = true;
                 }
-                
+
                 if (_cancelPressed)
                 {
                     return ProjectScanStatuses.CanceledByUser;
@@ -192,7 +192,7 @@ namespace CxViewerAction.Helpers
 
                 //if was selected "always run in background" checkbox - hide dialog
                 if (!backgroundMode)
-                {                    
+                {
                     ICommandResult commandResult = _dispatcher.Dispatch(_scan);
                     view = ((ScanPresenter)commandResult).View;
                 }
@@ -213,7 +213,7 @@ namespace CxViewerAction.Helpers
                     ShowScanProgressBar();
 
                     ConfigurationResult configuration = _configurationHelper.GetConfigurationList(_scan.LoginResult.SessionId, bg, client);
-                    
+
                     if (configuration == null)
                         _cancelPressed = true;
 
@@ -275,7 +275,7 @@ namespace CxViewerAction.Helpers
                                     _scan.RunScanResult = runScanResult;
 
                                     //perform scan work in separated thread to improve UI responsibility
-                                    System.Threading.ThreadPool.QueueUserWorkItem(delegate(object stateInfo)
+                                    System.Threading.ThreadPool.QueueUserWorkItem(delegate (object stateInfo)
                                     {
                                         try
                                         {
@@ -289,7 +289,7 @@ namespace CxViewerAction.Helpers
                                                 // operation complete
                                                 Logger.Create().Info("If scan complete with sucess or failure or cancel button was pressed operation complete.");
                                                 bCancel = bCancel ? bCancel : _scan.WaitForCancel();
-                                                
+
                                                 if (isIISStoped || bCancel ||
                                                     (statusScan != null && statusScan.RunStatus == CurrentStatusEnum.Finished) ||
                                                     (statusScan != null && statusScan.RunStatus == CurrentStatusEnum.Failed))
@@ -306,7 +306,7 @@ namespace CxViewerAction.Helpers
                                             // show error
                                             waitEnd.Set();
                                             isIISStoped = true;
-                                            Logger.Create().Debug("Error: " +err);
+                                            Logger.Create().Debug("Error: " + err);
 
                                         }
 
@@ -332,11 +332,11 @@ namespace CxViewerAction.Helpers
 
                             if (!bCancel && !isIISStoped)
                             {
+                                ShowScanData(ref scanData, ref scanId, client);
                                 if (scanData == null)
                                 {
                                     TopMostMessageBox.Show("There are no vulnerabilities to show.");
                                 }
-                                ShowScanData(ref scanData, ref scanId, client);
                             }
                             else
                             {
@@ -378,7 +378,7 @@ namespace CxViewerAction.Helpers
 
                 if (isIISStoped)
                 {
-                   
+
                     if (isScanningEror)
                         return ProjectScanStatuses.Error;
                     else
@@ -395,7 +395,7 @@ namespace CxViewerAction.Helpers
                         return ProjectScanStatuses.CanceledByUser;
                 }
             }
-            
+
             return ProjectScanStatuses.CanceledByUser;
         }
 
@@ -442,7 +442,7 @@ namespace CxViewerAction.Helpers
                 ScanReportInfo scanReportInfo = new ScanReportInfo();
                 scanReportInfo.Path = path;
                 scanReportInfo.Id = id;
-                LoginData.BindProject projectToUpdate = _scan.LoginResult.AuthenticationData.BindedProjects.Find(delegate(LoginData.BindProject bp)
+                LoginData.BindProject projectToUpdate = _scan.LoginResult.AuthenticationData.BindedProjects.Find(delegate (LoginData.BindProject bp)
                 {
                     return bp.BindedProjectId == CommonData.ProjectId;
                 }
@@ -463,7 +463,7 @@ namespace CxViewerAction.Helpers
             CxWSResponseScanStatus cxWSResponseScanStatus = null;
             StatusScanResult statusScan = null;
 
-            bg.DoWorkFunc = delegate(object obj)
+            bg.DoWorkFunc = delegate (object obj)
             {
                 cxWSResponseScanStatus = client.ServiceClient.GetStatusOfSingleScan(_scan.LoginResult.SessionId, _scan.RunScanResult.ScanId);
                 statusScan = new StatusScanResult();
@@ -506,11 +506,13 @@ namespace CxViewerAction.Helpers
 
                 if (!backgroundMode)
                     view.Progress = progress;
-                try {
+                try
+                {
                     CommonActionsInstance.getInstance().ScanProgressView.Progress = progress;
                 }
-                catch (Exception ex) {
-                    
+                catch (Exception ex)
+                {
+
                     Logger.Create().Error(ex.ToString());
                 }
 
@@ -535,7 +537,7 @@ namespace CxViewerAction.Helpers
         private RunScanResult RunBoundedProjectScan(Scan scan, BackgroundWorkerHelper bg, CxWebServiceClient client, byte[] zippedProject)
         {
             RunScanResult runScanResult = null;
-            bg.DoWorkFunc = delegate(object obj)
+            bg.DoWorkFunc = delegate (object obj)
             {
                 ProjectSettings projectSettings = new ProjectSettings();
                 projectSettings.projectID = CommonData.ProjectId;
@@ -574,7 +576,7 @@ namespace CxViewerAction.Helpers
                     CommonData.ProjectId = cxWSResponseRunID.ProjectID;
                     _scan.RunScanResult = runScanResult;
                     if (!cxWSResponseRunID.IsSuccesfull)
-                    {                        
+                    {
                         TopMostMessageBox.Show(string.Format("Scan Error: {0}", cxWSResponseRunID.ErrorMessage), "Scanning Error", MessageBoxButtons.OK);
                     }
                     else
@@ -611,7 +613,7 @@ namespace CxViewerAction.Helpers
         private byte[] ZipProject(Scan scan, Project project, BackgroundWorkerHelper bg)
         {
             byte[] zippedProject = null;
-            bg.DoWorkFunc = delegate(object obj)
+            bg.DoWorkFunc = delegate (object obj)
             {
                 string error = string.Empty;
                 zippedProject = ZipHelper.Compress(project, scan.LoginResult.AuthenticationData.ExcludeFileExt, scan.LoginResult.AuthenticationData.ExcludeFolder, scan.LoginResult.AuthenticationData.MaxZipFileSize * 1048576, out error);
@@ -630,7 +632,7 @@ namespace CxViewerAction.Helpers
         {
             RunScanResult runScanResult = null;
 
-            bg.DoWorkFunc = delegate(object obj)
+            bg.DoWorkFunc = delegate (object obj)
             {
                 ProjectSettings projectSettings = new ProjectSettings();
                 projectSettings.AssociatedGroupID = _scan.UploadSettings.Team.ToString();
@@ -661,7 +663,7 @@ namespace CxViewerAction.Helpers
                         , _scan.UploadSettings.IsPublic, _scan.IsPublic
                         );
                     }
-                    
+
 
                     runScanResult = new RunScanResult();
                     runScanResult.IsSuccesfull = cxWSResponseRunID.IsSuccesfull;
@@ -675,7 +677,7 @@ namespace CxViewerAction.Helpers
                     }
                     else
                     {
-                        Logger.Create().Info("Scan completed successfully.");
+                        //Logger.Create().Info("Scan completed successfully.");
                         LoginHelper.Save(_scan.LoginResult.AuthenticationData);
                     }
                 }

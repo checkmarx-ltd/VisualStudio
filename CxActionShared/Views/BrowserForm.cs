@@ -44,7 +44,7 @@ namespace CxViewerAction.Views
                 IsIntialized = true;
             }
         }
-        
+
         private void BrowserForm_Load(object sender, EventArgs e)
         {
 
@@ -75,7 +75,7 @@ namespace CxViewerAction.Views
 
                 if (urlAddress.ToString() == "about:blank")
                 {
-                   
+
                     string uri = LoginHelper.ServerBaseUrl;
                     string redirectUri = uri;
                     string contentType = " application/x-www-form-urlencoded";
@@ -136,7 +136,7 @@ namespace CxViewerAction.Views
                     Logger.Create().Debug("Navigation complete for " + e.Url.ToString());
                     Logger.Create().Debug("Checking for presence of authorization code in the URL. " + e.Url.ToLower());
                 }
-                
+
                 return;
             }
             Logger.Create().Info("Authorization code found. Extracting authorization code from the URL. ");
@@ -156,6 +156,7 @@ namespace CxViewerAction.Views
                 }));
             }
             Cef.GetGlobalCookieManager().DeleteCookies("", "");
+            Application.ExitThread();
         }
         private string ExtractCodeFromUrl(string absoluteUri)
         {
@@ -234,7 +235,7 @@ namespace CxViewerAction.Views
 
             public class CustomResourceRequestHandler : ResourceRequestHandler
             {
-                
+
                 protected override CefReturnValue OnBeforeResourceLoad(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request,
                     IRequestCallback callback)
                 {
@@ -242,33 +243,32 @@ namespace CxViewerAction.Views
                     var Url = request.Url.ToString();
                     Uri myUri = new Uri(request.Url);
 
-                        if (Url.ToLower().Contains("code="))
-                        {
+                    if (Url.ToLower().Contains("code="))
+                    {
 
-                            string code = HttpUtility.ParseQueryString(myUri.Query).Get("code");
-                            NavigationCompleted(this, code);
-                            Logger.Create().Info("Authorization code found. Extracting authorization code from the URL.");
-                            browser.CloseBrowser(false);
+                        string code = HttpUtility.ParseQueryString(myUri.Query).Get("code");
+                        NavigationCompleted(this, code);
+                        Logger.Create().Info("Authorization code found. Extracting authorization code from the URL.");
+                        browser.CloseBrowser(false);
 
-                        }
-                        else if (Url.ToLower().Contains("error="))
-                        {
+                    }
+                    else if (Url.ToLower().Contains("error="))
+                    {
 
-                            string error = HttpUtility.ParseQueryString(myUri.Query).Get("error");
-                            NavigationError(this, error);
-                            browser.CloseBrowser(false);
+                        string error = HttpUtility.ParseQueryString(myUri.Query).Get("error");
+                        NavigationError(this, error);
+                        browser.CloseBrowser(false);
 
-                        }
-                       else
-                       {
-                            Logger.Create().Debug("New url " + Url + ".");
-                       }
+                    }
+                    else
+                    {
+                        Logger.Create().Debug("New url " + Url + ".");
+                    }
 
                     return CefReturnValue.Continue;
-                    }
                 }
             }
         }
     }
+}
 
-    

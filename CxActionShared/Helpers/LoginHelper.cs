@@ -442,12 +442,20 @@ namespace CxViewerAction.Helpers
             }
             else
             {
-                if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && (login.AuthenticationType == Constants.AuthenticationaType_DefaultValue || login.AuthenticationType == Constants.AuthenticationaType_IE))
+                if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && (login.AuthenticationType == Constants.AuthenticationaType_DefaultValue || login.AuthenticationType == Constants.AuthenticationaType_IE) && string.IsNullOrEmpty(oidcLoginResult.ResultMessage))
                 {
                     Logger.Create().Debug("Server URL: " + login.ServerBaseUri);
                     _oidcLoginHelper.CloseLoginWindow();
+                    Logger.Create().Info("Known issue: On login page close button click if login page becomes irresponsive,please close all instances of visual studio and restart visual studio and relogin again.");
                 }
-                Logger.Create().Info("Login failed.");
+                else if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && (login.AuthenticationType == Constants.AuthenticationaType_DefaultValue || login.AuthenticationType == Constants.AuthenticationaType_IE))
+                {
+                    Logger.Create().Debug("Server URL: " + login.ServerBaseUri);
+                    _oidcLoginHelper.CloseLoginWindow();
+                    Logger.Create().Info("Login Failed.");
+                }
+
+
             }
             return loginSucceeded;
 
@@ -466,12 +474,12 @@ namespace CxViewerAction.Helpers
             oidcLoginData.RefreshToken = null;
             oidcLoginData.AccessTokenExpiration = -1;
             _isLogged = false;
-            if (string.IsNullOrWhiteSpace(login.AuthenticationType) && (login.AuthenticationType == Constants.AuthenticationaType_DefaultValue))
+            if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && (login.AuthenticationType == Constants.AuthenticationaType_DefaultValue))
             {
                 loginCache = null;
-                Cef.GetGlobalCookieManager().DeleteCookies("", "");                
+                Cef.GetGlobalCookieManager().DeleteCookies("", "");
             }
-            
+
         }
 
         /// <summary>
