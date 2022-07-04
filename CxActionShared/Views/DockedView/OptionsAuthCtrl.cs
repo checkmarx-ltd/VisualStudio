@@ -82,7 +82,7 @@ namespace CxViewerAction.Views.DockedView
                     loginBtn.Enabled = true;
                     logoutBtn.Enabled = false;
                 }
-                else if (!string.IsNullOrWhiteSpace(currentLogin.AuthenticationType) && (currentLogin.AuthenticationType != (Common.Constants.AuthenticationaType_DefaultValue) || (currentLogin.AuthenticationType != Common.Constants.AuthenticationaType_IE)) && !loginResult.IsSuccesfull && loginResult.LoginResultMessage == null)
+                else if (!string.IsNullOrWhiteSpace(currentLogin.AuthenticationType) && (currentLogin.AuthenticationType != (Common.Constants.AuthenticationaType_DefaultValue) && (currentLogin.AuthenticationType != Common.Constants.AuthenticationaType_IE)) && !loginResult.IsSuccesfull && loginResult.LoginResultMessage == null)
                 {
                     MessageBox.Show("Login Failed", "Information", MessageBoxButtons.OK);
                     loginBtn.Enabled = true;

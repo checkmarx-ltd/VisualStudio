@@ -333,7 +333,7 @@ namespace CxViewerAction.Helpers
                             if (!bCancel && !isIISStoped)
                             {
                                 ShowScanData(ref scanData, ref scanId, client);
-                                if (scanData == null)
+                                if (scanData.Length == 0)
                                 {
                                     TopMostMessageBox.Show("There are no vulnerabilities to show.");
                                 }
