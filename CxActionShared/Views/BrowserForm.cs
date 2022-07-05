@@ -75,10 +75,10 @@ namespace CxViewerAction.Views
 
                 if (urlAddress.ToString() == "about:blank")
                 {
-
                     string uri = LoginHelper.ServerBaseUrl;
                     string redirectUri = uri;
                     string contentType = " application/x-www-form-urlencoded";
+                    string header = string.Format("application/x-www-form-urlencoded", Environment.NewLine);
                     if (!redirectUri.EndsWith("/"))
                     {
                         redirectUri = redirectUri + "/";
@@ -91,6 +91,7 @@ namespace CxViewerAction.Views
                     System.Text.Encoding encoding = System.Text.Encoding.UTF8;
                     byte[] postDataBytes = encoding.GetBytes(postData);
                     browser.LoadUrlWithPostData(serverurl, postDataBytes, contentType);
+                    Logger.Create().Debug("Navigating to " + serverurl + " with PostData: " + postData + " and headers: " + header);
 
                 }
                 else
