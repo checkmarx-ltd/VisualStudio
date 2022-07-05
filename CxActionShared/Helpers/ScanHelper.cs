@@ -99,7 +99,8 @@ namespace CxViewerAction.Helpers
                     {
                         _scan.UploadSettings = _uploadSettings;
 
-                        return ExecuteScan(project, ref scanData, ref scanId);
+                        return ExecuteScan(project, ref scanData, ref scanId);                        
+
                     }
                 }
                 else if (!_cancelPressed)
@@ -332,11 +333,7 @@ namespace CxViewerAction.Helpers
 
                             if (!bCancel && !isIISStoped)
                             {
-                                ShowScanData(ref scanData, ref scanId, client);
-                                if (scanData.Length == 0)
-                                {
-                                    TopMostMessageBox.Show("There are no vulnerabilities to show.");
-                                }
+                                ShowScanData(ref scanData, ref scanId, client);                                
                             }
                             else
                             {
@@ -374,8 +371,13 @@ namespace CxViewerAction.Helpers
                 {
                 }
                 if (!backgroundMode && view != null)
-                    view.CloseView();
-
+                {
+                    view.CloseView();                    
+                }
+                //if (scanData != null && scanData.Length == 0)
+                //{
+                //    TopMostMessageBox.Show("There are no vulnerabilities to show.");
+                //}
                 if (isIISStoped)
                 {
 
@@ -395,7 +397,7 @@ namespace CxViewerAction.Helpers
                         return ProjectScanStatuses.CanceledByUser;
                 }
             }
-
+            
             return ProjectScanStatuses.CanceledByUser;
         }
 
@@ -676,8 +678,7 @@ namespace CxViewerAction.Helpers
                         TopMostMessageBox.Show(string.Format("Scan Error: {0}", cxWSResponseRunID.ErrorMessage), "Scanning Error", MessageBoxButtons.OK);
                     }
                     else
-                    {
-                        //Logger.Create().Info("Scan completed successfully.");
+                    {                       
                         LoginHelper.Save(_scan.LoginResult.AuthenticationData);
                     }
                 }

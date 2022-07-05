@@ -453,7 +453,7 @@ namespace CxViewerAction
             PerspectiveHelper.DoPrevResult();
             if (rep == null || rep.Report == null || rep.Report.Tree.Count == 0)
             {
-                TopMostMessageBox.Show("There are no vulnerabilities to show");
+                TopMostMessageBox.Show("There are no vulnerabilities to show.");
             }
         }
 

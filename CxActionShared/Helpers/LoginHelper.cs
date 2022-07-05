@@ -430,11 +430,14 @@ namespace CxViewerAction.Helpers
             {
                 if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && (login.AuthenticationType == Constants.AuthenticationaType_DefaultValue || login.AuthenticationType == Constants.AuthenticationaType_IE))
                 {
-                    //Add logs for print Server url and AccessToken
-                    Logger.Create().Debug("Server URL: " + login.ServerBaseUri);
-                    cxRestApi = new CxRESTApi(login);
-                    string accessToken = cxRestApi.Login(oidcLoginResult.Code);
-                    cxRestApi.GetPermissions(accessToken);
+                    if (login.AuthenticationType == Constants.AuthenticationaType_IE)
+                    {
+                        //Add logs for print Server url and AccessToken
+                        Logger.Create().Debug("Server URL: " + login.ServerBaseUri);
+                        cxRestApi = new CxRESTApi(login);
+                        string accessToken = cxRestApi.Login(oidcLoginResult.Code);
+                        cxRestApi.GetPermissions(accessToken);
+                    }
                 }
 
                 loginSucceeded = true;
@@ -445,8 +448,7 @@ namespace CxViewerAction.Helpers
                 if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && (login.AuthenticationType == Constants.AuthenticationaType_DefaultValue || login.AuthenticationType == Constants.AuthenticationaType_IE) && string.IsNullOrEmpty(oidcLoginResult.ResultMessage))
                 {
                     Logger.Create().Debug("Server URL: " + login.ServerBaseUri);
-                    _oidcLoginHelper.CloseLoginWindow();
-                    Logger.Create().Info("Known issue: On login page close button click if login page becomes irresponsive,please close all instances of visual studio and restart visual studio and relogin again.");
+                    _oidcLoginHelper.CloseLoginWindow();                    
                 }
                 else if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && (login.AuthenticationType == Constants.AuthenticationaType_DefaultValue || login.AuthenticationType == Constants.AuthenticationaType_IE))
                 {
@@ -467,7 +469,7 @@ namespace CxViewerAction.Helpers
         internal static void DoLogout()
         {
             Application.DoEvents();
-            LoginData login = LoginData.GetLoginDataInstance;
+            login = LoadSaved();
             Logger.Create().Info("Logging out, clearing authentication data.");
             OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
             oidcLoginData.AccessToken = null;
