@@ -429,15 +429,12 @@ namespace CxViewerAction.Helpers
             if (oidcLoginResult != null && oidcLoginResult.IsSuccessful)
             {
                 if (!string.IsNullOrWhiteSpace(login.AuthenticationType) && (login.AuthenticationType == Constants.AuthenticationaType_DefaultValue || login.AuthenticationType == Constants.AuthenticationaType_IE))
-                {
-                    if (login.AuthenticationType == Constants.AuthenticationaType_IE)
-                    {
+                {                    
                         //Add logs for print Server url and AccessToken
                         Logger.Create().Debug("Server URL: " + login.ServerBaseUri);
                         cxRestApi = new CxRESTApi(login);
                         string accessToken = cxRestApi.Login(oidcLoginResult.Code);
-                        cxRestApi.GetPermissions(accessToken);
-                    }
+                        cxRestApi.GetPermissions(accessToken);                    
                 }
 
                 loginSucceeded = true;
