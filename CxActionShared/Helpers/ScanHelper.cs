@@ -374,10 +374,10 @@ namespace CxViewerAction.Helpers
                 {
                     view.CloseView();                    
                 }
-                //if (scanData != null && scanData.Length == 0)
-                //{
-                //    TopMostMessageBox.Show("There are no vulnerabilities to show.");
-                //}
+                if (scanData != null && scanData.Length == 0)
+                {
+                    TopMostMessageBox.Show("There are no vulnerabilities to show.");
+                }
                 if (isIISStoped)
                 {
 

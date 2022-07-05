@@ -469,7 +469,7 @@ namespace CxViewerAction.Helpers
         internal static void DoLogout()
         {
             Application.DoEvents();
-            login = LoadSaved();
+            LoginData login = LoadSaved();
             Logger.Create().Info("Logging out, clearing authentication data.");
             OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
             oidcLoginData.AccessToken = null;
