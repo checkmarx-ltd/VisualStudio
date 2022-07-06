@@ -8,7 +8,7 @@ msbuild ci.msbuild /t:Pack - for pack
   <PropertyGroup>
     <WorkingFolder>$(MSBuildProjectDirectory)</WorkingFolder>
     <Configuration>Release</Configuration>
-    <Platform>AnyCPU</Platform>
+    <Platform>x86</Platform>
     <SolutionFile>$(WorkingFolder)\CxViewer.sln</SolutionFile>
     <ProjectFile>$(WorkingFolder)\CxViewerVSIX\CxViewerVSIX.csproj</ProjectFile>    
     <MSBuildCommunityTasksPath>$(WorkingFolder)\.build</MSBuildCommunityTasksPath>

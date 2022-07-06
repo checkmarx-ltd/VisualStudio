@@ -5863,6 +5863,74 @@
               Looks up a localized resource of type System.Drawing.Bitmap.
             </summary>
         </member>
+        <member name="T:CxViewerAction.Resources.CxViewerResources2019">
+             <summary>
+            Changes for bug Plug-513 unable to see scan results
+             </summary>
+        </member>
+        <member name="P:CxViewerAction.Resources.CxViewerResources2019.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:CxViewerAction.Resources.CxViewerResources2019.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="M:CxViewerAction.Resources.CxViewerResources2019.GetCxViewerResources">
+             <summary>
+               Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+            &lt;root&gt;
+              &lt;!-- 
+                Microsoft ResX Schema 
+                
+                Version 2.0
+                
+                The primary goals of this format is to allow a simple XML format 
+                that is mostly human readable. The generation and parsing of the 
+                various data types are done through the TypeConverter classes 
+                associated with the data types.
+                
+                Example:
+                
+                ... ado.net/XML headers &amp; schema ...
+                &lt;resheader name=&quot;resmimetype&quot;&gt;text/microsoft-resx&lt;/resheader&gt;
+                &lt;resheader n [rest of string was truncated]&quot;;.
+             </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:CxViewerAction.Resources.CxViewerResources2019.CxViewerResources_Designer" -->
+        <member name="P:CxViewerAction.Resources.CxViewerResources2019.Disabled">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:CxViewerAction.Resources.CxViewerResources2019.Enabled">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:CxViewerAction.Resources.CxViewerResources2019.MultiRelaitions">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:CxViewerAction.Resources.CxViewerResources2019.MultiRelaitionsSelected">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:CxViewerAction.Resources.CxViewerResources2019.NormalNode">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:CxViewerAction.Resources.CxViewerResources2019.NormalSelected">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
         <member name="T:CxViewerAction.Services.CxWebServiceClient">
             <summary>
             Wrapper for service client
