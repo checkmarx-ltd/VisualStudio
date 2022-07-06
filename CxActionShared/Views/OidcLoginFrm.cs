@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Reflection;
+using Common;
 
 namespace CxViewerAction.Views
 {
@@ -16,6 +17,7 @@ namespace CxViewerAction.Views
         public void ConnectToIdentidyProvider(string baseServerUri)
         {
             OidcLoginCtrl2.ConnectToIdentidyProvider(baseServerUri);
+            Logger.Create().Info("Connected by identity provider.");
         }
 
         public void CloseForm()

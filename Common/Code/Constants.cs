@@ -51,7 +51,8 @@
 		public const string RESPONSE_TYPE_VALUE = "code";
 		public const string SCOPE_VALUE = "offline_access openid sast_api sast-permissions access_control_api";
 		public const string AUTHORIZATION_ENDPOINT = SAST_PREFIX + "/identity/connect/authorize";
-		public const string AUTHORIZATION_ENDPOINT1 = SAST_PREFIX1 + "/identity/connect/authorize";
+		//public const string AUTHORIZATION_ENDPOINT1 = SAST_PREFIX1 + "/identity/connect/authorize";
+		public const string AUTHORIZATION_ENDPOINT_BROWSER = SAST_PREFIX1 + "/identity/connect/authorize";
 		public const string SAST_Suffix = "%252F";
 		public const string AUTHORIZATION_HEADER = "Authorization";
 		public const string BEARER = "Bearer ";

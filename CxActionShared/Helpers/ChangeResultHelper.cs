@@ -5,6 +5,7 @@ using CxViewerAction.Services;
 using CxViewerAction.CxVSWebService;
 using System.Threading;
 using CxViewerAction.Entities;
+using Common;
 
 namespace CxViewerAction.Helpers
 {
@@ -20,12 +21,14 @@ namespace CxViewerAction.Helpers
             bool cancelPressed = false;
             if (oidcLoginData.AccessToken == null) {
                 //Execute login
+                Logger.Create().Info("EditRemark():calling login without form.");
                 loginResult = LoginHelper.DoLoginWithoutForm(out cancelPressed, false);
                 if (!loginResult.IsSuccesfull)
                     loginResult = LoginHelper.DoLogin(out cancelPressed);
 
                 if (loginResult.IsSuccesfull)
                 {
+                    Logger.Create().Info("EditRemark():login successful.");
                     return EditRemark(loginResult, resultId, pathId, remark);
                 }
                 else if (!cancelPressed)

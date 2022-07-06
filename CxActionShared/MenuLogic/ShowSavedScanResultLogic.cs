@@ -9,6 +9,7 @@ using CxViewerAction.Views;
 using CxViewerAction.Views.DockedView;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
+using Common;
 
 namespace CxViewerAction.MenuLogic
 {
@@ -74,7 +75,9 @@ namespace CxViewerAction.MenuLogic
 
         public CommandStatus GetStatus()
         {
+            Logger.Create().Info("For retrieve results getting saved login data from conf file.");
             LoginData login = LoginHelper.LoadSaved();
+            Logger.Create().Info("Getting selected project.");
             Entities.Project selectedProject = CommonActionsInstance.getInstance().GetSelectedProject();
             if (selectedProject == null)
             {

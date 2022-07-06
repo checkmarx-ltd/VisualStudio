@@ -14,7 +14,7 @@ namespace CxViewerAction.Views
     {
         public frmBindingPrjList()
         {
-            Logger.Create().Debug("frmBindingPrjList in");
+            Logger.Create().Debug("Loading bind Project list form.");
             InitializeComponent();
         }
 

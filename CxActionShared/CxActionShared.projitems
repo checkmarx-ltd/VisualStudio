@@ -331,15 +331,15 @@
     <Content Include="$(MSBuildThisFileDirectory)Resources\cx.gif" />
     <Content Include="$(MSBuildThisFileDirectory)Resources\cx.ico" />
     <Content Include="$(MSBuildThisFileDirectory)Resources\Disabled.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Resources\down.gif" />
-    <Content Include="$(MSBuildThisFileDirectory)Resources\empty.gif" />
-    <Content Include="$(MSBuildThisFileDirectory)Resources\Enabled.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Resources\High.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Resources\Low.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Resources\Medium.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Resources\MultiRelaitions.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Resources\MultiRelaitionsSelected.PNG" />
-    <Content Include="$(MSBuildThisFileDirectory)Resources\NormalNode.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Resources\NormalSelected.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\down.gif" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\empty.gif" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\Enabled.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\High.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\Low.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\Medium.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\MultiRelaitions.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\MultiRelaitionsSelected.PNG" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\NormalNode.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\NormalSelected.png" />
   </ItemGroup>
 </Project>

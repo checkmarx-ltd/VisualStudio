@@ -54,7 +54,7 @@ namespace CxViewerAction.Views.DockedView
             Uri urlAddress = new Uri(eventArgs.Url.ToString());
             if (!urlAddress.ToString().Contains("code="))
             {
-                Logger.Create().Debug("Navigation complete for " + urlAddress.ToString());
+                Logger.Create().Debug("Navigation complete for " + urlAddress.ToString() + ".");
             }
             string queryString = urlAddress.Query;
             if (string.IsNullOrWhiteSpace(queryString))
@@ -67,7 +67,7 @@ namespace CxViewerAction.Views.DockedView
                 return;
             }
             errorMessage = string.IsNullOrWhiteSpace(errorMessage) ? "Internal server error" : errorMessage;
-            Logger.Create().Debug("Navigation complete with error " + errorMessage);
+            Logger.Create().Debug("Navigation complete with error " + errorMessage + ".");
             if (NavigationError != null)
             {
                 webBrowserIdentityProvider.Navigate(BLANK_PAGE);
@@ -95,13 +95,14 @@ namespace CxViewerAction.Views.DockedView
                 return;
             }
 
-            Logger.Create().Debug("Authorization code found.Extracting authorization code from the URL. ");
+            Logger.Create().Info("Authorization code found.Extracting authorization code from the URL. ");
             string code = ExtractCodeFromUrl(eventArgs.Url.AbsoluteUri);
 
             if (NavigationCompleted != null)
             {
                 webBrowserIdentityProvider.Navigate(BLANK_PAGE);
                 NavigationCompleted(this, code);
+                Logger.Create().Debug("Navigation completed with authorization code.");
             }
         }
 

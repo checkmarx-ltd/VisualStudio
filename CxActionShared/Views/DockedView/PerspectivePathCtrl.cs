@@ -83,10 +83,28 @@ namespace CxViewerAction.Views.DockedView
 
             pnlPath.RowCount = _queryItemResult.Paths.Count;
 
-            System.IO.Stream file = Assembly.GetExecutingAssembly().GetManifestResourceStream("CxViewerAction.Resources.down.gif");
-            System.IO.Stream fileEmpty = Assembly.GetExecutingAssembly().GetManifestResourceStream("CxViewerAction.Resources.empty.gif");
+            ///<summary>
+            /// Changes for bug Plug-513 unable to see scan results
+            /// </summary>
+            //Start
+            System.IO.Stream file;
+            System.IO.Stream fileEmpty;
 
-            
+            var data = this.GetType().Assembly.GetManifestResourceNames();
+            var assemName = this.GetType().Assembly.GetName();
+
+            if (assemName.Name.Equals("CxViewerAction2019"))
+            {
+                file = Assembly.GetExecutingAssembly().GetManifestResourceStream("CxViewerAction2019.Resources.down.gif");
+                fileEmpty = Assembly.GetExecutingAssembly().GetManifestResourceStream("CxViewerAction2019.Resources.empty.gif");
+            }
+            else
+            {
+                file = Assembly.GetExecutingAssembly().GetManifestResourceStream("CxViewerAction.Resources.down.gif");
+                fileEmpty = Assembly.GetExecutingAssembly().GetManifestResourceStream("CxViewerAction.Resources.empty.gif");
+            }
+            //End
+
             for (int i = 0; i < _queryItemResult.Paths.Count; i++)
             {
                 int row = 2 * i;

@@ -53,14 +53,14 @@ namespace CxViewerAction.Helpers
                 Thread.Sleep(3000);
                 Application.DoEvents();
                 var browserForm = new BrowserForm();
-                browserForm.NavigationCompleted += OidcLoginCtrlOnNavigationCompleted;
-                browserForm.NavigationError += OidcLoginCtrlOnNavigationError;
+                BrowserForm.NavigationCompleted += OidcLoginCtrlOnNavigationCompleted;
+                BrowserForm.NavigationError += OidcLoginCtrlOnNavigationError;
                 BrowserForm.IsbrowserIntialized();
                 browserForm.Show();
+                string txturl = "about:blank";
                 browserForm.Invoke(new MethodInvoker(() =>
                 {
-                  //  browserForm.Show();
-                    browserForm.ConnectToIdentidyProvider(baseServerUri);
+                    browserForm.ConnectToIdentidyProvider(txturl);
                     Application.Run(browserForm);
 
                 }));

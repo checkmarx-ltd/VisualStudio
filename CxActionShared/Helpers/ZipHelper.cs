@@ -41,40 +41,45 @@ namespace CxViewerAction.Helpers
             Project[] projectList = project.ProjectPaths.Count == 0 ? new Project[] { project } : project.ProjectPaths.ToArray();
 
 
-         
+
 
 
             data = Compress(projectList, GetFileExcludeRegex(fileExtToExclude), GetFolderToExcludeRegex(foldersToExclude),
                             project.ProjectPaths.Count > 0, maxAllowedZipFileSize, out error);
-
+            Logger.Create().Info("Checking for zip generation the archive size exceed max allowed zip file size value.");
             if (data != null && data.Length < maxAllowedZipFileSize)
             {
+                Logger.Create().Info("Zip generation the archive size not exceeded max allowed zip file size value.");
                 return data;
             }
-           
-                return null;
-            
+            Logger.Create().Info("Zip generation the archive size exceeded max allowed zip file size value so operation cancelled.");
+            return null;
+
         }
 
 
         private static string GetFileExcludeRegex(string[] filesExtToExclude)
         {
+            Logger.Create().Info("Excluding file extensions from zip operation.");
             if (filesExtToExclude.Length == 0)
                 return null;
 
             StringBuilder part = new StringBuilder();
 
             foreach (string ext in filesExtToExclude)
+            {
                 part.AppendFormat("({0}$)|", ext.Trim());
-
+            }
             part = part.Remove(part.Length - 1, 1);
             part = part.Replace("*", ".*");
 
+            Logger.Create().Info("Excluded file extensions from zip operation are : " + part);
             return string.Format("^((?!({0})).)*$", part);
         }
 
         private static string GetFolderToExcludeRegex(string[] foldersToExclude)
         {
+            Logger.Create().Info("Excluding folders from zip operation.");
             if (foldersToExclude.Length == 0)
                 return null;
 
@@ -86,6 +91,7 @@ namespace CxViewerAction.Helpers
             part = part.Remove(part.Length - 1, 1);
             part = part.Replace("*", ".*");
 
+            Logger.Create().Debug("Excluded folders are : " + part);
             return string.Format("^((?!({0})).)*$", part);
         }
 
@@ -102,7 +108,8 @@ namespace CxViewerAction.Helpers
                     {
                         //Compress Level
                         oZip.CompressionLevel = Ionic.Zlib.CompressionLevel.Level9;
-
+                        //fix for update zip32 to zip64
+                        oZip.EnableZip64 = Zip64Option.Always;
                         int commonPathLength = 0;
 
                         if (projects.Count() > 1)
@@ -116,7 +123,8 @@ namespace CxViewerAction.Helpers
                         }
 
                         Regex dirMatch = new Regex(sExcludePath, RegexOptions.IgnoreCase);
-                      
+                        Logger.Create().Info("Compress():looping through projects to compress.");
+
 
                         foreach (Project p in projects)
                         {
@@ -129,7 +137,7 @@ namespace CxViewerAction.Helpers
                                 {
                                     if (Directory.Exists(p.RootPath))
                                     {
-                                        Logger.Create().Info("Zip file: " + p.FilePathList);
+                                        Logger.Create().Debug("Zip file: " + p.FilePathList);
                                         WriteEntryToZip(oZip, Path.GetFileName(filePath), filePath);
                                     }
                                 }
@@ -147,7 +155,7 @@ namespace CxViewerAction.Helpers
                                 if (!p.FilePathList.Any() && !p.FolderPathList.Any() && Directory.Exists(p.RootPath))
                                 {
                                     //in case there are no selected files and folders - scan the whi
-                                    Logger.Create().Info("Zip Root Path: " + p.RootPath);
+                                    Logger.Create().Debug("Zip Root Path: " + p.RootPath);
                                     if (!WriteDirectoryToZip(oZip, p.RootPath.TrimEnd('\\'), sExcludeFile, sExcludePath, maxAllowedZipFileSize, commonPathLength))
                                     {
                                         error = string.Format("allowable archive size {0}mb exceeded", Convert.ToInt32(maxAllowedZipFileSize / 1024 / 1204));
@@ -201,12 +209,16 @@ namespace CxViewerAction.Helpers
         public static bool WriteDirectoryToZip(ZipOutputStream zipStream, string inputFolderPath, string sExcludeFile, string sExcludePath, long maxAllowedZipFileSize, int trimLength)
 
         {
+            Logger.Create().Info("For compression looping through directories.");
             Regex fileMatch = new Regex(sExcludeFile, RegexOptions.IgnoreCase);
             Regex dirMatch = new Regex(sExcludePath, RegexOptions.IgnoreCase);
 
             List<string> filesToZip = GenerateFileList(inputFolderPath, fileMatch, dirMatch);
 
             int entryCounter = 0;
+
+            Logger.Create().Info("Looping through directory files.");
+            Logger.Create().Info("Read all file to buffer and write to zip stream.");
 
             foreach (string file in filesToZip)
             {
@@ -240,6 +252,7 @@ namespace CxViewerAction.Helpers
         /// <param name="openShare">Open mode (share/non share)</param>
         private static void WriteEntryToZip(ZipOutputStream zipStream, string entryName, string file)
         {
+            Logger.Create().Debug("Zipping individual file of directory:" + file + ".");
             ZipEntry zipEntry = zipStream.PutNextEntry(entryName);
 
             if (!file.EndsWith(@"/")) // if a file ends with '/' its a directory
@@ -264,10 +277,12 @@ namespace CxViewerAction.Helpers
         {
             List<string> items = new List<string>();
             bool empty = true;
+            Logger.Create().Debug("Extracting files from directories and adding in it items list.");
             foreach (string file in Directory.GetFiles(Dir))
             {
                 if (fileMatch.IsMatch(file))
                 {
+                    Logger.Create().Debug("Extracted " + file + "from directory " + Dir + " and adding it in items list.");
                     items.Add(file);
                 }
 
@@ -282,10 +297,13 @@ namespace CxViewerAction.Helpers
                 }
             }
 
+            Logger.Create().Debug("Extracting sub directories from directories and adding it in items list.");
+
             foreach (string dirs in Directory.GetDirectories(Dir))
             {
                 if (dirMatch.IsMatch(Path.GetFileName(dirs)))
                 {
+                    Logger.Create().Debug("Extracted " + dirs + "sub directory from directory " + Dir + " and adding it in items list.");
                     foreach (string item in GenerateFileList(dirs, fileMatch, dirMatch))
                     {
                         items.Add(item);

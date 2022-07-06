@@ -44,8 +44,9 @@ namespace CxViewerAction.Helpers
         /// <returns></returns>
         public ProjectScanStatuses DoScan(Project project, bool isIncremental, ref CxWSQueryVulnerabilityData[] scanData, ref long scanId)
         {
+            Logger.Create().Info("DoScan():");
             if (_scan != null && _scan.InProcess)
-                {
+            {
                 return ProjectScanStatuses.CanceledByUser;
             }
             LoginResult loginResult = new LoginResult();
@@ -54,7 +55,7 @@ namespace CxViewerAction.Helpers
                 //Release old view data
 
                 CommonActionsInstance.getInstance().ClearScanProgressView();
-
+                Logger.Create().Info("Released old view data.");
                 LoginData logindata = LoginHelper.LoadSaved();
                 OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
                 //Execute login
@@ -72,7 +73,7 @@ namespace CxViewerAction.Helpers
                     loginResult.AuthenticationData = logindata;
                     loginResult.IsSuccesfull = true;
                 }
-                
+
                 if (_cancelPressed)
                 {
                     return ProjectScanStatuses.CanceledByUser;
@@ -98,7 +99,8 @@ namespace CxViewerAction.Helpers
                     {
                         _scan.UploadSettings = _uploadSettings;
 
-                        return ExecuteScan(project, ref scanData, ref scanId);
+                        return ExecuteScan(project, ref scanData, ref scanId);                        
+
                     }
                 }
                 else if (!_cancelPressed)
@@ -119,7 +121,7 @@ namespace CxViewerAction.Helpers
         private Upload GetUploadSettings(Project project, LoginResult loginResult)
         {
             Upload uploadSettings;
-
+            Logger.Create().Info("Getting upload settings.");
             if (!CommonData.IsProjectBound)
             {
                 uploadSettings = UploadHelper.SetUploadSettings(loginResult, project, _cancelPressed);
@@ -144,6 +146,7 @@ namespace CxViewerAction.Helpers
 
         private LoginResult Login()
         {
+            Logger.Create().Info("Login for scan operation.");
             LoginResult loginResult = LoginHelper.DoLoginWithoutForm(out _cancelPressed, true);
 
             if (!loginResult.IsSuccesfull)
@@ -176,7 +179,7 @@ namespace CxViewerAction.Helpers
         /// <returns></returns>
         private ProjectScanStatuses ExecuteScan(Project project, ref CxWSQueryVulnerabilityData[] scanData, ref long scanId)
         {
-            Logger.Create().Debug("DoScan in");
+            Logger.Create().Info("DoScan in");
             bool bCancel = false;
             bool backgroundMode = _scan.LoginResult.AuthenticationData.IsRunScanInBackground == SimpleDecision.Yes;
 
@@ -190,7 +193,7 @@ namespace CxViewerAction.Helpers
 
                 //if was selected "always run in background" checkbox - hide dialog
                 if (!backgroundMode)
-                {                    
+                {
                     ICommandResult commandResult = _dispatcher.Dispatch(_scan);
                     view = ((ScanPresenter)commandResult).View;
                 }
@@ -211,7 +214,7 @@ namespace CxViewerAction.Helpers
                     ShowScanProgressBar();
 
                     ConfigurationResult configuration = _configurationHelper.GetConfigurationList(_scan.LoginResult.SessionId, bg, client);
-                    
+
                     if (configuration == null)
                         _cancelPressed = true;
 
@@ -230,9 +233,9 @@ namespace CxViewerAction.Helpers
                     //User click cancel while info dialog was showed
                     if (!bCancel)
                     {
-                        Logger.Create().Debug("Zipping the proeject.");
+                        Logger.Create().Info("Zipping the proeject.");
                         byte[] zippedProject = ZipProject(_scan, project, bg);
-                        Logger.Create().Debug("Zipping is complete.");
+                        Logger.Create().Info("Zipping is complete.");
 
                         if (!_scan.IsCancelPressed && zippedProject != null)
                         {
@@ -273,19 +276,21 @@ namespace CxViewerAction.Helpers
                                     _scan.RunScanResult = runScanResult;
 
                                     //perform scan work in separated thread to improve UI responsibility
-                                    System.Threading.ThreadPool.QueueUserWorkItem(delegate(object stateInfo)
+                                    System.Threading.ThreadPool.QueueUserWorkItem(delegate (object stateInfo)
                                     {
                                         try
                                         {
                                             // Wait while scan operation complete
+                                            Logger.Create().Info("Wait till scan operation complete.");
                                             while (true)
                                             {
                                                 StatusScanResult statusScan = UpdateScanStatus(ref bCancel, backgroundMode, view, bg, client, ref isIISStoped);
 
                                                 // if scan complete with sucess or failure or cancel button was pressed
                                                 // operation complete
+                                                Logger.Create().Info("If scan complete with sucess or failure or cancel button was pressed operation complete.");
                                                 bCancel = bCancel ? bCancel : _scan.WaitForCancel();
-                                                
+
                                                 if (isIISStoped || bCancel ||
                                                     (statusScan != null && statusScan.RunStatus == CurrentStatusEnum.Finished) ||
                                                     (statusScan != null && statusScan.RunStatus == CurrentStatusEnum.Failed))
@@ -302,7 +307,7 @@ namespace CxViewerAction.Helpers
                                             // show error
                                             waitEnd.Set();
                                             isIISStoped = true;
-                                            Logger.Create().Debug(err);
+                                            Logger.Create().Debug("Error: " + err);
 
                                         }
 
@@ -328,7 +333,7 @@ namespace CxViewerAction.Helpers
 
                             if (!bCancel && !isIISStoped)
                             {
-                                ShowScanData(ref scanData, ref scanId, client);
+                                ShowScanData(ref scanData, ref scanId, client);                                
                             }
                             else
                             {
@@ -366,11 +371,16 @@ namespace CxViewerAction.Helpers
                 {
                 }
                 if (!backgroundMode && view != null)
-                    view.CloseView();
-
+                {
+                    view.CloseView();                    
+                }
+                if (scanData != null && scanData.Length == 0)
+                {
+                    TopMostMessageBox.Show("There are no vulnerabilities to show.");
+                }
                 if (isIISStoped)
                 {
-                   
+
                     if (isScanningEror)
                         return ProjectScanStatuses.Error;
                     else
@@ -434,7 +444,7 @@ namespace CxViewerAction.Helpers
                 ScanReportInfo scanReportInfo = new ScanReportInfo();
                 scanReportInfo.Path = path;
                 scanReportInfo.Id = id;
-                LoginData.BindProject projectToUpdate = _scan.LoginResult.AuthenticationData.BindedProjects.Find(delegate(LoginData.BindProject bp)
+                LoginData.BindProject projectToUpdate = _scan.LoginResult.AuthenticationData.BindedProjects.Find(delegate (LoginData.BindProject bp)
                 {
                     return bp.BindedProjectId == CommonData.ProjectId;
                 }
@@ -455,7 +465,7 @@ namespace CxViewerAction.Helpers
             CxWSResponseScanStatus cxWSResponseScanStatus = null;
             StatusScanResult statusScan = null;
 
-            bg.DoWorkFunc = delegate(object obj)
+            bg.DoWorkFunc = delegate (object obj)
             {
                 cxWSResponseScanStatus = client.ServiceClient.GetStatusOfSingleScan(_scan.LoginResult.SessionId, _scan.RunScanResult.ScanId);
                 statusScan = new StatusScanResult();
@@ -498,11 +508,13 @@ namespace CxViewerAction.Helpers
 
                 if (!backgroundMode)
                     view.Progress = progress;
-                try {
+                try
+                {
                     CommonActionsInstance.getInstance().ScanProgressView.Progress = progress;
                 }
-                catch (Exception ex) {
-                    
+                catch (Exception ex)
+                {
+
                     Logger.Create().Error(ex.ToString());
                 }
 
@@ -527,7 +539,7 @@ namespace CxViewerAction.Helpers
         private RunScanResult RunBoundedProjectScan(Scan scan, BackgroundWorkerHelper bg, CxWebServiceClient client, byte[] zippedProject)
         {
             RunScanResult runScanResult = null;
-            bg.DoWorkFunc = delegate(object obj)
+            bg.DoWorkFunc = delegate (object obj)
             {
                 ProjectSettings projectSettings = new ProjectSettings();
                 projectSettings.projectID = CommonData.ProjectId;
@@ -566,7 +578,7 @@ namespace CxViewerAction.Helpers
                     CommonData.ProjectId = cxWSResponseRunID.ProjectID;
                     _scan.RunScanResult = runScanResult;
                     if (!cxWSResponseRunID.IsSuccesfull)
-                    {                        
+                    {
                         TopMostMessageBox.Show(string.Format("Scan Error: {0}", cxWSResponseRunID.ErrorMessage), "Scanning Error", MessageBoxButtons.OK);
                     }
                     else
@@ -603,7 +615,7 @@ namespace CxViewerAction.Helpers
         private byte[] ZipProject(Scan scan, Project project, BackgroundWorkerHelper bg)
         {
             byte[] zippedProject = null;
-            bg.DoWorkFunc = delegate(object obj)
+            bg.DoWorkFunc = delegate (object obj)
             {
                 string error = string.Empty;
                 zippedProject = ZipHelper.Compress(project, scan.LoginResult.AuthenticationData.ExcludeFileExt, scan.LoginResult.AuthenticationData.ExcludeFolder, scan.LoginResult.AuthenticationData.MaxZipFileSize * 1048576, out error);
@@ -622,7 +634,7 @@ namespace CxViewerAction.Helpers
         {
             RunScanResult runScanResult = null;
 
-            bg.DoWorkFunc = delegate(object obj)
+            bg.DoWorkFunc = delegate (object obj)
             {
                 ProjectSettings projectSettings = new ProjectSettings();
                 projectSettings.AssociatedGroupID = _scan.UploadSettings.Team.ToString();
@@ -653,7 +665,7 @@ namespace CxViewerAction.Helpers
                         , _scan.UploadSettings.IsPublic, _scan.IsPublic
                         );
                     }
-                    
+
 
                     runScanResult = new RunScanResult();
                     runScanResult.IsSuccesfull = cxWSResponseRunID.IsSuccesfull;
@@ -666,7 +678,7 @@ namespace CxViewerAction.Helpers
                         TopMostMessageBox.Show(string.Format("Scan Error: {0}", cxWSResponseRunID.ErrorMessage), "Scanning Error", MessageBoxButtons.OK);
                     }
                     else
-                    {
+                    {                       
                         LoginHelper.Save(_scan.LoginResult.AuthenticationData);
                     }
                 }
@@ -678,7 +690,7 @@ namespace CxViewerAction.Helpers
                 }
 
             };
-            
+            Logger.Create().Info("Uploading project zipped source for scanning.");
             if (!bg.DoWork("Upload project zipped source for scanning..."))
                 return null;
 

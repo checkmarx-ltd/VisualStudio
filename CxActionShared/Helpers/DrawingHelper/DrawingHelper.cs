@@ -577,19 +577,53 @@ namespace CxViewerAction.Helpers.DrawingHelper
                 Graphics g = (Graphics)graphics;
 
                 MemoryStream ms = new MemoryStream();
+
+                ///<summary>
+                ///Changes for plug-513 unable to see scan results
+                ///</summary>
+                var assemName = Assembly.GetCallingAssembly().GetName();
+
                 switch (nodeType)
                 {
                     case NodeTypes.Normal:
-                        CxViewerResources.NormalNode.Save(ms, ImageFormat.Png);
+                        if (assemName.Name.Equals("CxViewerAction"))
+                        {
+                            CxViewerResources.NormalNode.Save(ms, ImageFormat.Png);
+                        }
+                        else
+                        {
+                            CxViewerResources2019.NormalNode.Save(ms, ImageFormat.Png);
+                        }
                         break;
                     case NodeTypes.NormalSelected:
-                        CxViewerResources.NormalSelected.Save(ms, ImageFormat.Png);
+                        if (assemName.Name.Equals("CxViewerAction"))
+                        {
+                            CxViewerResources.NormalSelected.Save(ms, ImageFormat.Png);
+                        }
+                        else
+                        {
+                            CxViewerResources2019.NormalSelected.Save(ms, ImageFormat.Png);
+                        }
                         break;
                     case NodeTypes.MultiRelaitions:
-                        CxViewerResources.MultiRelaitions.Save(ms, ImageFormat.Png);
+                        if (assemName.Name.Equals("CxViewerAction"))
+                        {
+                            CxViewerResources.MultiRelaitions.Save(ms, ImageFormat.Png);
+                        }
+                        else
+                        {
+                            CxViewerResources2019.MultiRelaitions.Save(ms, ImageFormat.Png);
+                        }
                         break;
                     case NodeTypes.MultiRelaitionsSelected:
-                        CxViewerResources.MultiRelaitionsSelected.Save(ms, ImageFormat.Png);
+                        if (assemName.Name.Equals("CxViewerAction"))
+                        {
+                            CxViewerResources.MultiRelaitionsSelected.Save(ms, ImageFormat.Png);
+                        }
+                        else
+                        {
+                            CxViewerResources2019.MultiRelaitionsSelected.Save(ms, ImageFormat.Png);
+                        }
                         break;
                 }
                 System.Drawing.Image image = System.Drawing.Image.FromStream(ms);
