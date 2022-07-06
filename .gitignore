@@ -4299,7 +4299,3 @@ packages/log4net.2.0.14/lib/net35-client/log4net.dll
 packages/log4net.2.0.14/lib/net20/log4net.xml
 packages/log4net.2.0.14/lib/net20/log4net.dll
 packages/log4net.2.0.14/.signature.p7s
-CxViewerVSIX/bin/x86/Release/log4net.xml
-CxViewerDgvFilterPopup/bin/x86/Release/log4net.xml
-CxViewerAction2019/bin/x86/Release/log4net.xml
-Common/bin/x86/Release/log4net.xml
