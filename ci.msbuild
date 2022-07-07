@@ -8,7 +8,7 @@ msbuild ci.msbuild /t:Pack - for pack
   <PropertyGroup>
     <WorkingFolder>$(MSBuildProjectDirectory)</WorkingFolder>
     <Configuration>Release</Configuration>
-    <Platform>AnyCPU</Platform>
+    <Platform>x86</Platform>
     <SolutionFile>$(WorkingFolder)\CxViewer.sln</SolutionFile>
     <ProjectFile>$(WorkingFolder)\CxViewerVSIX\CxViewerVSIX.csproj</ProjectFile>    
     <MSBuildCommunityTasksPath>$(WorkingFolder)\.build</MSBuildCommunityTasksPath>
@@ -36,7 +36,7 @@ msbuild ci.msbuild /t:Pack - for pack
   </Target>
   
   <Target Name="CopyToArtifacts">
-    <Copy SourceFiles="$(WorkingFolder)\CxViewerVSIX\bin\Release\CxViewerVSIX.vsix"
+    <Copy SourceFiles="$(WorkingFolder)\CxViewerVSIX\bin\x86\Release\CxViewerVSIX.vsix"
           DestinationFiles="$(WorkingFolder)\Artifacts\CxViewerVSIX-2019.vsix" />
   </Target>
 

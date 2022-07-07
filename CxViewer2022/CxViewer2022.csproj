@@ -74,7 +74,7 @@
       <Link>LICENSE2</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Checkmarx-X.ico">
+    <Content Include="checkmarx-80.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
