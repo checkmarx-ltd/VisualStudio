@@ -63,7 +63,7 @@ pipeline {
     post {
         always {
             script {
-                //logstashSend failBuild: false, maxLines: 1000
+                //logstashSend failBuild: false, maxLines: 1000  - commented code due to job failed because of logstashSend plugin not found 
                 if (ipAddress != null) {
                     try {
                         if (doNotDeleteVM == 'true') {
