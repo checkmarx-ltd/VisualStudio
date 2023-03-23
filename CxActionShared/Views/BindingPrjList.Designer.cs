@@ -217,13 +217,14 @@ namespace CxViewerAction.Views
             // 
             // pictureBox1
             // 
-            //this.pictureBox1.Image = global::CxViewerAction.Resources.CxViewerResources2019.close24;
-           // this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image"))); ;
+            this.pictureBox1.Image = global::CxViewerAction.Resources.CxViewerResources.close24;
             this.pictureBox1.Location = new System.Drawing.Point(376, 10);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(25, 23);
             this.pictureBox1.TabIndex = 12;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.BorderStyle = BorderStyle.FixedSingle;
+            this.pictureBox1.BackColor = Color.White;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // frmBindingPrjList

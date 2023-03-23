@@ -102,6 +102,7 @@ namespace CxViewerAction.Views
                 LoginData _loginResult = LoginHelper.Load(0);
                 if(_loginResult.BindProjectCount == -1)
                 {
+                    checkBox1.Show();
                     if (checkBox1.Checked == false && string.IsNullOrEmpty(textBox1.Text))
                     {
                         addInBindProjectsList(projectList, defaultProjectDisplayCount);

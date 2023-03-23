@@ -328,6 +328,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Resources\1.ico" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\close24.png" />
     <Content Include="$(MSBuildThisFileDirectory)Resources\cx.gif" />
     <Content Include="$(MSBuildThisFileDirectory)Resources\cx.ico" />
     <Content Include="$(MSBuildThisFileDirectory)Resources\Disabled.png" />
