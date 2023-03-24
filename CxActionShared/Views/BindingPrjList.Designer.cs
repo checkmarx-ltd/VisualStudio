@@ -1,4 +1,4 @@
-using CxViewerAction.Properties;
+using CxViewerAction.Helpers.DrawingHelper;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -120,7 +120,7 @@ namespace CxViewerAction.Views
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(184, 20);
             this.label1.TabIndex = 7;
-            this.label1.Text = "Search by project name: ";
+            this.label1.Text = "Search by Project Name: ";
             // 
             // checkBox1
             // 
@@ -217,7 +217,7 @@ namespace CxViewerAction.Views
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::CxViewerAction.Resources.CxViewerResources.close24;
+            this.pictureBox1.Image = DrawingHelper.GetResourceCloseByAssembly();
             this.pictureBox1.Location = new System.Drawing.Point(376, 10);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(25, 23);

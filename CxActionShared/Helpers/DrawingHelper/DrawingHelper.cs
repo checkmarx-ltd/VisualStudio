@@ -484,6 +484,14 @@ namespace CxViewerAction.Helpers.DrawingHelper
                 SetEdgeByNodes(graph, nodeId1.UniqueID, nodeId2.UniqueID);
         }
 
+        public static Image GetResourceCloseByAssembly()
+        {
+            var assemName = Assembly.GetCallingAssembly().GetName();
+            if (assemName.Name.Equals("CxViewerAction"))
+                return global::CxViewerAction.Resources.CxViewerResources.close24;
+            else
+                return global::CxViewerAction.Resources.CxViewerResources2019.close24;
+        }
         #endregion
 
         #region Draw Nodes
