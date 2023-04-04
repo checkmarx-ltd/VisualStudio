@@ -21,6 +21,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Commands\CommandExecutor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CommonActions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CommonCustomResourceRequestHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CommonData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Connect.cs">
       <SubType>Code</SubType>
@@ -212,6 +213,12 @@
       <DependentUpon>OpenPercspectiveDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\ProjectListEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\QueryDescriptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\QueryDescriptionForm.Designer.cs">
+      <DependentUpon>QueryDescriptionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\ScanProcessFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -305,6 +312,10 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\OpenPercspectiveDialog.resx">
       <SubType>Designer</SubType>
       <DependentUpon>OpenPercspectiveDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\QueryDescriptionForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>QueryDescriptionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ScanProcessFrm.resx">
       <SubType>Designer</SubType>
