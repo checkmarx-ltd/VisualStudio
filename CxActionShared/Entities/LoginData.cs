@@ -63,6 +63,7 @@ namespace CxViewerAction.Entities
         private bool _saveSastScan;
         private bool _manageResultsComment;
         private bool _manageResultsExploitability;
+        private int _bindProjectCount = -1;
 
         #endregion
 
@@ -275,6 +276,7 @@ namespace CxViewerAction.Entities
         public bool ManageResultsComment { get => _manageResultsComment; set => _manageResultsComment = value; }
         public bool ManageResultsExploitability { get => _manageResultsExploitability; set => _manageResultsExploitability = value; }
 
+        public int BindProjectCount { get { return _bindProjectCount; } set { _bindProjectCount = value; } }
         #endregion [ Properties ]
 
         #region [ Public Methods ]
