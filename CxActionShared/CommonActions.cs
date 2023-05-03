@@ -338,8 +338,8 @@ namespace CxViewerAction
                 rESTApiPortalConfiguration.InitPortalBaseUrl();
                 string urlToDescription = new QueryDescriptionUrlBuilder().Build(nodeData.QueryId, nodeData.QueryName, nodeData.QueryVersionCode);
 
-                WebBrowser webBrowser = new WebBrowser();
-                webBrowser.Navigate(urlToDescription, "Query Description", null, "Authorization: Bearer " + OidcLoginData.GetOidcLoginDataInstance().AccessToken);
+                QueryDescriptionForm queryDesc = new QueryDescriptionForm(urlToDescription,OidcLoginData.GetOidcLoginDataInstance().AccessToken);
+                queryDesc.Show();
             }
             catch (Exception ex)
             {
@@ -977,5 +977,6 @@ namespace CxViewerAction
         } 
         
         #endregion
+
     }
 }
