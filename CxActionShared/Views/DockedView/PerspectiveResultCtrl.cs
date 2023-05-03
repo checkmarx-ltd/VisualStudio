@@ -9,9 +9,11 @@ using CxViewerAction.Entities.WebServiceEntity;
 using System.Collections;
 using CxViewerAction.Helpers;
 using CxViewerAction.CxVSWebService;
-
-
-
+using CxViewerAction.Services;
+using System.Net;
+using System.IO;
+using System.Web.Script.Serialization;
+using CxViewerAction.ValueObjects;
 
 namespace CxViewerAction.Views.DockedView
 {
@@ -27,6 +29,7 @@ namespace CxViewerAction.Views.DockedView
         private IPerspectiveView perspectiveView = null;
         private ReportQueryResult _selectedReportItem = null;
         private ReportResult _report = null;
+        private string _apiShortDescription= "sast/scans/{0}/results/{1}/shortDescription";
         #endregion
 
         #region [Constructors]
@@ -341,6 +344,12 @@ namespace CxViewerAction.Views.DockedView
                 dgvProjects.Columns[i].DefaultCellStyle.Font = GetColumnFont();
             }
 
+            foreach (CxWSSingleResultData reportQueryItemResult in results)
+            {
+                GetShortDescription(nodeData.ScanId, reportQueryItemResult.PathId);
+                break;
+            }
+
             dgvProjects.Columns["checkBoxesColumn"].Frozen = true;
             dgvProjects.Columns["checkBoxesColumn"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvProjects.Columns["checkBoxesColumn"].Resizable = DataGridViewTriState.False;
@@ -568,18 +577,43 @@ namespace CxViewerAction.Views.DockedView
                             return;
 
                         this.SelectedRowChanged(this, new ResultData(reportQueryItemPathResult, scanId, this.SelectedNode));
+
+                        GetShortDescription(scanId, reportQueryItemPathResult.PathId);
                         UpdateGridShowPath();
                     }
 
                 }
-                
             }
             catch (Exception ex)
             {
                 Logger.Create().Error(ex.ToString());
             }
         }
-                       
+              
+        private void GetShortDescription(long scanId, long pathId)
+        {
+            string responseText = string.Empty;
+            CxQueryShortDescription queryShortDescription = new CxQueryShortDescription();
+
+            CxRESTApiCommon rESTApiPortalConfiguration = new CxRESTApiCommon(string.Format(_apiShortDescription, scanId,pathId));
+            HttpWebResponse response = rESTApiPortalConfiguration.InitPortalBaseUrl();
+            
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                using (StreamReader reader = new StreamReader(response.GetResponseStream(), ASCIIEncoding.ASCII))
+                {
+                    responseText = reader.ReadToEnd();
+                }
+            }
+
+            if (!string.IsNullOrEmpty(responseText))
+            {
+                JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
+                queryShortDescription = (CxQueryShortDescription)javaScriptSerializer.Deserialize(responseText, typeof(CxQueryShortDescription));
+            }
+            this.label1.Text = queryShortDescription.shortDescription.Replace("??", " ");
+        }
+
         private void EditRemark(int columnIndex, int rowIndex)
         {
             if (CommonData.IsWorkingOffline)
