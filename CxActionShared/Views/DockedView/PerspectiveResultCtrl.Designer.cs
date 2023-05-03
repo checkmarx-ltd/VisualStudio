@@ -103,9 +103,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(10, 4);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(1500, 90);
+            this.label1.Size = new System.Drawing.Size(1600, 90);
             this.label1.TabIndex = 0;
-            this.label1.MaximumSize = new System.Drawing.Size(1500, 90);
+            this.label1.MaximumSize = new System.Drawing.Size(1600, 90);
             // 
             // panel4
             // 
