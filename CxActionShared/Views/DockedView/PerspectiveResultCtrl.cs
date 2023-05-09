@@ -14,6 +14,7 @@ using System.Net;
 using System.IO;
 using System.Web.Script.Serialization;
 using CxViewerAction.ValueObjects;
+using System.Reflection;
 
 namespace CxViewerAction.Views.DockedView
 {
@@ -30,6 +31,7 @@ namespace CxViewerAction.Views.DockedView
         private ReportQueryResult _selectedReportItem = null;
         private ReportResult _report = null;
         private string _apiShortDescription= "sast/scans/{0}/results/{1}/shortDescription";
+        private string codeBashingTooltipMessage = "Learn more about {0} using Checkmarx’s eLearning platform";
         #endregion
 
         #region [Constructors]
@@ -350,6 +352,12 @@ namespace CxViewerAction.Views.DockedView
                 break;
             }
 
+            if(currentNodedata != null)
+            {
+                label2.Text = currentNodedata.Name;
+                toolTip1.SetToolTip(this.linkLabel1, string.Format(codeBashingTooltipMessage, currentNodedata.Name));
+            }
+
             dgvProjects.Columns["checkBoxesColumn"].Frozen = true;
             dgvProjects.Columns["checkBoxesColumn"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvProjects.Columns["checkBoxesColumn"].Resizable = DataGridViewTriState.False;
@@ -529,7 +537,21 @@ namespace CxViewerAction.Views.DockedView
         {
             try
             {
-                UpdateGridShowPath();
+                if (dgvProjects.SelectedRows.Count > 0)
+                {
+                    IsActive = true;
+                    CxWSSingleResultData reportQueryItemPathResult = dgvProjects.SelectedRows[0].Cells["ResultEntity"].Value as CxWSSingleResultData;
+                    int scanId = -1;
+                    Int32.TryParse(dgvProjects.SelectedRows[0].Cells["ScanId"].Value.ToString(), out scanId);
+
+                    if (reportQueryItemPathResult == null)
+                        return;
+
+                    this.SelectedRowChanged(this, new ResultData(reportQueryItemPathResult, scanId, this.SelectedNode));
+
+                    GetShortDescription(scanId, reportQueryItemPathResult.PathId);
+                    UpdateGridShowPath();
+                }
             }
             catch (Exception ex)
             {
@@ -589,7 +611,18 @@ namespace CxViewerAction.Views.DockedView
                 Logger.Create().Error(ex.ToString());
             }
         }
-              
+
+        private void linkLabel1_Sorted(object sender, EventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Create().Error(ex.ToString());
+            }
+        }
         private void GetShortDescription(long scanId, long pathId)
         {
             string responseText = string.Empty;
