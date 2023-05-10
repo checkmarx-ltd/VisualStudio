@@ -45,6 +45,7 @@ namespace CxViewerAction
         private bool wasInit = false;
         private const string vsProjectKindWeb = "{E24C65DC-7377-472b-9ABA-BC803B73C61A}";
         private const string vsProjectKindSolutionFolder = "{66A26720-8FB5-11D2-AA7E-00C04F688DDE}";
+        private const string queryDescriptionHeader = "Query Description";
         private Dictionary<string, List<string>> fileMapping = new Dictionary<string, List<string>>(StringComparer.InvariantCultureIgnoreCase);
 
         #endregion
@@ -338,7 +339,7 @@ namespace CxViewerAction
                 rESTApiPortalConfiguration.InitPortalBaseUrl();
                 string urlToDescription = new QueryDescriptionUrlBuilder().Build(nodeData.QueryId, nodeData.QueryName, nodeData.QueryVersionCode);
 
-                QueryDescriptionForm queryDesc = new QueryDescriptionForm(urlToDescription,OidcLoginData.GetOidcLoginDataInstance().AccessToken);
+                QueryDescriptionForm queryDesc = new QueryDescriptionForm(urlToDescription,OidcLoginData.GetOidcLoginDataInstance().AccessToken, queryDescriptionHeader);
                 queryDesc.Show();
             }
             catch (Exception ex)
