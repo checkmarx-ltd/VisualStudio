@@ -110,6 +110,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApiWebRequestBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\WinCookieHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\OidcLoginResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\RESTApi\CxAppSecCodbashing.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\RESTApi\CxQueryDescription.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\RESTApi\CxRESTApiLoginResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\Results.cs" />

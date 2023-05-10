@@ -10,11 +10,12 @@ namespace CxViewerAction.Views
     {
         public string DescriptionUrl;
         public string _token;
-        public QueryDescriptionForm(string descriptionUrl, string token)
+        public QueryDescriptionForm(string descriptionUrl, string token,string descriptionHeader)
         {
             DescriptionUrl = descriptionUrl;
             _token = token;
             InitializeComponent();
+            this.Text = descriptionHeader;
         }
 
         ChromiumWebBrowser browser;

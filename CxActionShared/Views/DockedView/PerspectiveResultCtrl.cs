@@ -15,6 +15,7 @@ using System.IO;
 using System.Web.Script.Serialization;
 using CxViewerAction.ValueObjects;
 using System.Reflection;
+using CxViewerAction.Entities;
 
 namespace CxViewerAction.Views.DockedView
 {
@@ -31,7 +32,9 @@ namespace CxViewerAction.Views.DockedView
         private ReportQueryResult _selectedReportItem = null;
         private ReportResult _report = null;
         private string _apiShortDescription= "sast/scans/{0}/results/{1}/shortDescription";
+        private string _apiAppSecCoachLessonsRequestData = "Queries/{0}/AppSecCoachLessonsRequestData";
         private string codeBashingTooltipMessage = "Learn more about {0} using Checkmarx’s eLearning platform";
+        private const string descriptionHeader = "Codebashing";
         #endregion
 
         #region [Constructors]
@@ -616,13 +619,51 @@ namespace CxViewerAction.Views.DockedView
         {
             try
             {
+                if(this.SelectedNode !=null)
+                {
+                    string responseText = string.Empty;
+                    CxAppSecCodbashing codbashingDetails = new CxAppSecCodbashing();
 
+                    CxRESTApiCommon rESTApiPortalConfiguration = new CxRESTApiCommon(string.Format(_apiAppSecCoachLessonsRequestData, this.SelectedNode.Id));
+                    HttpWebResponse response = rESTApiPortalConfiguration.InitPortalBaseUrl();
+
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        using (StreamReader reader = new StreamReader(response.GetResponseStream(), ASCIIEncoding.ASCII))
+                        {
+                            responseText = reader.ReadToEnd();
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(responseText))
+                    {
+                        JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
+                        codbashingDetails = (CxAppSecCodbashing)javaScriptSerializer.Deserialize(responseText, typeof(CxAppSecCodbashing));
+                    }
+
+                    if(codbashingDetails != null)
+                    {
+                        NavigateToCodebashing(codbashingDetails);
+                    }
+                }
             }
             catch (Exception ex)
             {
                 Logger.Create().Error(ex.ToString());
             }
         }
+
+        private void NavigateToCodebashing(CxAppSecCodbashing codbashingDetails)
+        {
+            string urlToDescription = codbashingDetails.url + "?serviceProviderId=" + codbashingDetails.paramteres.serviceProviderId
+            + "&utm_source=" + codbashingDetails.paramteres.utm_source
+            + "&utm_campaign=" + codbashingDetails.paramteres.utm_campaign;
+           
+            QueryDescriptionForm codebashingDesc = new QueryDescriptionForm(urlToDescription, OidcLoginData.GetOidcLoginDataInstance().AccessToken, descriptionHeader);
+            codebashingDesc.Show();
+
+        }
+
         private void GetShortDescription(long scanId, long pathId)
         {
             string responseText = string.Empty;
