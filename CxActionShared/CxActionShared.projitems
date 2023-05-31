@@ -105,8 +105,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\CxWSResolverWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\EnvDTEConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApi.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApiPortalConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApiCommon.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApiLogin.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApiPortalConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApiWebRequestBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\WinCookieHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\OidcLoginResult.cs" />
