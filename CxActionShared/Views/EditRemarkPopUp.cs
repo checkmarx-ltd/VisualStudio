@@ -12,11 +12,17 @@ namespace CxViewerAction.Views
             get { return remark; }
         }
 
-        public EditRemarkPopUp(string currentRemark, string historyComments)
+        public EditRemarkPopUp(string currentRemark, string historyComments, bool isCommentHistoryVisible)
         {
             InitializeComponent();
             textBox.Text = currentRemark;
             txtCommentHistory.Text = historyComments;
+            if(!isCommentHistoryVisible)
+            {
+                label2.Visible = false;
+                txtCommentHistory.Visible = false;
+                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 7F);
+            }
         }
 
 
