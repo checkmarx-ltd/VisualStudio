@@ -6,6 +6,8 @@
 
         public string WebServer { get; set; }
 
+        public bool MandatoryCommentOnChangeResultState { get; set; }
+
         #endregion
     }
 }

@@ -46,6 +46,30 @@ namespace CxViewerAction.Services
             }
         }
 
+        public CxPortalConfiguration InitPortalConfigurationDetails()
+        {
+            try
+            {
+                LoginHelper.PortalConfiguration = new CxPortalConfiguration();
+                Uri uri = GetLoginUri();
+                HttpWebRequest webRequest = GetWebRequest(uri);
+                return GetWebResponse(webRequest);
+            }
+            catch (System.Net.WebException ex)
+            {
+                var response = (System.Net.HttpWebResponse)ex.Response;
+
+                if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    LoginHelper.PortalConfiguration.WebServer = LoginHelper.ServerBaseUrl;
+                }
+                else
+                {
+                    Logger.Create().Error("CxRESTApiPortalConfiguration->InitPortalConfigurationDetails: " + ex.ToString());
+                }
+            }
+            return null;
+        }
         #endregion
 
         #region Private methods
