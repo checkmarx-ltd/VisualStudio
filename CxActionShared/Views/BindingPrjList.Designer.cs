@@ -202,7 +202,7 @@ namespace CxViewerAction.Views
             // 
             // Group
             // 
-            this.Group.HeaderText = "Group";
+            this.Group.HeaderText = "Team";
             this.Group.MinimumWidth = 8;
             this.Group.Name = "Group";
             this.Group.ReadOnly = true;
