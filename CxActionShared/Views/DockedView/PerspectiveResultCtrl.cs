@@ -816,13 +816,13 @@ namespace CxViewerAction.Views.DockedView
 
                 DialogResult result = remarkPopUp.ShowDialog();
 
-                if (result != DialogResult.OK)
+                if (result == DialogResult.Cancel)
                     return;
 
                 string remark = remarkPopUp.Remark;
                 if (String.IsNullOrEmpty(remark))
                 {
-                    return;
+                    MessageBox.Show("Please enter comment", "Error", MessageBoxButtons.OK);
                 }
                 else
                 {
