@@ -266,6 +266,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\BrowserForm.resx">
       <DependentUpon>BrowserForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DockedView\ConnectionCtrl.resx">
       <DependentUpon>ConnectionCtrl.cs</DependentUpon>
@@ -311,6 +312,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\OidcLoginFrm.resx">
       <DependentUpon>OidcLoginFrm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\OpenPercspectiveDialog.resx">
       <SubType>Designer</SubType>
@@ -342,6 +344,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Resources\1.ico" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\Checkmarx-X31.ico" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\Checkmarx-X3.ico" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\Checkmarx-X2.ico" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\Checkmarx-X1.ico" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\Checkmarx-X.ico" />
     <Content Include="$(MSBuildThisFileDirectory)Resources\close24.png" />
     <Content Include="$(MSBuildThisFileDirectory)Resources\cx.gif" />
     <Content Include="$(MSBuildThisFileDirectory)Resources\cx.ico" />
