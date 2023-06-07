@@ -11,6 +11,7 @@ using CefSharp.DevTools.CSS;
 using System.Linq;
 using CxViewerAction.Entities;
 using CxViewerAction.Helpers;
+using System.Web.UI.WebControls;
 
 namespace CxViewerAction.Views
 {
@@ -35,6 +36,7 @@ namespace CxViewerAction.Views
             get { return _projectList; }
             set
             {
+                Array.Reverse(value);
                 _projectList = value;
                 DisplayProjectLists(value);
             }
