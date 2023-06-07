@@ -731,7 +731,7 @@ namespace CxViewerAction.Views.DockedView
                 return;
 
             string remark = remarkPopUp.Remark;
-            if (String.IsNullOrEmpty(remark))
+            if (String.IsNullOrWhiteSpace(remark))
             {
                 return;
             }
@@ -820,14 +820,8 @@ namespace CxViewerAction.Views.DockedView
                     return;
 
                 string remark = remarkPopUp.Remark;
-                if (String.IsNullOrEmpty(remark))
-                {
-                    MessageBox.Show("Please enter comment", "Error", MessageBoxButtons.OK);
-                }
-                else
-                {
+                if (!String.IsNullOrWhiteSpace(remark))
                     updateResultStateDetails(sender, remark);
-                }
             }
         }
 

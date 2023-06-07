@@ -24,6 +24,11 @@ namespace CxViewerAction.Views
                 label2.Visible = false;
                 txtCommentHistory.Visible = false;
                 this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 7F);
+                this.label1.Text = "Enter mandatory comment for result state change :";
+            }
+            else
+            {
+                this.label1.Text = "Enter your comment:";
             }
         }
 
@@ -39,19 +44,10 @@ namespace CxViewerAction.Views
 
             okButton.Click += (sender1, e1) =>
                                   {
-                                      if (isCommentHistoryVisible)
-                                      {
+                                      if (!String.IsNullOrWhiteSpace(textBox.Text))
                                           DialogResult = DialogResult.OK;
-                                          Close();
-                                      }
                                       else
-                                      {
-                                          if (!String.IsNullOrEmpty(textBox.Text))
-                                              DialogResult = DialogResult.OK;
-                                          else
-                                            MessageBox.Show("Please enter comment", "Error", MessageBoxButtons.OK);
-                                      }
-                                      
+                                          MessageBox.Show("Please enter comment", "Error", MessageBoxButtons.OK);
                                   };
 
             cancelButton.Click += (sender1, e1) =>
