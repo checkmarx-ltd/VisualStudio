@@ -817,12 +817,15 @@ namespace CxViewerAction.Views.DockedView
                 DialogResult result = remarkPopUp.ShowDialog();
 
                 if (result == DialogResult.Cancel)
+                {
+                    this.cbState.SelectedIndex = -1;
                     return;
-
+                }
                 string remark = remarkPopUp.Remark;
                 if (!String.IsNullOrWhiteSpace(remark))
                     updateResultStateDetails(sender, remark);
             }
+            this.cbState.SelectedIndex = -1;
         }
 
 
@@ -955,6 +958,7 @@ namespace CxViewerAction.Views.DockedView
             finally
             {
                 this.Cursor = Cursors.Default;
+                this.cbSeverity.SelectedIndex = -1;
             }
         }
 
@@ -1005,6 +1009,7 @@ namespace CxViewerAction.Views.DockedView
             finally
             {
                 this.Cursor = Cursors.Default;
+                this.cbAssign.SelectedIndex = -1;
             }
         }
 
