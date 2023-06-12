@@ -333,7 +333,7 @@ namespace CxViewerAction.Helpers
 
                             if (!bCancel && !isIISStoped)
                             {
-                                ShowScanData(ref scanData, ref scanId, client);                                
+                                ShowScanData(ref scanData, ref scanId, client);
                             }
                             else
                             {
@@ -441,19 +441,31 @@ namespace CxViewerAction.Helpers
 
                 CommonData.SelectedScanId = id;
                 String path = PerspectiveHelper.GetScanXML(id);
-                ScanReportInfo scanReportInfo = new ScanReportInfo();
-                scanReportInfo.Path = path;
-                scanReportInfo.Id = id;
+
                 LoginData.BindProject projectToUpdate = _scan.LoginResult.AuthenticationData.BindedProjects.Find(delegate (LoginData.BindProject bp)
                 {
                     return bp.BindedProjectId == CommonData.ProjectId;
                 }
                 );
 
-                projectToUpdate.ScanReports = new List<ScanReportInfo>();
-                projectToUpdate.ScanReports.Add(scanReportInfo);
+                CxWSResponseScansDisplayData cxWSResponseScansDisplayData = PerspectiveHelper.GetScansDisplayData(CommonData.ProjectId);
+                foreach (ScanDisplayData item in cxWSResponseScansDisplayData.ScanList)
+                {
 
+                    // Add relation to scanned project and scan report
+                    ScanReportInfo scanReportInfo = new ScanReportInfo { Id = item.ScanID };
+                    string minutes = item.QueuedDateTime.Minute.ToString().Length > 1 ? item.QueuedDateTime.Minute.ToString() : "0" + item.QueuedDateTime.Minute;
+
+                    scanReportInfo.Name = string.Format("{0}/{1}/{2} {3}:{4}", item.QueuedDateTime.Month,
+                                                            item.QueuedDateTime.Day,
+                                                            item.QueuedDateTime.Year,
+                                                            item.QueuedDateTime.Hour,
+                                                            minutes);
+
+                    bindProject.AddScanReport(scanReportInfo);
+                }
                 LoginHelper.Save(_scan.LoginResult.AuthenticationData);
+                CommonActionsInstance.getInstance().ReportDoPrevResults();
             });
 
             bgWork.DoWork();

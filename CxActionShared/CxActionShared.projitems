@@ -21,6 +21,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Commands\CommandExecutor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CommonActions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CommonCustomResourceRequestHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CommonData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Connect.cs">
       <SubType>Code</SubType>
@@ -104,10 +105,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\CxWSResolverWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\EnvDTEConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApiCommon.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApiPortalConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApiWebRequestBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\WinCookieHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\OidcLoginResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\RESTApi\CxAppSecCodbashing.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\RESTApi\CxQueryDescription.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\RESTApi\CxRESTApiLoginResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\Results.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\WebPortal\Models\CxPortalConfiguration.cs" />
@@ -212,6 +216,12 @@
       <DependentUpon>OpenPercspectiveDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\ProjectListEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\QueryDescriptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\QueryDescriptionForm.Designer.cs">
+      <DependentUpon>QueryDescriptionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\ScanProcessFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -256,6 +266,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\BrowserForm.resx">
       <DependentUpon>BrowserForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DockedView\ConnectionCtrl.resx">
       <DependentUpon>ConnectionCtrl.cs</DependentUpon>
@@ -301,10 +312,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\OidcLoginFrm.resx">
       <DependentUpon>OidcLoginFrm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\OpenPercspectiveDialog.resx">
       <SubType>Designer</SubType>
       <DependentUpon>OpenPercspectiveDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\QueryDescriptionForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>QueryDescriptionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ScanProcessFrm.resx">
       <SubType>Designer</SubType>
@@ -328,6 +344,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Resources\1.ico" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\Checkmarx-X31.ico" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\Checkmarx-X3.ico" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\Checkmarx-X2.ico" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\Checkmarx-X1.ico" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\Checkmarx-X.ico" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\close24.png" />
     <Content Include="$(MSBuildThisFileDirectory)Resources\cx.gif" />
     <Content Include="$(MSBuildThisFileDirectory)Resources\cx.ico" />
     <Content Include="$(MSBuildThisFileDirectory)Resources\Disabled.png" />

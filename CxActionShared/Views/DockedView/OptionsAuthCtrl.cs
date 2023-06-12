@@ -83,7 +83,8 @@ namespace CxViewerAction.Views.DockedView
                     logoutBtn.Enabled = false;
                 }
                 else if (!string.IsNullOrWhiteSpace(currentLogin.AuthenticationType) && loginResult.LoginResultType == Common.LoginResultType.UnknownError && !loginResult.IsSuccesfull && loginResult.LoginResultMessage == null)
-                {                   
+                {
+                    MessageBox.Show("Invalid credentials", "Error", MessageBoxButtons.OK);
                     loginBtn.Enabled = true;
                     logoutBtn.Enabled = false;
                 }

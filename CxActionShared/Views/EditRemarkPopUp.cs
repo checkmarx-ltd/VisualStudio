@@ -7,16 +7,29 @@ namespace CxViewerAction.Views
     public partial class EditRemarkPopUp : Form
     {
         private string remark = string.Empty;
+        private bool isCommentHistoryVisible = true;
         public string Remark
         {
             get { return remark; }
         }
 
-        public EditRemarkPopUp(string currentRemark, string historyComments)
+        public EditRemarkPopUp(string currentRemark, string historyComments, bool _isCommentHistoryVisible)
         {
             InitializeComponent();
             textBox.Text = currentRemark;
             txtCommentHistory.Text = historyComments;
+            isCommentHistoryVisible = _isCommentHistoryVisible;
+            if (!_isCommentHistoryVisible)
+            {
+                label2.Visible = false;
+                txtCommentHistory.Visible = false;
+                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 7F);
+                this.label1.Text = "Enter mandatory comment for result state change :";
+            }
+            else
+            {
+                this.label1.Text = "Enter your comment:";
+            }
         }
 
 
@@ -31,8 +44,10 @@ namespace CxViewerAction.Views
 
             okButton.Click += (sender1, e1) =>
                                   {
-                                      DialogResult = DialogResult.OK;
-                                      Close();
+                                      if (!String.IsNullOrWhiteSpace(textBox.Text))
+                                          DialogResult = DialogResult.OK;
+                                      else
+                                          MessageBox.Show("Please enter comment", "Error", MessageBoxButtons.OK);
                                   };
 
             cancelButton.Click += (sender1, e1) =>

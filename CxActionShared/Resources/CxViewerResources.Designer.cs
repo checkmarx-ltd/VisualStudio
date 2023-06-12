@@ -167,6 +167,18 @@ namespace CxViewerAction.Resources {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap close24
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("close24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 
     /// <summary>
@@ -340,6 +352,17 @@ namespace CxViewerAction.Resources {
             get
             {
                 object obj = ResourceManager.GetObject("NormalSelected", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap close24
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("close24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

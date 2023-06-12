@@ -9,9 +9,13 @@ using CxViewerAction.Entities.WebServiceEntity;
 using System.Collections;
 using CxViewerAction.Helpers;
 using CxViewerAction.CxVSWebService;
-
-
-
+using CxViewerAction.Services;
+using System.Net;
+using System.IO;
+using System.Web.Script.Serialization;
+using CxViewerAction.ValueObjects;
+using System.Reflection;
+using CxViewerAction.Entities;
 
 namespace CxViewerAction.Views.DockedView
 {
@@ -27,6 +31,10 @@ namespace CxViewerAction.Views.DockedView
         private IPerspectiveView perspectiveView = null;
         private ReportQueryResult _selectedReportItem = null;
         private ReportResult _report = null;
+        private string _apiShortDescription = "sast/scans/{0}/results/{1}/shortDescription";
+        private string _apiAppSecCoachLessonsRequestData = "Queries/{0}/AppSecCoachLessonsRequestData";
+        private string codeBashingTooltipMessage = "Learn more about {0} using Checkmarx’s eLearning platform";
+        private const string descriptionHeader = "Codebashing";
         #endregion
 
         #region [Constructors]
@@ -44,7 +52,7 @@ namespace CxViewerAction.Views.DockedView
             {
                 Logger.Create().Error(ex.ToString());
             }
-                       
+
         }
 
         private void fillComboBoxes()
@@ -62,7 +70,7 @@ namespace CxViewerAction.Views.DockedView
                 cbAssign.Items.Add(new ComboBoxItem1("None", ""));
                 foreach (AssignUser user in ProjectAssignUsers)
                 {
-                    cbAssign.Items.Add(new ComboBoxItem1(user.UserName,user.UserName));
+                    cbAssign.Items.Add(new ComboBoxItem1(user.UserName, user.UserName));
                 }
             }
 
@@ -218,7 +226,7 @@ namespace CxViewerAction.Views.DockedView
             #endregion
         }
 
-        
+
         private TreeNodeData currentNodedata = null;
 
         private void SelectNode(TreeNodeData nodeData)
@@ -284,7 +292,7 @@ namespace CxViewerAction.Views.DockedView
             col.ReadOnly = true;
             dt.Columns.Add(col);
 
-            CxWSSingleResultData[] results  = PerspectiveHelper.GetScanResultsForQuery(nodeData.ScanId, nodeData.Id);          
+            CxWSSingleResultData[] results = PerspectiveHelper.GetScanResultsForQuery(nodeData.ScanId, nodeData.Id);
 
             int index = 1;
 
@@ -293,7 +301,7 @@ namespace CxViewerAction.Views.DockedView
                 string resultComment = reportQueryItemResult.Comment;
                 if (!string.IsNullOrEmpty(resultComment))
                 {
-                    string[] commentsArr = resultComment.Split(new char[]{Convert.ToChar(255)}, StringSplitOptions.RemoveEmptyEntries);
+                    string[] commentsArr = resultComment.Split(new char[] { Convert.ToChar(255) }, StringSplitOptions.RemoveEmptyEntries);
                     if (commentsArr.Length > 0)
                     {
                         resultComment = commentsArr[commentsArr.Length - 1];
@@ -309,7 +317,7 @@ namespace CxViewerAction.Views.DockedView
                     resultComment = string.Empty;
                 }
 
-                dt.Rows.Add(new object[] { 
+                dt.Rows.Add(new object[] {
                                            index,
                                            SavedResultsManager.ConvertResultStatusToString(reportQueryItemResult.ResultStatus),
                                            reportQueryItemResult.SourceFolder,
@@ -339,6 +347,18 @@ namespace CxViewerAction.Views.DockedView
             {
                 dgvProjects.Columns[i].HeaderCell.Style.Alignment = GetCellAlignment();
                 dgvProjects.Columns[i].DefaultCellStyle.Font = GetColumnFont();
+            }
+
+            foreach (CxWSSingleResultData reportQueryItemResult in results)
+            {
+                GetShortDescription(nodeData.ScanId, reportQueryItemResult.PathId);
+                break;
+            }
+
+            if (currentNodedata != null)
+            {
+                label2.Text = currentNodedata.Name;
+                toolTip1.SetToolTip(this.linkLabel1, string.Format(codeBashingTooltipMessage, currentNodedata.Name));
             }
 
             dgvProjects.Columns["checkBoxesColumn"].Frozen = true;
@@ -421,7 +441,7 @@ namespace CxViewerAction.Views.DockedView
 
         public void MarkRowAsSelected(long pathId)
         {
-            foreach(DataGridViewRow row in dgvProjects.Rows)
+            foreach (DataGridViewRow row in dgvProjects.Rows)
             {
                 if (Convert.ToInt64(row.Cells["PathId"].Value) == pathId)
                 {
@@ -435,16 +455,16 @@ namespace CxViewerAction.Views.DockedView
         {
             if (dgvProjects.SelectedRows.Count > 0)
             {
-				IsActive = true;
-				CxWSSingleResultData reportQueryItemPathResult = dgvProjects.SelectedRows[0].Cells["ResultEntity"].Value as CxWSSingleResultData;
-				int scanId = -1;
-				Int32.TryParse(dgvProjects.SelectedRows[0].Cells["ScanId"].Value.ToString(), out scanId);
+                IsActive = true;
+                CxWSSingleResultData reportQueryItemPathResult = dgvProjects.SelectedRows[0].Cells["ResultEntity"].Value as CxWSSingleResultData;
+                int scanId = -1;
+                Int32.TryParse(dgvProjects.SelectedRows[0].Cells["ScanId"].Value.ToString(), out scanId);
 
-				if (reportQueryItemPathResult == null)
-					return;
+                if (reportQueryItemPathResult == null)
+                    return;
 
-				this.SelectedRowChanged(this, new ResultData(reportQueryItemPathResult, scanId, this.SelectedNode));
-				UpdateGridShowPath();
+                this.SelectedRowChanged(this, new ResultData(reportQueryItemPathResult, scanId, this.SelectedNode));
+                UpdateGridShowPath();
             }
         }
 
@@ -512,7 +532,7 @@ namespace CxViewerAction.Views.DockedView
                 {
                     Logger.Create().Error(ex.ToString());
                 }
-                
+
             }
         }
 
@@ -520,7 +540,21 @@ namespace CxViewerAction.Views.DockedView
         {
             try
             {
-                UpdateGridShowPath();
+                if (dgvProjects.SelectedRows.Count > 0)
+                {
+                    IsActive = true;
+                    CxWSSingleResultData reportQueryItemPathResult = dgvProjects.SelectedRows[0].Cells["ResultEntity"].Value as CxWSSingleResultData;
+                    int scanId = -1;
+                    Int32.TryParse(dgvProjects.SelectedRows[0].Cells["ScanId"].Value.ToString(), out scanId);
+
+                    if (reportQueryItemPathResult == null)
+                        return;
+
+                    this.SelectedRowChanged(this, new ResultData(reportQueryItemPathResult, scanId, this.SelectedNode));
+
+                    GetShortDescription(scanId, reportQueryItemPathResult.PathId);
+                    UpdateGridShowPath();
+                }
             }
             catch (Exception ex)
             {
@@ -554,7 +588,7 @@ namespace CxViewerAction.Views.DockedView
                     if (dgvProjects.Columns[columnIndex].HeaderText == Constants.COL_NAME_REMARK)
                     {
                         EditRemark(columnIndex, rowIndex);
-                        
+
                         return;
                     }
                     if (dgvProjects.SelectedRows.Count > 0)
@@ -568,18 +602,92 @@ namespace CxViewerAction.Views.DockedView
                             return;
 
                         this.SelectedRowChanged(this, new ResultData(reportQueryItemPathResult, scanId, this.SelectedNode));
+
+                        GetShortDescription(scanId, reportQueryItemPathResult.PathId);
                         UpdateGridShowPath();
                     }
 
                 }
-                
             }
             catch (Exception ex)
             {
                 Logger.Create().Error(ex.ToString());
             }
         }
-                       
+
+        private void linkLabel1_Sorted(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.SelectedNode != null)
+                {
+                    string responseText = string.Empty;
+                    CxAppSecCodbashing codbashingDetails = new CxAppSecCodbashing();
+
+                    CxRESTApiCommon rESTApiPortalConfiguration = new CxRESTApiCommon(string.Format(_apiAppSecCoachLessonsRequestData, this.SelectedNode.Id));
+                    HttpWebResponse response = rESTApiPortalConfiguration.InitPortalBaseUrl();
+
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        using (StreamReader reader = new StreamReader(response.GetResponseStream(), ASCIIEncoding.ASCII))
+                        {
+                            responseText = reader.ReadToEnd();
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(responseText))
+                    {
+                        JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
+                        codbashingDetails = (CxAppSecCodbashing)javaScriptSerializer.Deserialize(responseText, typeof(CxAppSecCodbashing));
+                    }
+
+                    if (codbashingDetails != null)
+                    {
+                        NavigateToCodebashing(codbashingDetails);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Create().Error(ex.ToString());
+            }
+        }
+
+        private void NavigateToCodebashing(CxAppSecCodbashing codbashingDetails)
+        {
+            string urlToDescription = codbashingDetails.url + "?serviceProviderId=" + codbashingDetails.paramteres.serviceProviderId
+            + "&utm_source=" + codbashingDetails.paramteres.utm_source
+            + "&utm_campaign=" + codbashingDetails.paramteres.utm_campaign;
+
+            QueryDescriptionForm codebashingDesc = new QueryDescriptionForm(urlToDescription, OidcLoginData.GetOidcLoginDataInstance().AccessToken, descriptionHeader);
+            codebashingDesc.Show();
+
+        }
+
+        private void GetShortDescription(long scanId, long pathId)
+        {
+            string responseText = string.Empty;
+            CxQueryShortDescription queryShortDescription = new CxQueryShortDescription();
+
+            CxRESTApiCommon rESTApiPortalConfiguration = new CxRESTApiCommon(string.Format(_apiShortDescription, scanId, pathId));
+            HttpWebResponse response = rESTApiPortalConfiguration.InitPortalBaseUrl();
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                using (StreamReader reader = new StreamReader(response.GetResponseStream(), ASCIIEncoding.ASCII))
+                {
+                    responseText = reader.ReadToEnd();
+                }
+            }
+
+            if (!string.IsNullOrEmpty(responseText))
+            {
+                JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
+                queryShortDescription = (CxQueryShortDescription)javaScriptSerializer.Deserialize(responseText, typeof(CxQueryShortDescription));
+            }
+            this.label1.Text = queryShortDescription.shortDescription.Replace("??", " ");
+        }
+
         private void EditRemark(int columnIndex, int rowIndex)
         {
             if (CommonData.IsWorkingOffline)
@@ -591,7 +699,7 @@ namespace CxViewerAction.Views.DockedView
             int currentColumnIndex = dgvProjects.CurrentCell.ColumnIndex;
 
             CxWSSingleResultData reportQueryItemPathResult = dgvProjects.Rows[rowIndex].Cells["ResultEntity"].Value as CxWSSingleResultData;
-             
+
             long pathId = reportQueryItemPathResult.PathId;
             long resultId = Convert.ToInt64(dgvProjects.Rows[rowIndex].Cells["ScanId"].Value);
             CxViewerAction.CxVSWebService.CxWSResultPath resultPath = PerspectiveHelper.GetPathCommentsHistory(resultId, pathId);
@@ -615,15 +723,15 @@ namespace CxViewerAction.Views.DockedView
                 }
             }
 
-            EditRemarkPopUp remarkPopUp = new EditRemarkPopUp("", sb.ToString());
+            EditRemarkPopUp remarkPopUp = new EditRemarkPopUp("", sb.ToString(),true);
 
             DialogResult result = remarkPopUp.ShowDialog();
-            
+
             if (result != DialogResult.OK)
                 return;
 
             string remark = remarkPopUp.Remark;
-            if(String.IsNullOrEmpty(remark))
+            if (String.IsNullOrWhiteSpace(remark))
             {
                 return;
             }
@@ -643,7 +751,8 @@ namespace CxViewerAction.Views.DockedView
 
         public Dictionary<long, string> ResultStateList
         {
-            get{
+            get
+            {
                 if (stateList != null)
                 {
                     return stateList;
@@ -667,7 +776,7 @@ namespace CxViewerAction.Views.DockedView
                     {
                         Logger.Create().Error(ex.ToString());
                     }
-                                   
+
                 }
 
                 return stateList;
@@ -697,6 +806,33 @@ namespace CxViewerAction.Views.DockedView
 
         private void cbState_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            if (!IsMandatoryCommentOnChangeResultState())
+            {
+                updateResultStateDetails(sender,"");
+            }
+            else
+            {
+                EditRemarkPopUp remarkPopUp = new EditRemarkPopUp("", "",false);
+
+                DialogResult result = remarkPopUp.ShowDialog();
+
+                if (result == DialogResult.Cancel)
+                {
+                    this.cbState.SelectedIndex = -1;
+                    return;
+                }
+                string remark = remarkPopUp.Remark;
+                if (!String.IsNullOrWhiteSpace(remark))
+                    updateResultStateDetails(sender, remark);
+            }
+            this.cbState.SelectedIndex = -1;
+        }
+
+
+        private CheckBox checkboxHeader = new CheckBox();
+
+        private void updateResultStateDetails(object sender,string remark)
+        {
             bool needRefresh = false;
             try
             {
@@ -715,24 +851,24 @@ namespace CxViewerAction.Views.DockedView
                         {
                             data = item.Id.ToString(),
                             PathId = pathId,
-                            Remarks = string.Empty,
+                            Remarks = remark,
                             ResultLabelType = (int)CxViewerAction.Helpers.ResultLabelTypeEnum.State,
                             scanId = resultId
                         });
-                      
+
                     }
                 }
 
-                if (list.Count >0)
+                if (list.Count > 0)
                 {
-                    needRefresh = PerspectiveHelper.UpdateResultState(list.ToArray()); 
+                    needRefresh = PerspectiveHelper.UpdateResultState(list.ToArray());
                 }
 
                 if (needRefresh)
                 {
                     this.Refresh(this, currentNodedata);
                 }
-                
+
 
             }
             catch (Exception ex)
@@ -746,7 +882,11 @@ namespace CxViewerAction.Views.DockedView
             }
         }
 
-        private CheckBox checkboxHeader = new CheckBox();
+        private bool IsMandatoryCommentOnChangeResultState()
+        {
+            CxRESTApiPortalConfiguration rESTApiPortalConfiguration = new CxRESTApiPortalConfiguration();
+            return rESTApiPortalConfiguration.InitPortalConfigurationDetails().MandatoryCommentOnChangeResultState;
+        }
 
         private void show_chkBox()
         {
@@ -757,7 +897,7 @@ namespace CxViewerAction.Views.DockedView
             checkboxHeader.Name = "checkboxHeader";
             checkboxHeader.Size = new Size(18, 18);
             checkboxHeader.Location = rect.Location;
-            checkboxHeader.CheckedChanged -= new EventHandler(checkboxHeader_CheckedChanged);  
+            checkboxHeader.CheckedChanged -= new EventHandler(checkboxHeader_CheckedChanged);
             checkboxHeader.CheckedChanged += new EventHandler(checkboxHeader_CheckedChanged);
             dgvProjects.Controls.Add(checkboxHeader);
         }
@@ -766,7 +906,7 @@ namespace CxViewerAction.Views.DockedView
         {
             foreach (DataGridViewRow row in dgvProjects.Rows)
             {
-               row.Cells["checkBoxesColumn"].Value = checkboxHeader.Checked;
+                row.Cells["checkBoxesColumn"].Value = checkboxHeader.Checked;
             }
             dgvProjects.EndEdit();
         }
@@ -807,17 +947,18 @@ namespace CxViewerAction.Views.DockedView
                 {
                     this.Refresh(this, currentNodedata);
                 }
-               
+
             }
             catch (Exception ex)
             {
 
                 Logger.Create().Error(ex.ToString());
-               
+
             }
             finally
             {
                 this.Cursor = Cursors.Default;
+                this.cbSeverity.SelectedIndex = -1;
             }
         }
 
@@ -868,6 +1009,7 @@ namespace CxViewerAction.Views.DockedView
             finally
             {
                 this.Cursor = Cursors.Default;
+                this.cbAssign.SelectedIndex = -1;
             }
         }
 
