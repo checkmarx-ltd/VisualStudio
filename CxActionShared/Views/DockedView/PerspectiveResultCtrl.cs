@@ -674,7 +674,7 @@ namespace CxViewerAction.Views.DockedView
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                using (StreamReader reader = new StreamReader(response.GetResponseStream(), ASCIIEncoding.ASCII))
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                 {
                     responseText = reader.ReadToEnd();
                 }
@@ -685,7 +685,7 @@ namespace CxViewerAction.Views.DockedView
                 JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
                 queryShortDescription = (CxQueryShortDescription)javaScriptSerializer.Deserialize(responseText, typeof(CxQueryShortDescription));
             }
-            this.label1.Text = queryShortDescription.shortDescription.Replace("??", " ");
+            this.label1.Text = queryShortDescription.shortDescription;
         }
 
         private void EditRemark(int columnIndex, int rowIndex)
