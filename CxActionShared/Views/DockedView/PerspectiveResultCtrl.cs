@@ -674,7 +674,7 @@ namespace CxViewerAction.Views.DockedView
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
                 {
                     responseText = reader.ReadToEnd();
                 }
