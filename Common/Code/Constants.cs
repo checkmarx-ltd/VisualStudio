@@ -61,7 +61,7 @@
 		public const string TOKEN_ENDPOINT = SAST_PREFIX + "/identity/connect/token";
 		public const string SAVE_SAST_SCAN = "save-sast-scan";
 		public const string MANAGE_RESULTS_COMMENT = "manage-result-comment";
-		public const string MANAGE_RESULTS_EXPLOITABILITY = "manage-result-exploitability";
+		public const string MANAGE_RESULTS_EXPLOITABILITY = "set-result-state-notexploitable";
 
 	}
 }
