@@ -667,14 +667,13 @@ namespace CxViewerAction.Views.DockedView
         private void GetShortDescription(long scanId, long pathId)
         {
             string responseText = string.Empty;
-            CxQueryShortDescription queryShortDescription = new CxQueryShortDescription();
 
             CxRESTApiCommon rESTApiPortalConfiguration = new CxRESTApiCommon(string.Format(_apiShortDescription, scanId, pathId));
             HttpWebResponse response = rESTApiPortalConfiguration.InitPortalBaseUrl();
 
-            if (response.StatusCode == HttpStatusCode.OK)
+            if (response != null && response.StatusCode == HttpStatusCode.OK)
             {
-                using (StreamReader reader = new StreamReader(response.GetResponseStream(), ASCIIEncoding.ASCII))
+                using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
                 {
                     responseText = reader.ReadToEnd();
                 }
@@ -682,10 +681,17 @@ namespace CxViewerAction.Views.DockedView
 
             if (!string.IsNullOrEmpty(responseText))
             {
+                CxQueryShortDescription queryShortDescription = new CxQueryShortDescription();
                 JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
                 queryShortDescription = (CxQueryShortDescription)javaScriptSerializer.Deserialize(responseText, typeof(CxQueryShortDescription));
+                this.label1.Text = queryShortDescription.shortDescription;
+                this.label1.ForeColor = Color.Black;
             }
-            this.label1.Text = queryShortDescription.shortDescription.Replace("??", " ");
+            else
+            {
+                this.label1.Text = "The query description for vulnerability result is not available.\r\n";
+                this.label1.ForeColor = Color.Red;
+            }
         }
 
         private void EditRemark(int columnIndex, int rowIndex)
