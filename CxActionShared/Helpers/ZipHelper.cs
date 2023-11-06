@@ -135,7 +135,7 @@ namespace CxViewerAction.Helpers
                             {
                                 foreach (string filePath in p.FilePathList) // scan only the file selected
                                 {
-                                    if (Directory.Exists(p.RootPath))
+                                    if (Directory.Exists(p.RootPath) && !oZip.ContainsEntry(filePath))
                                     {
                                         Logger.Create().Debug("Zip file: " + p.FilePathList);
                                         WriteEntryToZip(oZip, Path.GetFileName(filePath), filePath);
@@ -222,9 +222,12 @@ namespace CxViewerAction.Helpers
 
             foreach (string file in filesToZip)
             {
-                WriteEntryToZip(zipStream, file.Remove(0, trimLength), file);
-
-                entryCounter++;
+                bool isEntryExists = zipStream.ContainsEntry(file.Remove(0, trimLength));
+                if (!isEntryExists)
+                {
+                    WriteEntryToZip(zipStream, file.Remove(0, trimLength), file);
+                    entryCounter++;
+                }
 
                 // Flush every 20 entries
                 if (entryCounter % 20 == 0)
