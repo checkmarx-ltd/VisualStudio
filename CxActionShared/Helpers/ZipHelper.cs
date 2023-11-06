@@ -222,7 +222,7 @@ namespace CxViewerAction.Helpers
 
             foreach (string file in filesToZip)
             {
-                bool isEntryExists = zipStream.ContainsEntry(file.Remove(0, trimLength));
+                bool isEntryExists = zipStream.ContainsEntry(file.Remove(0, trimLength)); // checking is entry already exists in zipoutputsteam or not 
                 if (!isEntryExists)
                 {
                     WriteEntryToZip(zipStream, file.Remove(0, trimLength), file);
