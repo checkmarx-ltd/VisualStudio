@@ -56,6 +56,7 @@ namespace CxViewerAction.Entities
         private int _reconnectCount = 3;
 
         private bool _disableConnectionOptimizations = false;
+        private bool _avoidDuplicateScansInQueue = false;
 
         SerializableDictionary<string, string> _perspectives;
 
@@ -277,6 +278,15 @@ namespace CxViewerAction.Entities
         public bool ManageResultsExploitability { get => _manageResultsExploitability; set => _manageResultsExploitability = value; }
 
         public int BindProjectCount { get { return _bindProjectCount; } set { _bindProjectCount = value; } }
+
+        /// <summary>
+        /// Gets or sets the option to avoid duplicate project scans in queue
+        /// </summary>
+        public bool AvoidDuplicateScansInQueue
+        {
+            get { return _avoidDuplicateScansInQueue; }
+            set { _avoidDuplicateScansInQueue = value; }
+        }
         #endregion [ Properties ]
 
         #region [ Public Methods ]
