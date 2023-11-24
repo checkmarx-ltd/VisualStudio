@@ -6,6 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using CxViewerAction.CxVSWebService;
 using CxViewerAction.Entities.WebServiceEntity;
+using Common;
 
 namespace CxViewerAction.Services
 {
@@ -61,7 +62,21 @@ namespace CxViewerAction.Services
         /// <param name="server">server url</param>
         public CxWebServiceClient(LoginData pLogin)
         {
-            ServicePointManager.ServerCertificateValidationCallback += delegate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+            ServicePointManager. ServerCertificateValidationCallback += delegate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) 
+            {
+                // No SSL policy errors, certificate is considered valid Or Certificate validation is disabled
+                if (!pLogin.EnableTLSOrSSLServerCertificateValidation || sslPolicyErrors == SslPolicyErrors.None)
+                    return true;
+                else
+                {
+                    // Log or handle SSL policy errors
+                    Logger.Create().Error("Certificate error: " + sslPolicyErrors.ToString());
+
+                    // Example: Check if the certificate is issued by a specific CA or meets specific criteria
+                    // Return false to reject the certificate
+                    return false;
+                }
+            };
 
             CxViewerAction.Services.CxWSResolverWrapper resolver = new CxViewerAction.Services.CxWSResolverWrapper { Url = pLogin.Server };
             resolver.DisableConnectionOptimizations = pLogin.DisableConnectionOptimizations;

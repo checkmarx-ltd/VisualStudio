@@ -64,6 +64,7 @@ namespace CxViewerAction.Entities
         private bool _manageResultsComment;
         private bool _manageResultsExploitability;
         private int _bindProjectCount = -1;
+        private bool _enableTLSOrSSLServerCertificateValidation = true;
 
         #endregion
 
@@ -277,6 +278,9 @@ namespace CxViewerAction.Entities
         public bool ManageResultsExploitability { get => _manageResultsExploitability; set => _manageResultsExploitability = value; }
 
         public int BindProjectCount { get { return _bindProjectCount; } set { _bindProjectCount = value; } }
+
+        public bool EnableTLSOrSSLServerCertificateValidation { get => _enableTLSOrSSLServerCertificateValidation; set => _enableTLSOrSSLServerCertificateValidation = value; }
+
         #endregion [ Properties ]
 
         #region [ Public Methods ]
