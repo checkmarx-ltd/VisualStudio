@@ -69,6 +69,11 @@ namespace CxViewerVSIX.Commands
         protected override void MenuItemCallback(object sender, EventArgs e)
         {
             base.MenuItemCallback(sender, e);
+            var bindCommand = sender as OleMenuCommand;
+            if(bindCommand.Text == "Unbind")
+            {
+                _logic.UnBindProject();
+            }
             _logic.Act();           
         }
 

@@ -14,6 +14,7 @@ using CxViewerAction.ValueObjects;
 using CxViewerAction.Views;
 using CxViewerAction.WebPortal;
 using CefSharp;
+using CxViewerAction.MenuLogic;
 
 namespace CxViewerAction.Helpers
 {
@@ -469,6 +470,8 @@ namespace CxViewerAction.Helpers
             LoginData login = LoadSaved();
             Logger.Create().Info("Logging out, clearing authentication data.");
             OidcLoginData oidcLoginData = OidcLoginData.GetOidcLoginDataInstance();
+            BindProjectLogic _logic = new BindProjectLogic();
+            _logic.UnBindProject(true);
             oidcLoginData.AccessToken = null;
             oidcLoginData.RefreshToken = null;
             oidcLoginData.AccessTokenExpiration = -1;
