@@ -13,6 +13,11 @@ using CxViewerAction.Entities.FormEntity;
 using System.Threading;
 using CxViewerAction.CxVSWebService;
 using Common;
+using System.Net;
+using System.IO;
+using System.Text;
+using CxViewerAction.ValueObjects;
+using System.Web.Script.Serialization;
 
 namespace CxViewerAction.Helpers
 {
@@ -27,7 +32,7 @@ namespace CxViewerAction.Helpers
         static bool _cancelPressed;
         static Upload _uploadSettings;
         readonly IConfigurationHelper _configurationHelper;
-
+        private string _apiProjectDetails = "projects/{0}";
 
         public ScanHelper(IConfigurationHelper configurationHelper)
         {
@@ -427,8 +432,9 @@ namespace CxViewerAction.Helpers
 
                 bindProject.BindedProjectId = scanStatus.ProjectId;
                 CommonData.ProjectId = scanStatus.ProjectId;
-                CommonData.IsProjectPublic = scanStatus.IsPublic;
-                bindProject.IsPublic = scanStatus.IsPublic;
+                bool isPublic= GetProjectDetails(scanStatus.ProjectId);
+                CommonData.IsProjectPublic = isPublic;
+                bindProject.IsPublic = isPublic;
                 bindProject.IsBound = true;
             }
             bindProject.SelectedScanId = id;
@@ -471,6 +477,30 @@ namespace CxViewerAction.Helpers
             bgWork.DoWork();
         }
 
+        private bool GetProjectDetails(long projectId)
+        {
+            string responseText = string.Empty;
+
+            CxRESTApiCommon rESTApiPortalConfiguration = new CxRESTApiCommon(string.Format(_apiProjectDetails, projectId));
+            HttpWebResponse response = rESTApiPortalConfiguration.InitPortalBaseUrl();
+
+            if (response != null && response.StatusCode == HttpStatusCode.OK)
+            {
+                using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                {
+                    responseText = reader.ReadToEnd();
+                }
+            }
+
+            if (!string.IsNullOrEmpty(responseText))
+            {
+                CxProjectDetails projectDetails = new CxProjectDetails();
+                JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
+                projectDetails = (CxProjectDetails)javaScriptSerializer.Deserialize(responseText, typeof(CxProjectDetails));
+                return projectDetails.isPublic;
+            }
+            return false;
+        }
         private StatusScanResult UpdateScanStatus(ref bool bCancel, bool backgroundMode, IScanView view, BackgroundWorkerHelper bg, CxWebServiceClient client, ref bool isIISStoped)
         {
             // Get current scan status
