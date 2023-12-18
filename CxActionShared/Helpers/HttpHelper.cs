@@ -24,7 +24,8 @@ namespace CxViewerAction.Helpers
             try
             {
                 HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
-                ServicePointManager.ServerCertificateValidationCallback += delegate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+                //This class is not in use. To avoid SSL_Verification_ByPass vulnarability by default SSL certificate validation enabled
+                ServicePointManager.ServerCertificateValidationCallback += delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return false; };
                 response = (HttpWebResponse)request.GetResponse();
 
                 using (StreamReader responseStream = new StreamReader(response.GetResponseStream()))
