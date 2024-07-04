@@ -12,7 +12,8 @@ namespace CxViewerAction.Entities.WebServiceEntity
         Information = 0,
         Low         = 1,
         Medium      = 2,
-        High        = 3
+        High        = 3,
+        Critical    = 4
     }
 
     public enum ViewerTreeNodeType
@@ -456,6 +457,7 @@ namespace CxViewerAction.Entities.WebServiceEntity
                 case "Low": type = ReportQuerySeverityType.Low; break;
                 case "Medium": type = ReportQuerySeverityType.Medium; break;
                 case "High": type = ReportQuerySeverityType.High; break;
+                case "Critical": type = ReportQuerySeverityType.Critical; break;
                 default: type = ReportQuerySeverityType.None; break;
             }
 

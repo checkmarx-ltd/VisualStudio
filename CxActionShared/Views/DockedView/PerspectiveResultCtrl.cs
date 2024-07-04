@@ -408,6 +408,9 @@ namespace CxViewerAction.Views.DockedView
 
             switch (severity)
             {
+                case 4:
+                    severityDesc = "Critical";
+                    break;
                 case 3:
                     severityDesc = "High";
                     break;
@@ -428,10 +431,12 @@ namespace CxViewerAction.Views.DockedView
 
         private void fillSeverityCB()
         {
+            ComboBoxItem critical = new ComboBoxItem(4, "Critical");
             ComboBoxItem high = new ComboBoxItem(3, "High");
             ComboBoxItem medium = new ComboBoxItem(2, "Medium");
             ComboBoxItem low = new ComboBoxItem(1, "Low");
             ComboBoxItem info = new ComboBoxItem(0, "Info");
+            cbSeverity.Items.Add(critical);
             cbSeverity.Items.Add(high);
             cbSeverity.Items.Add(medium);
             cbSeverity.Items.Add(low);

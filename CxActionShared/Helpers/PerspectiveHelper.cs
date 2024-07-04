@@ -310,6 +310,7 @@ namespace CxViewerAction.Helpers
                 List<CxWSQueryVulnerabilityData> sev1 = new List<CxWSQueryVulnerabilityData>();
                 List<CxWSQueryVulnerabilityData> sev2 = new List<CxWSQueryVulnerabilityData>();
                 List<CxWSQueryVulnerabilityData> sev3 = new List<CxWSQueryVulnerabilityData>();
+                List<CxWSQueryVulnerabilityData> sev4 = new List<CxWSQueryVulnerabilityData>();
 
                 for (int i = 0; i < queries.Length; i++)
                 {
@@ -328,7 +329,14 @@ namespace CxViewerAction.Helpers
                         case 3:
                             sev3.Add(cur);
                             break;
+                        case 4:
+                            sev4.Add(cur);
+                            break;
                     }
+                }
+                if (sev4.Count > 0)
+                {
+                    queriesGroups.Add(ReportQuerySeverityType.Critical, sev4);
                 }
                 if (sev3.Count > 0)
                 {
