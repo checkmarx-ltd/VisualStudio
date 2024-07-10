@@ -43,6 +43,11 @@ namespace CxViewerAction.Views.DockedView
             InitializeComponent();
             dgvProjects.CellClick += new DataGridViewCellEventHandler(dataGridView1_CellClick);
             dgvProjects.RowTemplate.Height = 30;
+
+        }
+
+        private void fillComboBoxes()
+        {
             try
             {
                 //DgvFilterManager fm = new DgvFilterManager { DataGridView = dgvProjects };
@@ -52,11 +57,6 @@ namespace CxViewerAction.Views.DockedView
             {
                 Logger.Create().Error(ex.ToString());
             }
-
-        }
-
-        private void fillComboBoxes()
-        {
             if (ResultStateList != null && cbState.Items.Count == 0 && !CommonData.IsWorkingOffline)
             {
                 foreach (KeyValuePair<long, string> state in ResultStateList)
@@ -431,17 +431,24 @@ namespace CxViewerAction.Views.DockedView
 
         private void fillSeverityCB()
         {
-            ComboBoxItem critical = new ComboBoxItem(4, "Critical");
+            cbSeverity.Items.Clear();
+            string version = PerspectiveHelper.GetSASTVersionDetails();
+            var value = version.Split('.');
+            var currentVersion = (value[0]) + "." + (value[1]);
+            if (!string.IsNullOrEmpty(version) && float.Parse(currentVersion) > float.Parse("9.6"))
+            {
+                ComboBoxItem critical = new ComboBoxItem(4, "Critical");
+                cbSeverity.Items.Add(critical);
+            }
+
             ComboBoxItem high = new ComboBoxItem(3, "High");
             ComboBoxItem medium = new ComboBoxItem(2, "Medium");
             ComboBoxItem low = new ComboBoxItem(1, "Low");
             ComboBoxItem info = new ComboBoxItem(0, "Info");
-            cbSeverity.Items.Add(critical);
             cbSeverity.Items.Add(high);
             cbSeverity.Items.Add(medium);
             cbSeverity.Items.Add(low);
             cbSeverity.Items.Add(info);
-
         }
 
         public void MarkRowAsSelected(long pathId)

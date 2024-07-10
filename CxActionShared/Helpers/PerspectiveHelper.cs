@@ -12,6 +12,10 @@ using CxViewerAction.Views.DockedView;
 using CxViewerAction.Entities.WebServiceEntity;
 using System.Collections.Generic;
 using Common;
+using System.Net;
+using System.Text;
+using System.Web.Script.Serialization;
+using CxViewerAction.ValueObjects;
 
 namespace CxViewerAction.Helpers
 {
@@ -26,7 +30,7 @@ namespace CxViewerAction.Helpers
         /// Perspective not exist message
         /// </summary>
         private const string _perspectiveNotExist = "Current project perspective not exist";
-
+        private static string _apiSASTVersionDetails = "system/version";
         #endregion [ Constants ]
 
         /// <summary>
@@ -560,6 +564,34 @@ namespace CxViewerAction.Helpers
             
 
             return res;
+        }
+
+        public static string GetSASTVersionDetails()
+        {
+            string responseText = string.Empty;
+
+            if(!string.IsNullOrEmpty(LoginHelper.ServerBaseUrl))
+            {
+                CxRESTApiCommon rESTApiPortalConfiguration = new CxRESTApiCommon(string.Format(_apiSASTVersionDetails));
+                HttpWebResponse response = rESTApiPortalConfiguration.InitPortalBaseUrl();
+
+                if (response != null && response.StatusCode == HttpStatusCode.OK)
+                {
+                    using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                    {
+                        responseText = reader.ReadToEnd();
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(responseText))
+            {
+                CxVersionInfo versionInfo = new CxVersionInfo();
+                JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
+                versionInfo = (CxVersionInfo)javaScriptSerializer.Deserialize(responseText, typeof(CxVersionInfo));
+                return versionInfo.version;
+            }
+            return "";
         }
 
         private static ResultState[] RemoveNotExploitableFromArray(ResultState[] resultStates)
