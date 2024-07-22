@@ -812,28 +812,45 @@ namespace CxViewerAction.Views.DockedView
 
         private void cbState_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            if (!IsMandatoryCommentOnChangeResultState())
+            try
             {
-                updateResultStateDetails(sender,"");
-            }
-            else
-            {
-                EditRemarkPopUp remarkPopUp = new EditRemarkPopUp("", "",false);
+                ComboBox senderComboBox = (ComboBox)sender;
+                ComboBoxItem item = (ComboBoxItem)senderComboBox.SelectedItem;
 
-                DialogResult result = remarkPopUp.ShowDialog();
-
-                if (result == DialogResult.Cancel)
+                if (IsMandatoryCommentOnChangeResultState() ||
+                    (item.Id == (int)ResultStates.NotExploitable && IsMandatoryCommentOnChangeResultStateToNE()) ||
+                    (item.Id == (int)ResultStates.ProposedNotExploitable && IsMandatoryCommentOnChangeResultStateToPNE()))
                 {
-                    this.cbState.SelectedIndex = -1;
-                    return;
+                    openCommentPopup(sender);
                 }
-                string remark = remarkPopUp.Remark;
-                if (!String.IsNullOrWhiteSpace(remark))
-                    updateResultStateDetails(sender, remark);
+                else
+                {
+                    updateResultStateDetails(sender, "");
+                }
+                this.cbState.SelectedIndex = -1;
             }
-            this.cbState.SelectedIndex = -1;
+            catch(Exception ex)
+            {
+                updateResultStateDetails(sender, "");
+            }
         }
 
+
+        private void openCommentPopup(object sender)
+        {
+            EditRemarkPopUp remarkPopUp = new EditRemarkPopUp("", "", false);
+
+            DialogResult result = remarkPopUp.ShowDialog();
+
+            if (result == DialogResult.Cancel)
+            {
+                this.cbState.SelectedIndex = -1;
+                return;
+            }
+            string remark = remarkPopUp.Remark;
+            if (!String.IsNullOrWhiteSpace(remark))
+                updateResultStateDetails(sender, remark);
+        }
 
         private CheckBox checkboxHeader = new CheckBox();
 
@@ -892,6 +909,18 @@ namespace CxViewerAction.Views.DockedView
         {
             CxRESTApiPortalConfiguration rESTApiPortalConfiguration = new CxRESTApiPortalConfiguration();
             return rESTApiPortalConfiguration.InitPortalConfigurationDetails().MandatoryCommentOnChangeResultState;
+        }
+
+        private bool IsMandatoryCommentOnChangeResultStateToNE()
+        {
+            CxRESTApiNoneConfiguration rESTApiPortalConfiguration = new CxRESTApiNoneConfiguration();
+            return rESTApiPortalConfiguration.InitNoneConfigurationDetails().MandatoryCommentOnChangeResultStateToNE;
+        }
+
+        private bool IsMandatoryCommentOnChangeResultStateToPNE()
+        {
+            CxRESTApiNoneConfiguration rESTApiPortalConfiguration = new CxRESTApiNoneConfiguration();
+            return rESTApiPortalConfiguration.InitNoneConfigurationDetails().MandatoryCommentOnChangeResultStateToPNE;
         }
 
         private void show_chkBox()

@@ -8,6 +8,9 @@
 
         public bool MandatoryCommentOnChangeResultState { get; set; }
 
+        public bool MandatoryCommentOnChangeResultStateToNE { get; set; }
+
+        public bool MandatoryCommentOnChangeResultStateToPNE { get; set; }
         #endregion
     }
 }
