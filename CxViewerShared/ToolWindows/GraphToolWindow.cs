@@ -13,6 +13,7 @@ namespace CxViewerVSIX.ToolWindows
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
     using Microsoft.VisualStudio.Shell;
+    using Microsoft.VisualStudio.Utilities;
 
     /// <summary>
     /// This class implements the tool window exposed by this package and hosts a user control.
@@ -41,14 +42,8 @@ namespace CxViewerVSIX.ToolWindows
 
         }
 
-        private PerspectiveGraphCtrl ctrl = new PerspectiveGraphCtrl(); 
-        public override IWin32Window Window
-        {
-            get
-            {
-                return ctrl;
-            }
-        }
+        private PerspectiveGraphCtrl ctrl;
+        override public IWin32Window Window { get { using (DpiAwareness.EnterDpiScope(DpiAwarenessContext.SystemAware)) { if (ctrl == null) ctrl = new PerspectiveGraphCtrl(); return ctrl; } } }
 
         private static int id = 0;
         public static int ID
