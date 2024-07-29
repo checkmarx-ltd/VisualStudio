@@ -812,27 +812,20 @@ namespace CxViewerAction.Views.DockedView
 
         private void cbState_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            try
-            {
-                ComboBox senderComboBox = (ComboBox)sender;
-                ComboBoxItem item = (ComboBoxItem)senderComboBox.SelectedItem;
+            ComboBox senderComboBox = (ComboBox)sender;
+            ComboBoxItem item = (ComboBoxItem)senderComboBox.SelectedItem;
 
-                if (IsMandatoryCommentOnChangeResultState() ||
-                    (item.Id == (int)ResultStates.NotExploitable && IsMandatoryCommentOnChangeResultStateToNE()) ||
-                    (item.Id == (int)ResultStates.ProposedNotExploitable && IsMandatoryCommentOnChangeResultStateToPNE()))
-                {
-                    openCommentPopup(sender);
-                }
-                else
-                {
-                    updateResultStateDetails(sender, "");
-                }
-                this.cbState.SelectedIndex = -1;
+            if (IsMandatoryCommentOnChangeResultState() ||
+                (item.Id == (int)ResultStates.NotExploitable && IsMandatoryCommentOnChangeResultStateToNE()) ||
+                (item.Id == (int)ResultStates.ProposedNotExploitable && IsMandatoryCommentOnChangeResultStateToPNE()))
+            {
+                openCommentPopup(sender);
             }
-            catch(Exception ex)
+            else
             {
                 updateResultStateDetails(sender, "");
             }
+            this.cbState.SelectedIndex = -1;
         }
 
 
