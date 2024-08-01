@@ -106,6 +106,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\EnvDTEConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApi.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApiCommon.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)services\restapi\CxRESTApiNoneConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApiPortalConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RESTApi\CxRESTApiWebRequestBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\WinCookieHelper.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\RESTApi\CxProjectDetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\RESTApi\CxQueryDescription.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\RESTApi\CxRESTApiLoginResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)valueobjects\restapi\enum\ResultStates.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)valueobjects\restapi\CxVersionInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\Results.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\WebPortal\Models\CxPortalConfiguration.cs" />
@@ -365,5 +367,8 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\MultiRelaitionsSelected.PNG" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\NormalNode.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\NormalSelected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)ValueObjects\RESTApi\Enum\" />
   </ItemGroup>
 </Project>

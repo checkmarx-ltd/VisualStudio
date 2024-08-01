@@ -824,28 +824,38 @@ namespace CxViewerAction.Views.DockedView
 
         private void cbState_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            if (!IsMandatoryCommentOnChangeResultState())
+            ComboBox senderComboBox = (ComboBox)sender;
+            ComboBoxItem item = (ComboBoxItem)senderComboBox.SelectedItem;
+
+            if (IsMandatoryCommentOnChangeResultState() ||
+                (item.Id == (int)ResultStates.NotExploitable && IsMandatoryCommentOnChangeResultStateToNE()) ||
+                (item.Id == (int)ResultStates.ProposedNotExploitable && IsMandatoryCommentOnChangeResultStateToPNE()))
             {
-                updateResultStateDetails(sender,"");
+                openCommentPopup(sender);
             }
             else
             {
-                EditRemarkPopUp remarkPopUp = new EditRemarkPopUp("", "",false);
-
-                DialogResult result = remarkPopUp.ShowDialog();
-
-                if (result == DialogResult.Cancel)
-                {
-                    this.cbState.SelectedIndex = -1;
-                    return;
-                }
-                string remark = remarkPopUp.Remark;
-                if (!String.IsNullOrWhiteSpace(remark))
-                    updateResultStateDetails(sender, remark);
+                updateResultStateDetails(sender, "");
             }
             this.cbState.SelectedIndex = -1;
         }
 
+
+        private void openCommentPopup(object sender)
+        {
+            EditRemarkPopUp remarkPopUp = new EditRemarkPopUp("", "", false);
+
+            DialogResult result = remarkPopUp.ShowDialog();
+
+            if (result == DialogResult.Cancel)
+            {
+                this.cbState.SelectedIndex = -1;
+                return;
+            }
+            string remark = remarkPopUp.Remark;
+            if (!String.IsNullOrWhiteSpace(remark))
+                updateResultStateDetails(sender, remark);
+        }
 
         private CheckBox checkboxHeader = new CheckBox();
 
@@ -904,6 +914,18 @@ namespace CxViewerAction.Views.DockedView
         {
             CxRESTApiPortalConfiguration rESTApiPortalConfiguration = new CxRESTApiPortalConfiguration();
             return rESTApiPortalConfiguration.InitPortalConfigurationDetails().MandatoryCommentOnChangeResultState;
+        }
+
+        private bool IsMandatoryCommentOnChangeResultStateToNE()
+        {
+            CxRESTApiNoneConfiguration rESTApiPortalConfiguration = new CxRESTApiNoneConfiguration();
+            return rESTApiPortalConfiguration.InitNoneConfigurationDetails().MandatoryCommentOnChangeResultStateToNE;
+        }
+
+        private bool IsMandatoryCommentOnChangeResultStateToPNE()
+        {
+            CxRESTApiNoneConfiguration rESTApiPortalConfiguration = new CxRESTApiNoneConfiguration();
+            return rESTApiPortalConfiguration.InitNoneConfigurationDetails().MandatoryCommentOnChangeResultStateToPNE;
         }
 
         private void show_chkBox()
