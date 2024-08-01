@@ -49,6 +49,11 @@ namespace CxViewerAction.Entities.WebServiceEntity
                     tepmTree[problem.Severity].Add(problem);
                 }
 
+                if (tepmTree.ContainsKey(ReportQuerySeverityType.Critical))
+                {
+                    _tree.Add(ReportQuerySeverityType.Critical, tepmTree[ReportQuerySeverityType.Critical]);
+                }
+
                 if (tepmTree.ContainsKey(ReportQuerySeverityType.High))
                 {
                     _tree.Add(ReportQuerySeverityType.High, tepmTree[ReportQuerySeverityType.High]);
