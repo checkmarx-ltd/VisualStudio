@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="37506746-5265-481e-ac06-32f67910eedd" Publisher="Checkmarx" Version="9.00.27" Language="en-US" />
+        <Identity Id="37506746-5265-481e-ac06-32f67910eedd" Publisher="Checkmarx" Version="9.00.28" Language="en-US" />
         <DisplayName>CxViewer</DisplayName>
         <Description xml:space="preserve" >Checkmarx Visual Studio Plugin</Description>
         <MoreInfo>https://checkmarx.atlassian.net/wiki/spaces/SD/pages/1339392185/Visual+Studio+Plugin</MoreInfo>

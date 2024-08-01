@@ -4,7 +4,8 @@ using System.Web;
 using System.Windows.Forms;
 using Common;
 using Microsoft.Win32;
-
+using CxViewerAction.Entities;
+using CxViewerAction.Helpers;
 
 namespace CxViewerAction.Views.DockedView
 {
@@ -16,7 +17,8 @@ namespace CxViewerAction.Views.DockedView
         public event EventHandler<string> NavigationError;
         public event EventHandler<string> NavigationCompleted;
         public const string ERROR_QUERY_KEY = "Error";
-        public const string BLANK_PAGE = "about:blank"; 
+        public const string BLANK_PAGE = "about:blank";
+        public const String CODE_KEY = "code=";
         
         #endregion
 
@@ -89,7 +91,7 @@ namespace CxViewerAction.Views.DockedView
         private void OnDocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs eventArgs)
         {
             
-            if (!eventArgs.Url.AbsoluteUri.ToLower().Contains("code="))
+            if (!validateUrlResponse(eventArgs))
             {
                 Logger.Create().Debug("Checking for presence of authorization code in the URL. " + eventArgs.Url.AbsoluteUri.ToLower());
                 return;
@@ -106,7 +108,22 @@ namespace CxViewerAction.Views.DockedView
             }
         }
 
-		private string ExtractCodeFromUrl(string absoluteUri)
+        private Boolean validateUrlResponse(WebBrowserDocumentCompletedEventArgs eventArgs)
+        {
+            try
+            {
+                LoginData loginData = LoginHelper.LoadSaved();
+                Uri myUri = new Uri(loginData.ServerBaseUri);
+                String host = myUri.Host;
+                return eventArgs.Url.AbsoluteUri.Contains(host) && eventArgs.Url.AbsoluteUri.ToLower().Contains(CODE_KEY);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        private string ExtractCodeFromUrl(string absoluteUri)
 		{
 			Uri myUri = new Uri(absoluteUri);
 			return HttpUtility.ParseQueryString(myUri.Query).Get("code");
