@@ -116,6 +116,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\RESTApi\CxQueryDescription.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\RESTApi\CxRESTApiLoginResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)valueobjects\restapi\enum\ResultStates.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)valueobjects\restapi\CxVersionInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\Results.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\WebPortal\Models\CxPortalConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\BindingPrjList.cs">

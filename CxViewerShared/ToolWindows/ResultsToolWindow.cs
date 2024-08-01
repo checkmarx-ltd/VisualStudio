@@ -14,6 +14,7 @@ namespace CxViewerVSIX.ToolWindows
     using System.Windows.Forms;
     using Microsoft.VisualStudio.Shell;
     using EnvDTE;
+    using Microsoft.VisualStudio.Utilities;
 
     /// <summary>
     /// This class implements the tool window exposed by this package and hosts a user control.
@@ -42,14 +43,8 @@ namespace CxViewerVSIX.ToolWindows
             // the object returned by the Content property.
         }
 
-        private PerspectiveResultCtrl ctrl = new PerspectiveResultCtrl();
-        public override IWin32Window Window
-        {
-            get
-            {
-                return ctrl;
-            }
-        }
+        private PerspectiveResultCtrl ctrl;
+        override public IWin32Window Window { get { using (DpiAwareness.EnterDpiScope(DpiAwarenessContext.SystemAware)) { if (ctrl == null) ctrl = new PerspectiveResultCtrl(); return ctrl; } } }
 
         private static int id = 3;
         public static int ID
