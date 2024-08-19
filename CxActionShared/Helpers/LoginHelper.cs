@@ -434,8 +434,16 @@ namespace CxViewerAction.Helpers
                         //Add logs for print Server url and AccessToken
                         Logger.Create().Debug("Server URL: " + login.ServerBaseUri);
                         cxRestApi = new CxRESTApi(login);
-                        string accessToken = cxRestApi.Login(oidcLoginResult.Code);
-                        cxRestApi.GetPermissions(accessToken);                    
+                        try
+                        {
+                            string accessToken = cxRestApi.Login(oidcLoginResult.Code);
+                            cxRestApi.GetPermissions(accessToken);
+                        }
+                        catch(Exception ex)
+                        {
+                             Logger.Create().Debug("Failed to get accesstoken. Error: " + ex.ToString());
+                        }
+                                          
                 }
 
                 loginSucceeded = true;
