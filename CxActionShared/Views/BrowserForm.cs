@@ -132,7 +132,7 @@ namespace CxViewerAction.Views
             // Was the loaded page the first page load?
             browser.ExecuteScriptAsync("document.oncontextmenu = function() { return false; };");
 
-            if (!validateUrlResponse(e)) //e.Url.ToLower().Contains("code=")
+            if (!validateUrlResponse(e)) 
             {
                 if (e.Url.ToString().Contains("CxRestAPI"))
                 {
