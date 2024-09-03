@@ -43,6 +43,11 @@ namespace CxViewerAction.Views.DockedView
             InitializeComponent();
             dgvProjects.CellClick += new DataGridViewCellEventHandler(dataGridView1_CellClick);
             dgvProjects.RowTemplate.Height = 30;
+
+        }
+
+        private void fillComboBoxes()
+        {
             try
             {
                 //DgvFilterManager fm = new DgvFilterManager { DataGridView = dgvProjects };
@@ -52,11 +57,6 @@ namespace CxViewerAction.Views.DockedView
             {
                 Logger.Create().Error(ex.ToString());
             }
-
-        }
-
-        private void fillComboBoxes()
-        {
             if (ResultStateList != null && cbState.Items.Count == 0 && !CommonData.IsWorkingOffline)
             {
                 foreach (KeyValuePair<long, string> state in ResultStateList)
@@ -408,6 +408,9 @@ namespace CxViewerAction.Views.DockedView
 
             switch (severity)
             {
+                case 4:
+                    severityDesc = "Critical";
+                    break;
                 case 3:
                     severityDesc = "High";
                     break;
@@ -428,6 +431,16 @@ namespace CxViewerAction.Views.DockedView
 
         private void fillSeverityCB()
         {
+            cbSeverity.Items.Clear();
+            string version = PerspectiveHelper.GetSASTVersionDetails();
+            var value = version.Split('.');
+            var currentVersion = (value[0]) + "." + (value[1]);
+            if (!string.IsNullOrEmpty(version) && float.Parse(currentVersion) > float.Parse("9.6"))
+            {
+                ComboBoxItem critical = new ComboBoxItem(4, "Critical");
+                cbSeverity.Items.Add(critical);
+            }
+
             ComboBoxItem high = new ComboBoxItem(3, "High");
             ComboBoxItem medium = new ComboBoxItem(2, "Medium");
             ComboBoxItem low = new ComboBoxItem(1, "Low");
@@ -436,7 +449,6 @@ namespace CxViewerAction.Views.DockedView
             cbSeverity.Items.Add(medium);
             cbSeverity.Items.Add(low);
             cbSeverity.Items.Add(info);
-
         }
 
         public void MarkRowAsSelected(long pathId)
@@ -812,28 +824,38 @@ namespace CxViewerAction.Views.DockedView
 
         private void cbState_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            if (!IsMandatoryCommentOnChangeResultState())
+            ComboBox senderComboBox = (ComboBox)sender;
+            ComboBoxItem item = (ComboBoxItem)senderComboBox.SelectedItem;
+
+            if (IsMandatoryCommentOnChangeResultState() ||
+                (item.Id == (int)ResultStates.NotExploitable && IsMandatoryCommentOnChangeResultStateToNE()) ||
+                (item.Id == (int)ResultStates.ProposedNotExploitable && IsMandatoryCommentOnChangeResultStateToPNE()))
             {
-                updateResultStateDetails(sender,"");
+                openCommentPopup(sender);
             }
             else
             {
-                EditRemarkPopUp remarkPopUp = new EditRemarkPopUp("", "",false);
-
-                DialogResult result = remarkPopUp.ShowDialog();
-
-                if (result == DialogResult.Cancel)
-                {
-                    this.cbState.SelectedIndex = -1;
-                    return;
-                }
-                string remark = remarkPopUp.Remark;
-                if (!String.IsNullOrWhiteSpace(remark))
-                    updateResultStateDetails(sender, remark);
+                updateResultStateDetails(sender, "");
             }
             this.cbState.SelectedIndex = -1;
         }
 
+
+        private void openCommentPopup(object sender)
+        {
+            EditRemarkPopUp remarkPopUp = new EditRemarkPopUp("", "", false);
+
+            DialogResult result = remarkPopUp.ShowDialog();
+
+            if (result == DialogResult.Cancel)
+            {
+                this.cbState.SelectedIndex = -1;
+                return;
+            }
+            string remark = remarkPopUp.Remark;
+            if (!String.IsNullOrWhiteSpace(remark))
+                updateResultStateDetails(sender, remark);
+        }
 
         private CheckBox checkboxHeader = new CheckBox();
 
@@ -892,6 +914,18 @@ namespace CxViewerAction.Views.DockedView
         {
             CxRESTApiPortalConfiguration rESTApiPortalConfiguration = new CxRESTApiPortalConfiguration();
             return rESTApiPortalConfiguration.InitPortalConfigurationDetails().MandatoryCommentOnChangeResultState;
+        }
+
+        private bool IsMandatoryCommentOnChangeResultStateToNE()
+        {
+            CxRESTApiNoneConfiguration rESTApiPortalConfiguration = new CxRESTApiNoneConfiguration();
+            return rESTApiPortalConfiguration.InitNoneConfigurationDetails().MandatoryCommentOnChangeResultStateToNE;
+        }
+
+        private bool IsMandatoryCommentOnChangeResultStateToPNE()
+        {
+            CxRESTApiNoneConfiguration rESTApiPortalConfiguration = new CxRESTApiNoneConfiguration();
+            return rESTApiPortalConfiguration.InitNoneConfigurationDetails().MandatoryCommentOnChangeResultStateToPNE;
         }
 
         private void show_chkBox()

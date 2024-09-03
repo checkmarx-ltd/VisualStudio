@@ -16,6 +16,7 @@ using CxViewerAction.Helpers;
 using CefSharp.WinForms;
 using System.Collections.Specialized;
 using static CxViewerAction.Views.BrowserForm.MyCustomResourceRequestHandler;
+using CxViewerAction.Entities;
 
 //This code is using CefSharp Browser for Login.
 // Use of this source code is governed by a BSD-style license that can be found in the CxViewerVSIX Resource LICENSE file.
@@ -28,6 +29,7 @@ namespace CxViewerAction.Views
         public event EventHandler UserClosedForm;
         public const string ERROR_QUERY_KEY = "Error";
         public const string BLANK_PAGE = "about:blank";
+        public const String CODE_KEY = "code=";
         public BrowserForm()
         {
             InitializeComponent();
@@ -130,7 +132,7 @@ namespace CxViewerAction.Views
             // Was the loaded page the first page load?
             browser.ExecuteScriptAsync("document.oncontextmenu = function() { return false; };");
 
-            if (!e.Url.ToLower().Contains("code="))
+            if (!validateUrlResponse(e)) 
             {
                 if (e.Url.ToString().Contains("CxRestAPI"))
                 {
@@ -158,6 +160,21 @@ namespace CxViewerAction.Views
             }
             Cef.GetGlobalCookieManager().DeleteCookies("", "");
             Application.ExitThread();
+        }
+
+        private Boolean validateUrlResponse(CefSharp.FrameLoadEndEventArgs eventArgs)
+        {
+            try
+            {
+                LoginData loginData = LoginHelper.LoadSaved();
+                Uri myUri = new Uri(loginData.ServerBaseUri);
+                String host = myUri.Host;
+                return eventArgs.Url.Contains(host) && eventArgs.Url.ToLower().Contains(CODE_KEY);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
         private string ExtractCodeFromUrl(string absoluteUri)
         {

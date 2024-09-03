@@ -12,6 +12,10 @@ using CxViewerAction.Views.DockedView;
 using CxViewerAction.Entities.WebServiceEntity;
 using System.Collections.Generic;
 using Common;
+using System.Net;
+using System.Text;
+using System.Web.Script.Serialization;
+using CxViewerAction.ValueObjects;
 
 namespace CxViewerAction.Helpers
 {
@@ -26,7 +30,7 @@ namespace CxViewerAction.Helpers
         /// Perspective not exist message
         /// </summary>
         private const string _perspectiveNotExist = "Current project perspective not exist";
-
+        private static string _apiSASTVersionDetails = "system/version";
         #endregion [ Constants ]
 
         /// <summary>
@@ -310,6 +314,7 @@ namespace CxViewerAction.Helpers
                 List<CxWSQueryVulnerabilityData> sev1 = new List<CxWSQueryVulnerabilityData>();
                 List<CxWSQueryVulnerabilityData> sev2 = new List<CxWSQueryVulnerabilityData>();
                 List<CxWSQueryVulnerabilityData> sev3 = new List<CxWSQueryVulnerabilityData>();
+                List<CxWSQueryVulnerabilityData> sev4 = new List<CxWSQueryVulnerabilityData>();
 
                 for (int i = 0; i < queries.Length; i++)
                 {
@@ -328,7 +333,14 @@ namespace CxViewerAction.Helpers
                         case 3:
                             sev3.Add(cur);
                             break;
+                        case 4:
+                            sev4.Add(cur);
+                            break;
                     }
+                }
+                if (sev4.Count > 0)
+                {
+                    queriesGroups.Add(ReportQuerySeverityType.Critical, sev4);
                 }
                 if (sev3.Count > 0)
                 {
@@ -552,6 +564,34 @@ namespace CxViewerAction.Helpers
             
 
             return res;
+        }
+
+        public static string GetSASTVersionDetails()
+        {
+            string responseText = string.Empty;
+
+            if(!string.IsNullOrEmpty(LoginHelper.ServerBaseUrl))
+            {
+                CxRESTApiCommon rESTApiPortalConfiguration = new CxRESTApiCommon(string.Format(_apiSASTVersionDetails));
+                HttpWebResponse response = rESTApiPortalConfiguration.InitPortalBaseUrl();
+
+                if (response != null && response.StatusCode == HttpStatusCode.OK)
+                {
+                    using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                    {
+                        responseText = reader.ReadToEnd();
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(responseText))
+            {
+                CxVersionInfo versionInfo = new CxVersionInfo();
+                JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
+                versionInfo = (CxVersionInfo)javaScriptSerializer.Deserialize(responseText, typeof(CxVersionInfo));
+                return versionInfo.version;
+            }
+            return "";
         }
 
         private static ResultState[] RemoveNotExploitableFromArray(ResultState[] resultStates)

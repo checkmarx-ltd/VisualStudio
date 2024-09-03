@@ -100,10 +100,11 @@
             this.tvImages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("tvImages.ImageStream")));
             this.tvImages.TransparentColor = System.Drawing.Color.Transparent;
             this.tvImages.Images.SetKeyName(0, "help_16x16.gif");
-            this.tvImages.Images.SetKeyName(1, "exclamation.png");
-            this.tvImages.Images.SetKeyName(2, "attention2_16x16.gif");
-            this.tvImages.Images.SetKeyName(3, "middle.jpg");
-            this.tvImages.Images.SetKeyName(4, "cross_octagon.png");
+            this.tvImages.Images.SetKeyName(1, "Information.png");
+            this.tvImages.Images.SetKeyName(2, "Low.png");
+            this.tvImages.Images.SetKeyName(3, "Medium.png");
+            this.tvImages.Images.SetKeyName(4, "High.png");
+            this.tvImages.Images.SetKeyName(5, "Critical.png");
             // 
             // cbScans
             // 
