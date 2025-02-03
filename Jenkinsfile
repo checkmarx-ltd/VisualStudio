@@ -95,17 +95,23 @@ pipeline {
 }
 
 def getVersionFromManifest(manifestPath) {
+	echo "Inside getVersionFromManifest"
     def manifestContent = readFile(manifestPath)
-
+	echo "Inside getVersionFromManifest 2"
     // Clean BOM and leading whitespace dynamically in Groovy
     manifestContent = manifestContent.replaceFirst(/^\xEF\xBB\xBF/, '').trim()
-
+echo "Inside getVersionFromManifest 3"
 	
     def xml
     try {
         xml = new XmlSlurper().parseText(manifestContent)
+	echo "manifestContent 1: ${xml.Metadata}"
+	echo "manifestContent 1: ${xml.Metadata.Identity}"
+	echo "manifestContent 1: ${xml.Metadata.Identity.@Version}"
+
     } catch (Exception e) {
         error "Failed to parse XML for ${manifestPath}: ${e.message}"
     }
+	echo "Inside getVersionFromManifest 4"
     return xml.Metadata.Identity.@Version.text()
 }
