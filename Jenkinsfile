@@ -5,6 +5,8 @@ def ipAddress
 def vmName = "Plugin-VisualStudio-" + UUID.randomUUID().toString()
 def msbuildLocationVS2019 = "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\MSBuild\\Current\\Bin\\MSBuild.exe\""
 def msbuildLocationVS2022 = "\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\MSBuild\\Current\\Bin\\MSBuild.exe\""
+def versionOfVS2022
+def versionOfVS2019
 
 pipeline {
     parameters {
@@ -22,6 +24,16 @@ pipeline {
                     ipAddress = kit.getIpAddress(vmName, "VMWARE")
                     kit.Create_Jenkins_Slave_On_Master(vmName)
                     kit.Start_Jenkins_Slave_On_Windows_Pstools(ipAddress, vmName)
+
+		   def vs2019ManifestPath = 'CxViewer2022/source.extension.vsixmanifest'
+                   def vs2022ManifestPath = 'CxViewerVSIX/source.extension.vsixmanifest'
+
+		   // Extract versions using a helper function
+                    versionOfVS2022 = getVersionFromManifest(vs2022ManifestPath)
+                    versionOfVS2019 = getVersionFromManifest(vs2019ManifestPath)
+
+		    echo "VS2022 version: ${versionOfVS2022}"
+                    echo "VS2019 version: ${versionOfVS2019}"
                 }
             }
         }
@@ -47,13 +59,11 @@ pipeline {
                 script {
 		    	if(templateName == "VisualStudio2019-Template")
 			{
-				fileOperations([folderRenameOperation(source: "${WORKSPACE}\\Artifacts\\CxViewerVSIX-2019.vsix", destination: "${WORKSPACE}\\Artifacts\\CxViewerVSIX-9.00.19.vsix")])
-				kit.Upload_To_Artifactory("${WORKSPACE}\\Artifacts\\CxViewerVSIX-9.00.19.vsix", "plugins-release-local/com/checkmarx/visual-studio/")
+				kit.Upload_To_Artifactory("${WORKSPACE}\\Artifacts\\CxViewerVSIX-2019.vsix", "plugins-release-local/com/checkmarx/visual-studio/${versionOfVS2019}")
 			}
 			else 
 			{
-				fileOperations([folderRenameOperation(source: "${WORKSPACE}\\Artifacts\\CxViewerVSIX-2022.vsix", destination: "${WORKSPACE}\\Artifacts\\CxViewerVSIX-9.00.19.vsix")])
-				kit.Upload_To_Artifactory("${WORKSPACE}\\Artifacts\\CxViewerVSIX-9.00.19.vsix", "plugins-release-local/com/checkmarx/visual-studio/")
+				kit.Upload_To_Artifactory("${WORKSPACE}\\Artifacts\\CxViewerVSIX-2022.vsix", "plugins-release-local/com/checkmarx/visual-studio/${versionOfVS2022}")
 			}
                 }
             }
@@ -82,4 +92,10 @@ pipeline {
             cleanWs()
         }
     }
+}
+
+def getVersionFromManifest(manifestPath) {
+    def manifestContent = readFile(manifestPath)
+    def xml = new XmlSlurper().parseText(manifestContent)
+    return xml.Metadata.Identity.@Version.text()
 }
