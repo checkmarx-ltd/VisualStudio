@@ -24,21 +24,20 @@ pipeline {
                     ipAddress = kit.getIpAddress(vmName, "VMWARE")
                     kit.Create_Jenkins_Slave_On_Master(vmName)
                     kit.Start_Jenkins_Slave_On_Windows_Pstools(ipAddress, vmName)
+
+				def vs2019ManifestPath = 'CxViewerVSIX/source.extension.vsixmanifest'
+                   def vs2022ManifestPath = 'CxViewer2022/source.extension.vsixmanifest'
+
+		   // Extract versions using a helper function
+                    versionOfVS2022 = getVersionFromManifest(vs2022ManifestPath)
+                    versionOfVS2019 = getVersionFromManifest(vs2019ManifestPath)
+
+		    echo "VS2022 version: ${versionOfVS2022}"
+                    echo "VS2019 version: ${versionOfVS2019}"
                 }
             }
         }
-	stage('Extract Version') {
-            steps {
-                script {
-                    // Use xmllint to extract the version attribute
-                     versionOfVS2022 = sh(
-                        script: "xmllint --xpath 'string(//Identity/@Version)' CxViewer2022/source.extension.vsixmanifest",
-                        returnStdout: true
-                    ).trim()
-                    echo "Extracted Version: ${versionOfVS2022}"
-                }
-            }
-        }
+	
         stage('Build and Pack') {
             agent { node { label vmName } }
             steps {
@@ -106,6 +105,8 @@ def getVersionFromManifest(manifestPath) {
     def xml
     try {
         xml = new XmlSlurper().parseText(manifestContent)
+	xml.declareNamespace(vsx: "http://schemas.microsoft.com/developer/vsx-schema/2011")
+
 	echo "manifestContent 1: ${xml}"
 	echo "manifestContent 2: ${xml.Version}"
 	echo "manifestContent 3: ${xml.Metadata}"
