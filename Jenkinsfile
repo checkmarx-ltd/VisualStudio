@@ -21,10 +21,10 @@ pipeline {
     }
     agent { node { label 'install01' } }
     stages {
-        stage('Create VM') {
+	stage('Extract Version') {
             steps {
                 script {
-			def vs2019ManifestPath = 'CxViewerVSIX/source.extension.vsixmanifest'
+                    def vs2019ManifestPath = 'CxViewerVSIX/source.extension.vsixmanifest'
                    def vs2022ManifestPath = 'CxViewer2022/source.extension.vsixmanifest'
 
 		   // Extract versions using a helper function
@@ -33,12 +33,16 @@ pipeline {
 
 		    echo "VS2022 version: ${versionOfVS2022}"
                     echo "VS2019 version: ${versionOfVS2019}"
+                }
+            }
+        }
+        stage('Create VM') {
+            steps {
+                script {
                     kit.Create_Vm_Terraform(vmName, templateName, "18000", "8", "VMWARE", decommissionPeriod, "Auto", "Plugins-Developers")
                     ipAddress = kit.getIpAddress(vmName, "VMWARE")
                     kit.Create_Jenkins_Slave_On_Master(vmName)
                     kit.Start_Jenkins_Slave_On_Windows_Pstools(ipAddress, vmName)
-
-				
                 }
             }
         }
@@ -58,17 +62,17 @@ pipeline {
             }
         }
 		
-		stage('Upload To Artifactory') {
+	stage('Upload To Artifactory') {
             agent { node { label vmName } }
             steps {
                 script {
 		    	if(templateName == "VisualStudio2019-Template")
 			{
-				kit.Upload_To_Artifactory("${WORKSPACE}\\Artifacts\\CxViewerVSIX-2019.vsix", "plugins-release-local/com/checkmarx/visual-studio/${versionOfVS2019}")
+				kit.Upload_To_Artifactory("${WORKSPACE}\\Artifacts\\CxViewerVSIX-2019.vsix", "plugins-release-local/com/checkmarx/visual-studio/${versionOfVS2019}/")
 			}
 			else 
 			{
-				kit.Upload_To_Artifactory("${WORKSPACE}\\Artifacts\\CxViewerVSIX-2022.vsix", "plugins-release-local/com/checkmarx/visual-studio/${versionOfVS2022}")
+				kit.Upload_To_Artifactory("${WORKSPACE}\\Artifacts\\CxViewerVSIX-2022.vsix", "plugins-release-local/com/checkmarx/visual-studio/${versionOfVS2022}/")
 			}
                 }
             }
@@ -100,8 +104,6 @@ pipeline {
 }
 def extractVersionUsingDOMBuilder(manifestPath) {
     def manifestContent = readFile(manifestPath)
-    
-    // Clean BOM if present and trim leading/trailing whitespace
     manifestContent = manifestContent.replaceFirst(/^\xEF\xBB\xBF/, '').trim()
 
     def version = ''
@@ -117,40 +119,10 @@ def extractVersionUsingDOMBuilder(manifestPath) {
         // Use DOM to extract the Version attribute
         def node = document.getElementsByTagName("Identity").item(0)
         version = node?.getAttribute("Version")
-	echo "version------ : ${version}"
-
         if (!version) {
             error "Version attribute not found in ${manifestPath}"
         }
-
         return version
-    } catch (Exception e) {
-        error "Failed to parse XML using DOMBuilder for ${manifestPath}: ${e.message}"
-    }
-}
-
-def getVersionFromManifest(manifestPath) {
-	echo "Inside getVersionFromManifest"
-   	def manifestContent = readFile(manifestPath)
-	echo "Inside getVersionFromManifest 2 : ${manifestContent}"
-	manifestContent = manifestContent.replaceFirst(/^\xEF\xBB\xBF/, '').trim()
-	echo "Inside getVersionFromManifest 3 : ${manifestContent}"
-
-	def version = ''
-    try {
-	def inputStream = new ByteArrayInputStream(manifestContent.getBytes("UTF-8"))
-	def document = DOMBuilder.parse(inputStream)
-        def root = document.documentElement
-        def node = root.getElementsByTagName("Identity").item(0)
-        version = node?.getAttribute("Version")
-	echo "version------ : ${version}"
-
-        if (!version) {
-            error "Version attribute not found in ${manifestPath}"
-        }
-	
-        return version
-
     } catch (Exception e) {
         error "Failed to parse XML using DOMBuilder for ${manifestPath}: ${e.message}"
     }
