@@ -104,7 +104,7 @@ def getVersionFromManifest(manifestPath) {
     try {
         xml = new XmlSlurper().parseText(manifestContent)
     } catch (Exception e) {
-        error "Failed to parse XML for ${filePath}: ${e.message}"
+        error "Failed to parse XML for ${manifestPath}: ${e.message}"
     }
     return xml.Metadata.Identity.@Version.text()
 }
