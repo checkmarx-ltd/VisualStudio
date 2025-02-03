@@ -2,6 +2,8 @@
 @Library('cx-jenkins-pipeline-kit')
 import groovy.xml.DOMBuilder
 import groovy.xml.XmlUtil
+import javax.xml.parsers.DocumentBuilderFactory
+import org.w3c.dom.Document
 
 def ipAddress
 def vmName = "Plugin-VisualStudio-" + UUID.randomUUID().toString()
@@ -31,8 +33,8 @@ pipeline {
                    def vs2022ManifestPath = 'CxViewer2022/source.extension.vsixmanifest'
 
 		   // Extract versions using a helper function
-                    versionOfVS2022 = getVersionFromManifest(vs2022ManifestPath)
-                    versionOfVS2019 = getVersionFromManifest(vs2019ManifestPath)
+                    versionOfVS2022 = extractVersionUsingDOMBuilder(vs2022ManifestPath)
+                    versionOfVS2019 = extractVersionUsingDOMBuilder(vs2019ManifestPath)
 
 		    echo "VS2022 version: ${versionOfVS2022}"
                     echo "VS2019 version: ${versionOfVS2019}"
@@ -93,6 +95,36 @@ pipeline {
         cleanup {
             cleanWs()
         }
+    }
+}
+def extractVersionUsingDOMBuilder(manifestPath) {
+    def manifestContent = readFile(manifestPath)
+    
+    // Clean BOM if present and trim leading/trailing whitespace
+    manifestContent = manifestContent.replaceFirst(/^\xEF\xBB\xBF/, '').trim()
+
+    def version = ''
+    try {
+        // Create DocumentBuilderFactory and parse the XML content
+        def factory = DocumentBuilderFactory.newInstance()
+        def builder = factory.newDocumentBuilder()
+        def inputStream = new ByteArrayInputStream(manifestContent.getBytes("UTF-8"))
+        
+        // Parse the input stream into a Document
+        Document document = builder.parse(inputStream)
+
+        // Use DOM to extract the Version attribute
+        def node = document.getElementsByTagName("Identity").item(0)
+        version = node?.getAttribute("Version")
+	echo "version------ : ${version}"
+
+        if (!version) {
+            error "Version attribute not found in ${manifestPath}"
+        }
+
+        return version
+    } catch (Exception e) {
+        error "Failed to parse XML using DOMBuilder for ${manifestPath}: ${e.message}"
     }
 }
 
