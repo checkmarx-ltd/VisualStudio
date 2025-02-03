@@ -24,12 +24,7 @@ pipeline {
         stage('Create VM') {
             steps {
                 script {
-                    kit.Create_Vm_Terraform(vmName, templateName, "18000", "8", "VMWARE", decommissionPeriod, "Auto", "Plugins-Developers")
-                    ipAddress = kit.getIpAddress(vmName, "VMWARE")
-                    kit.Create_Jenkins_Slave_On_Master(vmName)
-                    kit.Start_Jenkins_Slave_On_Windows_Pstools(ipAddress, vmName)
-
-				def vs2019ManifestPath = 'CxViewerVSIX/source.extension.vsixmanifest'
+			def vs2019ManifestPath = 'CxViewerVSIX/source.extension.vsixmanifest'
                    def vs2022ManifestPath = 'CxViewer2022/source.extension.vsixmanifest'
 
 		   // Extract versions using a helper function
@@ -38,6 +33,12 @@ pipeline {
 
 		    echo "VS2022 version: ${versionOfVS2022}"
                     echo "VS2019 version: ${versionOfVS2019}"
+                    kit.Create_Vm_Terraform(vmName, templateName, "18000", "8", "VMWARE", decommissionPeriod, "Auto", "Plugins-Developers")
+                    ipAddress = kit.getIpAddress(vmName, "VMWARE")
+                    kit.Create_Jenkins_Slave_On_Master(vmName)
+                    kit.Start_Jenkins_Slave_On_Windows_Pstools(ipAddress, vmName)
+
+				
                 }
             }
         }
