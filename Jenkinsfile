@@ -96,28 +96,27 @@ pipeline {
 
 def getVersionFromManifest(manifestPath) {
 	echo "Inside getVersionFromManifest"
-    def manifestContent = readFile(manifestPath)
+   	def manifestContent = readFile(manifestPath)
 	echo "Inside getVersionFromManifest 2 : ${manifestContent}"
-    // Clean BOM and leading whitespace dynamically in Groovy
-    //manifestContent = manifestContent.replaceFirst(/^\xEF\xBB\xBF/, '').trim()
-//echo "Inside getVersionFromManifest 3 : ${manifestContent}"
-	
-    def xml
-    try {
-        xml = new XmlSlurper().parseText(manifestContent)
-	xml.declareNamespace(vsx: "http://schemas.microsoft.com/developer/vsx-schema/2011")
-	def version1 = xml.'vsx:Metadata'.'vsx:Identity'.'vsx:Version'.text()
-	echo "version1 : ${version1}"
+	manifestContent = manifestContent.replaceFirst(/^\xEF\xBB\xBF/, '').trim()
+	echo "Inside getVersionFromManifest 3 : ${manifestContent}"
 
-	echo "manifestContent 1: ${xml}"
-	echo "manifestContent 2: ${xml.Version}"
-	echo "manifestContent 3: ${xml.Metadata}"
-	echo "manifestContent 4: ${xml.Metadata.Identity}"
-	echo "manifestContent 5: ${xml.Metadata.Identity.@Version}"
+	def version = ''
+    try {
+	def inputStream = new ByteArrayInputStream(manifestContent.getBytes("UTF-8"))
+	def document = DOMBuilder.parse(inputStream)
+        def root = document.documentElement
+        def node = root.getElementsByTagName("Identity").item(0)
+        version = node?.getAttribute("Version")
+	echo "version------ : ${version}"
+
+        if (!version) {
+            error "Version attribute not found in ${manifestPath}"
+        }
+	
+        return version
 
     } catch (Exception e) {
-        error "Failed to parse XML for ${manifestPath}: ${e.message}"
+        error "Failed to parse XML using DOMBuilder for ${manifestPath}: ${e.message}"
     }
-	echo "Inside getVersionFromManifest 4"
-    return xml.Metadata.Identity.@Version.text()
 }
