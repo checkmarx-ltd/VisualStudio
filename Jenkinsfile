@@ -24,7 +24,14 @@ pipeline {
                     ipAddress = kit.getIpAddress(vmName, "VMWARE")
                     kit.Create_Jenkins_Slave_On_Master(vmName)
                     kit.Start_Jenkins_Slave_On_Windows_Pstools(ipAddress, vmName)
-
+			
+		    sh '''
+                        # Remove BOM and leading whitespace from the manifest file
+                        sed -i '1s/^\xEF\xBB\xBF//' CxViewer2022/source.extension.vsixmanifest
+                        sed -i '/^\s*$/d' CxViewer2022/source.extension.vsixmanifest
+			sed -i '1s/^\xEF\xBB\xBF//' CxViewerVSIX/source.extension.vsixmanifest
+                        sed -i '/^\s*$/d' CxViewerVSIX/source.extension.vsixmanifest
+                    '''
 		   def vs2019ManifestPath = 'CxViewer2022/source.extension.vsixmanifest'
                    def vs2022ManifestPath = 'CxViewerVSIX/source.extension.vsixmanifest'
 
