@@ -99,8 +99,8 @@ def getVersionFromManifest(manifestPath) {
     def manifestContent = readFile(manifestPath)
 	echo "Inside getVersionFromManifest 2 : ${manifestContent}"
     // Clean BOM and leading whitespace dynamically in Groovy
-    manifestContent = manifestContent.replaceFirst(/^\xEF\xBB\xBF/, '').trim()
-echo "Inside getVersionFromManifest 3 : ${manifestContent}"
+    //manifestContent = manifestContent.replaceFirst(/^\xEF\xBB\xBF/, '').trim()
+//echo "Inside getVersionFromManifest 3 : ${manifestContent}"
 	
     def xml
     try {
