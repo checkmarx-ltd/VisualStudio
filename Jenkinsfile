@@ -25,8 +25,8 @@ pipeline {
                     kit.Create_Jenkins_Slave_On_Master(vmName)
                     kit.Start_Jenkins_Slave_On_Windows_Pstools(ipAddress, vmName)
 			
-		   def vs2019ManifestPath = 'CxViewer2022/source.extension.vsixmanifest'
-                   def vs2022ManifestPath = 'CxViewerVSIX/source.extension.vsixmanifest'
+		   def vs2019ManifestPath = 'CxViewerVSIX/source.extension.vsixmanifest'
+                   def vs2022ManifestPath = 'CxViewer2022/source.extension.vsixmanifest'
 
 		   // Extract versions using a helper function
                     versionOfVS2022 = getVersionFromManifest(vs2022ManifestPath)
