@@ -105,6 +105,8 @@ echo "Inside getVersionFromManifest 3"
     def xml
     try {
         xml = new XmlSlurper().parseText(manifestContent)
+	echo "manifestContent 1: ${xml}"
+	echo "manifestContent 1: ${xml.Version}"
 	echo "manifestContent 1: ${xml.Metadata}"
 	echo "manifestContent 1: ${xml.Metadata.Identity}"
 	echo "manifestContent 1: ${xml.Metadata.Identity.@Version}"
