@@ -106,6 +106,8 @@ def getVersionFromManifest(manifestPath) {
     try {
         xml = new XmlSlurper().parseText(manifestContent)
 	xml.declareNamespace(vsx: "http://schemas.microsoft.com/developer/vsx-schema/2011")
+	def version1 = xml.'vsx:Metadata'.'vsx:Identity'.'vsx:Version'.text()
+	echo "version1 : ${version1}"
 
 	echo "manifestContent 1: ${xml}"
 	echo "manifestContent 2: ${xml.Version}"
