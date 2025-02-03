@@ -1,5 +1,7 @@
 #!/groovy
 @Library('cx-jenkins-pipeline-kit')
+import groovy.xml.DOMBuilder
+import groovy.xml.XmlUtil
 
 def ipAddress
 def vmName = "Plugin-VisualStudio-" + UUID.randomUUID().toString()
