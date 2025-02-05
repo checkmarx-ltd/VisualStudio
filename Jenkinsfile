@@ -15,7 +15,7 @@ def versionOfVS2019
 pipeline {
     parameters {
         string(name: "decommissionPeriod", defaultValue: "3 hour", description: "Decommission period")
-		choice(name: "templateName", choices: ["VisualStudio2019-Template-2","VisualStudio2022-Template"], description: "Template name, if not specified then \"VisualStudio2019-Template-2\" template will be chosen")
+		choice(name: "templateName", choices: ["VisualStudio2019-Template","VisualStudio2022-Template"], description: "Template name, if not specified then \"VisualStudio2019-Template\" template will be chosen")
         booleanParam(name: 'doNotDeleteVM', defaultValue: false, description: 'If selected, VM will not be deleted after process finished')
 		gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'branch', type: 'PT_BRANCH'
     }
@@ -51,7 +51,7 @@ pipeline {
             agent { node { label vmName } }
             steps {
                 script {
-                    	if(templateName == "VisualStudio2019-Template-2")
+                    	if(templateName == "VisualStudio2019-Template")
 			{
 				bat "${msbuildLocationVS2019} ${WORKSPACE}\\ci.msbuild /t:CI /p:VisualStudioVersion=\"16.0\" /p:DeployExtension=false"
 			}
@@ -66,7 +66,7 @@ pipeline {
             agent { node { label vmName } }
             steps {
                 script {
-		    	if(templateName == "VisualStudio2019-Template-2")
+		    	if(templateName == "VisualStudio2019-Template")
 			{
 				kit.Upload_To_Artifactory("${WORKSPACE}\\Artifacts\\CxViewerVSIX-2019.vsix", "plugins-release-local/com/checkmarx/visual-studio/${versionOfVS2019}/")
 			}
