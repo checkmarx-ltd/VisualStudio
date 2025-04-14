@@ -72,6 +72,7 @@ namespace CxViewerAction.Views
             browser.ExecuteScriptAsync("document.oncontextmenu = function() { return false; };");
 
             Uri urlAddress = new Uri(browser.Address.ToString());
+            Logger.Create().Debug("In browser address changed event. URL -" + urlAddress.ToString());
             if (!urlAddress.ToString().ToLower().Contains("code="))
             {
 
@@ -139,7 +140,10 @@ namespace CxViewerAction.Views
                     Logger.Create().Debug("Navigation complete for " + e.Url.ToString());
                     Logger.Create().Debug("Checking for presence of authorization code in the URL. " + e.Url.ToLower());
                 }
-
+                else
+                {
+                    Logger.Create().Debug("Non access control URL  " + e.Url.ToString());
+                }
                 return;
             }
             Logger.Create().Info("Authorization code found. Extracting authorization code from the URL. ");
