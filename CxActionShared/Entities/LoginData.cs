@@ -19,6 +19,13 @@ namespace CxViewerAction.Entities
         /// </summary>
         public const int DEFAULT_LANGUAGE_CODE = 1033;
 
+        /// <summary>
+        /// Proxy type constants
+        /// </summary>
+        public const string PROXY_TYPE_NONE = "None";
+        public const string PROXY_TYPE_HTTP = "http";
+        public const string PROXY_TYPE_PAC = "pac";
+
         #endregion
 
         #region [Private Constants]
@@ -38,6 +45,11 @@ namespace CxViewerAction.Entities
         private string _serverBaseUri = null;
         private bool _ssl = false;
         private string _authenticationType = "access_control";
+
+        private string _proxyType = PROXY_TYPE_NONE;
+        private string _proxyLocation = null;
+        private string _noProxyList = null;
+ 
 
         private EntityId _id;
         private bool _isLogging;
@@ -182,6 +194,35 @@ namespace CxViewerAction.Entities
             get { return _authenticationType; }
             set { _authenticationType = value; }
         }
+
+        /// <summary>
+        /// Gets or sets value indicating the type of the proxy server none, http or pac
+        /// </summary>
+        public string ProxyType
+        {
+            get { return _proxyType; }
+            set { _proxyType = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets value indicating the url of the http or pac proxy.
+        /// </summary>
+        public string ProxyLocation
+        {
+            get { return _proxyLocation; }
+            set { _proxyLocation = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets value indicating the hosts that should be excluded from the proxy
+        /// </summary>
+        public string NoProxyList
+        {
+            get { return _noProxyList; }
+            set { _noProxyList = value; }
+        }
+
+
 
 
         /// <summary>
@@ -387,5 +428,6 @@ namespace CxViewerAction.Entities
             public List<ScanReportInfo> ScanReports { get { return scanReports; } set { scanReports = value; } }
         }
 
+    
     }
 }

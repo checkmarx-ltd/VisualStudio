@@ -15,10 +15,11 @@ namespace CxViewerAction.Helpers
         public static bool errorWasShown = false;
 
         private OidcLoginResult _latestResult;
+        private LoginData _pluginConfiguration = null;
 
         public OIDCLoginHelper()
         {
-
+            _pluginConfiguration = null;
         }
 
         public void resetLatestResult()
@@ -55,7 +56,7 @@ namespace CxViewerAction.Helpers
                 var browserForm = new BrowserForm();
                 BrowserForm.NavigationCompleted += OidcLoginCtrlOnNavigationCompleted;
                 BrowserForm.NavigationError += OidcLoginCtrlOnNavigationError;
-                BrowserForm.IsbrowserIntialized();
+                BrowserForm.IsbrowserIntialized(_pluginConfiguration);
                 browserForm.Show();
                 string txturl = "about:blank";
                 browserForm.Invoke(new MethodInvoker(() =>
@@ -98,6 +99,15 @@ namespace CxViewerAction.Helpers
             {
                 _oidcLoginFrm.CloseForm();
             }
+        }
+
+        /// <summary>
+        /// plugin's configuration
+        /// </summary>
+        public LoginData PluginConfiguration
+        {
+            get { return _pluginConfiguration; }
+            set { _pluginConfiguration = value; }
         }
     }
 }

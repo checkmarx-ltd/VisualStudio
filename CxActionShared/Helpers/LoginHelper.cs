@@ -180,6 +180,7 @@ namespace CxViewerAction.Helpers
             {
                 Logger.Create().Error(ex);
             }
+            _oidcLoginHelper.PluginConfiguration = login;
 
             return login;
         }
