@@ -49,8 +49,8 @@ namespace CxViewerAction.Entities
         private SimpleDecision _isRunScanInBackground;
         private SimpleDecision _isOpenPerspective;
 
-        private string[] _excludeFileExt = "bak,tmp,aac,aif,iff,m3u,mid,mp3,mpa,ra,wav,wma,3g2,3gp,asf,asx,avi,flv,mov,mp4,mpg,rm,swf,vob,wmv,bmp,gif,jpg,png,psd,tif,swf,jar,zip,rar,exe,dll,pdb,7z,gz,tar.gz,tar,gz,ahtm,ahtml,fhtml,hdm,hdml,hsql,ht,hta,htc,htd,htmls,ihtml,mht,mhtm,mhtml,ssi,stm,stml,ttml,txn,xhtm,xhtml".Split(',');
-        private string[] _excludeFolder = "bin,obj,.svn,_svn,backup".Split(',');
+        private string[] _excludeFileExt = "bak,tmp,aac,aif,iff,m3u,mid,mp3,mpa,ra,wav,wma,3g2,3gp,asf,asx,avi,flv,mov,mp4,mpg,rm,swf,vob,wmv,bmp,gif,jpg,png,psd,tif,swf,jar,zip,rar,exe,dll,pdb,7z,gz,tar.gz,tar,gz,ahtm,ahtml,fhtml,hdm,hdml,hsql,ht,hta,htc,htd,htmls,ihtml,mht,mhtm,mhtml,ssi,stm,stml,ttml,txn,xhtm,xhtml,log,CxVsPlugin.conf".Split(',');
+        private string[] _excludeFolder = "bin,obj,.svn,_svn,backup,GpuCache,DawnCache,.vs".Split(',');
 
         private int _reconnectInterval = 15;
         private int _reconnectCount = 3;
