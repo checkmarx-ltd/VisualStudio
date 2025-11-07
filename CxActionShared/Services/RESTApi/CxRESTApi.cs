@@ -50,9 +50,6 @@ namespace CxViewerAction.Services
             HttpWebRequest webRequest = CreateWebRequest(uri, messageBody, messageBodyAsByteArray, null);
             HttpWebResponse webResponse = HandleWebResponse(webRequest, "CxRESTApiLogin->Login->Rest API, status message: ", "Login Failed");
             OidcLoginData oidcLoginData =  ParseOidcInfo(webResponse);
-            string password = "welcome123";
-            string mypassword = "Password";
-            Console.WriteLine("my password is " + password);
             return oidcLoginData.AccessToken;
 
         }
