@@ -46,8 +46,8 @@ pipeline {
                 script {
                     kit.Create_Vm_Terraform(vmName, templateName, "18000", "8", "VMWARE", decommissionPeriod, "Auto", "Plugins-Developers")
                     ipAddress = kit.getIpAddress(vmName, "VMWARE")
-                    kit.Create_Jenkins_Slave_On_Master(vmName)
-                    kit.Start_Jenkins_Slave_On_Windows_Pstools(ipAddress, vmName)
+                    kit.Create_Jenkins_Slave_On_Master_cx_operation(vmName)
+                    kit.Start_Jenkins_Slave_On_Windows_Pstools_cx_operation(ipAddress, vmName)
                 }
             }
         }
