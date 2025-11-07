@@ -25,7 +25,7 @@ pipeline {
             steps {
                 checkout([$class: 'GitSCM',
                           branches: [[name: "${branch}"]],
-                          userRemoteConfigs: [[url: 'https://your.repo.git']]])
+                          userRemoteConfigs: [[url: 'https://github.com/checkmarx-ltd/VisualStudio.git']]])
             }
         }
 	stage('Extract Version') {
