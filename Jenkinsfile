@@ -1,31 +1,64 @@
 #!/groovy
 @Library('cx-jenkins-pipeline-kit')
+import groovy.xml.DOMBuilder
+import groovy.xml.XmlUtil
+import javax.xml.parsers.DocumentBuilderFactory
+import org.w3c.dom.Document
 
 def ipAddress
 def vmName = "Plugin-VisualStudio-" + UUID.randomUUID().toString()
-def msbuildLocationVS2019 = "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\MSBuild\\Current\\Bin\\MSBuild.exe\""
+def msbuildLocationVS2019 = "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Professional\\MSBuild\\Current\\Bin\\MSBuild.exe\""
 def msbuildLocationVS2022 = "\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\MSBuild\\Current\\Bin\\MSBuild.exe\""
+def versionOfVS2022
+def versionOfVS2019
+def decommissionPeriod =  "3 hour"
 
 pipeline {
     parameters {
-        string(name: "decommissionPeriod", defaultValue: "3 hour", description: "Decommission period")
 		choice(name: "templateName", choices: ["VisualStudio2019-Template","VisualStudio2022-Template"], description: "Template name, if not specified then \"VisualStudio2019-Template\" template will be chosen")
         booleanParam(name: 'doNotDeleteVM', defaultValue: false, description: 'If selected, VM will not be deleted after process finished')
 		gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'branch', type: 'PT_BRANCH'
     }
     agent { node { label 'install01' } }
     stages {
+		stage('Checkout') {
+            steps {
+                checkout([$class: 'GitSCM',
+                          branches: [[name: "${branch}"]],
+                          userRemoteConfigs: [[url: 'https://github.com/checkmarx-ltd/VisualStudio.git']]])
+            }
+        }
+	stage('Extract Version') {
+            steps {
+                script {
+			if(templateName == "VisualStudio2019-Template")
+			{
+				def vs2019ManifestPath = 'CxViewerVSIX/source.extension.vsixmanifest'
+				// Extract versions using a helper function
+	                    	versionOfVS2019 = extractVersionUsingDOMBuilder(vs2019ManifestPath)
+				echo "VS2019 version: ${versionOfVS2019}"
+			}
+			else 
+			{
+				def vs2022ManifestPath = 'CxViewer2022/source.extension.vsixmanifest'
+				// Extract versions using a helper function
+	                    	versionOfVS2022 = extractVersionUsingDOMBuilder(vs2022ManifestPath)
+				 echo "VS2022 version: ${versionOfVS2022}"
+			}
+                }
+            }
+        }
         stage('Create VM') {
             steps {
                 script {
                     kit.Create_Vm_Terraform(vmName, templateName, "18000", "8", "VMWARE", decommissionPeriod, "Auto", "Plugins-Developers")
                     ipAddress = kit.getIpAddress(vmName, "VMWARE")
-                    kit.Create_Jenkins_Slave_On_Master(vmName)
-                    kit.Start_Jenkins_Slave_On_Windows_Pstools(ipAddress, vmName)
+                    kit.Create_Jenkins_Slave_On_Master_cx_operation(vmName)
+                    kit.Start_Jenkins_Slave_On_Windows_Pstools_cx_operation(ipAddress, vmName)
                 }
             }
         }
-
+	
         stage('Build and Pack') {
             agent { node { label vmName } }
             steps {
@@ -41,19 +74,17 @@ pipeline {
             }
         }
 		
-		stage('Upload To Artifactory') {
+	stage('Upload To Artifactory') {
             agent { node { label vmName } }
             steps {
                 script {
 		    	if(templateName == "VisualStudio2019-Template")
 			{
-				fileOperations([folderRenameOperation(source: "${WORKSPACE}\\Artifacts\\CxViewerVSIX-2019.vsix", destination: "${WORKSPACE}\\Artifacts\\CxViewerVSIX-9.00.19.vsix")])
-				kit.Upload_To_Artifactory("${WORKSPACE}\\Artifacts\\CxViewerVSIX-9.00.19.vsix", "plugins-release-local/com/checkmarx/visual-studio/")
+				kit.Upload_To_Artifactory("${WORKSPACE}\\Artifacts\\CxViewerVSIX-2019.vsix", "plugins-release-local/com/checkmarx/visual-studio/${versionOfVS2019}/")
 			}
 			else 
 			{
-				fileOperations([folderRenameOperation(source: "${WORKSPACE}\\Artifacts\\CxViewerVSIX-2022.vsix", destination: "${WORKSPACE}\\Artifacts\\CxViewerVSIX-9.00.19.vsix")])
-				kit.Upload_To_Artifactory("${WORKSPACE}\\Artifacts\\CxViewerVSIX-9.00.19.vsix", "plugins-release-local/com/checkmarx/visual-studio/")
+				kit.Upload_To_Artifactory("${WORKSPACE}\\Artifacts\\CxViewerVSIX-2022.vsix", "plugins-release-local/com/checkmarx/visual-studio/${versionOfVS2022}/")
 			}
                 }
             }
@@ -81,5 +112,30 @@ pipeline {
         cleanup {
             cleanWs()
         }
+    }
+}
+def extractVersionUsingDOMBuilder(manifestPath) {
+    def manifestContent = readFile(manifestPath)
+    manifestContent = manifestContent.replaceFirst(/^\xEF\xBB\xBF/, '').trim()
+
+    def version = ''
+    try {
+        // Create DocumentBuilderFactory and parse the XML content
+        def factory = DocumentBuilderFactory.newInstance()
+        def builder = factory.newDocumentBuilder()
+        def inputStream = new ByteArrayInputStream(manifestContent.getBytes("UTF-8"))
+        
+        // Parse the input stream into a Document
+        Document document = builder.parse(inputStream)
+
+        // Use DOM to extract the Version attribute
+        def node = document.getElementsByTagName("Identity").item(0)
+        version = node?.getAttribute("Version")
+        if (!version) {
+            error "Version attribute not found in ${manifestPath}"
+        }
+        return version
+    } catch (Exception e) {
+        error "Failed to parse XML using DOMBuilder for ${manifestPath}: ${e.message}"
     }
 }

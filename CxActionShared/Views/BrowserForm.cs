@@ -38,10 +38,40 @@ namespace CxViewerAction.Views
         static bool IsIntialized = false;
         public static void IsbrowserIntialized()
         {
+            CefSettings settings = new CefSettings();
+            initializeCefBrowserWithSettings(settings);
+        }
+
+        public static void IsbrowserIntialized(LoginData pluginConfiguration)
+        {
+            CefSettings settings = new CefSettings();
+
+            if (!string.IsNullOrEmpty(pluginConfiguration.ProxyType) &&
+                    pluginConfiguration.ProxyType != LoginData.PROXY_TYPE_NONE)
+            {
+                if (pluginConfiguration.ProxyType == LoginData.PROXY_TYPE_HTTP)
+                {
+                    settings.CefCommandLineArgs.Add("proxy-server", pluginConfiguration.ProxyLocation);
+
+                    if (!string.IsNullOrEmpty(pluginConfiguration.NoProxyList))
+                    {
+                        settings.CefCommandLineArgs.Add("proxy-bypass-list", pluginConfiguration.NoProxyList);
+                    }
+                }
+                else if (pluginConfiguration.ProxyType == LoginData.PROXY_TYPE_PAC)
+                {
+                    settings.CefCommandLineArgs.Add("proxy-pac-url", pluginConfiguration.ProxyLocation);
+                }
+            }
+
+            initializeCefBrowserWithSettings(settings);            
+        }
+
+        private static void initializeCefBrowserWithSettings(CefSettings settings)
+        {
             if (IsIntialized == false)
             {
-                CefSharpSettings.ShutdownOnExit = false;
-                CefSettings settings = new CefSettings();
+                CefSharpSettings.ShutdownOnExit = false;              
                 Cef.Initialize(settings);
                 IsIntialized = true;
             }

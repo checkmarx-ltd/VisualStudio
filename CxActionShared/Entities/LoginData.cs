@@ -19,6 +19,13 @@ namespace CxViewerAction.Entities
         /// </summary>
         public const int DEFAULT_LANGUAGE_CODE = 1033;
 
+        /// <summary>
+        /// Proxy type constants
+        /// </summary>
+        public const string PROXY_TYPE_NONE = "None";
+        public const string PROXY_TYPE_HTTP = "http";
+        public const string PROXY_TYPE_PAC = "pac";
+
         #endregion
 
         #region [Private Constants]
@@ -39,6 +46,11 @@ namespace CxViewerAction.Entities
         private bool _ssl = false;
         private string _authenticationType = "access_control";
 
+        private string _proxyType = PROXY_TYPE_NONE;
+        private string _proxyLocation = null;
+        private string _noProxyList = null;
+ 
+
         private EntityId _id;
         private bool _isLogging;
         string unboundRunID;
@@ -49,8 +61,8 @@ namespace CxViewerAction.Entities
         private SimpleDecision _isRunScanInBackground;
         private SimpleDecision _isOpenPerspective;
 
-        private string[] _excludeFileExt = "bak,tmp,aac,aif,iff,m3u,mid,mp3,mpa,ra,wav,wma,3g2,3gp,asf,asx,avi,flv,mov,mp4,mpg,rm,swf,vob,wmv,bmp,gif,jpg,png,psd,tif,swf,jar,zip,rar,exe,dll,pdb,7z,gz,tar.gz,tar,gz,ahtm,ahtml,fhtml,hdm,hdml,hsql,ht,hta,htc,htd,htmls,ihtml,mht,mhtm,mhtml,ssi,stm,stml,ttml,txn,xhtm,xhtml".Split(',');
-        private string[] _excludeFolder = "bin,obj,.svn,_svn,backup".Split(',');
+        private string[] _excludeFileExt = "bak,tmp,aac,aif,iff,m3u,mid,mp3,mpa,ra,wav,wma,3g2,3gp,asf,asx,avi,flv,mov,mp4,mpg,rm,swf,vob,wmv,bmp,gif,jpg,png,psd,tif,swf,jar,zip,rar,exe,dll,pdb,7z,gz,tar.gz,tar,gz,ahtm,ahtml,fhtml,hdm,hdml,hsql,ht,hta,htc,htd,htmls,ihtml,mht,mhtm,mhtml,ssi,stm,stml,ttml,txn,xhtm,xhtml,log,CxVsPlugin.conf".Split(',');
+        private string[] _excludeFolder = "bin,obj,.svn,_svn,backup,GpuCache,DawnCache,.vs".Split(',');
 
         private int _reconnectInterval = 15;
         private int _reconnectCount = 3;
@@ -182,6 +194,35 @@ namespace CxViewerAction.Entities
             get { return _authenticationType; }
             set { _authenticationType = value; }
         }
+
+        /// <summary>
+        /// Gets or sets value indicating the type of the proxy server none, http or pac
+        /// </summary>
+        public string ProxyType
+        {
+            get { return _proxyType; }
+            set { _proxyType = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets value indicating the url of the http or pac proxy.
+        /// </summary>
+        public string ProxyLocation
+        {
+            get { return _proxyLocation; }
+            set { _proxyLocation = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets value indicating the hosts that should be excluded from the proxy
+        /// </summary>
+        public string NoProxyList
+        {
+            get { return _noProxyList; }
+            set { _noProxyList = value; }
+        }
+
+
 
 
         /// <summary>
@@ -387,5 +428,6 @@ namespace CxViewerAction.Entities
             public List<ScanReportInfo> ScanReports { get { return scanReports; } set { scanReports = value; } }
         }
 
+    
     }
 }
